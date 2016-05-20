@@ -28,11 +28,11 @@ namespace Fingerprints
 
 
             Picture p = new Picture(this);
-
+            p.InitializeR();
             p.InitializeL();// inizjalizacja kappa
 
-            p.InitializeR();
-
+            // testowanko h
+            
             m.Draw(canvasImageL, imageL);
             
             Vector v = new Vector();
