@@ -1,0 +1,60 @@
+﻿<Window x:Class="Fingerprints.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Fingerprints"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280">
+    <Grid Margin="20, 20, 20 ,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="openLeftImage"  Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Grid.Column="0"/>
+                <Button x:Name="openRightImage" Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Grid.Column="2"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+                <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
+                    <Image x:Name="imageL" Canvas.Left="150" Height="199" Width="241" Canvas.Top="150" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill"  />
+                    <Canvas x:Name="canvasImageL" Height="{Binding ActualHeight, ElementName=imageLeft}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualHeight, ElementName=imageLeft}"/>
+                </Canvas>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="1">
+                <Canvas HorizontalAlignment="Stretch" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
+                    <Image x:Name="imageR" Height="199" Canvas.Left="150" Canvas.Top="150" Width="241" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
+                    <Canvas x:Name="canvasImageR" Height="{Binding ActualHeight, ElementName=imageRight}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualWidth, ElementName=imageRight}"/>
+                </Canvas>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Window>
