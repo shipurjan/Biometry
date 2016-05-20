@@ -25,6 +25,8 @@ namespace Fingerprints
         {
             InitializeComponent();
             Minutiae m = new Vector();
+
+
             Picture p = new Picture(this);
 
             p.InitializeL();// inizjalizacja kappa
