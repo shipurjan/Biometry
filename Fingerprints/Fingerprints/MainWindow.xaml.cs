@@ -30,7 +30,7 @@ namespace Fingerprints
             p.InitializeR();
             p.InitializeL();
             draw.Draw(canvasImageL, imageL);
-            
+
             Vector v = new Vector();
                 
 

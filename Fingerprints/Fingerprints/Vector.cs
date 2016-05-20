@@ -37,15 +37,15 @@ namespace Fingerprints
                     {
                         tmp1 = ee.GetPosition(canvas);
                         firstPointLine = tmp1;
-                        //EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-                        //myEllipseGeometry.Center = tmp1;
-                        //myEllipseGeometry.RadiusX = 5;
-                        //myEllipseGeometry.RadiusY = 5;
-                        //Path myPath = new Path();
-                        //myPath.Stroke = Brushes.Black;
-                        //myPath.StrokeThickness = 1;
-                        //myPath.Data = myEllipseGeometry;
-                        //canvas.Children.Add(myPath);
+                        EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+                        myEllipseGeometry.Center = tmp1;
+                        myEllipseGeometry.RadiusX = 2;
+                        myEllipseGeometry.RadiusY = 2;
+                        Path myPath = new Path();
+                        myPath.Stroke = Brushes.Red;
+                        myPath.StrokeThickness = 0.3;
+                        myPath.Data = myEllipseGeometry;
+                        canvas.Children.Add(myPath);
                         clickCount++;
                     }
                     else
@@ -53,13 +53,14 @@ namespace Fingerprints
                         tmp2 = ee.GetPosition(canvas);
                         clickCount = 0;
                         var linetmp = new Line();
-                        linetmp.X1 = tmp1.X;
-                        linetmp.Y1 = tmp1.Y;
+                        
 
                         double deltaX = tmp2.X - tmp1.X;
                         double deltaY = tmp2.Y - tmp1.Y;
                         linetmp.Stroke = Brushes.Red;
-                        double angle = (Math.Atan2(deltaY, deltaX) * 180 / Math.PI) * 0.0174532925;
+                        double angle = (Math.Atan2(deltaY, deltaX));
+                        linetmp.X1 = tmp1.X + 2 * Math.Cos(angle);
+                        linetmp.Y1 = tmp1.Y + 2 * Math.Sin(angle);
                         tmp2.X = tmp1.X + Math.Cos(angle) * 10;
                         tmp2.Y = tmp1.Y + Math.Sin(angle) * 10;
                         linetmp.X2 = tmp2.X;
