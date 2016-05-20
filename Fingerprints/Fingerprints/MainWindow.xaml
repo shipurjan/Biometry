@@ -39,6 +39,7 @@
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.4*"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="100" Grid.Column="1"/>
                 <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Column="4"/>
@@ -57,6 +58,7 @@
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
                 <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
@@ -70,10 +72,10 @@
                     <Canvas x:Name="canvasImageR" Height="{Binding ActualHeight, ElementName=imageRight}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualWidth, ElementName=imageRight}"/>
                 </Canvas>
             </Border>
-            <ListBox x:Name="listBox" Grid.Column="3"/>
-            <ListBox x:Name="listBox1" Grid.Column="4"/>
+            <ListBox x:Name="listBoxLp" Grid.Column="3"/>
+            <ListBox x:Name="listBoxImageL" Grid.Column="4"/>
             <ListBox x:Name="listBox2" Grid.Column="5" />
-            <ListBox x:Name="listBox3" Grid.Column="6" />
+            <ListBox x:Name="listBoxImageR" Grid.Column="6" />
             <ListBox x:Name="listBox4" Grid.Column="7" />
         </Grid>
 
