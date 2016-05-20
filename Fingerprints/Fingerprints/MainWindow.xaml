@@ -27,8 +27,12 @@
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.5*"/>
@@ -36,11 +40,11 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="100" Grid.Column="0" Margin="219,14,194,13"/>
-                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
-                <TextBlock x:Name="textBlock" Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="3"/>
-                <TextBlock x:Name="textBlock1" Grid.Column="4" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center"/>
-                <TextBlock x:Name="textBlock2" Grid.Column="6" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center"/>
+                <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="100" Grid.Column="1"/>
+                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Column="4"/>
+                <TextBlock x:Name="textBlock" Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="7"/>
+                <TextBlock x:Name="textBlock1" Grid.Column="8" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center"/>
+                <TextBlock x:Name="textBlock2" Grid.Column="10" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
