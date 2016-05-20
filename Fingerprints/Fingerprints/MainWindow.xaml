@@ -20,10 +20,17 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="2.3*"/>
                 </Grid.ColumnDefinitions>
+                <ComboBox x:Name="comboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -41,8 +48,8 @@
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.4*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="100" Grid.Column="1"/>
-                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Column="4"/>
+                <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Center"  Grid.Column="1" Height="27" />
+                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Grid.Column="4" Height="27" />
                 <TextBlock x:Name="textBlock" Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="7"/>
                 <TextBlock x:Name="textBlock1" Grid.Column="8" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center"/>
                 <TextBlock x:Name="textBlock2" Grid.Column="10" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center"/>
