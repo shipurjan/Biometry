@@ -26,7 +26,7 @@ namespace Fingerprints
             InitializeComponent();
             Minutiae m = new Vector();
             Picture p = new Picture(this);
-            p.InitializeL(); // inicjalizacja panelu LEFT
+            p.InitializeL();
             p.InitializeR();
             m.Draw(canvasImageL, imageL);
             
