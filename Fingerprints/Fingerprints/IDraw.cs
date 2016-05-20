@@ -7,9 +7,8 @@ using System.Windows.Controls;
 
 namespace Fingerprints
 {
-    abstract class Minutiae : IDraw
+    interface IDraw
     {
-        public string Name;
-        public virtual void Draw(Canvas canvas, Image image) { }
+        void Draw(Canvas canvas, Image image);
     }
 }
