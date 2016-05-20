@@ -40,3 +40,6 @@ C:\Users\Mateusz\Dysk Google\PROGRAMOWANIE\Fingerprints (1)\Fingerprints\obj\Deb
 C:\Users\Mateusz\Dysk Google\PROGRAMOWANIE\Fingerprints (1)\Fingerprints\obj\Debug\Fingerprints.g.resources
 C:\Users\Mateusz\Dysk Google\PROGRAMOWANIE\Fingerprints (1)\Fingerprints\obj\Debug\Fingerprints.Properties.Resources.resources
 C:\Users\Mateusz\Dysk Google\PROGRAMOWANIE\Fingerprints (1)\Fingerprints\obj\Debug\Fingerprints.csproj.GenerateResource.Cache
+D:\PROGRAMOWANIE\biometry\Fingerprints\Fingerprints\bin\Debug\Fingerprints.exe.config
+D:\PROGRAMOWANIE\biometry\Fingerprints\Fingerprints\obj\Debug\Fingerprints.exe
+D:\PROGRAMOWANIE\biometry\Fingerprints\Fingerprints\obj\Debug\Fingerprints.pdb
