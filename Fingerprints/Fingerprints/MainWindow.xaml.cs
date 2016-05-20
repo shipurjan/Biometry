@@ -26,8 +26,11 @@ namespace Fingerprints
             InitializeComponent();
             Minutiae m = new Vector();
             Picture p = new Picture(this);
-            p.InitializeL();// inizjalizacja kappa
             p.InitializeR();
+            p.InitializeL();// inizjalizacja kappa
+
+            // testowanko h
+            
             m.Draw(canvasImageL, imageL);
             
             Vector v = new Vector();
