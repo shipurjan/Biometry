@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Curve.cs" />
     <Compile Include="IDraw.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Vector.cs" />

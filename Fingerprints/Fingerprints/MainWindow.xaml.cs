@@ -33,7 +33,11 @@ namespace Fingerprints
             p.InitializeL();
             draw.Draw(canvasImageL, imageL);
             draw1.Draw(canvasImageR, imageR);
-                
+
+            button.Click += (ss, ee) =>
+            {
+                canvasImageL.Children.RemoveAt(canvasImageL.Children.Count - 1);
+            };
 
         }
 
