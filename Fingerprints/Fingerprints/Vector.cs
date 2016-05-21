@@ -26,8 +26,7 @@ namespace Fingerprints
             tmp2 = new Point();
         }
         public override void Draw(Canvas canvas, Image image)
-        {
-            
+        {           
            
             handler += (ss, ee) =>
             {

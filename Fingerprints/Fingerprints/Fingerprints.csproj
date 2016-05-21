@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="IDraw.cs" />
     <Compile Include="Picture.cs" />
+    <Compile Include="SinglePoint.cs" />
     <Compile Include="Vector.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
