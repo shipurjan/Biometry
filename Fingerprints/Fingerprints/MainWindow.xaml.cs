@@ -25,13 +25,14 @@ namespace Fingerprints
         {
             InitializeComponent();
             Minutiae m = new Vector();
+            Minutiae m1 = new Vector();
             IDraw draw = m;
+            IDraw draw1 = m1;
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
             draw.Draw(canvasImageL, imageL);
-
-            Vector v = new Vector();
+            draw1.Draw(canvasImageR, imageR);
                 
 
         }
