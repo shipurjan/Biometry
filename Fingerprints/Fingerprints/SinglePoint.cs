@@ -12,18 +12,17 @@ namespace Fingerprints
 {
     class SinglePoint : Minutiae
     {
-
+        Point singlePoint = new Point();
         MouseButtonEventHandler handler = null;
         public override void Draw(Canvas canvas, Image image)
-        {
-            Point SinglePoint = new Point();
+        {            
             handler += (ss, ee) =>
             {
                 if (ee.RightButton == MouseButtonState.Pressed)
                 {
-                        SinglePoint = ee.GetPosition(canvas);;
+                        singlePoint = ee.GetPosition(canvas);;
                         EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-                        myEllipseGeometry.Center = SinglePoint;
+                        myEllipseGeometry.Center = singlePoint;
                         myEllipseGeometry.RadiusX = 2;
                         myEllipseGeometry.RadiusY = 2;
                         Path myPath = new Path();

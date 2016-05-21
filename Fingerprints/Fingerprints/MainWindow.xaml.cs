@@ -24,7 +24,7 @@ namespace Fingerprints
         public MainWindow()
         {
             InitializeComponent();
-            Minutiae m = new Vector();
+            Minutiae m = new CurveLine();
             Minutiae m1 = new Vector();
             IDraw draw = m;
             IDraw draw1 = m1;
