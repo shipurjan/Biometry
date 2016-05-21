@@ -46,6 +46,22 @@ namespace Fingerprints
                     canvas.Children.Add(myPath);
                     clickCount++;
 
+                    tmp2 = ee.GetPosition(canvas);
+                    var linetmp = new Line();
+
+                    double deltaX = tmp2.X - tmp1.X;
+                    double deltaY = tmp2.Y - tmp1.Y;
+                    linetmp.Stroke = Brushes.Red;
+                    double angle = (Math.Atan2(deltaY, deltaX));
+                    linetmp.X1 = tmp1.X + 2 * Math.Cos(angle);
+                    linetmp.Y1 = tmp1.Y + 2 * Math.Sin(angle);
+                    tmp2.X = tmp1.X + Math.Cos(angle) * 10;
+                    tmp2.Y = tmp1.Y + Math.Sin(angle) * 10;
+                    linetmp.X2 = tmp2.X;
+                    linetmp.Y2 = tmp2.Y;
+                    linetmp.StrokeThickness = 0.3;
+                    canvas.Children.Add(linetmp);
+
                 }
                 else
                 {
@@ -53,7 +69,6 @@ namespace Fingerprints
                     clickCount = 0;
                     var linetmp = new Line();
                         
-
                     double deltaX = tmp2.X - tmp1.X;
                     double deltaY = tmp2.Y - tmp1.Y;
                     linetmp.Stroke = Brushes.Red;
@@ -71,9 +86,35 @@ namespace Fingerprints
             };
 
 
-
-
+            mouseMove += (ss, ee) =>
+            {
+                if (clickCount == 1)
+                {
+                    drawCompleteLine(ee, canvas);
+                }
+            };
+            image.MouseMove += mouseMove;
             image.MouseRightButtonDown += handler;
+        }
+
+        private void drawCompleteLine(MouseEventArgs ee, Canvas canvas)
+        {
+            tmp2 = ee.GetPosition(canvas);
+            var linetmp = new Line();
+
+            double deltaX = tmp2.X - tmp1.X;
+            double deltaY = tmp2.Y - tmp1.Y;
+            linetmp.Stroke = Brushes.Red;
+            double angle = (Math.Atan2(deltaY, deltaX));
+            linetmp.X1 = tmp1.X + 2 * Math.Cos(angle);
+            linetmp.Y1 = tmp1.Y + 2 * Math.Sin(angle);
+            tmp2.X = tmp1.X + Math.Cos(angle) * 10;
+            tmp2.Y = tmp1.Y + Math.Sin(angle) * 10;
+            linetmp.X2 = tmp2.X;
+            linetmp.Y2 = tmp2.Y;
+            linetmp.StrokeThickness = 0.3;
+            canvas.Children.RemoveAt(canvas.Children.Count - 1);
+            canvas.Children.Add(linetmp);
         }
 
         public void DeleteEvent(Canvas canvas, Image image, Button button)
