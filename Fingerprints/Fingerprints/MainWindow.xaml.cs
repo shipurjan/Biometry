@@ -38,8 +38,6 @@ namespace Fingerprints
             {
                 canvasImageL.Children.RemoveAt(canvasImageL.Children.Count - 1);
             };
-
         }
-
     }
 }
