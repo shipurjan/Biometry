@@ -30,7 +30,9 @@
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="2.3*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="comboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <ComboBox x:Name="comboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    
+                </ComboBox>
                 <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="65,23,0,0" VerticalAlignment="Top" Width="75"/>
             </Grid>
             <Grid Grid.Row="2">

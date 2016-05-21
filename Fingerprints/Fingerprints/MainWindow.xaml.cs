@@ -24,15 +24,15 @@ namespace Fingerprints
         public MainWindow()
         {
             InitializeComponent();
-            Minutiae m = new CurveLine();
-            Minutiae m1 = new Vector();
-            IDraw draw = m;
-            IDraw draw1 = m1;
+            Minutiae mL = new Vector();
+            Minutiae mR = new Vector();
+            IDraw drawL = mL;
+            IDraw drawR = mR;
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
-            draw.Draw(canvasImageL, imageL);
-            draw1.Draw(canvasImageR, imageR);
+            drawL.Draw(canvasImageL, imageL);
+            drawR.Draw(canvasImageR, imageR);
 
             button.Click += (ss, ee) =>
             {
