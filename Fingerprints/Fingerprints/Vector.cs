@@ -63,6 +63,7 @@ namespace Fingerprints
                     clickCount = 0;
                     group = null;
                     group = new GeometryGroup();
+                    //DeleteEvent(image);
                 }
             };
 
@@ -91,9 +92,10 @@ namespace Fingerprints
             ((LineGeometry)group.Children[1]).EndPoint = tmp2;
         }
 
-        public void DeleteEvent(Canvas canvas, Image image, Button button)
+        public void DeleteEvent(Image image)
         {
             image.MouseRightButtonDown -= handler;
+            image.MouseMove -= mouseMove;
         }
     }
 }

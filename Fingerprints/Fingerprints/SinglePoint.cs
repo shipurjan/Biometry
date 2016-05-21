@@ -20,20 +20,26 @@ namespace Fingerprints
             {
                 if (ee.RightButton == MouseButtonState.Pressed)
                 {
-                        singlePoint = ee.GetPosition(canvas);;
-                        EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-                        myEllipseGeometry.Center = singlePoint;
-                        myEllipseGeometry.RadiusX = 2;
-                        myEllipseGeometry.RadiusY = 2;
-                        Path myPath = new Path();
-                        myPath.Stroke = Brushes.Red;
-                        myPath.StrokeThickness = 0.3;
-                        myPath.Data = myEllipseGeometry;
-                        canvas.Children.Add(myPath);                   
+                    singlePoint = ee.GetPosition(canvas);;
+                    EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+                    myEllipseGeometry.Center = singlePoint;
+                    myEllipseGeometry.RadiusX = 2;
+                    myEllipseGeometry.RadiusY = 2;
+                    Path myPath = new Path();
+                    myPath.Stroke = Brushes.Red;
+                    myPath.StrokeThickness = 0.3;
+                    myPath.Data = myEllipseGeometry;
+                    canvas.Children.Add(myPath);
+                    //DeleteEvent(image);    
                 }
 
             };
             image.MouseRightButtonDown += handler;
+        }
+
+        public void DeleteEvent(Image image)
+        {
+            image.MouseRightButtonDown -= handler;
         }
     }
 }

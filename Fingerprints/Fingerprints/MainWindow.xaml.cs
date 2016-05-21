@@ -21,18 +21,46 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
+        Minutiae mL;
+        Minutiae mR;
+        IDraw drawL;
+        IDraw drawR;
         public MainWindow()
         {
+
+            //var dict = new Dictionary<string, Action>();
+            //dict.Add("Półprosta skierowana", () => { mL = new Vector(); mR = new Vector(); });
+            //dict.Add("Por", () => { mL = new SinglePoint(); mR = new SinglePoint(); });
+            //dict.Add("Krzywa", () => { mL = new CurveLine(); mR = new CurveLine(); });
+
             InitializeComponent();
-            Minutiae mL = new Vector();
-            Minutiae mR = new Vector();
-            IDraw drawL = mL;
-            IDraw drawR = mR;
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
-            drawL.Draw(canvasImageL, imageL);
-            drawR.Draw(canvasImageR, imageR);
+            MinutiaeTypes types = new MinutiaeTypes();
+            this.comboBox.ItemsSource = types.dic.Values;
+
+            comboBox.SelectionChanged += (ss, ee) =>
+            {
+                if (comboBox.SelectedValue.ToString() == types.dic[0].ToString())
+                {
+                    drawL = new Vector();
+                    drawR = new Vector();
+                }
+                if (comboBox.SelectedValue.ToString() == types.dic[1].ToString())
+                {
+                    drawL = new SinglePoint();
+                    drawR = new SinglePoint();
+                }
+                if (comboBox.SelectedValue.ToString() == types.dic[2].ToString())
+                {
+                    drawL = new CurveLine();
+                    drawR = new CurveLine();
+                }
+
+                drawL.Draw(canvasImageL, imageL);
+                drawR.Draw(canvasImageR, imageR);
+            };
 
             button.Click += (ss, ee) =>
             {

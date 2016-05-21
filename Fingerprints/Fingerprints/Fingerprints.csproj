@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="CurveLine.cs" />
     <Compile Include="IDraw.cs" />
+    <Compile Include="MinutiaeTypes.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="SinglePoint.cs" />
     <Compile Include="Vector.cs" />
