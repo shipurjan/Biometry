@@ -64,7 +64,10 @@ namespace Fingerprints
 
             button.Click += (ss, ee) =>
             {
-                canvasImageL.Children.RemoveAt(canvasImageL.Children.Count - 1);
+                if (canvasImageL.Children.Count > 0)
+                {
+                    canvasImageL.Children.RemoveAt(canvasImageL.Children.Count - 1);
+                }
             };
         }
     }
