@@ -119,67 +119,50 @@ namespace Fingerprints
                     myEllipseGeometry.RadiusX = 2;
                     myEllipseGeometry.RadiusY = 2;
                     group.Children.Add(myEllipseGeometry);
-                    //tmp2 = ee.GetPosition(canvas);
 
-                    //var linetmp = new LineGeometry();
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas);
 
-                    //double deltaX = tmp2.X - tmp1.X;
-                    //double deltaY = tmp2.Y - tmp1.Y;
-                    //angle = (Math.Atan2(deltaY, deltaX));
-                    //linetmp.StartPoint = new Point(tmp1.X + 2 * Math.Cos(angle), tmp1.Y + 2 * Math.Sin(angle));
                     myPath.Stroke = Brushes.Red;
                     myPath.StrokeThickness = 0.3;
                     myPath.Data = group;
                     canvas.Children.Add(myPath);
-
+                    
 
                     clickCount++;
                 }
                 else
                 {
                     clickCount = 0;
-                    tmp2 = ee.GetPosition(canvas);
-
-                    var linetmp = new LineGeometry();
-
-                    double deltaX = tmp2.X - tmp1.X;
-                    double deltaY = tmp2.Y - tmp1.Y;
-                    angle = (Math.Atan2(deltaY, deltaX));
-                    linetmp.StartPoint = new Point(tmp1.X + 2 * Math.Cos(angle), tmp1.Y + 2 * Math.Sin(angle));
-
-                    tmp2.X = tmp1.X + Math.Cos(angle) * 10;
-                    tmp2.Y = tmp1.Y + Math.Sin(angle) * 10;
-                    linetmp.EndPoint = tmp2;
-                    group.Children.Add(linetmp);
-                    myPath.Stroke = Brushes.Red;
-                    myPath.StrokeThickness = 0.3;
-                    myPath.Data = group;
                     group = null;
                     group = new GeometryGroup();
-                    //image.MouseRightButtonDown -= handler;
                 }
             };
+
+            mouseMove += (ss, ee) =>
+            {
+                if (clickCount == 1)
+                {
+                    drawCompleteLine(ee, canvas);
+                }
+            };
+            image.MouseMove += mouseMove;
             image.MouseRightButtonDown += handler;
         }
 
         private void drawCompleteLine(MouseEventArgs ee, Canvas canvas)
         {
             tmp2 = ee.GetPosition(canvas);
-            var linetmp = new Line();
-
             double deltaX = tmp2.X - tmp1.X;
             double deltaY = tmp2.Y - tmp1.Y;
-            linetmp.Stroke = Brushes.Red;
             angle = (Math.Atan2(deltaY, deltaX));
-            linetmp.X1 = tmp1.X + 2 * Math.Cos(angle);
-            linetmp.Y1 = tmp1.Y + 2 * Math.Sin(angle);
+
             tmp2.X = tmp1.X + Math.Cos(angle) * 10;
             tmp2.Y = tmp1.Y + Math.Sin(angle) * 10;
-            linetmp.X2 = tmp2.X;
-            linetmp.Y2 = tmp2.Y;
-            linetmp.StrokeThickness = 0.3;
-            canvas.Children.RemoveAt(canvas.Children.Count - 1);
-            canvas.Children.Add(linetmp);
+
+            ((LineGeometry)group.Children[1]).StartPoint = new Point(tmp1.X + 2 * Math.Cos(angle), tmp1.Y + 2 * Math.Sin(angle));
+            ((LineGeometry)group.Children[1]).EndPoint = tmp2;
         }
 
         public void DeleteEvent(Canvas canvas, Image image, Button button)
