@@ -9,12 +9,31 @@ namespace Fingerprints
 {
     class Database
     {
-        public SQLiteConnection connection;
+        /// <summary>
+        /// Na razie dodaje rzeczy na sztywno do jednej tabeli, potem to trzeba bedzie zmienic jakos ;o
+        /// </summary>
 
-        public Database()
+        static public void InitialData()
         {
-            connection = new SQLiteConnection("Data Source=MyDatabase.sqlite");
-            connection.Open();
+            AddNewMinutiae("Por", 0, "Czerwony");
+            AddNewMinutiae("Rozwidlenie", 1, "Zielony");
+            AddNewMinutiae("Dowolna", 2, "Niebieski");
         }
+
+        static public void AddNewMinutiae(string name, int drawType, string color)
+        {
+            using (var db = new FingerContext())
+            {
+                var MinutiaeType = new MinutiaeType()
+                {
+                    Name = name,
+                    DrawType = drawType,
+                    Color = color                 
+                };
+                db.MinutiaeTypes.Add(MinutiaeType);
+                db.SaveChanges();                
+            }
+        }
+
     }
 }

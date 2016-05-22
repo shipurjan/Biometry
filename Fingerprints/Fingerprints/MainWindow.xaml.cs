@@ -39,8 +39,7 @@ namespace Fingerprints
             p.InitializeL();
             MinutiaeTypes types = new MinutiaeTypes();
             this.comboBox.ItemsSource = types.dic.Values;
-            Database db = new Database();
-            button.Content = db.connection.State.ToString();
+            Database.InitialData();
 
             comboBox.SelectionChanged += (ss, ee) =>
             {
