@@ -13,9 +13,14 @@ namespace Fingerprints
         public MinutiaeTypes()
         {
             dic = new Dictionary<int, string>();
-            dic.Add(0, "Półprosta skierowana");
-            dic.Add(1, "Por");
-            dic.Add(2, "Krzywa");
+            Database db = new Database();
+            using ()
+            {
+
+            }
+            //dic.Add(0, "Półprosta skierowana");
+            //dic.Add(1, "Por");
+            //dic.Add(2, "Krzywa");
         }
     }
 }
