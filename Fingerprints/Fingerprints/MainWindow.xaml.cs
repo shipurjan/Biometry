@@ -53,22 +53,32 @@ namespace Fingerprints
 
         public void comboBoxChanged()
         {
+            Dictionary<string, Brush> kolory = new Dictionary<string, Brush>();
+            kolory.Add("Czerwony", Brushes.Red);
+            kolory.Add("Niebieski", Brushes.Blue);
+            kolory.Add("Żółty", Brushes.Yellow);
+            kolory.Add("Zielony", Brushes.Green);
+
             comboBox.SelectionChanged += (ss, ee) =>
             {
+
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 1)
                 {
-                    drawL = new Vector();
-                    drawR = new Vector();
+                    var kolor = kolory[minType.Where(x => x.DrawType == 1 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    drawL = new Vector(kolor);
+                    drawR = new Vector(kolor);
                 }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 0)
                 {
-                    drawL = new SinglePoint();
-                    drawR = new SinglePoint();
+                    var kolor = kolory[minType.Where(x => x.DrawType == 0 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    drawL = new SinglePoint(kolor);
+                    drawR = new SinglePoint(kolor);
                 }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 2)
                 {
-                    drawL = new CurveLine();
-                    drawR = new CurveLine();
+                    var kolor = kolory[minType.Where(x => x.DrawType == 2 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    drawL = new CurveLine(kolor);
+                    drawR = new CurveLine(kolor);
                 }
 
                 drawL.Draw(canvasImageL, imageL);

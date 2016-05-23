@@ -13,6 +13,7 @@ namespace Fingerprints
 {
     class CurveLine : Minutiae
     {
+        Brush color;
         Polyline baseLine;
         Point currentPoint;
         bool newLine;
@@ -20,6 +21,10 @@ namespace Fingerprints
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
 
+        public CurveLine(Brush color)
+        {
+            this.color = color;
+        }
         public override void Draw(Canvas canvas, Image image)
         {
             handlerMouseDown += (ss, ee) =>
@@ -36,7 +41,7 @@ namespace Fingerprints
                     {
                         baseLine = new Polyline
                         {
-                            Stroke = Brushes.Red,
+                            Stroke = color,
                             StrokeThickness = 0.3
                         };
 

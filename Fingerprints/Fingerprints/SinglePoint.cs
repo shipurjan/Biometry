@@ -12,8 +12,14 @@ namespace Fingerprints
 {
     class SinglePoint : Minutiae
     {
+        Brush color;
         Point singlePoint = new Point();
         MouseButtonEventHandler handler = null;
+
+        public SinglePoint(Brush color)
+        {
+            this.color = color;
+        }
         public override void Draw(Canvas canvas, Image image)
         {            
             handler += (ss, ee) =>
@@ -26,11 +32,11 @@ namespace Fingerprints
                     myEllipseGeometry.RadiusX = 2;
                     myEllipseGeometry.RadiusY = 2;
                     Path myPath = new Path();
-                    myPath.Stroke = Brushes.Red;
+                    myPath.Stroke = color;
                     myPath.StrokeThickness = 0.3;
                     myPath.Data = myEllipseGeometry;
                     canvas.Children.Add(myPath);
-                    //DeleteEvent(image);    
+                    DeleteEvent(image);    
                 }
 
             };

@@ -13,6 +13,7 @@ namespace Fingerprints
 {
     class Vector : Minutiae
     {
+        Brush color;
         Point firstPointLine;
         Point tmp1, tmp2;
         double angle;
@@ -20,8 +21,9 @@ namespace Fingerprints
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector()
+        public Vector(Brush color)
         {
+            this.color = color;
             firstPointLine = new Point();
             tmp1 = new Point();
             tmp2 = new Point();
@@ -51,7 +53,7 @@ namespace Fingerprints
                     group.Children.Add(linetmp);
                     drawCompleteLine(ee, canvas);
 
-                    myPath.Stroke = Brushes.Red;
+                    myPath.Stroke = color;
                     myPath.StrokeThickness = 0.3;
                     myPath.Data = group;
                     canvas.Children.Add(myPath);
