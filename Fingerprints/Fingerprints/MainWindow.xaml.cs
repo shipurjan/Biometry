@@ -53,7 +53,6 @@ namespace Fingerprints
 
         public void comboBoxChanged()
         {
-
             comboBox.SelectionChanged += (ss, ee) =>
             {
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 1)

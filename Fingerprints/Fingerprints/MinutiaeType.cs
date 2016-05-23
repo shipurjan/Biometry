@@ -16,7 +16,7 @@ namespace Fingerprints
 
         public override string ToString()
         {
-            return Name + " (" + Color + ")"; 
+            return Name; 
         }
     }
 }
