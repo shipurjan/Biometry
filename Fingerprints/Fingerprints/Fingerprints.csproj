@@ -83,6 +83,7 @@
     <Compile Include="FingerContext.cs" />
     <Compile Include="IDraw.cs" />
     <Compile Include="MinutiaeType.cs" />
+    <Compile Include="MinutiaeTypeController.cs" />
     <Compile Include="MinutiaeTypes.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="SinglePoint.cs" />

@@ -63,7 +63,7 @@ namespace Fingerprints
                     clickCount = 0;
                     group = null;
                     group = new GeometryGroup();
-                    //DeleteEvent(image);
+                    DeleteEvent(image);
                 }
             };
 

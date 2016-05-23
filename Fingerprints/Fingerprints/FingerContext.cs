@@ -9,7 +9,7 @@ namespace Fingerprints
 {
     class FingerContext : DbContext
     {
-        public FingerContext() : base("Fingerprint")
+        public FingerContext() : base("fingerprint")
         {
                 
         }

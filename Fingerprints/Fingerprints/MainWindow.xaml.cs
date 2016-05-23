@@ -25,43 +25,22 @@ namespace Fingerprints
         Minutiae mR;
         IDraw drawL;
         IDraw drawR;
+        List<MinutiaeType> minType;
         public MainWindow()
         {
-
-            //var dict = new Dictionary<string, Action>();
-            //dict.Add("Półprosta skierowana", () => { mL = new Vector(); mR = new Vector(); });
-            //dict.Add("Por", () => { mL = new SinglePoint(); mR = new SinglePoint(); });
-            //dict.Add("Krzywa", () => { mL = new CurveLine(); mR = new CurveLine(); });
 
             InitializeComponent();
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
-            MinutiaeTypes types = new MinutiaeTypes();
-            this.comboBox.ItemsSource = types.dic.Values;
-            Database.InitialData();
 
-            comboBox.SelectionChanged += (ss, ee) =>
-            {
-                if (comboBox.SelectedValue.ToString() == types.dic[0].ToString())
-                {
-                    drawL = new Vector();
-                    drawR = new Vector();
-                }
-                if (comboBox.SelectedValue.ToString() == types.dic[1].ToString())
-                {
-                    drawL = new SinglePoint();
-                    drawR = new SinglePoint();
-                }
-                if (comboBox.SelectedValue.ToString() == types.dic[2].ToString())
-                {
-                    drawL = new CurveLine();
-                    drawR = new CurveLine();
-                }
+            minType = new List<MinutiaeType>();
+            MinutiaeTypeController controller = new MinutiaeTypeController();
+            minType = controller.Show();
+            comboBox.ItemsSource = minType;
+            comboBoxChanged();
 
-                drawL.Draw(canvasImageL, imageL);
-                drawR.Draw(canvasImageR, imageR);
-            };
+            //Database.InitialData();
 
             button.Click += (ss, ee) =>
             {
@@ -69,6 +48,32 @@ namespace Fingerprints
                 {
                     canvasImageL.Children.RemoveAt(canvasImageL.Children.Count - 1);
                 }
+            };
+        }
+
+        public void comboBoxChanged()
+        {
+
+            comboBox.SelectionChanged += (ss, ee) =>
+            {
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 1)
+                {
+                    drawL = new Vector();
+                    drawR = new Vector();
+                }
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 0)
+                {
+                    drawL = new SinglePoint();
+                    drawR = new SinglePoint();
+                }
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 2)
+                {
+                    drawL = new CurveLine();
+                    drawR = new CurveLine();
+                }
+
+                drawL.Draw(canvasImageL, imageL);
+                drawR.Draw(canvasImageR, imageR);
             };
         }
     }

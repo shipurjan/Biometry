@@ -13,5 +13,10 @@ namespace Fingerprints
         public string Name { get; set; }
         public int DrawType { get; set; }
         public string Color { get; set; }
+
+        public override string ToString()
+        {
+            return Name + " (" + Color + ")"; 
+        }
     }
 }

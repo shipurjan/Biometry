@@ -16,8 +16,10 @@ namespace Fingerprints
         Polyline baseLine;
         Point currentPoint;
         bool newLine;
+        
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
+
         public override void Draw(Canvas canvas, Image image)
         {
             handlerMouseDown += (ss, ee) =>
