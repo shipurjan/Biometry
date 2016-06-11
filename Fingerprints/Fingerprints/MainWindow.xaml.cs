@@ -28,7 +28,7 @@ namespace Fingerprints
         List<MinutiaeType> minType;
         public MainWindow()
         {
-
+            Table table = new Table();
             InitializeComponent();
             Picture p = new Picture(this);
             p.InitializeR();
@@ -39,7 +39,8 @@ namespace Fingerprints
             minType = controller.Show();
             comboBox.ItemsSource = minType;
             comboBoxChanged();
-
+            table.FillTable(canvasImageL, imageL ,listBoxImageL, comboBox);
+            table.SelectedObject(canvasImageL, listBoxImageL);
             //Database.InitialData();
 
             button.Click += (ss, ee) =>
