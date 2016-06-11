@@ -45,9 +45,12 @@ namespace Fingerprints
 
             button.Click += (ss, ee) =>
             {
-                if (canvasImageL.Children.Count > 0)
+                if (listBoxImageL.Items.Count != 0)
                 {
-                    canvasImageL.Children.RemoveAt(canvasImageL.Children.Count - 1);
+                    int index = listBoxImageL.SelectedIndex;
+                    listBoxImageL.UnselectAll();
+                    listBoxImageL.Items.RemoveAt(index);
+                    canvasImageL.Children.RemoveAt(index);
                 }
             };
         }

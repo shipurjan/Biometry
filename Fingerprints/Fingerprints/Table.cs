@@ -17,7 +17,7 @@ namespace Fingerprints
         {
             handler += (ss, ee) =>
             {
-                if (count != canvas.Children.Count)
+                if (count != canvas.Children.Count && canvas.Children.Count != 0)
                 {
                     listBox.Items.Add(canvas.Children[canvas.Children.Count - 1].ToString());
                     count = canvas.Children.Count;
@@ -34,8 +34,11 @@ namespace Fingerprints
                 {
                     canvas.Children[i].Opacity = 0.5;
                 }
-                var element = canvas.Children[listBox.SelectedIndex];
-                element.Opacity = 1;
+                if (listBox.SelectedIndex != -1)
+                {
+                    var element = canvas.Children[listBox.SelectedIndex];
+                    element.Opacity = 1;
+                }
             };
         }
     }
