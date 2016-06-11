@@ -78,16 +78,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CurveLine.cs" />
-    <Compile Include="Database.cs" />
-    <Compile Include="FingerContext.cs" />
-    <Compile Include="IDraw.cs" />
-    <Compile Include="MinutiaeType.cs" />
+    <Compile Include="MinutiaeTypes\CurveLine.cs" />
+    <Compile Include="DataBase\Database.cs" />
+    <Compile Include="DataBase\FingerContext.cs" />
+    <Compile Include="Interfaces\IDraw.cs" />
+    <Compile Include="Models\MinutiaeType.cs" />
     <Compile Include="MinutiaeTypeController.cs" />
     <Compile Include="MinutiaeTypes.cs" />
-    <Compile Include="Picture.cs" />
-    <Compile Include="SinglePoint.cs" />
-    <Compile Include="Vector.cs" />
+    <Compile Include="MinutiaeTypes\Picture.cs" />
+    <Compile Include="MinutiaeTypes\SinglePoint.cs" />
+    <Compile Include="Table.cs" />
+    <Compile Include="MinutiaeTypes\Vector.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

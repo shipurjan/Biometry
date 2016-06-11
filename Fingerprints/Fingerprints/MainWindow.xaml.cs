@@ -85,5 +85,10 @@ namespace Fingerprints
                 drawR.Draw(canvasImageR, imageR);
             };
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
