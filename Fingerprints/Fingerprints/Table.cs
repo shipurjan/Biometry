@@ -11,19 +11,36 @@ namespace Fingerprints
 {
     class Table
     {
-        int count = 0;
-        MouseButtonEventHandler handler = null;
-        public void FillTable(Canvas canvas, Image image ,ListBox listBox, ComboBox comboBox)
+        int countL = 0;
+        int countR = 0;
+        MouseButtonEventHandler handlerL = null;
+        MouseButtonEventHandler handlerR = null;
+        public void FillTableL(Canvas canvasL, Image imageL ,ListBox listBoxL, ComboBox comboBox)
         {
-            handler += (ss, ee) =>
+            handlerL += (ss, ee) =>
             {
-                if (count != canvas.Children.Count && canvas.Children.Count != 0)
+                if (countL != canvasL.Children.Count && canvasL.Children.Count != 0)
                 {
-                    listBox.Items.Add(canvas.Children[canvas.Children.Count - 1].ToString());
-                    count = canvas.Children.Count;
+                    //listBox.Items.Add(canvas.Children[canvas.Children.Count - 1].ToString());
+                    listBoxL.Items.Add(comboBox.SelectedItem.ToString());
+                    countL = canvasL.Children.Count;
                 }
             };
-            image.MouseRightButtonUp += handler;
+            imageL.MouseRightButtonUp += handlerL;
+        }
+
+        public void FillTableR(Canvas canvasR, Image imageR, ListBox listBoxR, ComboBox comboBox)
+        {
+            handlerR += (ss, ee) =>
+            {
+                if (countR != canvasR.Children.Count && canvasR.Children.Count != 0)
+                {
+                    //listBox.Items.Add(canvas.Children[canvas.Children.Count - 1].ToString());
+                    listBoxR.Items.Add(comboBox.SelectedItem.ToString());
+                    countR = canvasR.Children.Count;
+                }
+            };
+            imageR.MouseRightButtonUp += handlerR;
         }
 
         public void SelectedObject(Canvas canvas, ListBox listBox)

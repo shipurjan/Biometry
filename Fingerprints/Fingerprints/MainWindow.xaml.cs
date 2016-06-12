@@ -39,18 +39,38 @@ namespace Fingerprints
             minType = controller.Show();
             comboBox.ItemsSource = minType;
             comboBoxChanged();
-            table.FillTable(canvasImageL, imageL ,listBoxImageL, comboBox);
+            table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
+            table.SelectedObject(canvasImageR, listBoxImageR);
+            table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
             table.SelectedObject(canvasImageL, listBoxImageL);
+
             //Database.InitialData();
 
             button.Click += (ss, ee) =>
             {
                 if (listBoxImageL.Items.Count != 0)
                 {
-                    int index = listBoxImageL.SelectedIndex;
-                    listBoxImageL.UnselectAll();
-                    listBoxImageL.Items.RemoveAt(index);
-                    canvasImageL.Children.RemoveAt(index);
+                    int indexL = listBoxImageL.SelectedIndex;
+                    if (indexL >= 0)
+                    {
+                        listBoxImageL.UnselectAll();
+                        listBoxImageR.UnselectAll();
+                        listBoxImageL.Items.RemoveAt(indexL);
+                        canvasImageL.Children.RemoveAt(indexL);
+                    }
+
+                }
+                if (listBoxImageR.Items.Count != 0)
+                {
+                    int indexR = listBoxImageR.SelectedIndex;
+                    if (indexR >= 0)
+                    {
+                        listBoxImageR.UnselectAll();
+                        listBoxImageL.UnselectAll();
+                        listBoxImageR.Items.RemoveAt(indexR);
+                        canvasImageR.Children.RemoveAt(indexR);
+                    }
+
                 }
             };
         }
