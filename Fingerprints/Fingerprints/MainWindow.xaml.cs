@@ -103,9 +103,9 @@ namespace Fingerprints
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }
-
-                drawL.Draw(canvasImageL, imageL);
-                drawR.Draw(canvasImageR, imageR);
+                borderLeft.BorderBrush = Brushes.Cyan;
+                drawL.Draw(canvasImageL, imageL, borderLeft, borderRight);
+                drawR.Draw(canvasImageR, imageR, borderRight, borderRight);
             };
         }
 

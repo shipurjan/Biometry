@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="Minutiae" Height="720" Width="1280">
     <Grid Margin="20, 20, 20 ,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -54,7 +54,7 @@
                 <TextBlock x:Name="textBlock" Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="7"/>
                 <TextBlock x:Name="textBlock1" Grid.Column="8" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center"/>
                 <TextBlock x:Name="textBlock2" Grid.Column="9" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center"/>
-            </Grid>
+            </Grid> 
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -66,13 +66,13 @@
                 <ColumnDefinition Width="0.8*"/>
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
-            <Border x:Name="borderRight" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+            <Border x:Name="borderLeft" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
                 <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
                     <Image x:Name="imageL" Canvas.Left="150" Height="199" Width="241" Canvas.Top="150" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill"  />
                     <Canvas x:Name="canvasImageL" Height="{Binding ActualHeight, ElementName=imageLeft}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualHeight, ElementName=imageLeft}"/>
                 </Canvas>
             </Border>
-            <Border x:Name="borderLeft" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="1">
+            <Border x:Name="borderRight" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="1">
                 <Canvas HorizontalAlignment="Stretch" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
                     <Image x:Name="imageR" Height="199" Canvas.Left="150" Canvas.Top="150" Width="241" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
                     <Canvas x:Name="canvasImageR" Height="{Binding ActualHeight, ElementName=imageRight}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualWidth, ElementName=imageRight}"/>
