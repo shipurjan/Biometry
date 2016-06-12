@@ -9,6 +9,6 @@ namespace Fingerprints
 {
     interface IDraw
     {
-        void Draw(Canvas canvas, Image image, Border borderL, Border borderR);
+        void Draw(Canvas canvas, Image image, Border border);
     }
 }

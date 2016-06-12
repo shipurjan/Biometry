@@ -10,6 +10,6 @@ namespace Fingerprints
     abstract class Minutiae : IDraw
     {
         public string Name;
-        public virtual void Draw(Canvas canvas, Image image, Border borderL, Border roderR) { }
+        public virtual void Draw(Canvas canvas, Image image, Border border) { }
     }
 }
