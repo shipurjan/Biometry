@@ -41,6 +41,7 @@ namespace Fingerprints
             minType = controller.Show();
             comboBox.ItemsSource = minType;
             comboBoxChanged();
+            InitTable();
 
             //Database.InitialData();
         }

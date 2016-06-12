@@ -35,6 +35,7 @@ namespace Fingerprints
                     myPath.Stroke = color;
                     myPath.StrokeThickness = 0.3;
                     myPath.Data = myEllipseGeometry;
+                    myPath.Opacity = 0.5;
                     canvas.Children.Add(myPath);
                     DeleteEvent(image);    
                 }

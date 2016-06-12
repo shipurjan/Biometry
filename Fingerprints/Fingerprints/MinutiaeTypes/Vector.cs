@@ -62,6 +62,7 @@ namespace Fingerprints
                 }
                 else
                 {
+                    canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     clickCount = 0;
                     group = null;
                     group = new GeometryGroup();
