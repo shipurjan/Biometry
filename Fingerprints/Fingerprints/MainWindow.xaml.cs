@@ -21,6 +21,7 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
+        Dictionary<string, Brush> kolory = new Dictionary<string, Brush>();
         Minutiae mL;
         Minutiae mR;
         IDraw drawL;
@@ -28,8 +29,9 @@ namespace Fingerprints
         List<MinutiaeType> minType;
         public MainWindow()
         {
-            Table table = new Table();
             InitializeComponent();
+            SetColors();
+
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
@@ -39,13 +41,12 @@ namespace Fingerprints
             minType = controller.Show();
             comboBox.ItemsSource = minType;
             comboBoxChanged();
-            table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
-            table.SelectedObject(canvasImageR, listBoxImageR);
-            table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
-            table.SelectedObject(canvasImageL, listBoxImageL);
 
             //Database.InitialData();
+        }
 
+        public void InitTable()
+        {
             button.Click += (ss, ee) =>
             {
                 if (listBoxImageL.Items.Count != 0)
@@ -58,7 +59,6 @@ namespace Fingerprints
                         listBoxImageL.Items.RemoveAt(indexL);
                         canvasImageL.Children.RemoveAt(indexL);
                     }
-
                 }
                 if (listBoxImageR.Items.Count != 0)
                 {
@@ -70,22 +70,20 @@ namespace Fingerprints
                         listBoxImageR.Items.RemoveAt(indexR);
                         canvasImageR.Children.RemoveAt(indexR);
                     }
-
                 }
             };
+
+            Table table = new Table();
+            table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
+            table.SelectedObject(canvasImageR, listBoxImageR);
+            table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
+            table.SelectedObject(canvasImageL, listBoxImageL);
         }
 
         public void comboBoxChanged()
         {
-            Dictionary<string, Brush> kolory = new Dictionary<string, Brush>();
-            kolory.Add("Czerwony", Brushes.Red);
-            kolory.Add("Niebieski", Brushes.Blue);
-            kolory.Add("Żółty", Brushes.Yellow);
-            kolory.Add("Zielony", Brushes.Green);
-
             comboBox.SelectionChanged += (ss, ee) =>
             {
-
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 1)
                 {
                     var kolor = kolory[minType.Where(x => x.DrawType == 1 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
@@ -108,6 +106,14 @@ namespace Fingerprints
                 drawL.Draw(canvasImageL, imageL);
                 drawR.Draw(canvasImageR, imageR);
             };
+        }
+
+        public void SetColors()
+        {
+            kolory.Add("Czerwony", Brushes.Red);
+            kolory.Add("Niebieski", Brushes.Blue);
+            kolory.Add("Żółty", Brushes.Yellow);
+            kolory.Add("Zielony", Brushes.Green);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

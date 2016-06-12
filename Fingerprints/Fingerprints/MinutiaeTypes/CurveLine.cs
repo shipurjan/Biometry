@@ -44,7 +44,6 @@ namespace Fingerprints
                             Stroke = color,
                             StrokeThickness = 0.3
                         };
-
                         canvas.Children.Add(baseLine);
                         newLine = false;
                     }
