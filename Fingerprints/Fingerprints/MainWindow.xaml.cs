@@ -80,21 +80,23 @@ namespace Fingerprints
         {
             comboBox.SelectionChanged += (ss, ee) =>
             {
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 1)
-                {
-                    var kolor = kolory[minType.Where(x => x.TypeId == 1 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
-                    drawL = new Vector(kolor, 1.2);
-                    drawR = new Vector(kolor, 1.2);
-                }
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 0)
-                {
-                    var kolor = kolory[minType.Where(x => x.TypeId == 0 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
-                    drawL = new SinglePoint(kolor);
-                    drawR = new SinglePoint(kolor);
-                }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 2)
                 {
                     var kolor = kolory[minType.Where(x => x.TypeId == 2 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
+                    drawL = new Vector(kolor, size);
+                    drawR = new Vector(kolor, size);
+                }
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 1)
+                {
+                    var kolor = kolory[minType.Where(x => x.TypeId == 1 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
+                    drawL = new SinglePoint(kolor, size);
+                    drawR = new SinglePoint(kolor, size);
+                }
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 3)
+                {
+                    var kolor = kolory[minType.Where(x => x.TypeId == 3 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }

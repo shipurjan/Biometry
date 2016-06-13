@@ -19,5 +19,9 @@ namespace Fingerprints
         public string  Color { get; set; }
         public double Size { get; set; }
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
