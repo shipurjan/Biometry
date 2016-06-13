@@ -39,14 +39,13 @@ namespace Fingerprints
                     myPath.Data = myEllipseGeometry;
                     myPath.Opacity = 0.5;
                     canvas.Children.Add(myPath);
-                    DeleteEvent(image);    
                 }
 
             };
             image.MouseRightButtonDown += handler;
         }
 
-        public void DeleteEvent(Image image)
+        public override void DeleteEvent(Image image)
         {
             image.MouseRightButtonDown -= handler;
         }

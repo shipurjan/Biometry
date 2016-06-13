@@ -80,6 +80,12 @@ namespace Fingerprints
         {
             comboBox.SelectionChanged += (ss, ee) =>
             {
+                if (drawL != null && drawR != null)
+                {
+                    drawL.DeleteEvent(imageL);
+                    drawR.DeleteEvent(imageR);
+                }
+
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 2)
                 {
                     var kolor = kolory[minType.Where(x => x.TypeId == 2 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];

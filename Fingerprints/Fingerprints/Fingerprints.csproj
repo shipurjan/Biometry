@@ -84,7 +84,7 @@
     <Compile Include="DataBase\FingerContext.cs" />
     <Compile Include="Interfaces\IDraw.cs" />
     <Compile Include="Models\Type.cs" />
-    <Compile Include="MinutiaeTypeController.cs" />
+    <Compile Include="DataBase\MinutiaeTypeController.cs" />
     <Compile Include="MinutiaeTypes\Picture.cs" />
     <Compile Include="MinutiaeTypes\SinglePoint.cs" />
     <Compile Include="Models\Project.cs" />

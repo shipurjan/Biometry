@@ -56,7 +56,7 @@ namespace Fingerprints
             image.MouseMove += handler;
         }
 
-        public void DeleteEvent(Image image)
+        public override void DeleteEvent(Image image)
         {
             image.MouseMove -= handler;
         }

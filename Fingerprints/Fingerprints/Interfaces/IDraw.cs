@@ -10,5 +10,6 @@ namespace Fingerprints
     interface IDraw
     {
         void Draw(Canvas canvas, Image image, Border border);
+        void DeleteEvent(Image image);
     }
 }
