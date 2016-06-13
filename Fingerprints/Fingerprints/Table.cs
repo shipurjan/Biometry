@@ -43,18 +43,21 @@ namespace Fingerprints
             imageR.MouseRightButtonUp += handlerR;
         }
 
-        public void SelectedObject(Canvas canvas, ListBox listBox)
+        public void SelectedObject(Canvas canvas, ListBox listBox, Canvas canvas2)
         {
             listBox.SelectionChanged += (ss, ee) =>
             {
                 for (int i = 0; i < canvas.Children.Count; i++)
                 {
                     canvas.Children[i].Opacity = 0.5;
+                    canvas2.Children[i].Opacity = 0.5;
                 }
                 if (listBox.SelectedIndex != -1)
                 {
                     var element = canvas.Children[listBox.SelectedIndex];
+                    var element2 = canvas2.Children[listBox.SelectedIndex];
                     element.Opacity = 1;
+                    element2.Opacity = 1;
                 }
             };
         }

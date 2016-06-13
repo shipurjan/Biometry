@@ -62,27 +62,18 @@ namespace Fingerprints
                         listBoxImageL.UnselectAll();
                         listBoxImageR.UnselectAll();
                         listBoxImageL.Items.RemoveAt(indexL);
+                        listBoxImageR.Items.RemoveAt(indexL);
                         canvasImageL.Children.RemoveAt(indexL);
-                    }
-                }
-                if (listBoxImageR.Items.Count != 0)
-                {
-                    int indexR = listBoxImageR.SelectedIndex;
-                    if (indexR >= 0)
-                    {
-                        listBoxImageR.UnselectAll();
-                        listBoxImageL.UnselectAll();
-                        listBoxImageR.Items.RemoveAt(indexR);
-                        canvasImageR.Children.RemoveAt(indexR);
+                        canvasImageR.Children.RemoveAt(indexL);
                     }
                 }
             };
 
             Table table = new Table();
             table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
-            table.SelectedObject(canvasImageR, listBoxImageR);
+            table.SelectedObject(canvasImageR, listBoxImageR, canvasImageL);
             table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
-            table.SelectedObject(canvasImageL, listBoxImageL);
+            table.SelectedObject(canvasImageL, listBoxImageL, canvasImageR);
         }
 
         public void comboBoxChanged()
