@@ -13,6 +13,8 @@ namespace Fingerprints
         {
                 
         }
-        public DbSet<MinutiaeType> MinutiaeTypes { get; set; }
+        public DbSet<Type> Types { get; set; }
+        public DbSet<SelfDefinedMinutiae> SelfDefinedMinutiaes { get; set; }
+        public DbSet<Project> Projects { get; set; }
     }
 }

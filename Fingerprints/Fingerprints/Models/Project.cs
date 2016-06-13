@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Core;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace Fingerprints
 {
-    class MinutiaeType
+    class Project
     {
-        public int MinutiaeTypeId { get; set; }
+        [Key]
+        public int ProjectId { get; set; }
         public string Name { get; set; }
-        public int DrawType { get; set; }
-        public string Color { get; set; }
-
-        public override string ToString()
-        {
-            return Name; 
-        }
+        public virtual ICollection<SelfDefinedMinutiae> SelfDefinedMinutiaes { get; set; }
     }
 }

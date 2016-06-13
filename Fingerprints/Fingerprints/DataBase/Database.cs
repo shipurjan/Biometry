@@ -15,22 +15,26 @@ namespace Fingerprints
 
         static public void InitialData()
         {
-            AddNewMinutiae("Por", 0, "Czerwony");
-            AddNewMinutiae("Rozwidlenie", 1, "Zielony");
-            AddNewMinutiae("Dowolna", 2, "Niebieski");
+            AddNewMinutiae("Por", 1, 1, "Czerwony", 1);
+            AddNewMinutiae("Rozwidlenie",1 ,2 , "Zielony", 1.2);
+            AddNewMinutiae("Dowolna",1 ,3 , "Niebieski", 1);
         }
 
-        static public void AddNewMinutiae(string name, int drawType, string color)
+        static public void AddNewMinutiae(string name, int projectid, int drawType, string color, double size)
         {
             using (var db = new FingerContext())
             {
-                var MinutiaeType = new MinutiaeType()
+                var q = db.SelfDefinedMinutiaes.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
+                var SelfDefinedMinutiae = new SelfDefinedMinutiae()
                 {
                     Name = name,
-                    DrawType = drawType,
-                    Color = color                 
+                    ProjectId = projectid,
+                    TypeId = q,
+                    Color = color,
+                    Size = size
+                                    
                 };
-                db.MinutiaeTypes.Add(MinutiaeType);
+                db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
                 db.SaveChanges();                
             }
         }

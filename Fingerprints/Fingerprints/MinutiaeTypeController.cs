@@ -8,11 +8,11 @@ namespace Fingerprints
 {
     class MinutiaeTypeController
     {
-        public List<MinutiaeType> Show()
+        public List<SelfDefinedMinutiae> Show()
         {
             using (var db = new FingerContext())
             {
-                var q = db.MinutiaeTypes.ToList();
+                var q = db.SelfDefinedMinutiaes.ToList();
                 return q;
             }
         }

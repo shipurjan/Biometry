@@ -27,7 +27,7 @@ namespace Fingerprints
         Minutiae mR;
         IDraw drawL;
         IDraw drawR;
-        List<MinutiaeType> minType;
+        List<SelfDefinedMinutiae> minType;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace Fingerprints
             p.InitializeR();
             p.InitializeL();
 
-            minType = new List<MinutiaeType>();
+            minType = new List<SelfDefinedMinutiae>();
             MinutiaeTypeController controller = new MinutiaeTypeController();
             minType = controller.Show();
             comboBox.ItemsSource = minType;
@@ -80,21 +80,21 @@ namespace Fingerprints
         {
             comboBox.SelectionChanged += (ss, ee) =>
             {
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 1)
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 1)
                 {
-                    var kolor = kolory[minType.Where(x => x.DrawType == 1 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    var kolor = kolory[minType.Where(x => x.TypeId == 1 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
                     drawL = new Vector(kolor, 1.2);
                     drawR = new Vector(kolor, 1.2);
                 }
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 0)
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 0)
                 {
-                    var kolor = kolory[minType.Where(x => x.DrawType == 0 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    var kolor = kolory[minType.Where(x => x.TypeId == 0 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
                     drawL = new SinglePoint(kolor);
                     drawR = new SinglePoint(kolor);
                 }
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 2)
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 2)
                 {
-                    var kolor = kolory[minType.Where(x => x.DrawType == 2 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
+                    var kolor = kolory[minType.Where(x => x.TypeId == 2 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }
