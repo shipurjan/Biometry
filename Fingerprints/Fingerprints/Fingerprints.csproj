@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BorderColor.cs" />
     <Compile Include="MinutiaeTypes\CurveLine.cs" />
     <Compile Include="DataBase\Database.cs" />
     <Compile Include="DataBase\FingerContext.cs" />

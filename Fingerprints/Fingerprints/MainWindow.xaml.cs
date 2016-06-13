@@ -21,6 +21,7 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
+        BorderColor borderColor;
         Dictionary<string, Brush> kolory = new Dictionary<string, Brush>();
         Minutiae mL;
         Minutiae mR;
@@ -31,6 +32,9 @@ namespace Fingerprints
         {
             InitializeComponent();
             SetColors();
+            borderColor = new BorderColor() { BorderLeftColor = Brushes.Black, BorderRightColor = Brushes.Black };
+            borderLeft.DataContext = borderColor;
+            borderRight.DataContext = borderColor;
 
             Picture p = new Picture(this);
             p.InitializeR();
@@ -88,8 +92,8 @@ namespace Fingerprints
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 1)
                 {
                     var kolor = kolory[minType.Where(x => x.DrawType == 1 && x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).First()];
-                    drawL = new Vector(kolor);
-                    drawR = new Vector(kolor);
+                    drawL = new Vector(kolor, 1.2);
+                    drawR = new Vector(kolor, 1.2);
                 }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.DrawType).First() == 0)
                 {
@@ -103,7 +107,6 @@ namespace Fingerprints
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }
-                borderLeft.BorderBrush = Brushes.Cyan;
                 drawL.Draw(canvasImageL, imageL, borderLeft);
                 drawR.Draw(canvasImageR, imageR, borderRight);
             };
@@ -119,7 +122,8 @@ namespace Fingerprints
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
+            borderColor.BorderLeftColor = Brushes.Cyan;
+            borderColor.BorderRightColor = Brushes.Cyan;
         }
     }
 }

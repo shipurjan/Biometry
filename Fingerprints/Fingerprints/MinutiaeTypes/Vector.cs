@@ -14,6 +14,7 @@ namespace Fingerprints
     class Vector : Minutiae
     {
         Brush color;
+        double size;
         Point firstPointLine;
         Point tmp1, tmp2;
         double angle;
@@ -21,8 +22,9 @@ namespace Fingerprints
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector(Brush color)
+        public Vector(Brush color, double size)
         {
+            this.size = size;
             this.color = color;
             firstPointLine = new Point();
             tmp1 = new Point();
@@ -45,13 +47,13 @@ namespace Fingerprints
                     myPathFigure.StartPoint = tmp1;
 
                     myEllipseGeometry.Center = tmp1;
-                    myEllipseGeometry.RadiusX = 2;
-                    myEllipseGeometry.RadiusY = 2;
+                    myEllipseGeometry.RadiusX = 2 * size;
+                    myEllipseGeometry.RadiusY = 2 * size;
                     group.Children.Add(myEllipseGeometry);
 
                     var linetmp = new LineGeometry();
                     group.Children.Add(linetmp);
-                    drawCompleteLine(ee, canvas);
+                    drawCompleteLine(ee, canvas, size);
 
                     myPath.Stroke = color;
                     myPath.StrokeThickness = 0.3;
@@ -63,7 +65,6 @@ namespace Fingerprints
                 else
                 {
                     canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
-                    border.BorderBrush = Brushes.Black;
                     clickCount = 0;
                     group = null;
                     group = new GeometryGroup();
@@ -75,14 +76,14 @@ namespace Fingerprints
             {
                 if (clickCount == 1)
                 {
-                    drawCompleteLine(ee, canvas);
+                    drawCompleteLine(ee, canvas, size);
                 }
             };
             image.MouseMove += mouseMove;
             image.MouseRightButtonDown += handler;
         }
 
-        private void drawCompleteLine(MouseEventArgs ee, Canvas canvas)
+        private void drawCompleteLine(MouseEventArgs ee, Canvas canvas, double size)
         {
             tmp2 = ee.GetPosition(canvas);
             double deltaX = tmp2.X - tmp1.X;
@@ -92,7 +93,7 @@ namespace Fingerprints
             tmp2.X = tmp1.X + Math.Cos(angle) * 10;
             tmp2.Y = tmp1.Y + Math.Sin(angle) * 10;
 
-            ((LineGeometry)group.Children[1]).StartPoint = new Point(tmp1.X + 2 * Math.Cos(angle), tmp1.Y + 2 * Math.Sin(angle));
+            ((LineGeometry)group.Children[1]).StartPoint = new Point(tmp1.X + (2 * size) * Math.Cos(angle), tmp1.Y + (2 * size) * Math.Sin(angle));
             ((LineGeometry)group.Children[1]).EndPoint = tmp2;
         }
 
