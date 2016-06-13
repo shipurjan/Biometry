@@ -21,7 +21,6 @@ namespace Fingerprints
             {
                 if (countL != canvasL.Children.Count && canvasL.Children.Count != 0)
                 {
-                    //listBox.Items.Add(canvas.Children[canvas.Children.Count - 1].ToString());
                     listBoxL.Items.Add(comboBox.SelectedItem.ToString());
                     countL = canvasL.Children.Count;
                 }
@@ -35,12 +34,17 @@ namespace Fingerprints
             {
                 if (countR != canvasR.Children.Count && canvasR.Children.Count != 0)
                 {
-                    //listBox.Items.Add(canvas.Children[canvas.Children.Count - 1].ToString());
                     listBoxR.Items.Add(comboBox.SelectedItem.ToString());
                     countR = canvasR.Children.Count;
                 }
             };
             imageR.MouseRightButtonUp += handlerR;
+        }
+
+        public void UpdateCount(Canvas canvasL, Canvas canvasR)
+        {
+            countL -= 1;
+            countR -= 1;
         }
 
         public void SelectedObject(Canvas canvas, ListBox listBox, Canvas canvas2)

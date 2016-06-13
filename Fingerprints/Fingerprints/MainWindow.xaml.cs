@@ -52,6 +52,12 @@ namespace Fingerprints
 
         public void InitTable()
         {
+            Table table = new Table();
+            table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
+            table.SelectedObject(canvasImageR, listBoxImageR, canvasImageL);
+            table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
+            table.SelectedObject(canvasImageL, listBoxImageL, canvasImageR);
+
             button.Click += (ss, ee) =>
             {
                 if (listBoxImageL.Items.Count != 0)
@@ -59,6 +65,7 @@ namespace Fingerprints
                     int indexL = listBoxImageL.SelectedIndex;
                     if (indexL >= 0)
                     {
+                        table.UpdateCount(canvasImageL, canvasImageR);
                         listBoxImageL.UnselectAll();
                         listBoxImageR.UnselectAll();
                         listBoxImageL.Items.RemoveAt(indexL);
@@ -68,12 +75,6 @@ namespace Fingerprints
                     }
                 }
             };
-
-            Table table = new Table();
-            table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
-            table.SelectedObject(canvasImageR, listBoxImageR, canvasImageL);
-            table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
-            table.SelectedObject(canvasImageL, listBoxImageL, canvasImageR);
         }
 
         public void comboBoxChanged()
