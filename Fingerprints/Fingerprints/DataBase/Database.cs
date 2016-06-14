@@ -24,7 +24,7 @@ namespace Fingerprints
         {
             using (var db = new FingerContext())
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
+                var q = db.Types.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
                 var SelfDefinedMinutiae = new SelfDefinedMinutiae()
                 {
                     Name = name,
