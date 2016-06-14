@@ -28,6 +28,7 @@ namespace Fingerprints
         IDraw drawL;
         IDraw drawR;
         List<SelfDefinedMinutiae> minType;
+        MinutiaeTypeController controller;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,7 +42,7 @@ namespace Fingerprints
             p.InitializeL();
 
             minType = new List<SelfDefinedMinutiae>();
-            MinutiaeTypeController controller = new MinutiaeTypeController();
+            controller = new MinutiaeTypeController();
             minType = controller.Show();
             comboBox.ItemsSource = minType;
             comboBoxChanged();
@@ -130,6 +131,8 @@ namespace Fingerprints
         {
             Window1 win = new Window1();
             win.ShowDialog();
+            minType = controller.Show();
+            comboBox.ItemsSource = minType;
         }
     }
 }
