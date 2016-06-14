@@ -49,9 +49,8 @@ namespace Fingerprints
         private void add_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                Database.AddNewMinutiae("porZielony", 1, 1, "Zielony", 4);
-                //Database.AddNewMinutiae(textBox.Text, 1, comboBoxType.SelectedIndex + 1, comboBoxColor.SelectedValue.ToString(), Convert.ToDouble(comboBoxSize.SelectedItem));
+            {                
+                Database.AddNewMinutiae(textBox.Text, 1, comboBoxType.SelectedIndex + 1, comboBoxColor.SelectedValue.ToString(), Convert.ToDouble(comboBoxSize.SelectedItem));
             }
             catch (Exception)
             {

@@ -11,9 +11,9 @@ namespace Fingerprints
 {
     class SelfDefinedMinutiae
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int MinutiaeId { get; set; }
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SelfDefinedMinutiaeId { get; set; }
         public string Name { get; set; }
         public int ProjectId { get; set; }
         public int TypeId { get; set; }
