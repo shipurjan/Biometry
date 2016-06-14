@@ -35,7 +35,7 @@ namespace Fingerprints
                                     
                 };
                 db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
-                db.SaveChanges();          
+                db.SaveChanges();                
             }
         }
 

@@ -125,11 +125,5 @@ namespace Fingerprints
             borderColor.BorderLeftColor = Brushes.Cyan;
             borderColor.BorderRightColor = Brushes.Cyan;
         }
-
-        private void wizardAdd_Click(object sender, RoutedEventArgs e)
-        {
-            Window1 win = new Window1();
-            win.ShowDialog();
-        }
     }
 }
