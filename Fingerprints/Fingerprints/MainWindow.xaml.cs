@@ -33,9 +33,7 @@ namespace Fingerprints
         {
             InitializeComponent();
             SetColors();
-            borderColor = new BorderColor() { BorderLeftColor = Brushes.Black, BorderRightColor = Brushes.Black };
-            borderLeft.DataContext = borderColor;
-            borderRight.DataContext = borderColor;
+
 
             Picture p = new Picture(this);
             p.InitializeR();
@@ -47,14 +45,6 @@ namespace Fingerprints
             comboBox.ItemsSource = minType;
             comboBoxChanged();
             InitTable();
-
-            canvasImageL.MouseRightButtonDown += (ss, ee) =>
-            {
-                if (borderLeft.BorderBrush == Brushes.Black)
-                {
-                    drawL.DeleteEvent(imageL);
-                }
-            };
 
             //Database.InitialData();
         }

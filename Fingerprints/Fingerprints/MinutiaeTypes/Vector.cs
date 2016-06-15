@@ -33,53 +33,58 @@ namespace Fingerprints
 
         public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {
+
             handler += (ss, ee) =>
             {
-
+                
                 Path myPath = new Path();
                 EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                 LineGeometry myPathFigure = new LineGeometry();
                 myPathFigure.StartPoint = new Point(0, 0);
-                if (clickCount == 0)
+                if (border1.BorderBrush == Brushes.DeepSkyBlue)
                 {
-                    tmp1 = ee.GetPosition(canvas);
-                    firstPointLine = tmp1;
-                    myPathFigure.StartPoint = tmp1;
-
-                    myEllipseGeometry.Center = tmp1;
-                    myEllipseGeometry.RadiusX = 2 * size;
-                    myEllipseGeometry.RadiusY = 2 * size;
-                    group.Children.Add(myEllipseGeometry);
-
-                    var linetmp = new LineGeometry();
-                    group.Children.Add(linetmp);
-                    drawCompleteLine(ee, canvas, size);
-
-                    myPath.Stroke = color;
-                    myPath.StrokeThickness = 0.3;
-                    myPath.Data = group;
-                    canvas.Children.Add(myPath);
-
-                    clickCount++;
-                }
-                else
-                {
-                    if (border1.BorderBrush == Brushes.Black)
+                    if (clickCount == 0)
                     {
-                        border1.BorderBrush = Brushes.DeepSkyBlue;
-                        border2.BorderBrush = Brushes.Black;
-                    }
-                    else if (border2.BorderBrush == Brushes.Black)
-                    {
-                        border1.BorderBrush = Brushes.Black;
-                        border2.BorderBrush = Brushes.DeepSkyBlue;
-                    }
+                        tmp1 = ee.GetPosition(canvas);
+                        firstPointLine = tmp1;
+                        myPathFigure.StartPoint = tmp1;
 
-                    canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
-                    clickCount = 0;
-                    group = null;
-                    group = new GeometryGroup();
+                        myEllipseGeometry.Center = tmp1;
+                        myEllipseGeometry.RadiusX = 2 * size;
+                        myEllipseGeometry.RadiusY = 2 * size;
+                        group.Children.Add(myEllipseGeometry);
+
+                        var linetmp = new LineGeometry();
+                        group.Children.Add(linetmp);
+                        drawCompleteLine(ee, canvas, size);
+
+                        myPath.Stroke = color;
+                        myPath.StrokeThickness = 0.3;
+                        myPath.Data = group;
+                        canvas.Children.Add(myPath);
+
+                        clickCount++;
+                    }
+                    else
+                    {
+                        if (border1.BorderBrush == Brushes.Black)
+                        {
+                            border1.BorderBrush = Brushes.DeepSkyBlue;
+                            border2.BorderBrush = Brushes.Black;
+                        }
+                        else if (border2.BorderBrush == Brushes.Black)
+                        {
+                            border1.BorderBrush = Brushes.Black;
+                            border2.BorderBrush = Brushes.DeepSkyBlue;
+                        }
+
+                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                        clickCount = 0;
+                        group = null;
+                        group = new GeometryGroup();
+                    }
                 }
+               
             };
 
             mouseMove += (ss, ee) =>
