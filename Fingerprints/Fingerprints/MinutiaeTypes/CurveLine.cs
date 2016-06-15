@@ -25,7 +25,7 @@ namespace Fingerprints
         {
             this.color = color;
         }
-        public override void Draw(Canvas canvas, Image image, Border border)
+        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {
             handlerMouseDown += (ss, ee) =>
             {

@@ -31,7 +31,7 @@ namespace Fingerprints
             tmp2 = new Point();
         }
 
-        public override void Draw(Canvas canvas, Image image, Border border)
+        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {
             handler += (ss, ee) =>
             {
@@ -64,6 +64,17 @@ namespace Fingerprints
                 }
                 else
                 {
+                    if (border1.BorderBrush == Brushes.Black)
+                    {
+                        border1.BorderBrush = Brushes.DeepSkyBlue;
+                        border2.BorderBrush = Brushes.Black;
+                    }
+                    else if (border2.BorderBrush == Brushes.Black)
+                    {
+                        border1.BorderBrush = Brushes.Black;
+                        border2.BorderBrush = Brushes.DeepSkyBlue;
+                    }
+
                     canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     clickCount = 0;
                     group = null;

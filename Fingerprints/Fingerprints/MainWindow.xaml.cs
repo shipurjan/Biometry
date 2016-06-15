@@ -48,6 +48,14 @@ namespace Fingerprints
             comboBoxChanged();
             InitTable();
 
+            canvasImageL.MouseRightButtonDown += (ss, ee) =>
+            {
+                if (borderLeft.BorderBrush == Brushes.Black)
+                {
+                    drawL.DeleteEvent(imageL);
+                }
+            };
+
             //Database.InitialData();
         }
 
@@ -82,6 +90,8 @@ namespace Fingerprints
         {
             comboBox.SelectionChanged += (ss, ee) =>
             {
+                borderLeft.BorderBrush = Brushes.DeepSkyBlue;
+                borderRight.BorderBrush = Brushes.Black;
                 if (drawL != null && drawR != null)
                 {
                     drawL.DeleteEvent(imageL);
@@ -108,8 +118,8 @@ namespace Fingerprints
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }
-                drawL.Draw(canvasImageL, imageL, borderLeft);
-                drawR.Draw(canvasImageR, imageR, borderRight);
+                drawL.Draw(canvasImageL, imageL, borderLeft, borderRight);
+                drawR.Draw(canvasImageR, imageR, borderRight, borderLeft);
             };
         }
 
@@ -123,8 +133,6 @@ namespace Fingerprints
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            borderColor.BorderLeftColor = Brushes.Cyan;
-            borderColor.BorderRightColor = Brushes.Cyan;
         }
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)

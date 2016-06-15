@@ -22,7 +22,7 @@ namespace Fingerprints
             this.size = size;
             this.color = color;
         }
-        public override void Draw(Canvas canvas, Image image, Border border)
+        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {            
             handler += (ss, ee) =>
             {
