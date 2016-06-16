@@ -119,6 +119,12 @@ namespace Fingerprints
             kolory.Add("Niebieski", Brushes.Blue);
             kolory.Add("Żółty", Brushes.Yellow);
             kolory.Add("Zielony", Brushes.Green);
+            kolory.Add("Pomarańczowy", Brushes.Orange);
+            kolory.Add("Fioletowy", Brushes.Purple);
+            kolory.Add("Czarny", Brushes.Black);
+            kolory.Add("Różowy", Brushes.Pink);
+            kolory.Add("Jasno zielony", Brushes.LightGreen);
+            kolory.Add("Jasno niebiesko", Brushes.LightBlue);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
