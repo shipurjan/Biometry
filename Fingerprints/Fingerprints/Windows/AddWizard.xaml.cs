@@ -38,7 +38,6 @@ namespace Fingerprints
             size.Add(2);            
 
             comboBoxType.ItemsSource = drawingType;
-            comboBoxColor.ItemsSource = colors;
             comboBoxSize.ItemsSource = size; 
             buttonColorPicker.Click += (ss, ee) =>
             {
