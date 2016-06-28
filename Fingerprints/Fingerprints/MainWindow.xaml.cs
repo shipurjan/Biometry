@@ -45,6 +45,10 @@ namespace Fingerprints
             InitTable();
 
             //Database.InitialData();
+            this.Closed += (ss, ee) =>
+            {
+                FileTransfer.Save();
+            };
         }
 
         public void InitTable()

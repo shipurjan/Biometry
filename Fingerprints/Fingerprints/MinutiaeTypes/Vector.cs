@@ -67,15 +67,17 @@ namespace Fingerprints
                     }
                     else
                     {
-                        if (border1.BorderBrush == Brushes.Black)
-                        {
-                            border1.BorderBrush = Brushes.DeepSkyBlue;
-                            border2.BorderBrush = Brushes.Black;
-                        }
-                        else if (border2.BorderBrush == Brushes.Black)
+                        if (border2.BorderBrush == Brushes.Black)
                         {
                             border1.BorderBrush = Brushes.Black;
                             border2.BorderBrush = Brushes.DeepSkyBlue;
+                            FileTransfer.ListL.Add(ToString());
+                        }
+                        else
+                        {
+                            border1.BorderBrush = Brushes.DeepSkyBlue;
+                            border2.BorderBrush = Brushes.Black;
+                            FileTransfer.ListR.Add(ToString());
                         }
 
                         canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
