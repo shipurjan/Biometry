@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
-        Title="ColorPicker" Height="300" Width="300">
+        Title="ColorPicker" Height="350" Width="300">
     
     <Grid>
-        <xctk:ColorCanvas  />
+        <xctk:ColorCanvas x:Name="colorPicker" />
+        <Button x:Name="button" Content="Zapisz" HorizontalAlignment="Left" Margin="108,279,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
     </Grid>
 </Window>

@@ -23,5 +23,11 @@ namespace Fingerprints
         {
             InitializeComponent();
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Window1.colorPicked = colorPicker.SelectedColor.ToString();
+            this.Close();
+        }
     }
 }

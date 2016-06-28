@@ -19,6 +19,7 @@ namespace Fingerprints
     /// </summary>
     public partial class Window1 : Window
     {
+        public static string colorPicked;
         public Window1()
         {
             InitializeComponent();
@@ -49,8 +50,7 @@ namespace Fingerprints
 
             comboBoxType.ItemsSource = drawingType;
             comboBoxColor.ItemsSource = colors;
-            comboBoxSize.ItemsSource = size;
-
+            comboBoxSize.ItemsSource = size; 
             buttonColorPicker.Click += (ss, ee) =>
             {
                 ColorPicker colorPicker = new ColorPicker();
@@ -62,7 +62,7 @@ namespace Fingerprints
         {
             try
             {                
-                Database.AddNewMinutiae(textBox.Text, 1, comboBoxType.SelectedIndex + 1, comboBoxColor.SelectedValue.ToString(), Convert.ToDouble(comboBoxSize.SelectedItem));
+                Database.AddNewMinutiae(textBox.Text, 1, comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem));
             }
             catch (Exception)
             {
