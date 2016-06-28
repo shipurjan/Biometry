@@ -101,5 +101,9 @@ namespace Fingerprints
             image.MouseRightButtonDown -= handler;
             image.MouseMove -= mouseMove;
         }
+        public override string ToString()
+        {
+            return Name + ";" + firstPointLine.X.ToString() + "," + firstPointLine.Y.ToString() + ";" + angle.ToString();
+        }
     }
 }

@@ -49,5 +49,10 @@ namespace Fingerprints
         {
             image.MouseRightButtonDown -= handler;
         }
+
+        public override string ToString()
+        {
+            return Name + ";" + singlePoint.X.ToString() + "," + singlePoint.Y.ToString();
+        }
     }
 }

@@ -60,6 +60,10 @@ namespace Fingerprints
         {
             image.MouseMove -= handler;
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
 
