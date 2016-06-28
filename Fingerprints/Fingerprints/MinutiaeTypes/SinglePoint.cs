@@ -22,11 +22,11 @@ namespace Fingerprints
             this.size = size;
             this.color = color;
         }
-        public override void Draw(Canvas canvas, Image image, Border border)
+        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {            
             handler += (ss, ee) =>
             {
-                if (ee.RightButton == MouseButtonState.Pressed)
+                if (ee.RightButton == MouseButtonState.Pressed && border1.BorderBrush == Brushes.DeepSkyBlue)
                 {
                     singlePoint = ee.GetPosition(canvas);;
                     EllipseGeometry myEllipseGeometry = new EllipseGeometry();
@@ -39,6 +39,16 @@ namespace Fingerprints
                     myPath.Data = myEllipseGeometry;
                     myPath.Opacity = 0.5;
                     canvas.Children.Add(myPath);
+                    if (border1.BorderBrush == Brushes.Black)
+                    {
+                        border1.BorderBrush = Brushes.DeepSkyBlue;
+                        border2.BorderBrush = Brushes.Black;
+                    }
+                    else if (border2.BorderBrush == Brushes.Black)
+                    {
+                        border1.BorderBrush = Brushes.Black;
+                        border2.BorderBrush = Brushes.DeepSkyBlue;
+                    }
                 }
 
             };

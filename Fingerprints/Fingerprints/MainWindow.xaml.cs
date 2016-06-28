@@ -28,20 +28,19 @@ namespace Fingerprints
         IDraw drawL;
         IDraw drawR;
         List<SelfDefinedMinutiae> minType;
+        MinutiaeTypeController controller;
         public MainWindow()
         {
             InitializeComponent();
             SetColors();
-            borderColor = new BorderColor() { BorderLeftColor = Brushes.Black, BorderRightColor = Brushes.Black };
-            borderLeft.DataContext = borderColor;
-            borderRight.DataContext = borderColor;
+
 
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
 
             minType = new List<SelfDefinedMinutiae>();
-            MinutiaeTypeController controller = new MinutiaeTypeController();
+            controller = new MinutiaeTypeController();
             minType = controller.Show();
             comboBox.ItemsSource = minType;
             comboBoxChanged();
@@ -81,6 +80,8 @@ namespace Fingerprints
         {
             comboBox.SelectionChanged += (ss, ee) =>
             {
+                borderLeft.BorderBrush = Brushes.DeepSkyBlue;
+                borderRight.BorderBrush = Brushes.Black;
                 if (drawL != null && drawR != null)
                 {
                     drawL.DeleteEvent(imageL);
@@ -107,8 +108,8 @@ namespace Fingerprints
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }
-                drawL.Draw(canvasImageL, imageL, borderLeft);
-                drawR.Draw(canvasImageR, imageR, borderRight);
+                drawL.Draw(canvasImageL, imageL, borderLeft, borderRight);
+                drawR.Draw(canvasImageR, imageR, borderRight, borderLeft);
             };
         }
 
@@ -118,18 +119,24 @@ namespace Fingerprints
             kolory.Add("Niebieski", Brushes.Blue);
             kolory.Add("Żółty", Brushes.Yellow);
             kolory.Add("Zielony", Brushes.Green);
+            kolory.Add("Pomarańczowy", Brushes.Orange);
+            kolory.Add("Fioletowy", Brushes.Purple);
+            kolory.Add("Czarny", Brushes.Black);
+            kolory.Add("Różowy", Brushes.Pink);
+            kolory.Add("Jasno zielony", Brushes.LightGreen);
+            kolory.Add("Jasno niebiesko", Brushes.LightBlue);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            borderColor.BorderLeftColor = Brushes.Cyan;
-            borderColor.BorderRightColor = Brushes.Cyan;
         }
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)
         {
             Window1 win = new Window1();
             win.ShowDialog();
+            minType = controller.Show();
+            comboBox.ItemsSource = minType;
         }
     }
 }

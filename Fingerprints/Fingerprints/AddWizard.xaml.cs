@@ -34,12 +34,18 @@ namespace Fingerprints
             colors.Add("Zielony");
             colors.Add("Niebieski");
             colors.Add("Żółty");
+            colors.Add("Pomarańczowy");
+            colors.Add("Fioletowy");
+            colors.Add("Czarny");
+            colors.Add("Różowy");
+            colors.Add("Jasno zielony");
+            colors.Add("Jasno niebiesko");
 
+            size.Add(0.1);
             size.Add(0.25);
             size.Add(0.5);
             size.Add(1);
-            size.Add(2);
-            size.Add(4);
+            size.Add(2);            
 
             comboBoxType.ItemsSource = drawingType;
             comboBoxColor.ItemsSource = colors;

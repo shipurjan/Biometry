@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,25 +18,33 @@ namespace Fingerprints
         Polyline baseLine;
         Point currentPoint;
         bool newLine;
-        
+        bool clickCount = true;
+
         MouseButtonEventHandler handlerMouseDown = null;
+        MouseButtonEventHandler handlerMouseUp = null;
         MouseEventHandler handler = null;
 
         public CurveLine(Brush color)
         {
             this.color = color;
         }
-        public override void Draw(Canvas canvas, Image image, Border border)
+
+        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {
             handlerMouseDown += (ss, ee) =>
             {
-                newLine = true;
+                newLine = true;               
+            };
+            handlerMouseUp += (ss, ee) =>
+            {
+                
             };
             image.MouseDown += handlerMouseDown;
+            image.MouseUp += handlerMouseUp;
 
             handler += (ss, ee) =>
             {
-                if (ee.RightButton == MouseButtonState.Pressed)
+                if (ee.RightButton == MouseButtonState.Pressed && border1.BorderBrush == Brushes.DeepSkyBlue)
                 {
                     if (newLine)
                     {
@@ -45,20 +54,44 @@ namespace Fingerprints
                             StrokeThickness = 0.3
                         };
                         canvas.Children.Add(baseLine);
-                        newLine = false;
+                        newLine = false; 
                     }
-
                     currentPoint = ee.GetPosition(canvas);
                     baseLine.Points.Add(currentPoint);
+                    clickCount = false;
+                    
+
                 }
+                if (ee.RightButton == MouseButtonState.Released && clickCount == false)
+                {
+                    if (border1.BorderBrush == Brushes.Black)
+                    {
+                        border1.BorderBrush = Brushes.DeepSkyBlue;
+                        border2.BorderBrush = Brushes.Black;
+                        clickCount = true;
+                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                    }
+                    else if (border2.BorderBrush == Brushes.Black)
+                    {                        
+                        border1.BorderBrush = Brushes.Black;
+                        border2.BorderBrush = Brushes.DeepSkyBlue;
+                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                        clickCount = true;
+                    }
+                }
+
 
             };
             image.MouseMove += handler;
+
+            
         }
 
         public override void DeleteEvent(Image image)
         {
             image.MouseMove -= handler;
+            image.MouseDown -= handlerMouseDown;
+            image.MouseUp -= handlerMouseUp;
         }
         public override string ToString()
         {
