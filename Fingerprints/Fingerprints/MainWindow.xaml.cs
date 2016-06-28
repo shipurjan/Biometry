@@ -23,7 +23,6 @@ namespace Fingerprints
     {
         public static BrushConverter converter = new System.Windows.Media.BrushConverter();
         BorderColor borderColor;
-        Dictionary<string, Brush> kolory = new Dictionary<string, Brush>();
         Minutiae mL;
         Minutiae mR;
         IDraw drawL;
@@ -33,8 +32,6 @@ namespace Fingerprints
         public MainWindow()
         {
             InitializeComponent();
-            SetColors();
-
 
             Picture p = new Picture(this);
             p.InitializeR();
@@ -112,19 +109,6 @@ namespace Fingerprints
             };
         }
 
-        public void SetColors()
-        {
-            kolory.Add("Czerwony", Brushes.Red);
-            kolory.Add("Niebieski", Brushes.Blue);
-            kolory.Add("Żółty", Brushes.Yellow);
-            kolory.Add("Zielony", Brushes.Green);
-            kolory.Add("Pomarańczowy", Brushes.Orange);
-            kolory.Add("Fioletowy", Brushes.Purple);
-            kolory.Add("Czarny", Brushes.Black);
-            kolory.Add("Różowy", Brushes.Pink);
-            kolory.Add("Jasno zielony", Brushes.LightGreen);
-            kolory.Add("Jasno niebiesko", Brushes.LightBlue);
-        }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
