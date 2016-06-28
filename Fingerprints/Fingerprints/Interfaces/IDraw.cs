@@ -9,7 +9,7 @@ namespace Fingerprints
 {
     interface IDraw
     {
-        void Draw(Canvas canvas, Image image, Border border);
+        void Draw(Canvas canvas, Image image, Border border1, Border border2);
         void DeleteEvent(Image image);
     }
 }
