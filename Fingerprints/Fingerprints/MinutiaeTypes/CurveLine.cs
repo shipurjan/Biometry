@@ -28,7 +28,13 @@ namespace Fingerprints
         {
             this.color = color;
         }
-
+        /// <summary>
+        /// Dodaje handlery do myszy, rysuje linie ciagla, zapisuje jako liste puktow
+        /// </summary>
+        /// <param name="canvas">Atkualny canvas</param>
+        /// <param name="image">Aktualny obrazek</param>
+        /// <param name="border1">Ramka 1</param>
+        /// <param name="border2">Ramka 2</param>
         public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {
             handlerMouseDown += (ss, ee) =>

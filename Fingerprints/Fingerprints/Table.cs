@@ -51,18 +51,33 @@ namespace Fingerprints
         {
             listBox.SelectionChanged += (ss, ee) =>
             {
-                for (int i = 0; i < canvas.Children.Count; i++)
+                try
                 {
-                    canvas.Children[i].Opacity = 0.5;
-                    canvas2.Children[i].Opacity = 0.5;
+                    for (int i = 0; i < canvas.Children.Count; i++)
+                    {
+                        if (canvas.Children[i] != null)
+                        {
+                            canvas.Children[i].Opacity = 0.5;
+                        }
+                        if (canvas2.Children[i] != null)
+                        {
+                            canvas2.Children[i].Opacity = 0.5;
+                        }                            
+                    }
+                    if (listBox.SelectedIndex != -1)
+                    {
+                        var element = canvas.Children[listBox.SelectedIndex];
+                        var element2 = canvas2.Children[listBox.SelectedIndex];
+                        element.Opacity = 1;
+                        element2.Opacity = 1;
+                    }
                 }
-                if (listBox.SelectedIndex != -1)
+                catch (Exception)
                 {
-                    var element = canvas.Children[listBox.SelectedIndex];
-                    var element2 = canvas2.Children[listBox.SelectedIndex];
-                    element.Opacity = 1;
-                    element2.Opacity = 1;
+
+                    
                 }
+                
             };
         }
     }

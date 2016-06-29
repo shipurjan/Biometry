@@ -28,7 +28,7 @@ namespace Fingerprints
             {
                 if (ee.RightButton == MouseButtonState.Pressed && border1.BorderBrush == Brushes.DeepSkyBlue)
                 {
-                    singlePoint = ee.GetPosition(canvas);;
+                    singlePoint = ee.GetPosition(canvas);
                     EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                     myEllipseGeometry.Center = singlePoint;
                     myEllipseGeometry.RadiusX = 2 * size;

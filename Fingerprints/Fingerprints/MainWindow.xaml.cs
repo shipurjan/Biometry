@@ -30,6 +30,7 @@ namespace Fingerprints
         IDraw drawR;
         List<SelfDefinedMinutiae> minType;
         MinutiaeTypeController controller;
+        SelectionChangedEventHandler handler = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -65,21 +66,33 @@ namespace Fingerprints
                     int indexL = listBoxImageL.SelectedIndex;
                     if (indexL >= 0)
                     {
-                        table.UpdateCount(canvasImageL, canvasImageR);
-                        listBoxImageL.UnselectAll();
-                        listBoxImageR.UnselectAll();
-                        listBoxImageL.Items.RemoveAt(indexL);
-                        listBoxImageR.Items.RemoveAt(indexL);
-                        canvasImageL.Children.RemoveAt(indexL);
-                        canvasImageR.Children.RemoveAt(indexL);
+                        try
+                        {
+                            
+                            if (listBoxImageR.Items[indexL] != null)
+                            {
+                                table.UpdateCount(canvasImageL, canvasImageR);
+                                listBoxImageL.UnselectAll();
+                                listBoxImageR.UnselectAll();
+                                listBoxImageL.Items.RemoveAt(indexL);
+                                listBoxImageR.Items.RemoveAt(indexL);
+                                canvasImageL.Children.RemoveAt(indexL);
+                                canvasImageR.Children.RemoveAt(indexL);
+                            }
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Do wyboru tej opcji potrzebne są 2 minucje");
+                        }
                     }
                 }
+                
             };
         }
 
         public void comboBoxChanged()
         {
-            comboBox.SelectionChanged += (ss, ee) =>
+            handler += (ss, ee) =>
             {
                 borderLeft.BorderBrush = Brushes.DeepSkyBlue;
                 borderRight.BorderBrush = Brushes.Black;
@@ -90,6 +103,21 @@ namespace Fingerprints
                     drawL.DeleteEvent(imageL);
                     drawR.DeleteEvent(imageR);
                 }
+                if (listBoxImageL.Items.Count != listBoxImageR.Items.Count)
+                {
+                    Point singlePoint = new Point(1,1);                    
+                    EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+                    myEllipseGeometry.Center = singlePoint;
+                    myEllipseGeometry.RadiusX = 0;
+                    myEllipseGeometry.RadiusY = 0;
+                    Path myPath = new Path();
+                    myPath.StrokeThickness = 0.3;
+                    myPath.Data = myEllipseGeometry;
+                    myPath.Opacity = 0;
+                    canvasImageR.Children.Add(myPath);
+                    listBoxImageR.Items.Add("Puste");
+                }
+
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 2)
                 {
                     double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
@@ -110,6 +138,7 @@ namespace Fingerprints
                 drawL.Draw(canvasImageL, imageL, borderLeft, borderRight);
                 drawR.Draw(canvasImageR, imageR, borderRight, borderLeft);
             };
+            comboBox.SelectionChanged += handler;
         }
 
         public void SetColors()
@@ -134,8 +163,10 @@ namespace Fingerprints
         {
             Window1 win = new Window1();
             win.ShowDialog();
+            comboBox.SelectionChanged -= handler;
             minType = controller.Show();
             comboBox.ItemsSource = minType;
+            comboBoxChanged();
         }
     }
 }
