@@ -21,7 +21,6 @@ namespace Fingerprints
         bool clickCount = true;
 
         MouseButtonEventHandler handlerMouseDown = null;
-        MouseButtonEventHandler handlerMouseUp = null;
         MouseEventHandler handler = null;
 
         public CurveLine(Brush color)
@@ -89,7 +88,6 @@ namespace Fingerprints
         {
             image.MouseMove -= handler;
             image.MouseDown -= handlerMouseDown;
-            image.MouseUp -= handlerMouseUp;
         }
         public override string ToString()
         {
