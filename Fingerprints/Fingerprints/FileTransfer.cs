@@ -11,18 +11,20 @@ namespace Fingerprints
     {
         public static List<string> ListL = new List<string>();
         public static List<string> ListR = new List<string>();
+        public static string LeftImagePath;
+        public static string RightImagePath;
         public static void Save()
         {
             //streamWriter(ListL, "cordsLeft.txt");
             //streamWriter(ListR, "cordsRight.txt");
-            using (StreamWriter writerL = new StreamWriter("cordsLeft.txt"))
+            using (StreamWriter writerL = new StreamWriter(LeftImagePath))
             {
                 foreach (var item in ListL)
                 {
                     writerL.WriteLine(item);
                 }
             }
-            using (StreamWriter writerR = new StreamWriter("cordsRight.txt"))
+            using (StreamWriter writerR = new StreamWriter(RightImagePath))
             {
                 foreach (var item in ListR)
                 {
