@@ -17,8 +17,9 @@ namespace Fingerprints
         Point singlePoint = new Point();
         MouseButtonEventHandler handler = null;
 
-        public SinglePoint(Brush color, double size)
+        public SinglePoint(string name, Brush color, double size)
         {
+            this.Name = name;
             this.size = size;
             this.color = color;
         }

@@ -94,14 +94,14 @@ namespace Fingerprints
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 2)
                 {
                     double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new Vector(kolor, size);
-                    drawR = new Vector(kolor, size);
+                    drawL = new Vector(comboBox.SelectedValue.ToString() ,kolor, size);
+                    drawR = new Vector(comboBox.SelectedValue.ToString(), kolor, size);
                 }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 1)
                 {
                     double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new SinglePoint(kolor, size);
-                    drawR = new SinglePoint(kolor, size);
+                    drawL = new SinglePoint(comboBox.SelectedValue.ToString(), kolor, size);
+                    drawR = new SinglePoint(comboBox.SelectedValue.ToString(), kolor, size);
                 }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 3)
                 {

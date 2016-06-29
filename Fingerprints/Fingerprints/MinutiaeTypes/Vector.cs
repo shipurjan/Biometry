@@ -22,8 +22,9 @@ namespace Fingerprints
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector(Brush color, double size)
+        public Vector(string name, Brush color, double size)
         {
+            this.Name = name;
             this.size = size;
             this.color = color;
             firstPointLine = new Point();
