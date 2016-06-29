@@ -78,7 +78,6 @@ namespace Fingerprints
                         {
                             FileTransfer.ListR.Add(ToString());
                         }
-
                         canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                         clickCount = 0;
                         group = null;
@@ -87,7 +86,7 @@ namespace Fingerprints
                 }
                
             };
-
+            
             mouseMove += (ss, ee) =>
             {
                 if (clickCount == 1)
@@ -97,6 +96,7 @@ namespace Fingerprints
             };
             image.MouseMove += mouseMove;
             image.MouseRightButtonDown += handler;
+            canvas.MouseRightButtonDown += handler;
         }
 
         private void drawCompleteLine(MouseEventArgs ee, Canvas canvas, double size)
@@ -113,10 +113,11 @@ namespace Fingerprints
             ((LineGeometry)group.Children[1]).EndPoint = tmp2;
         }
 
-        public override void DeleteEvent(Image image)
+        public override void DeleteEvent(Image image, Canvas canvas)
         {
             image.MouseRightButtonDown -= handler;
             image.MouseMove -= mouseMove;
+            canvas.MouseRightButtonDown -= handler;
         }
         public override string ToString()
         {

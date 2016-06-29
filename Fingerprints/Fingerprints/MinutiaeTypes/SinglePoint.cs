@@ -56,7 +56,7 @@ namespace Fingerprints
             image.MouseRightButtonDown += handler;
         }
 
-        public override void DeleteEvent(Image image)
+        public override void DeleteEvent(Image image, Canvas canvas)
         {
             image.MouseRightButtonDown -= handler;
         }

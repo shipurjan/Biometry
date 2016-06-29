@@ -101,8 +101,8 @@ namespace Fingerprints
 
                 if (drawL != null && drawR != null)
                 {
-                    drawL.DeleteEvent(imageL);
-                    drawR.DeleteEvent(imageR);
+                    drawL.DeleteEvent(imageL, canvasImageL);
+                    drawR.DeleteEvent(imageR, canvasImageR);
                 }
                 if (listBoxImageL.Items.Count != listBoxImageR.Items.Count)
                 {

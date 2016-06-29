@@ -11,6 +11,6 @@ namespace Fingerprints
     {
         public string Name;
         public virtual void Draw(Canvas canvas, Image image, Border border1, Border border2) { }
-        public virtual void DeleteEvent(Image image) { }
+        public virtual void DeleteEvent(Image image, Canvas canvas) { }
     }
 }

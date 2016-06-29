@@ -41,12 +41,9 @@ namespace Fingerprints
             {
                 newLine = true;               
             };
-            handlerMouseUp += (ss, ee) =>
-            {
-                
-            };
+
             image.MouseDown += handlerMouseDown;
-            image.MouseUp += handlerMouseUp;
+            canvas.MouseDown += handlerMouseDown;
 
             handler += (ss, ee) =>
             {
@@ -65,8 +62,6 @@ namespace Fingerprints
                     currentPoint = ee.GetPosition(canvas);
                     baseLine.Points.Add(currentPoint);
                     clickCount = false;
-                    
-
                 }
                 if (ee.RightButton == MouseButtonState.Released && clickCount == false)
                 {
@@ -85,15 +80,12 @@ namespace Fingerprints
                         clickCount = true;
                     }
                 }
-
-
             };
             image.MouseMove += handler;
-
-            
+            canvas.MouseMove += handler;
         }
 
-        public override void DeleteEvent(Image image)
+        public override void DeleteEvent(Image image, Canvas canvas)
         {
             image.MouseMove -= handler;
             image.MouseDown -= handlerMouseDown;
