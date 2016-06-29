@@ -34,10 +34,18 @@ namespace Fingerprints
         {
             button.Click += (ss, ee) =>
             {
-                OpenFileDialog openFileLeft = new OpenFileDialog();
-                if (openFileLeft.ShowDialog() == true)
+                OpenFileDialog openFile = new OpenFileDialog();
+                if (openFile.ShowDialog() == true)
                 {
-                    image.Source = new BitmapImage(new Uri(openFileLeft.FileName));
+                    image.Source = new BitmapImage(new Uri(openFile.FileName));
+                    if (image.Tag.ToString() == "Left")
+                    { 
+                        FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
+                    }
+                    else
+                    {
+                        FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
+                    }
                 }
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
                 Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));

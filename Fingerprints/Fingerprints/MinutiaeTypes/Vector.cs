@@ -22,8 +22,9 @@ namespace Fingerprints
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector(Brush color, double size)
+        public Vector(string name, Brush color, double size)
         {
+            this.Name = name;
             this.size = size;
             this.color = color;
             firstPointLine = new Point();
@@ -67,15 +68,15 @@ namespace Fingerprints
                     }
                     else
                     {
-                        if (border1.BorderBrush == Brushes.Black)
+                        border1.BorderBrush = Brushes.Black;
+                        border2.BorderBrush = Brushes.DeepSkyBlue;
+                        if (border1.Tag.ToString() == "Left")
                         {
-                            border1.BorderBrush = Brushes.DeepSkyBlue;
-                            border2.BorderBrush = Brushes.Black;
+                            FileTransfer.ListL.Add(ToString());
                         }
-                        else if (border2.BorderBrush == Brushes.Black)
+                        else
                         {
-                            border1.BorderBrush = Brushes.Black;
-                            border2.BorderBrush = Brushes.DeepSkyBlue;
+                            FileTransfer.ListR.Add(ToString());
                         }
 
                         canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;

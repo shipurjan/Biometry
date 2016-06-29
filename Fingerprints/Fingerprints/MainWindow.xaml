@@ -67,15 +67,15 @@
                 <ColumnDefinition Width="0.8*"/>
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
-            <Border x:Name="borderLeft" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+            <Border x:Name="borderLeft" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch" Grid.Column="0">
                 <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                    <Image x:Name="imageL" Canvas.Left="150" Height="199" Width="241" Canvas.Top="150" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill"  />
+                    <Image x:Name="imageL" Tag="Left" Canvas.Left="150" Height="199" Width="241" Canvas.Top="150" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill"  />
                     <Canvas x:Name="canvasImageL" Height="{Binding ActualHeight, ElementName=imageLeft}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualHeight, ElementName=imageLeft}"/>
                 </Canvas>
             </Border>
-            <Border x:Name="borderRight" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="1">
+            <Border x:Name="borderRight" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch"  Grid.Column="1">
                 <Canvas HorizontalAlignment="Stretch" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
-                    <Image x:Name="imageR" Height="199" Canvas.Left="150" Canvas.Top="150" Width="241" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
+                    <Image x:Name="imageR" Tag="Right" Height="199" Canvas.Left="150" Canvas.Top="150" Width="241" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
                     <Canvas x:Name="canvasImageR" Height="{Binding ActualHeight, ElementName=imageRight}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualWidth, ElementName=imageRight}"/>
                 </Canvas>
             </Border>

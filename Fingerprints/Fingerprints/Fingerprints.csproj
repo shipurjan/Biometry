@@ -105,7 +105,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BorderColor.cs" />
-    <Compile Include="ColorPicker.xaml.cs">
+    <Compile Include="Windows\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="MinutiaeTypes\CurveLine.cs" />
@@ -114,16 +114,17 @@
     <Compile Include="Interfaces\IDraw.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="DataBase\MinutiaeTypeController.cs" />
-    <Compile Include="MinutiaeTypes\Picture.cs" />
+    <Compile Include="Picture.cs" />
     <Compile Include="MinutiaeTypes\SinglePoint.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\SelfDefinedMinutiae.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="MinutiaeTypes\Vector.cs" />
+    <Compile Include="FileTransfer.cs" />
     <Compile Include="Windows\AddWizard.xaml.cs">
       <DependentUpon>AddWizard.xaml</DependentUpon>
     </Compile>
-    <Page Include="ColorPicker.xaml">
+    <Page Include="Windows\ColorPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

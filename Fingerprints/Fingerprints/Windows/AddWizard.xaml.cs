@@ -31,17 +31,6 @@ namespace Fingerprints
             drawingType.Add("Prosta skierowana");
             drawingType.Add("Krzywa dowolna");
 
-            colors.Add("Czerwony");
-            colors.Add("Zielony");
-            colors.Add("Niebieski");
-            colors.Add("Żółty");
-            colors.Add("Pomarańczowy");
-            colors.Add("Fioletowy");
-            colors.Add("Czarny");
-            colors.Add("Różowy");
-            colors.Add("Jasno zielony");
-            colors.Add("Jasno niebiesko");
-
             size.Add(0.1);
             size.Add(0.25);
             size.Add(0.5);
@@ -49,7 +38,6 @@ namespace Fingerprints
             size.Add(2);            
 
             comboBoxType.ItemsSource = drawingType;
-            comboBoxColor.ItemsSource = colors;
             comboBoxSize.ItemsSource = size; 
             buttonColorPicker.Click += (ss, ee) =>
             {

@@ -23,7 +23,6 @@ namespace Fingerprints
     {
         public static BrushConverter converter = new System.Windows.Media.BrushConverter();
         BorderColor borderColor;
-        Dictionary<string, Brush> kolory = new Dictionary<string, Brush>();
         Minutiae mL;
         Minutiae mR;
         IDraw drawL;
@@ -34,8 +33,6 @@ namespace Fingerprints
         public MainWindow()
         {
             InitializeComponent();
-            SetColors();
-
 
             Picture p = new Picture(this);
             p.InitializeR();
@@ -49,6 +46,10 @@ namespace Fingerprints
             InitTable();
 
             //Database.InitialData();
+            this.Closed += (ss, ee) =>
+            {
+                FileTransfer.Save();
+            };
         }
 
         public void InitTable()
@@ -121,14 +122,14 @@ namespace Fingerprints
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 2)
                 {
                     double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new Vector(kolor, size);
-                    drawR = new Vector(kolor, size);
+                    drawL = new Vector(comboBox.SelectedValue.ToString() ,kolor, size);
+                    drawR = new Vector(comboBox.SelectedValue.ToString(), kolor, size);
                 }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 1)
                 {
                     double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new SinglePoint(kolor, size);
-                    drawR = new SinglePoint(kolor, size);
+                    drawL = new SinglePoint(comboBox.SelectedValue.ToString(), kolor, size);
+                    drawR = new SinglePoint(comboBox.SelectedValue.ToString(), kolor, size);
                 }
                 if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 3)
                 {
@@ -141,19 +142,6 @@ namespace Fingerprints
             comboBox.SelectionChanged += handler;
         }
 
-        public void SetColors()
-        {
-            kolory.Add("Czerwony", Brushes.Red);
-            kolory.Add("Niebieski", Brushes.Blue);
-            kolory.Add("Żółty", Brushes.Yellow);
-            kolory.Add("Zielony", Brushes.Green);
-            kolory.Add("Pomarańczowy", Brushes.Orange);
-            kolory.Add("Fioletowy", Brushes.Purple);
-            kolory.Add("Czarny", Brushes.Black);
-            kolory.Add("Różowy", Brushes.Pink);
-            kolory.Add("Jasno zielony", Brushes.LightGreen);
-            kolory.Add("Jasno niebiesko", Brushes.LightBlue);
-        }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
