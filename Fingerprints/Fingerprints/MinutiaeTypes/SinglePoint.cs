@@ -39,15 +39,15 @@ namespace Fingerprints
                     myPath.Data = myEllipseGeometry;
                     myPath.Opacity = 0.5;
                     canvas.Children.Add(myPath);
-                    if (border1.BorderBrush == Brushes.Black)
+                    border1.BorderBrush = Brushes.Black;
+                    border2.BorderBrush = Brushes.DeepSkyBlue;
+                    if (border1.Tag.ToString() == "Left")
                     {
-                        border1.BorderBrush = Brushes.DeepSkyBlue;
-                        border2.BorderBrush = Brushes.Black;
+                        FileTransfer.ListL.Add(ToString());
                     }
-                    else if (border2.BorderBrush == Brushes.Black)
+                    else
                     {
-                        border1.BorderBrush = Brushes.Black;
-                        border2.BorderBrush = Brushes.DeepSkyBlue;
+                        FileTransfer.ListR.Add(ToString());
                     }
                 }
 
