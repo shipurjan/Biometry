@@ -15,8 +15,6 @@ namespace Fingerprints
         public static string RightImagePath;
         public static void Save()
         {
-            //streamWriter(ListL, "cordsLeft.txt");
-            //streamWriter(ListR, "cordsRight.txt");
             using (StreamWriter writerL = new StreamWriter(LeftImagePath))
             {
                 foreach (var item in ListL)
@@ -32,17 +30,6 @@ namespace Fingerprints
                 }
             }
         }
-
-        //static private void streamWriter(List<string> list, string path)
-        //{
-        //    using (StreamWriter writer = new StreamWriter(path))
-        //    {
-        //        foreach (var item in list)
-        //        {
-        //            writer.WriteLine(item);
-        //        }
-        //    }
-        //}
         public static void Load()
         {
 
