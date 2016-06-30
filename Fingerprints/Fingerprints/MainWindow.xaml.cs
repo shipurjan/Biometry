@@ -65,12 +65,17 @@ namespace Fingerprints
                 if (listBoxImageL.Items.Count != 0)
                 {
                     int indexL = listBoxImageL.SelectedIndex;
-                    if (indexL >= 0)
+                    int indexR = listBoxImageR.SelectedIndex; 
+                    if (indexL >= 0 || indexR >= 0)
                     {
                         try
                         {
-                            
-                            if (listBoxImageR.Items[indexL] != null)
+                            if (indexL >= 0)
+                                indexR = indexL;
+                            else
+                                indexL = indexR;
+
+                            if (listBoxImageR.Items[indexL] != null) 
                             {
                                 table.UpdateCount(canvasImageL, canvasImageR);
                                 listBoxImageL.UnselectAll();
