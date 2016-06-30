@@ -121,7 +121,7 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return Name + ";" + firstPointLine.X.ToString() + "," + firstPointLine.Y.ToString() + ";" + angle.ToString();
+            return Name + ";" + firstPointLine.X.ToString() + ";" + firstPointLine.Y.ToString() + ";" + angle.ToString();
         }
     }
 }

@@ -30,9 +30,26 @@ namespace Fingerprints
                 }
             }
         }
-        public static void Load()
+        public static void LoadLeftFile()
         {
+            using (StreamReader readerL = new StreamReader(LeftImagePath))
+            {
+                while (!readerL.EndOfStream)
+                {
+                    ListL.Add(readerL.ReadLine());
+                }
+            }
+        }
 
+        public static void LoadRightFile()
+        {
+            using (StreamReader readerR = new StreamReader(RightImagePath))
+            {
+                while (!readerR.EndOfStream)
+                {
+                    ListR.Add(readerR.ReadLine());
+                }
+            }
         }
     }
 }

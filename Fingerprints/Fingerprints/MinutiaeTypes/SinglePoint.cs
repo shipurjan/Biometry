@@ -63,7 +63,7 @@ namespace Fingerprints
 
         public override string ToString()
         {
-            return Name + ";" + singlePoint.X.ToString() + "," + singlePoint.Y.ToString();
+            return Name + ";" + singlePoint.X.ToString() + ";" + singlePoint.Y.ToString();
         }
     }
 }

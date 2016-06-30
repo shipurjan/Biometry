@@ -41,15 +41,18 @@ namespace Fingerprints
                     if (image.Tag.ToString() == "Left")
                     { 
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
+                        FileTransfer.LoadLeftFile();
                     }
                     else
                     {
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
+                        FileTransfer.LoadRightFile();
                     }
                 }
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
                 Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
             };
+
 
             image.MouseLeftButtonDown += (ss, ee) =>
             {
@@ -95,6 +98,16 @@ namespace Fingerprints
                 }
             };
             image.MouseUp += (ss, ee) => { image.ReleaseMouseCapture(); };
+        }
+
+        private void loadMinutiae(List<string> list)
+        {
+            List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().Show();
+            foreach (var item in list)
+            {
+                string[] tmp = item.Split(';');
+
+            }
         }
 
     }
