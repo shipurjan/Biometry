@@ -23,9 +23,9 @@ namespace Fingerprints
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
 
-        public CurveLine(Brush color)
+        public CurveLine(string color)
         {
-            this.color = color;
+            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
         }
         /// <summary>
         /// Dodaje handlery do myszy, rysuje linie ciagla, zapisuje jako liste puktow

@@ -21,7 +21,7 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static BrushConverter converter = new System.Windows.Media.BrushConverter();
+        public BrushConverter converter = new System.Windows.Media.BrushConverter();
         BorderColor borderColor;
         Minutiae mL;
         Minutiae mR;
@@ -97,7 +97,7 @@ namespace Fingerprints
             {
                 borderLeft.BorderBrush = Brushes.DeepSkyBlue;
                 borderRight.BorderBrush = Brushes.Black;
-                Brush kolor = (Brush)converter.ConvertFromString(minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).FirstOrDefault());
+                string kolor = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).FirstOrDefault();
 
                 if (drawL != null && drawR != null)
                 {
