@@ -15,39 +15,53 @@ namespace Fingerprints
         public static string RightImagePath;
         public static void Save()
         {
-            using (StreamWriter writerL = new StreamWriter(LeftImagePath))
+            if (File.Exists(LeftImagePath))
             {
-                foreach (var item in ListL)
+                using (StreamWriter writerL = new StreamWriter(LeftImagePath))
                 {
-                    writerL.WriteLine(item);
+                    foreach (var item in ListL)
+                    {
+                        writerL.WriteLine(item);
+                    }
                 }
             }
-            using (StreamWriter writerR = new StreamWriter(RightImagePath))
+
+            if (File.Exists(RightImagePath))
             {
-                foreach (var item in ListR)
+                using (StreamWriter writerR = new StreamWriter(RightImagePath))
                 {
-                    writerR.WriteLine(item);
+                    foreach (var item in ListR)
+                    {
+                        writerR.WriteLine(item);
+                    }
                 }
             }
+
         }
         public static void LoadLeftFile()
         {
-            using (StreamReader readerL = new StreamReader(LeftImagePath))
+            if (File.Exists(LeftImagePath))
             {
-                while (!readerL.EndOfStream)
+                using (StreamReader readerL = new StreamReader(LeftImagePath))
                 {
-                    ListL.Add(readerL.ReadLine());
+                    while (!readerL.EndOfStream)
+                    {
+                        ListL.Add(readerL.ReadLine());
+                    }
                 }
             }
         }
 
         public static void LoadRightFile()
         {
-            using (StreamReader readerR = new StreamReader(RightImagePath))
+            if (File.Exists(LeftImagePath))
             {
-                while (!readerR.EndOfStream)
+                using (StreamReader readerR = new StreamReader(RightImagePath))
                 {
-                    ListR.Add(readerR.ReadLine());
+                    while (!readerR.EndOfStream)
+                    {
+                        ListR.Add(readerR.ReadLine());
+                    }
                 }
             }
         }
