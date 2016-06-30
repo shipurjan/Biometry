@@ -21,12 +21,11 @@ namespace Fingerprints
         bool clickCount = true;
 
         MouseButtonEventHandler handlerMouseDown = null;
-        MouseButtonEventHandler handlerMouseUp = null;
         MouseEventHandler handler = null;
 
-        public CurveLine(Brush color)
+        public CurveLine(string color)
         {
-            this.color = color;
+            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
         }
         /// <summary>
         /// Dodaje handlery do myszy, rysuje linie ciagla, zapisuje jako liste puktow
@@ -89,7 +88,6 @@ namespace Fingerprints
         {
             image.MouseMove -= handler;
             image.MouseDown -= handlerMouseDown;
-            image.MouseUp -= handlerMouseUp;
         }
         public override string ToString()
         {

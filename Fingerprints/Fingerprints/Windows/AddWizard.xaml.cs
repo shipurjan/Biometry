@@ -43,6 +43,7 @@ namespace Fingerprints
             {
                 ColorPicker colorPicker = new ColorPicker();
                 colorPicker.ShowDialog();
+                buttonColorPicker.Background = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(colorPicked);
             };
         }
 

@@ -17,11 +17,13 @@ namespace Fingerprints
         Point singlePoint = new Point();
         MouseButtonEventHandler handler = null;
 
-        public SinglePoint(string name, Brush color, double size)
+        public SinglePoint(string name, string color, double size, double x = 0, double y = 0)
         {
             this.Name = name;
             this.size = size;
-            this.color = color;
+            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
+            singlePoint.X = x;
+            singlePoint.Y = y;
         }
         public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
         {            
@@ -63,7 +65,21 @@ namespace Fingerprints
 
         public override string ToString()
         {
-            return Name + ";" + singlePoint.X.ToString() + "," + singlePoint.Y.ToString();
+            return Name + ";" + singlePoint.X.ToString() + ";" + singlePoint.Y.ToString();
+        }
+
+        public void DrawFromFile(Canvas canvas)
+        {
+            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+            myEllipseGeometry.Center = singlePoint;
+            myEllipseGeometry.RadiusX = 2 * size;
+            myEllipseGeometry.RadiusY = 2 * size;
+            Path myPath = new Path();
+            myPath.Stroke = color;
+            myPath.StrokeThickness = 0.3;
+            myPath.Data = myEllipseGeometry;
+            myPath.Opacity = 0.5;
+            canvas.Children.Add(myPath);
         }
     }
 }

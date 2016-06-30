@@ -22,12 +22,15 @@ namespace Fingerprints
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector(string name, Brush color, double size)
+        public Vector(string name, string color, double size, double x = 0, double y = 0, double angle = 0)
         {
             this.Name = name;
             this.size = size;
-            this.color = color;
+            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
             firstPointLine = new Point();
+            firstPointLine.X = x;
+            firstPointLine.Y = y;
+            this.angle = angle;
             tmp1 = new Point();
             tmp2 = new Point();
         }
@@ -121,7 +124,30 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return Name + ";" + firstPointLine.X.ToString() + "," + firstPointLine.Y.ToString() + ";" + angle.ToString();
+            return Name + ";" + firstPointLine.X.ToString() + ";" + firstPointLine.Y.ToString() + ";" + angle.ToString();
+        }
+
+        public void DrawFromFile(Canvas canvas)
+        {
+            Path myPath = new Path();
+            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+            LineGeometry myPathFigure = new LineGeometry();
+
+            
+            myEllipseGeometry.Center = firstPointLine;
+            myEllipseGeometry.RadiusX = 2 * size;
+            myEllipseGeometry.RadiusY = 2 * size;
+            group.Children.Add(myEllipseGeometry);
+            tmp2.X = firstPointLine.X + Math.Cos(angle) * 10;
+            tmp2.Y = firstPointLine.Y + Math.Sin(angle) * 10;
+            myPathFigure.StartPoint = new Point(firstPointLine.X + (2 * size) * Math.Cos(angle), firstPointLine.Y + (2 * size) * Math.Sin(angle));
+            myPathFigure.EndPoint = tmp2;
+            group.Children.Add(myPathFigure);
+            myPath.Stroke = color;
+            myPath.StrokeThickness = 0.3;
+            myPath.Data = group;
+            canvas.Children.Add(myPath);
+            canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
         }
     }
 }

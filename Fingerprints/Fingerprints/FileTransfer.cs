@@ -15,37 +15,55 @@ namespace Fingerprints
         public static string RightImagePath;
         public static void Save()
         {
-            //streamWriter(ListL, "cordsLeft.txt");
-            //streamWriter(ListR, "cordsRight.txt");
-            using (StreamWriter writerL = new StreamWriter(LeftImagePath))
+            if (File.Exists(LeftImagePath))
             {
-                foreach (var item in ListL)
+                using (StreamWriter writerL = new StreamWriter(LeftImagePath))
                 {
-                    writerL.WriteLine(item);
+                    foreach (var item in ListL)
+                    {
+                        writerL.WriteLine(item);
+                    }
                 }
             }
-            using (StreamWriter writerR = new StreamWriter(RightImagePath))
+
+            if (File.Exists(RightImagePath))
             {
-                foreach (var item in ListR)
+                using (StreamWriter writerR = new StreamWriter(RightImagePath))
                 {
-                    writerR.WriteLine(item);
+                    foreach (var item in ListR)
+                    {
+                        writerR.WriteLine(item);
+                    }
+                }
+            }
+
+        }
+        public static void LoadLeftFile()
+        {
+            if (File.Exists(LeftImagePath))
+            {
+                using (StreamReader readerL = new StreamReader(LeftImagePath))
+                {
+                    while (!readerL.EndOfStream)
+                    {
+                        ListL.Add(readerL.ReadLine());
+                    }
                 }
             }
         }
 
-        //static private void streamWriter(List<string> list, string path)
-        //{
-        //    using (StreamWriter writer = new StreamWriter(path))
-        //    {
-        //        foreach (var item in list)
-        //        {
-        //            writer.WriteLine(item);
-        //        }
-        //    }
-        //}
-        public static void Load()
+        public static void LoadRightFile()
         {
-
+            if (File.Exists(LeftImagePath))
+            {
+                using (StreamReader readerR = new StreamReader(RightImagePath))
+                {
+                    while (!readerR.EndOfStream)
+                    {
+                        ListR.Add(readerR.ReadLine());
+                    }
+                }
+            }
         }
     }
 }
