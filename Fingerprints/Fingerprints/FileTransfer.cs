@@ -15,25 +15,19 @@ namespace Fingerprints
         public static string RightImagePath;
         public static void Save()
         {
-            if (File.Exists(LeftImagePath))
+            using (StreamWriter writerL = new StreamWriter(LeftImagePath))
             {
-                using (StreamWriter writerL = new StreamWriter(LeftImagePath))
+                foreach (var item in ListL)
                 {
-                    foreach (var item in ListL)
-                    {
-                        writerL.WriteLine(item);
-                    }
+                    writerL.WriteLine(item);
                 }
             }
 
-            if (File.Exists(RightImagePath))
+            using (StreamWriter writerR = new StreamWriter(RightImagePath))
             {
-                using (StreamWriter writerR = new StreamWriter(RightImagePath))
+                foreach (var item in ListR)
                 {
-                    foreach (var item in ListR)
-                    {
-                        writerR.WriteLine(item);
-                    }
+                    writerR.WriteLine(item);
                 }
             }
 
