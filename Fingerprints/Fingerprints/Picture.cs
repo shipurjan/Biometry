@@ -48,6 +48,7 @@ namespace Fingerprints
                     {
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();
+                        loadMinutiae(FileTransfer.ListR, canvasImage);
                     }
                 }
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
@@ -107,23 +108,30 @@ namespace Fingerprints
             foreach (var item in list)
             {
                 string[] tmp = item.Split(';');
+                var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
+                if (type.TypeId == 1)
                 {
-                    var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
-                    if (type.TypeId == 1)
-                    {
-                        SinglePoint p = new SinglePoint(type.Name, type.Color, type.Size, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]));
-                        p.DrawFromFile(canvas);
-                    }
-                    else if (type.TypeId == 2)
-                    {
-                        Vector v = new Vector(type.Name, type.Color, type.Size, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]));
-                        v.DrawFromFile(canvas);
-                    }
-                    else if (type.TypeId == 3)
-                    {
+                    SinglePoint p = new SinglePoint(type.Name, type.Color, type.Size, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]));
+                    p.DrawFromFile(canvas);
 
-                    }
+                }
+                else if (type.TypeId == 2)
+                {
+                    Vector v = new Vector(type.Name, type.Color, type.Size, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]));
+                    v.DrawFromFile(canvas);
+                }
+                else if (type.TypeId == 3)
+                {
 
+                }
+
+                if (canvas.Tag.ToString() == "Left")
+                {
+                    mw.listBoxImageL.Items.Add(type.Name);
+                }
+                else
+                {
+                    mw.listBoxImageR.Items.Add(type.Name);
                 }
 
             }
