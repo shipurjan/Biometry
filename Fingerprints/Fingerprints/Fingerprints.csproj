@@ -105,6 +105,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BorderColor.cs" />
+    <Compile Include="MinutiaeTypes\Peak.cs" />
+    <Compile Include="MinutiaeTypes\Triangle.cs" />
     <Compile Include="Windows\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>

@@ -30,6 +30,8 @@ namespace Fingerprints
             drawingType.Add("Punkt");
             drawingType.Add("Prosta skierowana");
             drawingType.Add("Krzywa dowolna");
+            drawingType.Add("Trojkat");
+            drawingType.Add("Daszek");
 
             size.Add(0.1);
             size.Add(0.25);

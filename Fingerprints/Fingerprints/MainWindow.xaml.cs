@@ -141,6 +141,19 @@ namespace Fingerprints
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 4)
+                {
+                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
+                    drawL = new Triangle(comboBox.SelectedValue.ToString(), kolor);
+                    drawR = new Triangle(comboBox.SelectedValue.ToString(), kolor);
+                }
+                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 5)
+                {
+                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
+                    drawL = new Peak(comboBox.SelectedValue.ToString(), kolor);
+                    drawR = new Peak(comboBox.SelectedValue.ToString(), kolor);
+                }
+
                 drawL.Draw(canvasImageL, imageL, borderLeft, borderRight);
                 drawR.Draw(canvasImageR, imageR, borderRight, borderLeft);
             };

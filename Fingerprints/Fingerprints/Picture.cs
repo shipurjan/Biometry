@@ -122,7 +122,17 @@ namespace Fingerprints
                 }
                 else if (type.TypeId == 3)
                 {
-
+                    
+                }
+                else if(type.TypeId == 4)
+                {
+                    Triangle t = new Triangle(type.Name, type.Color, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
+                    t.DrawFromFile(canvas);
+                }
+                else if (type.TypeId == 5)
+                {
+                    Peak p = new Peak(type.Name, type.Color, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
+                    p.DrawFromFile(canvas);
                 }
 
                 if (canvas.Tag.ToString() == "Left")
