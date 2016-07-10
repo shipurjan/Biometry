@@ -26,13 +26,11 @@ namespace Fingerprints
             List<string> drawingType = new List<string>();
             List<string> colors = new List<string>();
             List<double> size = new List<double>();
-
             drawingType.Add("Punkt");
             drawingType.Add("Prosta skierowana");
             drawingType.Add("Krzywa dowolna");
             drawingType.Add("Trojkat");
             drawingType.Add("Daszek");
-
             size.Add(0.1);
             size.Add(0.25);
             size.Add(0.5);
@@ -47,6 +45,7 @@ namespace Fingerprints
                 colorPicker.ShowDialog();
                 buttonColorPicker.Background = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(colorPicked);
             };
+            listBoxRefresh();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -54,12 +53,24 @@ namespace Fingerprints
             try
             {                
                 Database.AddNewMinutiae(textBox.Text, 1, comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem));
+                this.Close();
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            Database.DeleteMinutiae(listBox.SelectedValue as SelfDefinedMinutiae);
+            listBoxRefresh();
+        }
+
+        private void listBoxRefresh()
+        {
+            listBox.ItemsSource = Database.ShowSelfDefinedMinutiae();
         }
     }
 }

@@ -38,6 +38,27 @@ namespace Fingerprints
                 db.SaveChanges();          
             }
         }
+        static public void DeleteMinutiae(SelfDefinedMinutiae minutiae)
+        {
+            using (var db = new FingerContext())
+            { 
+                db.SelfDefinedMinutiaes.Attach(minutiae);
+                db.SelfDefinedMinutiaes.Remove(minutiae);
+                db.SaveChanges();
+            }
+        }
+
+
+        static public List<SelfDefinedMinutiae> ShowSelfDefinedMinutiae()
+        {
+            using (var db = new FingerContext())
+            {
+                var q = db.SelfDefinedMinutiaes.AsEnumerable().ToList();
+                return q;
+            }
+        }
+
+
 
     }
 }
