@@ -15,22 +15,27 @@ namespace Fingerprints
         public static string RightImagePath;
         public static void Save()
         {
-            using (StreamWriter writerL = new StreamWriter(LeftImagePath))
+            if (LeftImagePath != null)
             {
-                foreach (var item in ListL)
+                using (StreamWriter writerL = new StreamWriter(LeftImagePath))
                 {
-                    writerL.WriteLine(item);
+                    foreach (var item in ListL)
+                    {
+                        writerL.WriteLine(item);
+                    }
                 }
             }
 
-            using (StreamWriter writerR = new StreamWriter(RightImagePath))
+            if (RightImagePath != null)
             {
-                foreach (var item in ListR)
+                using (StreamWriter writerR = new StreamWriter(RightImagePath))
                 {
-                    writerR.WriteLine(item);
+                    foreach (var item in ListR)
+                    {
+                        writerR.WriteLine(item);
+                    }
                 }
             }
-
         }
         public static void LoadLeftFile()
         {
@@ -48,7 +53,7 @@ namespace Fingerprints
 
         public static void LoadRightFile()
         {
-            if (File.Exists(LeftImagePath))
+            if (File.Exists(RightImagePath))
             {
                 using (StreamReader readerR = new StreamReader(RightImagePath))
                 {
