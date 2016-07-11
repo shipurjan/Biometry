@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class Triangle : Minutiae
+    class Peak : Minutiae
     {
         Brush color;
         Point tmp1, tmp2;
@@ -24,7 +24,7 @@ namespace Fingerprints
         GeometryGroup group = new GeometryGroup();
 
 
-        public Triangle(string name, string color, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0)
+        public Peak(string name, string color, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0)
         {
             this.Name = name;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
@@ -41,7 +41,7 @@ namespace Fingerprints
             tmp2 = new Point();
         }
 
-        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
+        public override void Draw(OverridedCanvas canvas, Image image, Border border1, Border border2)
         {
             handler += (ss, ee) =>
             {
@@ -60,7 +60,8 @@ namespace Fingerprints
                         myPath.Stroke = color;
                         myPath.StrokeThickness = 0.3;
                         myPath.Data = group;
-                        canvas.Children.Add(myPath);
+                        myPath.Tag = Name;
+                        canvas.AddLogicalChild(myPath);
                         clickCount++;
                     }
                     else if (clickCount == 1)
@@ -71,8 +72,9 @@ namespace Fingerprints
                         myPath.Stroke = color;
                         myPath.StrokeThickness = 0.3;
                         myPath.Data = group;
+                        myPath.Tag = Name;
                         canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                        canvas.Children.Add(myPath);
+                        canvas.AddLogicalChild(myPath);
                         clickCount++;
                     }
                     else if (clickCount == 2)
@@ -80,17 +82,16 @@ namespace Fingerprints
                         var linetmp = new LineGeometry();
                         group.Children.Add(linetmp);
                         drawCompleteLine(ee, canvas, clickCount);
-                        clickCount++;
-                        drawCompleteLine(ee, canvas, clickCount);
                         myPath.Stroke = color;
                         myPath.StrokeThickness = 0.3;
                         myPath.Data = group;
-                        System.Threading.Thread.Sleep(450);
+                        myPath.Tag = Name;
+                        //System.Threading.Thread.Sleep(450);
                         canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                        canvas.Children.Add(myPath);
+                        canvas.AddLogicalChild(myPath);
                         border1.BorderBrush = Brushes.Black;
                         border2.BorderBrush = Brushes.DeepSkyBlue;
-                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                        //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                         clickCount = 0;
                         if (border1.Tag.ToString() == "Left")
                         {
@@ -104,7 +105,7 @@ namespace Fingerprints
                         group = new GeometryGroup();
                     }
                 }
-               
+
             };
 
             mouseMove += (ss, ee) =>
@@ -124,24 +125,19 @@ namespace Fingerprints
             {
                 tmp2 = ee.GetPosition(canvas);
                 secondPointLine = tmp2;
-                ((LineGeometry)group.Children[clickCount-1]).StartPoint = tmp1;
-                ((LineGeometry)group.Children[clickCount-1]).EndPoint = tmp2;
+                ((LineGeometry)group.Children[clickCount - 1]).StartPoint = tmp1;
+                ((LineGeometry)group.Children[clickCount - 1]).EndPoint = tmp2;
             }
             else if (clickCount == 2)
             {
                 tmp2 = ee.GetPosition(canvas);
                 thirdPointLine = tmp2;
-                ((LineGeometry)group.Children[clickCount-1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
-                ((LineGeometry)group.Children[clickCount-1]).EndPoint = tmp2;
-            }
-            else if (clickCount == 3)
-            {
-                ((LineGeometry)group.Children[clickCount-1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
-                ((LineGeometry)group.Children[clickCount-1]).EndPoint = ((LineGeometry)group.Children[0]).StartPoint;
+                ((LineGeometry)group.Children[clickCount - 1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
+                ((LineGeometry)group.Children[clickCount - 1]).EndPoint = tmp2;
             }
 
         }
-        public override void DeleteEvent(Image image, Canvas canvas)
+        public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
             image.MouseRightButtonDown -= handler;
             image.MouseMove -= mouseMove;
@@ -152,12 +148,11 @@ namespace Fingerprints
             return Name + ";" + firstPointLine.X.ToString() + ";" + firstPointLine.Y.ToString() + ";" + secondPointLine.X.ToString() + ";" + secondPointLine.Y.ToString() + ";" + thirdPointLine.X.ToString() + ";" + thirdPointLine.Y.ToString();
         }
 
-        public void DrawFromFile(Canvas canvas)
+        public void DrawFromFile(OverridedCanvas canvas)
         {
             Path myPath = new Path();
             LineGeometry myFirstPathFigure = new LineGeometry();
             LineGeometry mySecondPathFigure = new LineGeometry();
-            LineGeometry myThirdPathFigure = new LineGeometry();
 
             myFirstPathFigure.StartPoint = firstPointLine;
             myFirstPathFigure.EndPoint = secondPointLine;
@@ -167,14 +162,10 @@ namespace Fingerprints
             mySecondPathFigure.EndPoint = thirdPointLine;
             group.Children.Add(mySecondPathFigure);
 
-            myThirdPathFigure.StartPoint = thirdPointLine;
-            myThirdPathFigure.EndPoint = firstPointLine;
-            group.Children.Add(myThirdPathFigure);
-
             myPath.Stroke = color;
             myPath.StrokeThickness = 0.3;
             myPath.Data = group;
-            canvas.Children.Add(myPath);
+            canvas.AddLogicalChild(myPath);
             canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
         }
     }

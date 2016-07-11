@@ -30,7 +30,7 @@ namespace Fingerprints
             Init(mw.canvasImageR, mw.imageR, mw.openRightImage);
         }
 
-        private void Init(Canvas canvasImage, Image image, Button button)
+        private void Init(OverridedCanvas canvasImage, Image image, Button button)
         {
             button.Click += (ss, ee) =>
             {
@@ -102,7 +102,7 @@ namespace Fingerprints
             image.MouseUp += (ss, ee) => { image.ReleaseMouseCapture(); };
         }
 
-        private void loadMinutiae(List<string> list, Canvas canvas)
+        private void loadMinutiae(List<string> list, OverridedCanvas canvas)
         {
             List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().Show();
             foreach (var item in list)

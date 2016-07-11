@@ -34,7 +34,7 @@ namespace Fingerprints
         /// <param name="image">Aktualny obrazek</param>
         /// <param name="border1">Ramka 1</param>
         /// <param name="border2">Ramka 2</param>
-        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
+        public override void Draw(OverridedCanvas canvas, Image image, Border border1, Border border2)
         {
             handlerMouseDown += (ss, ee) =>
             {
@@ -55,7 +55,9 @@ namespace Fingerprints
                             Stroke = color,
                             StrokeThickness = 0.3
                         };
-                        canvas.Children.Add(baseLine);
+                        //canvas.Children.Add(baseLine);
+                        baseLine.Name = Name;
+                        canvas.AddLogicalChild(baseLine);   
                         newLine = false; 
                     }
                     currentPoint = ee.GetPosition(canvas);
@@ -69,13 +71,13 @@ namespace Fingerprints
                         border1.BorderBrush = Brushes.DeepSkyBlue;
                         border2.BorderBrush = Brushes.Black;
                         clickCount = true;
-                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                        //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     }
                     else if (border2.BorderBrush == Brushes.Black)
                     {                        
                         border1.BorderBrush = Brushes.Black;
                         border2.BorderBrush = Brushes.DeepSkyBlue;
-                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                        //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                         clickCount = true;
                     }
                 }
@@ -84,7 +86,7 @@ namespace Fingerprints
             canvas.MouseMove += handler;
         }
 
-        public override void DeleteEvent(Image image, Canvas canvas)
+        public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
             image.MouseMove -= handler;
             image.MouseDown -= handlerMouseDown;

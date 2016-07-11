@@ -41,9 +41,45 @@ namespace Fingerprints
             minType = new List<SelfDefinedMinutiae>();
             controller = new MinutiaeTypeController();
             minType = controller.Show();
+            
             comboBox.ItemsSource = minType;
             comboBoxChanged();
-            InitTable();
+            //InitTable();
+            canvasImageL.ChildAdded += (ss, ee) =>
+            {
+                textBox.Text = canvasImageL.Children.Count.ToString();
+                //if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Path")
+                //{
+                //    Path q = (Path)canvasImageL.Children[canvasImageL.Children.Count - 1];
+                //    listBoxImageL.Items.Add(q.Tag);
+                //}
+                //else if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Polyline")
+                //{
+                //    Polyline q = (Polyline)canvasImageL.Children[canvasImageL.Children.Count - 1];
+                //    listBoxImageL.Items.Add(q.Tag);
+                //}
+                listBoxImageL.Items.Clear();
+                foreach (var item in canvasImageL.Children)
+                {
+                    listBoxImageL.Items.Add(ToString());
+                }
+                
+                
+            };
+            canvasImageR.ChildAdded += (ss, ee) =>
+            {
+                textBox_Copy.Text = canvasImageR.Children.Count.ToString();
+                if (canvasImageR.Children[canvasImageR.Children.Count - 1].GetType().Name == "Path")
+                {
+                    Path q = (Path)canvasImageR.Children[canvasImageR.Children.Count - 1];
+                    listBoxImageR.Items.Add(q.Tag);
+                }
+                else if (canvasImageR.Children[canvasImageR.Children.Count - 1].GetType().Name == "Polyline")
+                {
+                    Polyline q = (Polyline)canvasImageR.Children[canvasImageR.Children.Count - 1];
+                    listBoxImageR.Items.Add(q.Tag);
+                }
+            };
 
             //Database.InitialData();
             this.Closed += (ss, ee) =>
@@ -52,49 +88,49 @@ namespace Fingerprints
             };
         }
 
-        public void InitTable()
-        {
-            Table table = new Table();
-            table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
-            table.SelectedObject(canvasImageR, listBoxImageR, canvasImageL);
-            table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
-            table.SelectedObject(canvasImageL, listBoxImageL, canvasImageR);
+        //public void InitTable()
+        //{
+        //    Table table = new Table();
+        //    table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
+        //    table.SelectedObject(canvasImageR, listBoxImageR, canvasImageL);
+        //    table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
+        //    table.SelectedObject(canvasImageL, listBoxImageL, canvasImageR);
 
-            button.Click += (ss, ee) =>
-            {
-                if (listBoxImageL.Items.Count != 0)
-                {
-                    int indexL = listBoxImageL.SelectedIndex;
-                    int indexR = listBoxImageR.SelectedIndex; 
-                    if (indexL >= 0 || indexR >= 0)
-                    {
-                        try
-                        {
-                            if (indexL >= 0)
-                                indexR = indexL;
-                            else
-                                indexL = indexR;
+        //    button.Click += (ss, ee) =>
+        //    {
+        //        if (listBoxImageL.Items.Count != 0)
+        //        {
+        //            int indexL = listBoxImageL.SelectedIndex;
+        //            int indexR = listBoxImageR.SelectedIndex; 
+        //            if (indexL >= 0 || indexR >= 0)
+        //            {
+        //                try
+        //                {
+        //                    if (indexL >= 0)
+        //                        indexR = indexL;
+        //                    else
+        //                        indexL = indexR;
 
-                            if (listBoxImageR.Items[indexL] != null) 
-                            {
-                                table.UpdateCount(canvasImageL, canvasImageR);
-                                listBoxImageL.UnselectAll();
-                                listBoxImageR.UnselectAll();
-                                listBoxImageL.Items.RemoveAt(indexL);
-                                listBoxImageR.Items.RemoveAt(indexL);
-                                canvasImageL.Children.RemoveAt(indexL);
-                                canvasImageR.Children.RemoveAt(indexL);
-                            }
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Do wyboru tej opcji potrzebne są 2 minucje");
-                        }
-                    }
-                }
+        //                    if (listBoxImageR.Items[indexL] != null) 
+        //                    {
+        //                        table.UpdateCount(canvasImageL, canvasImageR);
+        //                        listBoxImageL.UnselectAll();
+        //                        listBoxImageR.UnselectAll();
+        //                        listBoxImageL.Items.RemoveAt(indexL);
+        //                        listBoxImageR.Items.RemoveAt(indexL);
+        //                        canvasImageL.Children.RemoveAt(indexL);
+        //                        canvasImageR.Children.RemoveAt(indexL);
+        //                    }
+        //                }
+        //                catch
+        //                {
+        //                    MessageBox.Show("Do wyboru tej opcji potrzebne są 2 minucje");
+        //                }
+        //            }
+        //        }
                 
-            };
-        }
+        //    };
+        //}
 
         public void comboBoxChanged()
         {
@@ -120,6 +156,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = 0.3;
                     myPath.Data = myEllipseGeometry;
                     myPath.Opacity = 0;
+                    myPath.Name = "Puste";
                     canvasImageR.Children.Add(myPath);
                     listBoxImageR.Items.Add("Puste");
                 }

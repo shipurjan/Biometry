@@ -25,7 +25,7 @@ namespace Fingerprints
             singlePoint.X = x;
             singlePoint.Y = y;
         }
-        public override void Draw(Canvas canvas, Image image, Border border1, Border border2)
+        public override void Draw(OverridedCanvas canvas, Image image, Border border1, Border border2)
         {            
             handler += (ss, ee) =>
             {
@@ -40,8 +40,9 @@ namespace Fingerprints
                     myPath.Stroke = color;
                     myPath.StrokeThickness = 0.3;
                     myPath.Data = myEllipseGeometry;
-                    myPath.Opacity = 0.5;
-                    canvas.Children.Add(myPath);
+                    //myPath.Opacity = 0.5;
+                    myPath.Tag = Name;
+                    canvas.AddLogicalChild(myPath);
                     border1.BorderBrush = Brushes.Black;
                     border2.BorderBrush = Brushes.DeepSkyBlue;
                     if (border1.Tag.ToString() == "Left")
@@ -58,7 +59,7 @@ namespace Fingerprints
             image.MouseRightButtonDown += handler;
         }
 
-        public override void DeleteEvent(Image image, Canvas canvas)
+        public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
             image.MouseRightButtonDown -= handler;
         }
@@ -68,7 +69,7 @@ namespace Fingerprints
             return Name + ";" + singlePoint.X.ToString() + ";" + singlePoint.Y.ToString();
         }
 
-        public void DrawFromFile(Canvas canvas)
+        public void DrawFromFile(OverridedCanvas canvas)
         {
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             myEllipseGeometry.Center = singlePoint;
@@ -79,7 +80,7 @@ namespace Fingerprints
             myPath.StrokeThickness = 0.3;
             myPath.Data = myEllipseGeometry;
             myPath.Opacity = 0.5;
-            canvas.Children.Add(myPath);
+            canvas.AddLogicalChild(myPath);
         }
     }
 }
