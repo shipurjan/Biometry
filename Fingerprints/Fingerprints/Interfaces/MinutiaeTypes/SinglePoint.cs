@@ -80,6 +80,7 @@ namespace Fingerprints
             myPath.StrokeThickness = 0.3;
             myPath.Data = myEllipseGeometry;
             myPath.Opacity = 0.5;
+            myPath.Tag = Name;
             canvas.AddLogicalChild(myPath);
         }
     }

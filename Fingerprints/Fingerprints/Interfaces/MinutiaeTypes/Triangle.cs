@@ -178,6 +178,7 @@ namespace Fingerprints
             myPath.Stroke = color;
             myPath.StrokeThickness = 0.3;
             myPath.Data = group;
+            myPath.Tag = Name;
             //canvas.Children.Add(myPath);
             canvas.AddLogicalChild(myPath);
             //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;

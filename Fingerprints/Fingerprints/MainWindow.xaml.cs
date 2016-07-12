@@ -44,27 +44,28 @@ namespace Fingerprints
             
             comboBox.ItemsSource = minType;
             comboBoxChanged();
-            //InitTable();
+            ////InitTable();
             canvasImageL.ChildAdded += (ss, ee) =>
             {
                 textBox.Text = canvasImageL.Children.Count.ToString();
-                //if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Path")
-                //{
-                //    Path q = (Path)canvasImageL.Children[canvasImageL.Children.Count - 1];
-                //    listBoxImageL.Items.Add(q.Tag);
-                //}
-                //else if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Polyline")
-                //{
-                //    Polyline q = (Polyline)canvasImageL.Children[canvasImageL.Children.Count - 1];
-                //    listBoxImageL.Items.Add(q.Tag);
-                //}
-                listBoxImageL.Items.Clear();
-                foreach (var item in canvasImageL.Children)
+
+                if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Path")
                 {
-                    listBoxImageL.Items.Add(ToString());
+                    Path q = (Path)canvasImageL.Children[canvasImageL.Children.Count - 1];
+                    listBoxImageL.Items.Add(q.Tag);
                 }
-                
-                
+                else if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Polyline")
+                {
+                    Polyline q = (Polyline)canvasImageL.Children[canvasImageL.Children.Count - 1];
+                    listBoxImageL.Items.Add(q.Tag);
+                }
+                //listBoxImageL.Items.Clear();
+                //foreach (var item in canvasImageL.Children)
+                //{
+                //    listBoxImageL.Items.Add(ToString());
+                //}
+
+
             };
             canvasImageR.ChildAdded += (ss, ee) =>
             {

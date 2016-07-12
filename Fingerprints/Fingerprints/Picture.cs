@@ -135,14 +135,14 @@ namespace Fingerprints
                     p.DrawFromFile(canvas);
                 }
 
-                if (canvas.Tag.ToString() == "Left")
-                {
-                    mw.listBoxImageL.Items.Add(type.Name);
-                }
-                else
-                {
-                    mw.listBoxImageR.Items.Add(type.Name);
-                }
+                //if (canvas.Tag.ToString() == "Left")
+                //{
+                //    mw.listBoxImageL.Items.Add(type.Name);
+                //}
+                //else
+                //{
+                //    mw.listBoxImageR.Items.Add(type.Name);
+                //}
 
             }
         }
