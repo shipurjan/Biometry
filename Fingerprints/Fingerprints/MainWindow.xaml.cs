@@ -44,73 +44,8 @@ namespace Fingerprints
             
             comboBox.ItemsSource = minType;
             comboBoxChanged();
-            ////InitTable();
-            canvasImageL.ChildAdded += (ss, ee) =>
-            {
-                listBoxImageL.Items.Clear();
-                foreach (var item in canvasImageL.Children)
-                {
-                    if (item.GetType().Name == "Path")
-                    {
-                        Path q = (Path)item;
-                        listBoxImageL.Items.Add(q.Tag);
-                    }
-                    else if (item.GetType().Name == "Polyline")
-                    {
-                        Polyline q = (Polyline)item;
-                        listBoxImageL.Items.Add(q.Tag);
-                    }
-                }
-            };
-            canvasImageR.ChildAdded += (ss, ee) =>
-            {
-                listBoxImageR.Items.Clear();
-                foreach (var item in canvasImageR.Children)
-                {
-                    if (item.GetType().Name == "Path")
-                    {
-                        Path q = (Path)item;
-                        listBoxImageR.Items.Add(q.Tag);
-                    }
-                    else if (item.GetType().Name == "Polyline")
-                    {
-                        Polyline q = (Polyline)item;
-                        listBoxImageR.Items.Add(q.Tag);
-                    }
-                }
-            };
+            InitTable();
 
-            listBoxImageL.SelectionChanged += (ss, ee) =>
-            {
-                for (int i = 0; i < canvasImageL.Children.Count; i++)
-                {
-                    if (canvasImageL.Children[i] != null)
-                    {
-                        canvasImageL.Children[i].Opacity = 0.5;
-                    }
-                }
-
-                if (listBoxImageL.SelectedIndex != -1)
-                {
-                    canvasImageL.Children[listBoxImageL.SelectedIndex].Opacity = 1;
-                }
-            };
-
-            listBoxImageR.SelectionChanged += (ss, ee) =>
-            {
-                for (int i = 0; i < canvasImageR.Children.Count; i++)
-                {
-                    if (canvasImageR.Children[i] != null)
-                    {
-                        canvasImageR.Children[i].Opacity = 0.5;
-                    }
-                }
-
-                if (listBoxImageR.SelectedIndex != -1)
-                {
-                    canvasImageR.Children[listBoxImageR.SelectedIndex].Opacity = 1;
-                }
-            };
             //Database.InitialData();
             this.Closed += (ss, ee) =>
             {
@@ -118,7 +53,53 @@ namespace Fingerprints
             };
         }
 
+        public void InitTable()
+        {
+            listBoxSelectionChanged(listBoxImageL, canvasImageL);
+            listBoxSelectionChanged(listBoxImageR, canvasImageR);
+            canvasChildAdded(canvasImageL, listBoxImageL);
+            canvasChildAdded(canvasImageR, listBoxImageR);
 
+        }
+
+        private void canvasChildAdded(OverridedCanvas canvas, ListBox listbox)
+        {
+            canvas.ChildAdded += (ss, ee) =>
+            {
+                listbox.Items.Clear();
+                foreach (var item in canvas.Children)
+                {
+                    if (item.GetType().Name == "Path")
+                    {
+                        Path q = (Path)item;
+                        listbox.Items.Add(q.Tag);
+                    }
+                    else if (item.GetType().Name == "Polyline")
+                    {
+                        Polyline q = (Polyline)item;
+                        listbox.Items.Add(q.Tag);
+                    }
+                }
+            };
+        }
+        private void listBoxSelectionChanged(ListBox listBox, OverridedCanvas canvas)
+        {
+            listBox.SelectionChanged += (ss, ee) =>
+            {
+                for (int i = 0; i < canvas.Children.Count; i++)
+                {
+                    if (canvas.Children[i] != null)
+                    {
+                        canvas.Children[i].Opacity = 0.5;
+                    }
+                }
+
+                if (listBox.SelectedIndex != -1)
+                {
+                    canvas.Children[listBox.SelectedIndex].Opacity = 1;
+                }
+            };
+        }
 
         public void comboBoxChanged()
         {
@@ -184,7 +165,6 @@ namespace Fingerprints
             };
             comboBox.SelectionChanged += handler;
         }
-
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
