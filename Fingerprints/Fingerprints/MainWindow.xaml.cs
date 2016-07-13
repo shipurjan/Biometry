@@ -47,41 +47,70 @@ namespace Fingerprints
             ////InitTable();
             canvasImageL.ChildAdded += (ss, ee) =>
             {
-                textBox.Text = canvasImageL.Children.Count.ToString();
-
-                if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Path")
+                listBoxImageL.Items.Clear();
+                foreach (var item in canvasImageL.Children)
                 {
-                    Path q = (Path)canvasImageL.Children[canvasImageL.Children.Count - 1];
-                    listBoxImageL.Items.Add(q.Tag);
+                    if (item.GetType().Name == "Path")
+                    {
+                        Path q = (Path)item;
+                        listBoxImageL.Items.Add(q.Tag);
+                    }
+                    else if (item.GetType().Name == "Polyline")
+                    {
+                        Polyline q = (Polyline)item;
+                        listBoxImageL.Items.Add(q.Tag);
+                    }
                 }
-                else if (canvasImageL.Children[canvasImageL.Children.Count - 1].GetType().Name == "Polyline")
-                {
-                    Polyline q = (Polyline)canvasImageL.Children[canvasImageL.Children.Count - 1];
-                    listBoxImageL.Items.Add(q.Tag);
-                }
-                //listBoxImageL.Items.Clear();
-                //foreach (var item in canvasImageL.Children)
-                //{
-                //    listBoxImageL.Items.Add(ToString());
-                //}
-
-
             };
             canvasImageR.ChildAdded += (ss, ee) =>
             {
-                textBox_Copy.Text = canvasImageR.Children.Count.ToString();
-                if (canvasImageR.Children[canvasImageR.Children.Count - 1].GetType().Name == "Path")
+                listBoxImageR.Items.Clear();
+                foreach (var item in canvasImageR.Children)
                 {
-                    Path q = (Path)canvasImageR.Children[canvasImageR.Children.Count - 1];
-                    listBoxImageR.Items.Add(q.Tag);
-                }
-                else if (canvasImageR.Children[canvasImageR.Children.Count - 1].GetType().Name == "Polyline")
-                {
-                    Polyline q = (Polyline)canvasImageR.Children[canvasImageR.Children.Count - 1];
-                    listBoxImageR.Items.Add(q.Tag);
+                    if (item.GetType().Name == "Path")
+                    {
+                        Path q = (Path)item;
+                        listBoxImageR.Items.Add(q.Tag);
+                    }
+                    else if (item.GetType().Name == "Polyline")
+                    {
+                        Polyline q = (Polyline)item;
+                        listBoxImageR.Items.Add(q.Tag);
+                    }
                 }
             };
 
+            listBoxImageL.SelectionChanged += (ss, ee) =>
+            {
+                for (int i = 0; i < canvasImageL.Children.Count; i++)
+                {
+                    if (canvasImageL.Children[i] != null)
+                    {
+                        canvasImageL.Children[i].Opacity = 0.5;
+                    }
+                }
+
+                if (listBoxImageL.SelectedIndex != -1)
+                {
+                    canvasImageL.Children[listBoxImageL.SelectedIndex].Opacity = 1;
+                }
+            };
+
+            listBoxImageR.SelectionChanged += (ss, ee) =>
+            {
+                for (int i = 0; i < canvasImageR.Children.Count; i++)
+                {
+                    if (canvasImageR.Children[i] != null)
+                    {
+                        canvasImageR.Children[i].Opacity = 0.5;
+                    }
+                }
+
+                if (listBoxImageR.SelectedIndex != -1)
+                {
+                    canvasImageR.Children[listBoxImageR.SelectedIndex].Opacity = 1;
+                }
+            };
             //Database.InitialData();
             this.Closed += (ss, ee) =>
             {
@@ -89,49 +118,7 @@ namespace Fingerprints
             };
         }
 
-        //public void InitTable()
-        //{
-        //    Table table = new Table();
-        //    table.FillTableR(canvasImageR, imageR, listBoxImageR, comboBox);
-        //    table.SelectedObject(canvasImageR, listBoxImageR, canvasImageL);
-        //    table.FillTableL(canvasImageL, imageL, listBoxImageL, comboBox);
-        //    table.SelectedObject(canvasImageL, listBoxImageL, canvasImageR);
 
-        //    button.Click += (ss, ee) =>
-        //    {
-        //        if (listBoxImageL.Items.Count != 0)
-        //        {
-        //            int indexL = listBoxImageL.SelectedIndex;
-        //            int indexR = listBoxImageR.SelectedIndex; 
-        //            if (indexL >= 0 || indexR >= 0)
-        //            {
-        //                try
-        //                {
-        //                    if (indexL >= 0)
-        //                        indexR = indexL;
-        //                    else
-        //                        indexL = indexR;
-
-        //                    if (listBoxImageR.Items[indexL] != null) 
-        //                    {
-        //                        table.UpdateCount(canvasImageL, canvasImageR);
-        //                        listBoxImageL.UnselectAll();
-        //                        listBoxImageR.UnselectAll();
-        //                        listBoxImageL.Items.RemoveAt(indexL);
-        //                        listBoxImageR.Items.RemoveAt(indexL);
-        //                        canvasImageL.Children.RemoveAt(indexL);
-        //                        canvasImageR.Children.RemoveAt(indexL);
-        //                    }
-        //                }
-        //                catch
-        //                {
-        //                    MessageBox.Show("Do wyboru tej opcji potrzebne są 2 minucje");
-        //                }
-        //            }
-        //        }
-                
-        //    };
-        //}
 
         public void comboBoxChanged()
         {
