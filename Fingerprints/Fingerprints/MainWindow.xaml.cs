@@ -126,6 +126,7 @@ namespace Fingerprints
                     myPath.Data = myEllipseGeometry;
                     myPath.Opacity = 0;
                     myPath.Name = "Puste";
+                    myPath.Tag = "Puste";
                     canvasImageR.Children.Add(myPath);
                     listBoxImageR.Items.Add("Puste");
                 }
