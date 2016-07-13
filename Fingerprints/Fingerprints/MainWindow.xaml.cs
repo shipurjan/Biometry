@@ -59,7 +59,6 @@ namespace Fingerprints
             listBoxSelectionChanged(listBoxImageR, canvasImageR);
             canvasChildAdded(canvasImageL, listBoxImageL);
             canvasChildAdded(canvasImageR, listBoxImageR);
-
         }
 
         private void canvasChildAdded(OverridedCanvas canvas, ListBox listbox)
