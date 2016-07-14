@@ -23,8 +23,9 @@ namespace Fingerprints
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
 
-        public CurveLine(string color)
+        public CurveLine(string color, string name = "krzywa")
         {
+            this.Name = name;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
         }
         /// <summary>
@@ -56,7 +57,7 @@ namespace Fingerprints
                             StrokeThickness = 0.3
                         };
                         //canvas.Children.Add(baseLine);
-                        baseLine.Name = Name;
+                        baseLine.Tag = Name;
                         canvas.AddLogicalChild(baseLine);   
                         newLine = false; 
                     }
