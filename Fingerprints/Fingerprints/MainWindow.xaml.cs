@@ -57,17 +57,46 @@ namespace Fingerprints
         {
             listBoxSelectionChanged(listBoxImageL, canvasImageL);
             listBoxSelectionChanged(listBoxImageR, canvasImageR);
-            canvasChildAdded(canvasImageL, listBoxImageL);
-            canvasChildAdded(canvasImageR, listBoxImageR);
+            canvasChildAdded(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR);
+            canvasChildAdded(canvasImageR, canvasImageL, listBoxImageR, listBoxImageL);
         }
 
-        private void canvasChildAdded(OverridedCanvas canvas, ListBox listbox)
+        private void canvasChildAdded(OverridedCanvas canvas, OverridedCanvas canvas2, ListBox listbox, ListBox listbox2)
         {
             canvas.ChildAdded += (ss, ee) =>
             {
                 listbox.Items.Clear();
+                double top = 0;
+                int elementIndex = 0;  
                 foreach (var item in canvas.Children)
                 {
+                    Button button = new Button();
+                    button.Height = 20;
+                    button.Width = 30;
+                    button.Background = Brushes.Aqua;
+                    button.Tag = elementIndex;
+                    button.Content = elementIndex;
+                    button.Click += (s, e) =>
+                    {
+                        int index = Convert.ToInt16(button.Tag);
+                        if (listbox.Items.Count > index)
+                        {
+                            listbox.Items.RemoveAt(index);
+                            canvas.Children.RemoveAt(index);
+                            FileTransfer.ListL.RemoveAt(index);
+                        }
+                        if (listbox2.Items.Count > index)
+                        {
+                            listbox2.Items.RemoveAt(index);
+                            canvas2.Children.RemoveAt(index);
+                            FileTransfer.ListR.RemoveAt(index);
+                        }
+                        this.canvasDelete.Children.RemoveAt(index);
+                    };
+                    canvasDelete.Children.Add(button);
+                    Canvas.SetTop(button, top);
+                    top += 20;
+                    elementIndex++;
                     if (item.GetType().Name == "Path")
                     {
                         Path q = (Path)item;

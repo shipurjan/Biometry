@@ -34,7 +34,6 @@
 
                 </ComboBox>
                 <Button x:Name="button" Content="Usuń" HorizontalAlignment="Left" Margin="10,18,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" Grid.Column="8"/>
-                <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="43" Margin="36,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="54" Grid.Column="5"/>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -55,9 +54,8 @@
                 <TextBlock x:Name="textBlock" Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="7"/>
                 <TextBlock x:Name="textBlock1" Grid.Column="8" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center"/>
                 <TextBlock x:Name="textBlock2" Grid.Column="9" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center"/>
-                <Button x:Name="wizardAdd"  Content="Dodaj nowy typ" HorizontalAlignment="Stretch"  VerticalAlignment="Center" Height="26" Margin="48,10,52,11" Click="wizardAdd_Click" />
+                <Button x:Name="wizardAdd"  Content="Dodaj nowy typ" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="100" Click="wizardAdd_Click" />
             </Grid>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="43" Margin="673,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="54" Grid.Row="1"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -84,7 +82,7 @@
             <ListBox x:Name="listBoxLp" Grid.Column="3"/>
             <ListBox x:Name="listBoxImageL" Grid.Column="4"/>
             <ListBox x:Name="listBoxImageR" Grid.Column="5" />
-            <ListBox x:Name="listBox" Grid.Column="8" />
+            <local:OverridedCanvas x:Name="canvasDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         </Grid>
 
     </Grid>
