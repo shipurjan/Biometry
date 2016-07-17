@@ -105,17 +105,11 @@ namespace Fingerprints
         private void loadMinutiae(List<string> list, OverridedCanvas canvas)
         {
             List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().Show();
-            foreach (var item in minutiaeList)
-            {
-                MessageBox.Show(item.ToString());
-            }
+
             foreach (var item in list)
             {
                 string[] tmp = item.Split(';');
-                if (item == "Puste")
-                {
-                    tmp[0] = item;
-                }
+
                 var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
                 if (type.TypeId == 1)
                 {
@@ -144,7 +138,8 @@ namespace Fingerprints
                 }
                 else if (type.TypeId == 6)
                 {
-                    MessageBox.Show("PUSTE");
+                    Empty emptyObject = new Empty();
+                    emptyObject.DrawFromFile(canvas);
                 }
 
             }
