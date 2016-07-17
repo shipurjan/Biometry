@@ -105,9 +105,17 @@ namespace Fingerprints
         private void loadMinutiae(List<string> list, OverridedCanvas canvas)
         {
             List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().Show();
+            foreach (var item in minutiaeList)
+            {
+                MessageBox.Show(item.ToString());
+            }
             foreach (var item in list)
             {
                 string[] tmp = item.Split(';');
+                if (item == "Puste")
+                {
+                    tmp[0] = item;
+                }
                 var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
                 if (type.TypeId == 1)
                 {
@@ -122,9 +130,9 @@ namespace Fingerprints
                 }
                 else if (type.TypeId == 3)
                 {
-                    
+
                 }
-                else if(type.TypeId == 4)
+                else if (type.TypeId == 4)
                 {
                     Triangle t = new Triangle(type.Name, type.Color, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
                     t.DrawFromFile(canvas);
@@ -134,15 +142,10 @@ namespace Fingerprints
                     Peak p = new Peak(type.Name, type.Color, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
                     p.DrawFromFile(canvas);
                 }
-
-                //if (canvas.Tag.ToString() == "Left")
-                //{
-                //    mw.listBoxImageL.Items.Add(type.Name);
-                //}
-                //else
-                //{
-                //    mw.listBoxImageR.Items.Add(type.Name);
-                //}
+                else if (type.TypeId == 6)
+                {
+                    MessageBox.Show("PUSTE");
+                }
 
             }
         }
