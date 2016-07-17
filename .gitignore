@@ -243,5 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/Fingerprints/Images/L2U.txt
-*.txt
+Fingerprints/Images/*.txt
