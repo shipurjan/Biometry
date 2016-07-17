@@ -45,7 +45,6 @@ namespace Fingerprints
             comboBox.ItemsSource = minType;
             comboBoxChanged();
             InitTable();
-
             
             //Database.InitialData();
             this.Closed += (ss, ee) =>
@@ -56,7 +55,7 @@ namespace Fingerprints
 
         public void InitTable()
         {
-            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, canvasDelete);
+            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, canvasDelete, buttonDeleteL, buttonDeleteR);
 
         }
 

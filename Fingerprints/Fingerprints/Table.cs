@@ -15,13 +15,16 @@ namespace Fingerprints
     {
         OverridedCanvas canvasL, canvasR, canvasD;
         ListBox listBoxL, listBoxR;
-        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, OverridedCanvas canvasDelete)
+        Button buttonLeft, buttonRight;
+        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, OverridedCanvas canvasDelete, Button buttonDeleteLeft, Button buttonDeleteRight)
         {
             this.canvasL = canvasImageL;
             this.canvasR = canvasImageR;
             this.canvasD = canvasDelete;
             this.listBoxL = listBoxImageL;
             this.listBoxR = listBoxImageR;
+            this.buttonLeft = buttonDeleteLeft;
+            this.buttonRight = buttonDeleteRight;
             listBoxSelectionChanged(listBoxImageL, canvasImageL);
             listBoxSelectionChanged(listBoxImageR, canvasImageR);
             canvasLeftChildAdded();
@@ -133,6 +136,30 @@ namespace Fingerprints
         {
             listBox.SelectionChanged += (ss, ee) =>
             {
+                if (canvas.Tag.ToString() == "Left")
+                {
+                    buttonLeft.Click += (s, e) =>
+                    {
+                        if (listBox.SelectedIndex != -1)
+                        {
+                            canvas.Children.RemoveAt(listBox.SelectedIndex);
+                            FileTransfer.ListL.RemoveAt(listBox.SelectedIndex);
+                            listBox.Items.RemoveAt(listBox.SelectedIndex);
+                        }
+                    };
+                }
+                else
+                {
+                    buttonRight.Click += (s, e) =>
+                    {
+                        if (listBox.SelectedIndex != -1)
+                        {
+                            canvas.Children.RemoveAt(listBox.SelectedIndex);
+                            FileTransfer.ListR.RemoveAt(listBox.SelectedIndex);
+                            listBox.Items.RemoveAt(listBox.SelectedIndex);
+                        }
+                    };
+                }
                 for (int i = 0; i < canvas.Children.Count; i++)
                 {
                     if (canvas.Children[i] != null)
