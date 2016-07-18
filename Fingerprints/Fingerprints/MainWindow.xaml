@@ -65,6 +65,7 @@
                 <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="button_Click" Grid.Column="8"/>
                 <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="button_Click" Grid.Column="9"/>
             </Grid>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="122" Margin="751,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="278" Grid.RowSpan="3"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -89,10 +90,40 @@
                 </Canvas>
             </Border>
             <ListBox x:Name="listBoxLp" Grid.Column="3"/>
-            <ListBox x:Name="listBoxImageL" Grid.Column="4"/>
-            <ListBox x:Name="listBoxImageR" Grid.Column="5" />
+            <ListBox x:Name="listBoxImageL" Grid.Column="4">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Wstaw">
+                                        <MenuItem Header="Typ"></MenuItem>
+                                    </MenuItem>
+                                    <MenuItem Header="Usun"></MenuItem>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <ListBox x:Name="listBoxImageR" Grid.Column="5" >
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Wstaw">
+                                        <MenuItem Header="Typ"></MenuItem>
+                                    </MenuItem>
+                                    <MenuItem Header="Usun"></MenuItem>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
             <local:OverridedCanvas x:Name="canvasDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         </Grid>
     </Grid>
-    
+
 </Window>

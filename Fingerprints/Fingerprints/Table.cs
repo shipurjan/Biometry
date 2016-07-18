@@ -35,38 +35,17 @@ namespace Fingerprints
         {
             canvasL.ChildAdded += (ss, ee) =>
             {
+                canvasD.Children.Clear();
                 listBoxL.Items.Clear();
                 double top = 0;
                 int elementIndex = 0;
 
                 foreach (var item in canvasL.Children)
                 {
-                    Button button = new Button();
-                    button.Height = 20;
-                    button.Width = 30;
-                    button.Background = Brushes.Aqua;
-                    button.Tag = elementIndex;
-                    button.Content = elementIndex;
-                    button.Click += (s, e) =>
-                    {
-                        int index = Convert.ToInt16(button.Tag);
-                        if (listBoxL.Items.Count > index)
-                        {
-                            listBoxL.Items.RemoveAt(index);
-                            canvasL.Children.RemoveAt(index);
-                            FileTransfer.ListL.RemoveAt(index);
-                        }
-                        if (listBoxR.Items.Count > index)
-                        {
-                            listBoxR.Items.RemoveAt(index);
-                            canvasR.Children.RemoveAt(index);
-                            FileTransfer.ListR.RemoveAt(index);
-                        }
-                    };
-                    canvasD.Children.Add(button);
-                    Canvas.SetTop(button, top);
+                    buttonConfiguration(elementIndex, top);
                     top += 20;
                     elementIndex++;
+                    
                     if (item.GetType().Name == "Path")
                     {
                         Path q = (Path)item;
@@ -85,39 +64,17 @@ namespace Fingerprints
         {
             canvasR.ChildAdded += (ss, ee) =>
             {
+                canvasD.Children.Clear();
                 listBoxR.Items.Clear();
                 double top = 0;
                 int elementIndex = 0;
 
                 foreach (var item in canvasR.Children)
                 {
-                    Button button = new Button();
-                    button.Height = 20;
-                    button.Width = 30;
-                    button.Background = Brushes.Aqua;
-                    button.Tag = elementIndex;
-                    button.Content = elementIndex;
-                    button.Click += (s, e) =>
-                    {
-                        int index = Convert.ToInt16(button.Tag);
-                        if (listBoxR.Items.Count > index)
-                        {
-                            listBoxR.Items.RemoveAt(index);
-                            canvasR.Children.RemoveAt(index);
-                            FileTransfer.ListR.RemoveAt(index);
-                        }
-                        if (listBoxL.Items.Count > index)
-                        {
-                            listBoxL.Items.RemoveAt(index);
-                            canvasL.Children.RemoveAt(index);
-                            FileTransfer.ListL.RemoveAt(index);
-                        }
-                        //this.canvasDelete.Children.RemoveAt(index);
-                    };
-                    canvasD.Children.Add(button);
-                    Canvas.SetTop(button, top);
+                    buttonConfiguration(elementIndex, top);
                     top += 20;
                     elementIndex++;
+                    
                     if (item.GetType().Name == "Path")
                     {
                         Path q = (Path)item;
@@ -132,6 +89,33 @@ namespace Fingerprints
             };
         }
 
+        private void buttonConfiguration(int elementIndex, double top)
+        {
+            Button button = new Button();
+            button.Height = 20;
+            button.Width = 30;
+            button.Background = Brushes.CadetBlue;
+            button.Tag = elementIndex;
+            button.Click += (s, e) =>
+            {
+                int index = Convert.ToInt16(button.Tag);
+                if (listBoxR.Items.Count > index)
+                {
+                    listBoxR.Items.RemoveAt(index);
+                    canvasR.Children.RemoveAt(index);
+                    FileTransfer.ListR.RemoveAt(index);
+                }
+                if (listBoxL.Items.Count > index)
+                {
+                    listBoxL.Items.RemoveAt(index);
+                    canvasL.Children.RemoveAt(index);
+                    FileTransfer.ListL.RemoveAt(index);
+                }
+                canvasD.Children.RemoveAt(index);
+            };
+            canvasD.AddLogicalChild(button);
+            Canvas.SetTop(button, top);
+        }
         private void listBoxSelectionChanged(ListBox listBox, OverridedCanvas canvas)
         {
             listBox.SelectionChanged += (ss, ee) =>
