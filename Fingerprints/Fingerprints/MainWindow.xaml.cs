@@ -128,6 +128,7 @@ namespace Fingerprints
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+
         }
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)
@@ -139,5 +140,31 @@ namespace Fingerprints
             comboBox.ItemsSource = minType;
             comboBoxChanged();
         }
+
+        private void leftMenuClick_Delete(object sender, RoutedEventArgs e)
+        {
+            int index = listBoxImageL.SelectedIndex;
+            if (index == -1)
+            {
+                return;
+            }
+            listBoxImageL.Items.RemoveAt(index);
+            listBoxImageL.UnselectAll();
+            canvasImageL.Children.RemoveAt(index);
+            FileTransfer.ListL.RemoveAt(index);
+        }
+        private void rightMenuClick_Delete(object sender, RoutedEventArgs e)
+        {
+            int index = listBoxImageR.SelectedIndex;
+            if (index == -1)
+            {
+                return;
+            }
+
+            listBoxImageR.Items.RemoveAt(index);
+            canvasImageR.Children.RemoveAt(index);
+            FileTransfer.ListR.RemoveAt(index);
+        }
+
     }
 }
