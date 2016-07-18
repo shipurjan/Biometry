@@ -174,13 +174,5 @@ namespace Fingerprints
                 }
             };
         }
-
-        private void rightClickMenu()
-        {
-            listBoxL.MouseRightButtonDown += (ss, ee) =>
-            {
-                Menu menu = new Menu();
-            };
-        }
     }
 }

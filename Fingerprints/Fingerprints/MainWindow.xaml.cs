@@ -46,6 +46,7 @@ namespace Fingerprints
             comboBoxChanged();
             InitTable();
             
+
             //Database.InitialData();
             this.Closed += (ss, ee) =>
             {
