@@ -33,8 +33,7 @@ namespace Fingerprints
         private void Init(OverridedCanvas canvasImage, Image image, Button button)
         {
             button.Click += (ss, ee) =>
-            {
-                canvasImage.Children.Clear();
+            {   
                 OpenFileDialog openFile = new OpenFileDialog();
                 if (openFile.ShowDialog() == true)
                 {
@@ -43,14 +42,18 @@ namespace Fingerprints
                     image.Height = b.PixelHeight;
                     image.Width = b.PixelWidth;
                     if (image.Tag.ToString() == "Left")
-                    { 
+                    {
+                        mw.listBoxImageL.Items.Clear();
+                        FileTransfer.ListL.Clear();
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
-                        canvasImage.Children.Clear();
+                        canvasImage.Children.Clear();                        
                         loadMinutiae(FileTransfer.ListL, canvasImage);
                     }
                     else
                     {
+                        mw.listBoxImageR.Items.Clear();
+                        FileTransfer.ListR.Clear();
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();
                         canvasImage.Children.Clear();
@@ -59,8 +62,6 @@ namespace Fingerprints
                 }                
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
                 Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
-                
-
             };
 
 
