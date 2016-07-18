@@ -46,11 +46,6 @@ namespace Fingerprints
             comboBoxChanged();
             InitTable();
 
-            canvasDelete.ChildAdded += (ss, ee) =>
-            {
-                textBox.Text = canvasDelete.Children.Count.ToString();
-            };
-
             //Database.InitialData();
             this.Closed += (ss, ee) =>
             {
