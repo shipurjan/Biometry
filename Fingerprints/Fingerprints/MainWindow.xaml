@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
         Title="Minutiae" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
-    <Grid Margin="20, 20, 20 ,20">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="62*"/>
             <RowDefinition Height="7"/>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0*"/>
+                <RowDefinition Height="25*"/>
                 <RowDefinition Height="69*"/>
                 <RowDefinition Height="52*"/>
             </Grid.RowDefinitions>
@@ -33,7 +33,15 @@
                 <ComboBox x:Name="comboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
                 </ComboBox>
-                <Button x:Name="wizardAdd"  Content="Dodaj nowy typ" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="27" Click="wizardAdd_Click" Grid.ColumnSpan="2" Grid.Column="2"/>
+            </Grid>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
+                <Menu x:Name="mainMenu" IsMainMenu="True">
+                    <MenuItem Header="_Plik">
+                        <MenuItem Header="Nowa minucja" Click="wizardAdd_Click"/>
+                    </MenuItem>
+                </Menu>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -85,6 +93,6 @@
             <ListBox x:Name="listBoxImageR" Grid.Column="5" />
             <local:OverridedCanvas x:Name="canvasDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         </Grid>
-
     </Grid>
+    
 </Window>

@@ -105,6 +105,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BorderColor.cs" />
+    <Compile Include="Interfaces\MinutiaeTypes\Empty.cs" />
     <Compile Include="Interfaces\MinutiaeTypes\Peak.cs" />
     <Compile Include="Interfaces\MinutiaeTypes\Triangle.cs" />
     <Compile Include="OverridedCanvas.cs" />

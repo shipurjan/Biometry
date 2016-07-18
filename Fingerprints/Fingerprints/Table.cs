@@ -6,78 +6,172 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Fingerprints
 {
     class Table
     {
-        int countL = 0;
-        int countR = 0;
-        MouseButtonEventHandler handlerL = null;
-        MouseButtonEventHandler handlerR = null;
-        public void FillTableL(Canvas canvasL, Image imageL ,ListBox listBoxL, ComboBox comboBox)
+        OverridedCanvas canvasL, canvasR, canvasD;
+        ListBox listBoxL, listBoxR;
+        Button buttonLeft, buttonRight;
+        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, OverridedCanvas canvasDelete, Button buttonDeleteLeft, Button buttonDeleteRight)
         {
-            handlerL += (ss, ee) =>
+            this.canvasL = canvasImageL;
+            this.canvasR = canvasImageR;
+            this.canvasD = canvasDelete;
+            this.listBoxL = listBoxImageL;
+            this.listBoxR = listBoxImageR;
+            this.buttonLeft = buttonDeleteLeft;
+            this.buttonRight = buttonDeleteRight;
+            listBoxSelectionChanged(listBoxImageL, canvasImageL);
+            listBoxSelectionChanged(listBoxImageR, canvasImageR);
+            canvasLeftChildAdded();
+            canvasRightChildAdded();
+        }
+
+        private void canvasLeftChildAdded()
+        {
+            canvasL.ChildAdded += (ss, ee) =>
             {
-                if (countL != canvasL.Children.Count && canvasL.Children.Count != 0)
+                listBoxL.Items.Clear();
+                double top = 0;
+                int elementIndex = 0;
+
+                foreach (var item in canvasL.Children)
                 {
-                    listBoxL.Items.Add(comboBox.SelectedItem.ToString());
-                    countL = canvasL.Children.Count;
+                    Button button = new Button();
+                    button.Height = 20;
+                    button.Width = 30;
+                    button.Background = Brushes.Aqua;
+                    button.Tag = elementIndex;
+                    button.Content = elementIndex;
+                    button.Click += (s, e) =>
+                    {
+                        int index = Convert.ToInt16(button.Tag);
+                        if (listBoxL.Items.Count > index)
+                        {
+                            listBoxL.Items.RemoveAt(index);
+                            canvasL.Children.RemoveAt(index);
+                            FileTransfer.ListL.RemoveAt(index);
+                        }
+                        if (listBoxR.Items.Count > index)
+                        {
+                            listBoxR.Items.RemoveAt(index);
+                            canvasR.Children.RemoveAt(index);
+                            FileTransfer.ListR.RemoveAt(index);
+                        }
+                    };
+                    canvasD.Children.Add(button);
+                    Canvas.SetTop(button, top);
+                    top += 20;
+                    elementIndex++;
+                    if (item.GetType().Name == "Path")
+                    {
+                        Path q = (Path)item;
+                        listBoxL.Items.Add(q.Tag);
+                    }
+                    else if (item.GetType().Name == "Polyline")
+                    {
+                        Polyline q = (Polyline)item;
+                        listBoxL.Items.Add(q.Tag);
+                    }
                 }
             };
-            imageL.MouseRightButtonUp += handlerL;
         }
 
-        public void FillTableR(Canvas canvasR, Image imageR, ListBox listBoxR, ComboBox comboBox)
+        private void canvasRightChildAdded()
         {
-            handlerR += (ss, ee) =>
+            canvasR.ChildAdded += (ss, ee) =>
             {
-                if (countR != canvasR.Children.Count && canvasR.Children.Count != 0)
+                listBoxR.Items.Clear();
+                double top = 0;
+                int elementIndex = 0;
+
+                foreach (var item in canvasR.Children)
                 {
-                    listBoxR.Items.Add(comboBox.SelectedItem.ToString());
-                    countR = canvasR.Children.Count;
+                    Button button = new Button();
+                    button.Height = 20;
+                    button.Width = 30;
+                    button.Background = Brushes.Aqua;
+                    button.Tag = elementIndex;
+                    button.Content = elementIndex;
+                    button.Click += (s, e) =>
+                    {
+                        int index = Convert.ToInt16(button.Tag);
+                        if (listBoxR.Items.Count > index)
+                        {
+                            listBoxR.Items.RemoveAt(index);
+                            canvasR.Children.RemoveAt(index);
+                            FileTransfer.ListR.RemoveAt(index);
+                        }
+                        if (listBoxL.Items.Count > index)
+                        {
+                            listBoxL.Items.RemoveAt(index);
+                            canvasL.Children.RemoveAt(index);
+                            FileTransfer.ListL.RemoveAt(index);
+                        }
+                        //this.canvasDelete.Children.RemoveAt(index);
+                    };
+                    canvasD.Children.Add(button);
+                    Canvas.SetTop(button, top);
+                    top += 20;
+                    elementIndex++;
+                    if (item.GetType().Name == "Path")
+                    {
+                        Path q = (Path)item;
+                        listBoxR.Items.Add(q.Tag);
+                    }
+                    else if (item.GetType().Name == "Polyline")
+                    {
+                        Polyline q = (Polyline)item;
+                        listBoxR.Items.Add(q.Tag);
+                    }
                 }
             };
-            imageR.MouseRightButtonUp += handlerR;
         }
 
-        public void UpdateCount(Canvas canvasL, Canvas canvasR)
-        {
-            countL -= 1;
-            countR -= 1;
-        }
-
-        public void SelectedObject(Canvas canvas, ListBox listBox, Canvas canvas2)
+        private void listBoxSelectionChanged(ListBox listBox, OverridedCanvas canvas)
         {
             listBox.SelectionChanged += (ss, ee) =>
             {
-                try
+                if (canvas.Tag.ToString() == "Left")
                 {
-                    for (int i = 0; i < canvas.Children.Count; i++)
+                    buttonLeft.Click += (s, e) =>
                     {
-                        if (canvas.Children[i] != null)
+                        if (listBox.SelectedIndex != -1)
                         {
-                            canvas.Children[i].Opacity = 0.5;
+                            canvas.Children.RemoveAt(listBox.SelectedIndex);
+                            FileTransfer.ListL.RemoveAt(listBox.SelectedIndex);
+                            listBox.Items.RemoveAt(listBox.SelectedIndex);
                         }
-                        if (canvas2.Children[i] != null)
-                        {
-                            canvas2.Children[i].Opacity = 0.5;
-                        }                            
-                    }
-                    if (listBox.SelectedIndex != -1)
-                    {
-                        var element = canvas.Children[listBox.SelectedIndex];
-                        var element2 = canvas2.Children[listBox.SelectedIndex];
-                        element.Opacity = 1;
-                        element2.Opacity = 1;
-                    }
+                    };
                 }
-                catch (Exception)
+                else
                 {
-
-                    
+                    buttonRight.Click += (s, e) =>
+                    {
+                        if (listBox.SelectedIndex != -1)
+                        {
+                            canvas.Children.RemoveAt(listBox.SelectedIndex);
+                            FileTransfer.ListR.RemoveAt(listBox.SelectedIndex);
+                            listBox.Items.RemoveAt(listBox.SelectedIndex);
+                        }
+                    };
                 }
-                
+                for (int i = 0; i < canvas.Children.Count; i++)
+                {
+                    if (canvas.Children[i] != null)
+                    {
+                        canvas.Children[i].Opacity = 0.5;
+                    }
+                }
+
+                if (listBox.SelectedIndex != -1)
+                {
+                    canvas.Children[listBox.SelectedIndex].Opacity = 1;
+                }
             };
         }
     }
