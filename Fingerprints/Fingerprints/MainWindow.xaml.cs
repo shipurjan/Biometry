@@ -149,7 +149,6 @@ namespace Fingerprints
                 return;
             }
             listBoxImageL.Items.RemoveAt(index);
-            listBoxImageL.UnselectAll();
             canvasImageL.Children.RemoveAt(index);
             FileTransfer.ListL.RemoveAt(index);
         }
