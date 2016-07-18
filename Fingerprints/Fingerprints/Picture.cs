@@ -34,25 +34,33 @@ namespace Fingerprints
         {
             button.Click += (ss, ee) =>
             {
+                canvasImage.Children.Clear();
                 OpenFileDialog openFile = new OpenFileDialog();
                 if (openFile.ShowDialog() == true)
                 {
                     image.Source = new BitmapImage(new Uri(openFile.FileName));
+                    BitmapImage b = new BitmapImage(new Uri(openFile.FileName));
+                    image.Height = b.PixelHeight;
+                    image.Width = b.PixelWidth;
                     if (image.Tag.ToString() == "Left")
                     { 
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
+                        canvasImage.Children.Clear();
                         loadMinutiae(FileTransfer.ListL, canvasImage);
                     }
                     else
                     {
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();
+                        canvasImage.Children.Clear();
                         loadMinutiae(FileTransfer.ListR, canvasImage);
                     }
-                }
+                }                
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
                 Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
+                
+
             };
 
 

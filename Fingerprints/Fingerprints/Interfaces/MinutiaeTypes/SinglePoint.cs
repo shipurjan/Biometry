@@ -66,7 +66,7 @@ namespace Fingerprints
 
         public override string ToString()
         {
-            return Name + ";" + singlePoint.X.ToString() + ";" + singlePoint.Y.ToString();
+            return Name + ";" + Math.Floor(singlePoint.X).ToString() + ";" + Math.Floor(singlePoint.Y).ToString();
         }
 
         public void DrawFromFile(OverridedCanvas canvas)

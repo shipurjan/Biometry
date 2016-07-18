@@ -145,7 +145,7 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return Name + ";" + firstPointLine.X.ToString() + ";" + firstPointLine.Y.ToString() + ";" + secondPointLine.X.ToString() + ";" + secondPointLine.Y.ToString() + ";" + thirdPointLine.X.ToString() + ";" + thirdPointLine.Y.ToString();
+            return Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + Math.Floor(secondPointLine.X).ToString() + ";" + Math.Floor(secondPointLine.Y).ToString() + ";" + Math.Floor(thirdPointLine.X).ToString() + ";" + Math.Floor(thirdPointLine.Y).ToString();
         }
 
         public void DrawFromFile(OverridedCanvas canvas)
