@@ -109,7 +109,8 @@
                     </Style>
                 </ListBox.Resources>
             </ListBox>
-            <local:OverridedCanvas x:Name="canvasDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            <!--<local:OverridedCanvas x:Name="canvasDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
         </Grid>
     </Grid>
 

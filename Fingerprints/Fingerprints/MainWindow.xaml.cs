@@ -55,7 +55,7 @@ namespace Fingerprints
 
         public void InitTable()
         {
-            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, canvasDelete, buttonDeleteL, buttonDeleteR);
+            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, listBoxDelete, buttonDeleteL, buttonDeleteR);
 
         }
 
