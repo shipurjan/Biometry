@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FontAwesome.WPF;
 
 namespace Fingerprints
 {
@@ -21,6 +22,7 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
+        //pack://application:,,,/fonts/#FontAwesome
         public BrushConverter converter = new System.Windows.Media.BrushConverter();
         BorderColor borderColor;
         Minutiae mL;
@@ -32,8 +34,9 @@ namespace Fingerprints
         SelectionChangedEventHandler handler = null;
         public MainWindow()
         {
+            
             InitializeComponent();
-
+            buttonDeleteL.Content = FontAwesomeIcon.Trash;
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
@@ -41,11 +44,9 @@ namespace Fingerprints
             minType = new List<SelfDefinedMinutiae>();
             controller = new MinutiaeTypeController();
             minType = controller.Show();
-            
             comboBox.ItemsSource = minType;
             comboBoxChanged();
             InitTable();
-
             //Database.InitialData();
             this.Closed += (ss, ee) =>
             {
@@ -128,7 +129,7 @@ namespace Fingerprints
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show(listBoxDelete.Items.Count.ToString());
         }
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)

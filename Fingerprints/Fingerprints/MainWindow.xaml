@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        
         Title="Minutiae" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -31,7 +33,6 @@
                     <ColumnDefinition Width="2.3*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="comboBox" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-
                 </ComboBox>
             </Grid>
             <Grid Grid.Row="0">
@@ -109,7 +110,8 @@
                     </Style>
                 </ListBox.Resources>
             </ListBox>
-            <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            </ListBox>
             <!--<local:OverridedCanvas x:Name="canvasDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
         </Grid>
     </Grid>

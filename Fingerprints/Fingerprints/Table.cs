@@ -117,7 +117,7 @@ namespace Fingerprints
                 maxIndex = listBoxR.Items.Count;
             for (int i = 0; i < maxIndex; i++)
             {
-                listBoxD.Items.Add("Usuń");
+                listBoxD.Items.Add("Usun");
             }
         }
 
