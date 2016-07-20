@@ -13,14 +13,14 @@ namespace Fingerprints
 {
     class Table
     {
-        OverridedCanvas canvasL, canvasR, canvasD;
-        ListBox listBoxL, listBoxR;
+        OverridedCanvas canvasL, canvasR;
+        ListBox listBoxL, listBoxR, listBoxD;
         Button buttonLeft, buttonRight;
-        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, OverridedCanvas canvasDelete, Button buttonDeleteLeft, Button buttonDeleteRight)
+        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight)
         {
+            this.listBoxD = listboxDelete;
             this.canvasL = canvasImageL;
             this.canvasR = canvasImageR;
-            this.canvasD = canvasDelete;
             this.listBoxL = listBoxImageL;
             this.listBoxR = listBoxImageR;
             this.buttonLeft = buttonDeleteLeft;
@@ -29,6 +29,36 @@ namespace Fingerprints
             listBoxSelectionChanged(listBoxImageR, canvasImageR);
             canvasLeftChildAdded();
             canvasRightChildAdded();
+            listBoxD.SelectionChanged += (ss, ee) =>
+            {
+                if (listBoxD.SelectedIndex != -1)
+                {
+                    int index = listBoxD.SelectedIndex;
+                    if (listBoxL.Items.Count > index )
+                    {
+                        deleteLeft(index);
+                    }
+                    if (listBoxR.Items.Count > index)
+                    {
+                        deleteRight(index);
+                    }
+                    listBoxD.Items.RemoveAt(index);
+                }
+            };
+        }
+
+        private void deleteLeft(int index)
+        {
+            listBoxL.Items.RemoveAt(index);
+            canvasL.Children.RemoveAt(index);
+            FileTransfer.ListL.RemoveAt(index);
+        }
+
+        private void deleteRight(int index)
+        {
+            listBoxR.Items.RemoveAt(index);
+            canvasR.Children.RemoveAt(index);
+            FileTransfer.ListR.RemoveAt(index);
         }
 
         private void canvasLeftChildAdded()
@@ -36,37 +66,9 @@ namespace Fingerprints
             canvasL.ChildAdded += (ss, ee) =>
             {
                 listBoxL.Items.Clear();
-                double top = 0;
-                int elementIndex = 0;
 
                 foreach (var item in canvasL.Children)
-                {
-                    Button button = new Button();
-                    button.Height = 20;
-                    button.Width = 30;
-                    button.Background = Brushes.Aqua;
-                    button.Tag = elementIndex;
-                    button.Content = elementIndex;
-                    button.Click += (s, e) =>
-                    {
-                        int index = Convert.ToInt16(button.Tag);
-                        if (listBoxL.Items.Count > index)
-                        {
-                            listBoxL.Items.RemoveAt(index);
-                            canvasL.Children.RemoveAt(index);
-                            FileTransfer.ListL.RemoveAt(index);
-                        }
-                        if (listBoxR.Items.Count > index)
-                        {
-                            listBoxR.Items.RemoveAt(index);
-                            canvasR.Children.RemoveAt(index);
-                            FileTransfer.ListR.RemoveAt(index);
-                        }
-                    };
-                    canvasD.Children.Add(button);
-                    Canvas.SetTop(button, top);
-                    top += 20;
-                    elementIndex++;
+                {                    
                     if (item.GetType().Name == "Path")
                     {
                         Path q = (Path)item;
@@ -78,6 +80,7 @@ namespace Fingerprints
                         listBoxL.Items.Add(q.Tag);
                     }
                 }
+                deleteListRefresh();
             };
         }
 
@@ -86,38 +89,8 @@ namespace Fingerprints
             canvasR.ChildAdded += (ss, ee) =>
             {
                 listBoxR.Items.Clear();
-                double top = 0;
-                int elementIndex = 0;
-
                 foreach (var item in canvasR.Children)
-                {
-                    Button button = new Button();
-                    button.Height = 20;
-                    button.Width = 30;
-                    button.Background = Brushes.Aqua;
-                    button.Tag = elementIndex;
-                    button.Content = elementIndex;
-                    button.Click += (s, e) =>
-                    {
-                        int index = Convert.ToInt16(button.Tag);
-                        if (listBoxR.Items.Count > index)
-                        {
-                            listBoxR.Items.RemoveAt(index);
-                            canvasR.Children.RemoveAt(index);
-                            FileTransfer.ListR.RemoveAt(index);
-                        }
-                        if (listBoxL.Items.Count > index)
-                        {
-                            listBoxL.Items.RemoveAt(index);
-                            canvasL.Children.RemoveAt(index);
-                            FileTransfer.ListL.RemoveAt(index);
-                        }
-                        //this.canvasDelete.Children.RemoveAt(index);
-                    };
-                    canvasD.Children.Add(button);
-                    Canvas.SetTop(button, top);
-                    top += 20;
-                    elementIndex++;
+                {                    
                     if (item.GetType().Name == "Path")
                     {
                         Path q = (Path)item;
@@ -129,9 +102,50 @@ namespace Fingerprints
                         listBoxR.Items.Add(q.Tag);
                     }
                 }
+                deleteListRefresh();
             };
         }
 
+        private void deleteListRefresh()
+        {
+            listBoxD.Items.Clear();
+
+            int maxIndex = 0;
+            if (listBoxL.Items.Count > listBoxR.Items.Count)
+                maxIndex = listBoxL.Items.Count;
+            else
+                maxIndex = listBoxR.Items.Count;
+            for (int i = 0; i < maxIndex; i++)
+            {
+                listBoxD.Items.Add("Usun");
+            }
+        }
+
+        private void buttonConfiguration(int elementIndex, double top)
+        {
+            Button button = new Button();
+            button.Height = 20;
+            button.Width = 30;
+            button.Background = Brushes.CadetBlue;
+            button.Tag = elementIndex;
+            button.Click += (s, e) =>
+            {
+                int index = Convert.ToInt16(button.Tag);
+                if (listBoxR.Items.Count > index)
+                {
+                    listBoxR.Items.RemoveAt(index);
+                    canvasR.Children.RemoveAt(index);
+                    FileTransfer.ListR.RemoveAt(index);
+                }
+                if (listBoxL.Items.Count > index)
+                {
+                    listBoxL.Items.RemoveAt(index);
+                    canvasL.Children.RemoveAt(index);
+                    FileTransfer.ListL.RemoveAt(index);
+                }
+            };
+            Canvas.SetTop(button, top);
+        }
         private void listBoxSelectionChanged(ListBox listBox, OverridedCanvas canvas)
         {
             listBox.SelectionChanged += (ss, ee) =>
@@ -145,6 +159,7 @@ namespace Fingerprints
                             canvas.Children.RemoveAt(listBox.SelectedIndex);
                             FileTransfer.ListL.RemoveAt(listBox.SelectedIndex);
                             listBox.Items.RemoveAt(listBox.SelectedIndex);
+                            deleteListRefresh();
                         }
                     };
                 }
@@ -157,6 +172,7 @@ namespace Fingerprints
                             canvas.Children.RemoveAt(listBox.SelectedIndex);
                             FileTransfer.ListR.RemoveAt(listBox.SelectedIndex);
                             listBox.Items.RemoveAt(listBox.SelectedIndex);
+                            deleteListRefresh();
                         }
                     };
                 }
