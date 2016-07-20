@@ -16,8 +16,13 @@ namespace Fingerprints
         OverridedCanvas canvasL, canvasR;
         ListBox listBoxL, listBoxR, listBoxD;
         Button buttonLeft, buttonRight;
-        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight)
+        Border borderLeft, borderRight;
+        ComboBox combobox;
+        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight, Border borderLeft, Border borderRight, ComboBox combobox)
         {
+            this.combobox = combobox;
+            this.borderLeft = borderLeft;
+            this.borderRight = borderRight;
             this.listBoxD = listboxDelete;
             this.canvasL = canvasImageL;
             this.canvasR = canvasImageR;
@@ -45,6 +50,38 @@ namespace Fingerprints
                     listBoxD.Items.RemoveAt(index);
                 }
             };
+
+            contextMenu();
+        }
+
+        private void contextMenu()
+        {
+            List<SelfDefinedMinutiae> minType = new List<SelfDefinedMinutiae>();
+            minType = new MinutiaeTypeController().Show();
+            //MenuItem mi = new MenuItem() { Header = "Wstaw" };
+            //MenuItem nMenu = new MenuItem() { Header = "Second" };
+            //mi.Items.Add(nMenu);
+            ContextMenu cm = new ContextMenu();
+
+            cm.Items.Add(contextMenuLeft(minType));
+            listBoxL.ContextMenu = cm;
+        }
+
+        private MenuItem contextMenuLeft(List<SelfDefinedMinutiae> list)
+        {
+            MenuItem mi = new MenuItem() { Header = "Wstaw" };
+
+            foreach (var item in list)
+            {
+                MenuItem nMenu = new MenuItem() { Header = item.Name };
+                nMenu.Click += (ss, ee) =>
+                {
+                    combobox.Text = item.Name;
+                };
+                mi.Items.Add(nMenu);
+            }
+
+            return mi;
         }
 
         private void deleteLeft(int index)

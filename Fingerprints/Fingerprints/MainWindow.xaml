@@ -91,24 +91,9 @@
             </Border>
             <ListBox x:Name="listBoxLp" Grid.Column="3"/>
             <ListBox x:Name="listBoxImageL" Grid.Column="4">
-                <ListBox.Resources>
-                    <ContextMenu x:Key="MyElementMenu">
-                        <MenuItem Header="Usun" Click="leftMenuClick_Delete"/>
-                    </ContextMenu>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="ContextMenu" Value="{StaticResource MyElementMenu}"/>
-                    </Style>
-                </ListBox.Resources>
             </ListBox>
             <ListBox x:Name="listBoxImageR" Grid.Column="5" >
-                <ListBox.Resources>
-                    <ContextMenu x:Key="MyElementMenu">
-                        <MenuItem Header="Usun" Click="rightMenuClick_Delete"/>
-                    </ContextMenu>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="ContextMenu" Value="{StaticResource MyElementMenu}"/>
-                    </Style>
-                </ListBox.Resources>
+
             </ListBox>
             <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             </ListBox>

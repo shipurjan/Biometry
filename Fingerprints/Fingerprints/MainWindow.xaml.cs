@@ -22,7 +22,7 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
-        //pack://application:,,,/fonts/#FontAwesome
+        
         public BrushConverter converter = new System.Windows.Media.BrushConverter();
         BorderColor borderColor;
         Minutiae mL;
@@ -41,6 +41,7 @@ namespace Fingerprints
             p.InitializeR();
             p.InitializeL();
 
+
             minType = new List<SelfDefinedMinutiae>();
             controller = new MinutiaeTypeController();
             minType = controller.Show();
@@ -56,7 +57,7 @@ namespace Fingerprints
 
         public void InitTable()
         {
-            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, listBoxDelete, buttonDeleteL, buttonDeleteR);
+            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, listBoxDelete, buttonDeleteL, buttonDeleteR, borderLeft, borderRight, comboBox);
 
         }
 
