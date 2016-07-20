@@ -35,6 +35,7 @@ namespace Fingerprints
             button.Click += (ss, ee) =>
             {   
                 OpenFileDialog openFile = new OpenFileDialog();
+                openFile.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
                 if (openFile.ShowDialog() == true)
                 {
                     image.Source = new BitmapImage(new Uri(openFile.FileName));
@@ -48,7 +49,7 @@ namespace Fingerprints
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
                         canvasImage.Children.Clear();                        
-                        loadMinutiae(FileTransfer.ListL, canvasImage);
+                        loadMinutiae(FileTransfer.ListL, canvasImage);                        
                     }
                     else
                     {
@@ -59,7 +60,8 @@ namespace Fingerprints
                         canvasImage.Children.Clear();
                         loadMinutiae(FileTransfer.ListR, canvasImage);
                     }
-                }                
+                }
+                fillEmpty();        
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
                 Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
             };
@@ -153,6 +155,27 @@ namespace Fingerprints
 
             }
         }
+        private void fillEmpty()
+        {
+            Empty emptyObject = new Empty();
+            int l = mw.canvasImageL.Children.Count;
+            int r = mw.canvasImageR.Children.Count;
+            if (l > r)
+            {
+                for (int i = 0; i < l-r; i++)
+                {
+                    emptyObject.DrawFromFile(mw.canvasImageR);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < r - l; i++)
+                {
+                    emptyObject.DrawFromFile(mw.canvasImageL);
+                }
+            }
+        }
+
 
     }
 }
