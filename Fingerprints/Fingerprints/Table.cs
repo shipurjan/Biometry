@@ -73,6 +73,7 @@ namespace Fingerprints
                     {
                         Path q = (Path)item;
                         listBoxL.Items.Add(q.Tag);
+                        //Console.WriteLine(q.Tag + " " + "LEFT");
                     }
                     else if (item.GetType().Name == "Polyline")
                     {
@@ -80,6 +81,7 @@ namespace Fingerprints
                         listBoxL.Items.Add(q.Tag);
                     }
                 }
+                Console.WriteLine("----------------------------------------------------");
                 deleteListRefresh();
             };
         }
@@ -95,6 +97,7 @@ namespace Fingerprints
                     {
                         Path q = (Path)item;
                         listBoxR.Items.Add(q.Tag);
+                        Console.WriteLine(q.Tag + " " + "RIGHT");
                     }
                     else if (item.GetType().Name == "Polyline")
                     {
@@ -102,6 +105,7 @@ namespace Fingerprints
                         listBoxR.Items.Add(q.Tag);
                     }
                 }
+                Console.WriteLine("----------------------------------------------------");
                 deleteListRefresh();
             };
         }

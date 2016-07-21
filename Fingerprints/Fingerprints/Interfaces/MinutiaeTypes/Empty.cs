@@ -29,7 +29,20 @@ namespace Fingerprints
             myPath.Opacity = 1;
             myPath.Name = "Puste";
             myPath.Tag = "Puste";
+            if (canvas.Tag.ToString() == "Left")
+            {
+                FileTransfer.ListL.Add("Puste");
+            }
+            else if (canvas.Tag.ToString() == "Right")
+            {
+                FileTransfer.ListR.Add("Puste");
+            }
             canvas.AddLogicalChild(myPath);
+        }
+
+        public override string ToString()
+        {
+            return "Puste";
         }
     }
 }
