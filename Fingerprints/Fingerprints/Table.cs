@@ -52,6 +52,7 @@ namespace Fingerprints
             };
 
             contextMenu();
+            
         }
 
         private void contextMenu()
@@ -69,6 +70,7 @@ namespace Fingerprints
 
         private MenuItem contextMenuLeft(List<SelfDefinedMinutiae> list)
         {
+            
             MenuItem mi = new MenuItem() { Header = "Wstaw" };
 
             foreach (var item in list)
@@ -76,7 +78,20 @@ namespace Fingerprints
                 MenuItem nMenu = new MenuItem() { Header = item.Name };
                 nMenu.Click += (ss, ee) =>
                 {
+                    int index = listBoxL.SelectedIndex;
+                    if (index == -1)  {return; }
+                    listBoxL.UnselectAll();
+                    borderLeft.BorderBrush = Brushes.DeepSkyBlue;
+                    borderRight.BorderBrush = Brushes.Black;
                     combobox.Text = item.Name;
+                    canvasL.Children.RemoveAt(index);
+                    canvasL.ChildAdded += (s, e) =>
+                    {
+                        UIElement child = canvasL.Children[canvasL.Children.Count - 1];
+                        canvasL.RemoveLogicalChild(child);
+                        canvasL.Children.Insert(index, child);
+                    };
+
                 };
                 mi.Items.Add(nMenu);
             }
