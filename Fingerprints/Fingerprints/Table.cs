@@ -16,11 +16,10 @@ namespace Fingerprints
         OverridedCanvas canvasL, canvasR;
         ListBox listBoxL, listBoxR, listBoxD;
         Button buttonLeft, buttonRight;
-        Border borderLeft, borderRight;
-        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight)
+        ComboBox combobox;
+        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight, ComboBox combobox)
         {
-            this.borderLeft = borderLeft;
-            this.borderRight = borderRight;
+            this.combobox = combobox;
             this.listBoxD = listboxDelete;
             this.canvasL = canvasImageL;
             this.canvasR = canvasImageR;
@@ -57,23 +56,27 @@ namespace Fingerprints
         {
             List<SelfDefinedMinutiae> minType = new List<SelfDefinedMinutiae>();
             minType = new MinutiaeTypeController().Show();
-            //MenuItem mi = new MenuItem() { Header = "Wstaw" };
-            //MenuItem nMenu = new MenuItem() { Header = "Second" };
-            //mi.Items.Add(nMenu);
-            ContextMenu cm = new ContextMenu();
 
-            cm.Items.Add(contextMenuLeft(minType));
-            listBoxL.ContextMenu = cm;
+            ContextMenu cmL = new ContextMenu();
+            ContextMenu cmR = new ContextMenu();
+
+            cmL.Items.Add(contextMenuLeftInsert(minType));
+            cmL.Items.Add(deleteMenuContext(listBoxL, canvasL));
+
+            cmR.Items.Add(deleteMenuContext(listBoxR, canvasR));
+
+            listBoxR.ContextMenu = cmR;
+            listBoxL.ContextMenu = cmL;
         }
 
-        private MenuItem contextMenuLeft(List<SelfDefinedMinutiae> list)
+        private MenuItem contextMenuLeftInsert(List<SelfDefinedMinutiae> minType)
         {
-            
             MenuItem mi = new MenuItem() { Header = "Wstaw" };
 
-            foreach (var item in list)
+            foreach (var type in minType)
             {
-                MenuItem nMenu = new MenuItem() { Header = item.Name };
+                
+                MenuItem nMenu = new MenuItem() { Header = type.Name };
                 nMenu.Click += (ss, ee) =>
                 {
                     int index = listBoxL.SelectedIndex;
@@ -82,8 +85,32 @@ namespace Fingerprints
                 };
                 mi.Items.Add(nMenu);
             }
-
             return mi;
+        }
+
+        private MenuItem deleteMenuContext(ListBox listbox, OverridedCanvas canvas)
+        {
+            MenuItem usun = new MenuItem() { Header = "Usuń" };
+            usun.Click += (ss, ee) =>
+            {
+                int index = listbox.SelectedIndex;
+                if (index == -1)
+                {
+                    return;
+                }
+                listbox.Items.RemoveAt(index);
+                canvas.Children.RemoveAt(index);
+                if (canvas.Tag.ToString() == "Left")
+                {
+                    FileTransfer.ListL.RemoveAt(index);
+                }
+                else
+                {
+                    FileTransfer.ListR.RemoveAt(index);
+                }
+            };
+
+            return usun;
         }
 
         private void addLeftAtIndex(int index, string name, UIElement child, string cords)
@@ -165,32 +192,6 @@ namespace Fingerprints
             {
                 listBoxD.Items.Add("Usun");
             }
-        }
-
-        private void buttonConfiguration(int elementIndex, double top)
-        {
-            Button button = new Button();
-            button.Height = 20;
-            button.Width = 30;
-            button.Background = Brushes.CadetBlue;
-            button.Tag = elementIndex;
-            button.Click += (s, e) =>
-            {
-                int index = Convert.ToInt16(button.Tag);
-                if (listBoxR.Items.Count > index)
-                {
-                    listBoxR.Items.RemoveAt(index);
-                    canvasR.Children.RemoveAt(index);
-                    FileTransfer.ListR.RemoveAt(index);
-                }
-                if (listBoxL.Items.Count > index)
-                {
-                    listBoxL.Items.RemoveAt(index);
-                    canvasL.Children.RemoveAt(index);
-                    FileTransfer.ListL.RemoveAt(index);
-                }
-            };
-            Canvas.SetTop(button, top);
         }
         private void listBoxSelectionChanged(ListBox listBox, OverridedCanvas canvas)
         {

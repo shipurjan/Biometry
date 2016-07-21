@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FontAwesome.WPF;
 
 namespace Fingerprints
 {
@@ -23,7 +22,6 @@ namespace Fingerprints
     public partial class MainWindow : Window
     {
         public BrushConverter converter = new System.Windows.Media.BrushConverter();
-        BorderColor borderColor;
         Minutiae mL;
         Minutiae mR;
         IDraw drawL;
@@ -35,7 +33,6 @@ namespace Fingerprints
         {
             
             InitializeComponent();
-            buttonDeleteL.Content = FontAwesomeIcon.Trash;
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
@@ -56,8 +53,7 @@ namespace Fingerprints
 
         public void InitTable()
         {
-            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, listBoxDelete, buttonDeleteL, buttonDeleteR);
-
+            Table table = new Table(canvasImageL, canvasImageR, listBoxImageL, listBoxImageR, listBoxDelete, buttonDeleteL, buttonDeleteR, comboBox);
         }
 
         public void comboBoxChanged()
@@ -66,7 +62,12 @@ namespace Fingerprints
             {
                 borderLeft.BorderBrush = Brushes.DeepSkyBlue;
                 borderRight.BorderBrush = Brushes.Black;
-                string kolor = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Color).FirstOrDefault();
+
+                string selectedValue = "";
+                if (comboBox.SelectedValue != null)
+                    selectedValue = comboBox.SelectedValue.ToString();
+
+                string kolor = minType.Where(x => x.Name == selectedValue).Select(y => y.Color).FirstOrDefault();
 
                 if (drawL != null && drawR != null)
                 {
@@ -91,34 +92,34 @@ namespace Fingerprints
                     listBoxImageR.Items.Add("Puste");
                 }
 
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 2)
+                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 2)
                 {
-                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new Vector(comboBox.SelectedValue.ToString() ,kolor, size);
-                    drawR = new Vector(comboBox.SelectedValue.ToString(), kolor, size);
+                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
+                    drawL = new Vector(selectedValue, kolor, size);
+                    drawR = new Vector(selectedValue, kolor, size);
                 }
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 1)
+                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 1)
                 {
-                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new SinglePoint(comboBox.SelectedValue.ToString(), kolor, size);
-                    drawR = new SinglePoint(comboBox.SelectedValue.ToString(), kolor, size);
+                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
+                    drawL = new SinglePoint(selectedValue, kolor, size);
+                    drawR = new SinglePoint(selectedValue, kolor, size);
                 }
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 3)
+                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 3)
                 {
                     drawL = new CurveLine(kolor);
                     drawR = new CurveLine(kolor);
                 }
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 4)
+                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 4)
                 {
-                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new Triangle(comboBox.SelectedValue.ToString(), kolor);
-                    drawR = new Triangle(comboBox.SelectedValue.ToString(), kolor);
+                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
+                    drawL = new Triangle(selectedValue, kolor);
+                    drawR = new Triangle(selectedValue, kolor);
                 }
-                if (minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.TypeId).First() == 5)
+                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 5)
                 {
-                    double size = minType.Where(x => x.Name == comboBox.SelectedValue.ToString()).Select(y => y.Size).First();
-                    drawL = new Peak(comboBox.SelectedValue.ToString(), kolor);
-                    drawR = new Peak(comboBox.SelectedValue.ToString(), kolor);
+                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
+                    drawL = new Peak(selectedValue, kolor);
+                    drawR = new Peak(selectedValue, kolor);
                 }
 
                 drawL.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);

@@ -95,11 +95,9 @@
             <ListBox x:Name="listBoxImageL" Grid.Column="4">
             </ListBox>
             <ListBox x:Name="listBoxImageR" Grid.Column="5" >
-
             </ListBox>
             <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             </ListBox>
-            <!--<local:OverridedCanvas x:Name="canvasDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
         </Grid>
     </Grid>
 
