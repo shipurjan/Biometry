@@ -40,13 +40,14 @@ namespace Fingerprints
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();
-
+            radioButtonEventInit();
             minType = new List<SelfDefinedMinutiae>();
             controller = new MinutiaeTypeController();
             minType = controller.Show();
             comboBox.ItemsSource = minType;
             comboBoxChanged();
             InitTable();
+            
             //Database.InitialData();
             this.Closed += (ss, ee) =>
             {
@@ -166,5 +167,35 @@ namespace Fingerprints
             FileTransfer.ListR.RemoveAt(index);
         }
 
+        void activeCanvasL_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb != null)
+            {
+                if (rb.IsChecked == true)
+                {
+                    borderRight.BorderBrush = Brushes.Black;
+                    borderLeft.BorderBrush = Brushes.DeepSkyBlue;
+                }
+            }
+        }
+        void activeCanvasR_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb != null)
+            {
+                if (rb.IsChecked == true)
+                {
+                    borderLeft.BorderBrush = Brushes.Black;
+                    borderRight.BorderBrush = Brushes.DeepSkyBlue;
+                }
+            }
+        }
+
+        private void radioButtonEventInit()
+        {
+            activeCanvasL.Checked += activeCanvasL_CheckedChanged;
+            activeCanvasR.Checked += activeCanvasR_CheckedChanged;
+        }
     }
 }
