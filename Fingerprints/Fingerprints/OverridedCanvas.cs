@@ -17,9 +17,13 @@ namespace Fingerprints
         {
         }
 
-        protected internal new void AddLogicalChild(Object child)
+        protected internal new void AddLogicalChild(Object child, int index = -1)
         {
-            this.Children.Add((UIElement)child);
+            if (index >= 0)
+                this.Children.Insert(index, (UIElement)child);
+            else
+                this.Children.Add((UIElement)child);
+
             OnChildAdded(this, EventArgs.Empty);
         }
 

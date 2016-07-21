@@ -81,22 +81,18 @@ namespace Fingerprints
                     int index = listBoxL.SelectedIndex;
                     if (index == -1)  {return; }
                     listBoxL.UnselectAll();
-                    borderLeft.BorderBrush = Brushes.DeepSkyBlue;
-                    borderRight.BorderBrush = Brushes.Black;
-                    combobox.Text = item.Name;
-                    canvasL.Children.RemoveAt(index);
-                    canvasL.ChildAdded += (s, e) =>
-                    {
-                        UIElement child = canvasL.Children[canvasL.Children.Count - 1];
-                        canvasL.RemoveLogicalChild(child);
-                        canvasL.Children.Insert(index, child);
-                    };
-
                 };
                 mi.Items.Add(nMenu);
             }
 
             return mi;
+        }
+
+        private void addLeftAtIndex(int index, string name, UIElement child, string cords)
+        {
+            listBoxL.Items.Insert(index, name);
+            canvasL.Children.Insert(index, child);
+            FileTransfer.ListL.Insert(index, cords);
         }
 
         private void deleteLeft(int index)
