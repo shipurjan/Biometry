@@ -10,7 +10,7 @@ namespace Fingerprints
     abstract class Minutiae : IDraw
     {
         public string Name;
-        public virtual void Draw(OverridedCanvas canvas, Image image, Border border1, Border border2) { }
+        public virtual void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2) { }
         public virtual void DeleteEvent(Image image, OverridedCanvas canvas) { }
     }
 }

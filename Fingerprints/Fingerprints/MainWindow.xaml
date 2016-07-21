@@ -65,6 +65,8 @@
                 <TextBlock x:Name="textBlock2" Grid.Column="9" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Top"/>
                 <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="button_Click" Grid.Column="8"/>
                 <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="button_Click" Grid.Column="9"/>
+                <RadioButton x:Name="activeCanvasL" Content="Aktywuj" HorizontalAlignment="Left" Height="20" Margin="0,17,0,0" VerticalAlignment="Top" Width="93" IsChecked="True"/>
+                <RadioButton x:Name="activeCanvasR" Content="Aktywuj" HorizontalAlignment="Left" Height="20" Margin="0,17,0,0" VerticalAlignment="Top" Width="93" Grid.Column="3"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
