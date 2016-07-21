@@ -17,10 +17,8 @@ namespace Fingerprints
         ListBox listBoxL, listBoxR, listBoxD;
         Button buttonLeft, buttonRight;
         Border borderLeft, borderRight;
-        ComboBox combobox;
-        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight, Border borderLeft, Border borderRight, ComboBox combobox)
+        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight)
         {
-            this.combobox = combobox;
             this.borderLeft = borderLeft;
             this.borderRight = borderRight;
             this.listBoxD = listboxDelete;

@@ -63,8 +63,8 @@
                 <TextBlock x:Name="textBlock" Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="7"/>
                 <TextBlock x:Name="textBlock1" Grid.Column="8" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Top"/>
                 <TextBlock x:Name="textBlock2" Grid.Column="9" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Top"/>
-                <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="button_Click" Grid.Column="8"/>
-                <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="button_Click" Grid.Column="9"/>
+                <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="leftMenuClick_Delete" Grid.Column="8"/>
+                <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="rightMenuClick_Delete" Grid.Column="9"/>
                 <RadioButton x:Name="activeCanvasL" Content="Aktywuj" HorizontalAlignment="Left" Height="20" Margin="0,17,0,0" VerticalAlignment="Top" Width="93" IsChecked="True"/>
                 <RadioButton x:Name="activeCanvasR" Content="Aktywuj" HorizontalAlignment="Left" Height="20" Margin="0,17,0,0" VerticalAlignment="Top" Width="93" Grid.Column="3"/>
             </Grid>

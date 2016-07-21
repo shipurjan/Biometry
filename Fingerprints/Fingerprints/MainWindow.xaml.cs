@@ -22,7 +22,6 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
-        //pack://application:,,,/fonts/#FontAwesome
         public BrushConverter converter = new System.Windows.Media.BrushConverter();
         BorderColor borderColor;
         Minutiae mL;
@@ -130,7 +129,6 @@ namespace Fingerprints
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(listBoxDelete.Items.Count.ToString());
         }
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)
