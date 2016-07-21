@@ -35,7 +35,7 @@ namespace Fingerprints
         /// <param name="image">Aktualny obrazek</param>
         /// <param name="border1">Ramka 1</param>
         /// <param name="border2">Ramka 2</param>
-        public override void Draw(OverridedCanvas canvas, Image image, Border border1, Border border2)
+        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
         {
             handlerMouseDown += (ss, ee) =>
             {
@@ -47,7 +47,7 @@ namespace Fingerprints
 
             handler += (ss, ee) =>
             {
-                if (ee.RightButton == MouseButtonState.Pressed && border1.BorderBrush == Brushes.DeepSkyBlue)
+                if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
                 {
                     if (newLine)
                     {
@@ -67,17 +67,17 @@ namespace Fingerprints
                 }
                 if (ee.RightButton == MouseButtonState.Released && clickCount == false)
                 {
-                    if (border1.BorderBrush == Brushes.Black)
+                    if (radioButton1.IsChecked == false)
                     {
-                        border1.BorderBrush = Brushes.DeepSkyBlue;
-                        border2.BorderBrush = Brushes.Black;
+                        radioButton2.IsChecked = false;
+                        radioButton1.IsChecked = true;
                         clickCount = true;
                         //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     }
-                    else if (border2.BorderBrush == Brushes.Black)
-                    {                        
-                        border1.BorderBrush = Brushes.Black;
-                        border2.BorderBrush = Brushes.DeepSkyBlue;
+                    else
+                    {
+                        radioButton1.IsChecked = false;
+                        radioButton2.IsChecked = true;
                         //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                         clickCount = true;
                     }

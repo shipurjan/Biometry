@@ -122,8 +122,8 @@ namespace Fingerprints
                     drawR = new Peak(comboBox.SelectedValue.ToString(), kolor);
                 }
 
-                drawL.Draw(canvasImageL, imageL, borderLeft, borderRight);
-                drawR.Draw(canvasImageR, imageR, borderRight, borderLeft);
+                drawL.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);
+                drawR.Draw(canvasImageR, imageR, activeCanvasR, activeCanvasL);
             };
             comboBox.SelectionChanged += handler;
         }

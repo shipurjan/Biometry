@@ -25,11 +25,11 @@ namespace Fingerprints
             singlePoint.X = x;
             singlePoint.Y = y;
         }
-        public override void Draw(OverridedCanvas canvas, Image image, Border border1, Border border2)
+        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
         {            
             handler += (ss, ee) =>
             {
-                if (ee.RightButton == MouseButtonState.Pressed && border1.BorderBrush == Brushes.DeepSkyBlue)
+                if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
                 {
                     singlePoint = ee.GetPosition(canvas);
                     EllipseGeometry myEllipseGeometry = new EllipseGeometry();
@@ -43,9 +43,9 @@ namespace Fingerprints
                     //myPath.Opacity = 0.5;
                     myPath.Tag = Name;
                     canvas.AddLogicalChild(myPath);
-                    border1.BorderBrush = Brushes.Black;
-                    border2.BorderBrush = Brushes.DeepSkyBlue;
-                    if (border1.Tag.ToString() == "Left")
+                    radioButton1.IsChecked = false;
+                    radioButton2.IsChecked = true;
+                    if (radioButton1.Name == "activeCanvasL")
                     {
                         FileTransfer.ListL.Add(ToString());
                     }

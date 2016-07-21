@@ -35,7 +35,7 @@ namespace Fingerprints
             tmp2 = new Point();
         }
 
-        public override void Draw(OverridedCanvas canvas, Image image, Border border1, Border border2)
+        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
         {
 
             handler += (ss, ee) =>
@@ -45,7 +45,7 @@ namespace Fingerprints
                 EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                 LineGeometry myPathFigure = new LineGeometry();
                 myPathFigure.StartPoint = new Point(0, 0);
-                if (border1.BorderBrush == Brushes.DeepSkyBlue)
+                if (radioButton1.IsChecked == true)
                 {
                     if (clickCount == 0)
                     {
@@ -72,9 +72,9 @@ namespace Fingerprints
                     }
                     else
                     {
-                        border1.BorderBrush = Brushes.Black;
-                        border2.BorderBrush = Brushes.DeepSkyBlue;
-                        if (border1.Tag.ToString() == "Left")
+                        radioButton1.IsChecked = false;
+                        radioButton2.IsChecked = true;
+                        if (radioButton1.Name == "activeCanvasL")
                         {
                             FileTransfer.ListL.Add(ToString());
                         }
