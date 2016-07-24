@@ -43,6 +43,7 @@ namespace Fingerprints
             comboBox.ItemsSource = minType;
             comboBoxChanged();
             InitTable();
+            addEmpty.Click += addEmpty_Click;
             
             //Database.InitialData();
             this.Closed += (ss, ee) =>
@@ -190,6 +191,20 @@ namespace Fingerprints
                 }
             }
         }
+        private void addEmpty_Click(object sender, EventArgs e)
+        {
+            Empty empty = new Empty();
+            if(activeCanvasL.IsChecked == true)
+            {
+                empty.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);
+            }
+            else
+            {
+                empty.Draw(canvasImageR, imageR, activeCanvasR, activeCanvasL);
+            }
+            
+        }
+
 
         private void radioButtonEventInit()
         {
