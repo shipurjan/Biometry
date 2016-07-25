@@ -197,10 +197,12 @@ namespace Fingerprints
             if(activeCanvasL.IsChecked == true)
             {
                 empty.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);
+                FileTransfer.ListL.Add("Puste");
             }
             else
             {
                 empty.Draw(canvasImageR, imageR, activeCanvasR, activeCanvasL);
+                FileTransfer.ListR.Add("Puste");
             }
             
         }
