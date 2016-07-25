@@ -71,9 +71,6 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" BorderThickness="0" Background="#FFEEEEEE" />
                 <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" />
-                <TextBlock x:Name="textBlock" Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="9" Height="16" Margin="8.4,0,7.8,0" Width="15"/>
-                <TextBlock x:Name="textBlock1" Grid.Column="10" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Top" Height="16" Margin="18.2,0,16.2,0" Width="48"/>
-                <TextBlock x:Name="textBlock2" Grid.Column="11" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Top" Height="16" Margin="16.8,0" Width="48"/>
                 <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="leftMenuClick_Delete" Grid.Column="9" Grid.ColumnSpan="2" Margin="22.4,-33,16.2,41.4" BorderThickness="0" Background="#FFEEEEEE" Height="18"/>
                 <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="rightMenuClick_Delete" Grid.Column="10" Grid.ColumnSpan="2" Margin="81.2,-33,7.8,41.4" BorderThickness="0" Background="#FFEEEEEE" Height="18"/>
                 <Button x:Name="addEmpty" Content="Dodaj puste" Grid.Column="5" HorizontalAlignment="Left" Height="28" Margin="81,-64,0,0" VerticalAlignment="Top" Width="147" Grid.ColumnSpan="2" Background="#FFEEEEEE"/>
@@ -85,35 +82,95 @@
                 </Border>
             </Grid>
         </Grid>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.8*"/>
-                <ColumnDefinition Width="0.8*"/>
-                <ColumnDefinition Width="0.4*"/>
-            </Grid.ColumnDefinitions>
-            <Border x:Name="borderLeft" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch" Grid.Column="0">
-                <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                    <Image x:Name="imageL" Tag="Left" Canvas.Left="150" Canvas.Top="150" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill"  />
-                    <local:OverridedCanvas x:Name="canvasImageL" Tag="Left" Height="{Binding ActualHeight, ElementName=imageLeft}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualHeight, ElementName=imageLeft}"/>
-                </Canvas>
-            </Border>
-            <Border x:Name="borderRight" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch"  Grid.Column="1">
-                <Canvas HorizontalAlignment="Stretch" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
-                    <Image x:Name="imageR" Tag="Right" Height="199" Canvas.Left="150" Canvas.Top="150" Width="241" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
-                    <local:OverridedCanvas x:Name="canvasImageR" Tag="Right" Height="{Binding ActualHeight, ElementName=imageRight}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualWidth, ElementName=imageRight}"/>
-                </Canvas>
-            </Border>
-            <ListBox x:Name="listBoxLp" Grid.Column="3"/>
-            <ListBox x:Name="listBoxImageL" Grid.Column="4">
-            </ListBox>
-            <ListBox x:Name="listBoxImageR" Grid.Column="5" >
-            </ListBox>
-            <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            </ListBox>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="90*"/>
+            </Grid.RowDefinitions>
+                
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                <TextBlock x:Name="textBlock1" Grid.Column="4" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center" />
+                <TextBlock x:Name="textBlock2" Grid.Column="5" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center" />
+            </Grid>
+            
+            <Grid Grid.Row="1" Margin="0, -1, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="#FFEEEEEE" Margin="0, 0, -1, 0" BorderThickness="1,1,1,1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                <Border BorderBrush="#FFEEEEEE" BorderThickness="0,0,0,1" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,1" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                <Border BorderBrush="#FFEEEEEE" Margin=" -1, 0, 0, 0" BorderThickness="1,1,1,1" Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                <TextBlock  Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="3"/>
+                <TextBlock  Text="Typ 1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="4"/>
+                <TextBlock  Text="Typ 2" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="5"/>
+                <TextBlock  Text="Kosz" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="6"/>
+
+            </Grid>
+            
+            
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+                <ListBox x:Name="listBoxLp" Grid.Column="3"/>
+                <ListBox x:Name="listBoxImageL" Grid.Column="4"/>
+                <ListBox x:Name="listBoxImageR" Grid.Column="5" >
+                </ListBox>
+                <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                </ListBox>
+
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.RowSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="borderLeft" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch" Grid.Column="0">
+                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
+                        <Image x:Name="imageL" Tag="Left" Canvas.Left="150" Canvas.Top="150" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill"  />
+                        <local:OverridedCanvas x:Name="canvasImageL" Tag="Left" Height="{Binding ActualHeight, ElementName=imageLeft}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualHeight, ElementName=imageLeft}"/>
+                    </Canvas>
+                </Border>
+                <Border x:Name="borderRight" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch"  Grid.Column="1">
+                    <Canvas HorizontalAlignment="Stretch" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
+                        <Image x:Name="imageR" Tag="Right" Height="199" Canvas.Left="150" Canvas.Top="150" Width="241" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
+                        <local:OverridedCanvas x:Name="canvasImageR" Tag="Right" Height="{Binding ActualHeight, ElementName=imageRight}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualWidth, ElementName=imageRight}"/>
+                    </Canvas>
+                </Border>
+
+
+            </Grid>
+            
         </Grid>
     </Grid>
 
