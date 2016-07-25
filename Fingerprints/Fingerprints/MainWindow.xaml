@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        
+        Style="{StaticResource FontStyle}"
         Title="Minutiae" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -37,20 +37,13 @@
                     <ColumnDefinition Width="163*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="4" >
-                    <ComboBox.Background>
-                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
-                            <GradientStop Color="#FFEEEEEE" Offset="1"/>
-                        </LinearGradientBrush>
-                    </ComboBox.Background>
-                </ComboBox>
-                <Button x:Name="addEmpty" Margin="0, 10, 0, 0" Content="Dodaj puste" Grid.Column="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFEEEEEE" BorderThickness="0"/>
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="4" Background="#FFEEEEEE" />
+                <Button x:Name="addEmpty" Style="{StaticResource FontStyle}" Margin="0, 10, 0, 0" Content="Dodaj puste" Grid.Column="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFEEEEEE" BorderThickness="0"/>
             </Grid>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                 </Grid.ColumnDefinitions>
-                <Menu x:Name="mainMenu" IsMainMenu="True" Background="#FFEEEEEE">
+                <Menu x:Name="mainMenu" IsMainMenu="True" Background="#FFEEEEEE" Style="{StaticResource FontStyle}"  VerticalAlignment="Center" >
                     <MenuItem Header="_Plik">
                         <MenuItem Header="Nowa minucja" Click="wizardAdd_Click"/>
                     </MenuItem>
@@ -73,14 +66,14 @@
                     <ColumnDefinition Width="79*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="10" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="12" BorderThickness="0" Background="#FFEEEEEE" />
+                <Button x:Name="openLeftImage" Style="{StaticResource FontStyle}"  Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" BorderThickness="0" Background="#FFEEEEEE" />
+                <Button x:Name="openRightImage" Style="{StaticResource FontStyle}" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" />
+                <Button x:Name="buttonDeleteL" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="10" BorderThickness="0" Background="#FFEEEEEE" />
+                <Button x:Name="buttonDeleteR" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="12" BorderThickness="0" Background="#FFEEEEEE" />
                 <Border BorderBrush="#FFEEEEEE" BorderThickness="0,1,1,1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
-                <RadioButton x:Name="activeCanvasL" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="2" VerticalAlignment="Center"/>
+                <RadioButton x:Name="activeCanvasL" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="2" VerticalAlignment="Center"/>
                 <Border BorderBrush="#FFEEEEEE" BorderThickness="0,1,1,1" Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
-                <RadioButton x:Name="activeCanvasR" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="6" VerticalAlignment="Center"/>
+                <RadioButton x:Name="activeCanvasR" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="6" VerticalAlignment="Center"/>
 
             </Grid>
         </Grid>
@@ -171,11 +164,7 @@
                         <local:OverridedCanvas x:Name="canvasImageR" Tag="Right" Height="{Binding ActualHeight, ElementName=imageRight}" Canvas.Left="150" Canvas.Top="150" Width="{Binding ActualWidth, ElementName=imageRight}"/>
                     </Canvas>
                 </Border>
-
-
             </Grid>
-
         </Grid>
     </Grid>
-
 </Window>

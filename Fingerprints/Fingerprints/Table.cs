@@ -60,7 +60,7 @@ namespace Fingerprints
             ContextMenu cmL = new ContextMenu();
             ContextMenu cmR = new ContextMenu();
 
-            cmL.Items.Add(contextMenuLeftInsert(minType));
+            //cmL.Items.Add(contextMenuLeftInsert(minType));
             cmL.Items.Add(deleteMenuContext(listBoxL, canvasL));
 
             cmR.Items.Add(deleteMenuContext(listBoxR, canvasR));

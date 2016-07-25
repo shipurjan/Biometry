@@ -61,7 +61,7 @@ namespace Fingerprints
                         loadMinutiae(FileTransfer.ListR, canvasImage);
                     }
                 }
-                fillEmpty();
+                //fillEmpty();
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
                 Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
             };
