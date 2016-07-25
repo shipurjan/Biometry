@@ -25,15 +25,17 @@
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="206*"/>
-                    <ColumnDefinition Width="65*"/>
+                    <ColumnDefinition Width="64*"/>
                     <ColumnDefinition Width="38*"/>
                     <ColumnDefinition Width="103*"/>
-                    <ColumnDefinition Width="206*"/>
+                    <ColumnDefinition Width="205*"/>
                     <ColumnDefinition Width="102*"/>
                     <ColumnDefinition Width="103*"/>
                     <ColumnDefinition Width="206*"/>
                     <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="236*"/>
+                    <ColumnDefinition Width="31*"/>
+                    <ColumnDefinition Width="163*"/>
+                    <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="comboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="4" >
                     <ComboBox.Background>
@@ -43,6 +45,7 @@
                         </LinearGradientBrush>
                     </ComboBox.Background>
                 </ComboBox>
+                <Button x:Name="addEmpty" Margin="0, 10, 0, 0" Content="Dodaj puste" Grid.Column="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFEEEEEE" BorderThickness="0"/>
             </Grid>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -57,7 +60,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="130*"/>
                     <ColumnDefinition Width="128*"/>
-                    <ColumnDefinition Width="127*"/>
+                    <ColumnDefinition Width="126*"/>
                     <ColumnDefinition Width="130*"/>
                     <ColumnDefinition Width="129*"/>
                     <ColumnDefinition Width="126*"/>
@@ -65,15 +68,15 @@
                     <ColumnDefinition Width="130*"/>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="31*"/>
-                    <ColumnDefinition Width="82*"/>
-                    <ColumnDefinition Width="82*"/>
+                    <ColumnDefinition Width="79*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="79*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="openLeftImage"  Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" BorderThickness="0" Background="#FFEEEEEE" />
                 <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="leftMenuClick_Delete" Grid.Column="9" Grid.ColumnSpan="2" Margin="22.4,-33,16.2,41.4" BorderThickness="0" Background="#FFEEEEEE" Height="18"/>
-                <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" Click="rightMenuClick_Delete" Grid.Column="10" Grid.ColumnSpan="2" Margin="81.2,-33,7.8,41.4" BorderThickness="0" Background="#FFEEEEEE" Height="18"/>
-                <Button x:Name="addEmpty" Content="Dodaj puste" Grid.Column="5" HorizontalAlignment="Left" Height="28" Margin="81,-64,0,0" VerticalAlignment="Top" Width="147" Grid.ColumnSpan="2" Background="#FFEEEEEE"/>
+                <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="10" BorderThickness="0" Background="#FFEEEEEE" />
+                <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="12" BorderThickness="0" Background="#FFEEEEEE" />
                 <Border BorderBrush="#FFEEEEEE" BorderThickness="0,1,1,1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
                     <RadioButton x:Name="activeCanvasL" Content="Aktywuj" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
@@ -88,7 +91,7 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="90*"/>
             </Grid.RowDefinitions>
-                
+
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
@@ -103,7 +106,7 @@
                 <TextBlock x:Name="textBlock1" Grid.Column="4" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center" />
                 <TextBlock x:Name="textBlock2" Grid.Column="5" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center" />
             </Grid>
-            
+
             <Grid Grid.Row="1" Margin="0, -1, 0, 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
@@ -124,8 +127,8 @@
                 <TextBlock  Text="Kosz" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="6"/>
 
             </Grid>
-            
-            
+
+
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
@@ -170,7 +173,7 @@
 
 
             </Grid>
-            
+
         </Grid>
     </Grid>
 
