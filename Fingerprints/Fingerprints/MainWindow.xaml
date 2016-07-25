@@ -71,7 +71,7 @@
                 <Button x:Name="buttonDeleteL" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="10" BorderThickness="0" Background="#FFEEEEEE" />
                 <Button x:Name="buttonDeleteR" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="12" BorderThickness="0" Background="#FFEEEEEE" />
                 <Border BorderBrush="#FFEEEEEE" BorderThickness="0,1,1,1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
-                <RadioButton x:Name="activeCanvasL" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="2" VerticalAlignment="Center"/>
+                <RadioButton x:Name="activeCanvasL" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="2" VerticalAlignment="Center" IsChecked="True"/>
                 <Border BorderBrush="#FFEEEEEE" BorderThickness="0,1,1,1" Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
                 <RadioButton x:Name="activeCanvasR" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="6" VerticalAlignment="Center"/>
 
