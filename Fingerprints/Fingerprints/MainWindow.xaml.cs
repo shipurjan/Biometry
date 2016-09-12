@@ -50,6 +50,11 @@ namespace Fingerprints
             {
                 FileTransfer.Save();
             };
+
+            saveButton.Click += (ss, ee) =>
+            {
+                FileTransfer.Save();
+            };
         }
 
         public void InitTable()

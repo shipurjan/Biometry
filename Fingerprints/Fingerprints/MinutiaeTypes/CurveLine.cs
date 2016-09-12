@@ -54,14 +54,18 @@ namespace Fingerprints
                         baseLine = new Polyline
                         {
                             Stroke = color,
-                            StrokeThickness = 0.3
+                            StrokeThickness = 1,
+                            SnapsToDevicePixels = true
                         };
                         //canvas.Children.Add(baseLine);
                         baseLine.Tag = Name;
+                        baseLine.SnapsToDevicePixels = true;
                         canvas.AddLogicalChild(baseLine);   
                         newLine = false; 
                     }
-                    currentPoint = ee.GetPosition(canvas);
+                    currentPoint.X = Math.Floor(ee.GetPosition(canvas).X +0.5);
+                    currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y +0.5);
+
                     baseLine.Points.Add(currentPoint);
                     clickCount = false;
                 }
