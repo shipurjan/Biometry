@@ -19,12 +19,14 @@ namespace Fingerprints
         Point currentPoint;
         bool newLine;
         bool clickCount = true;
+        string[] points;
 
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
 
-        public CurveLine(string color, string name = "krzywa")
+        public CurveLine(string color, string name = "Krzywa", string[] points = null)
         {
+            this.points = points;
             this.Name = name;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
         }
@@ -57,32 +59,44 @@ namespace Fingerprints
                             StrokeThickness = 1,
                             SnapsToDevicePixels = true
                         };
-                        //canvas.Children.Add(baseLine);
                         baseLine.Tag = Name;
                         baseLine.SnapsToDevicePixels = true;
-                        canvas.AddLogicalChild(baseLine);   
+                        canvas.AddLogicalChild(baseLine);
                         newLine = false; 
                     }
                     currentPoint.X = Math.Floor(ee.GetPosition(canvas).X +0.5);
                     currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y +0.5);
+                    
 
-                    baseLine.Points.Add(currentPoint);
+                    if (baseLine.Points.LastOrDefault() != currentPoint)
+                    {
+                        Console.WriteLine(currentPoint);
+                        baseLine.Points.Add(currentPoint);
+                    }
+
                     clickCount = false;
                 }
                 if (ee.RightButton == MouseButtonState.Released && clickCount == false)
                 {
+                    if (radioButton1.Name == "activeCanvasL")
+                    {
+                        FileTransfer.ListL.Add(ToString());
+                    }
+                    else
+                    {
+                        FileTransfer.ListR.Add(ToString());
+                    }
+
                     if (radioButton1.IsChecked == false)
                     {
                         radioButton2.IsChecked = false;
                         radioButton1.IsChecked = true;
                         clickCount = true;
-                        //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     }
                     else
                     {
                         radioButton1.IsChecked = false;
                         radioButton2.IsChecked = true;
-                        //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                         clickCount = true;
                     }
                 }
@@ -98,8 +112,34 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return Name;
+            string points = null;
+            foreach (var point in baseLine.Points)
+            {
+                points += point.X + ";" + point.Y + ";";
+            }
+            return Name + ";" + points;
         }
+
+        public void DrawFromFile(OverridedCanvas canvas)
+        {
+            List<Point> curvePoint = new List<Point>();
+            PointCollection curvePoints = new PointCollection();
+            for (int i = 1; i < points.Count()-2; i+=2)
+            {
+                curvePoints.Add(new Point(Convert.ToInt32(points[i]), Convert.ToInt32(points[i + 1])));
+            }
+
+            Polyline polyLine = new Polyline()
+            {
+                Stroke = color,
+                StrokeThickness = 1,
+                SnapsToDevicePixels = true,
+            };
+            polyLine.Points = curvePoints;
+            polyLine.Tag = Name;
+            canvas.AddLogicalChild(polyLine);
+        }
+
     }
 }
 

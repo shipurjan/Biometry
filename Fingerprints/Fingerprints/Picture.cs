@@ -122,7 +122,7 @@ namespace Fingerprints
             foreach (var item in list)
             {
                 string[] tmp = item.Split(';');
-
+                
                 var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
                 if (type.TypeId == 1)
                 {
@@ -137,7 +137,8 @@ namespace Fingerprints
                 }
                 else if (type.TypeId == 3)
                 {
-
+                    CurveLine c = new CurveLine(type.Color, type.Name, tmp);
+                    c.DrawFromFile(canvas);
                 }
                 else if (type.TypeId == 4)
                 {

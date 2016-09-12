@@ -31,7 +31,6 @@ namespace Fingerprints
         SelectionChangedEventHandler handler = null;
         public MainWindow()
         {
-            
             InitializeComponent();
             Picture p = new Picture(this);
             p.InitializeR();

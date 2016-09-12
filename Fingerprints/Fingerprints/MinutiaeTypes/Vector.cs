@@ -133,7 +133,6 @@ namespace Fingerprints
             Path myPath = new Path();
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             LineGeometry myPathFigure = new LineGeometry();
-
             
             myEllipseGeometry.Center = firstPointLine;
             myEllipseGeometry.RadiusX = 2 * size;
