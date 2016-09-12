@@ -24,21 +24,23 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140*"/>
                     <ColumnDefinition Width="130*"/>
-                    <ColumnDefinition Width="128*"/>
-                    <ColumnDefinition Width="157*"/>
-                    <ColumnDefinition Width="206*"/>
-                    <ColumnDefinition Width="102*"/>
-                    <ColumnDefinition Width="103*"/>
-                    <ColumnDefinition Width="206*"/>
+                    <ColumnDefinition Width="140*"/>
+                    <ColumnDefinition Width="205*"/>
+                    <ColumnDefinition Width="140*"/>
+                    <ColumnDefinition Width="130*"/>
+                    <ColumnDefinition Width="140*"/>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="31*"/>
                     <ColumnDefinition Width="162*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="3" Background="#FFEEEEEE" Grid.ColumnSpan="1"/>
+                <ComboBox x:Name="comboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="3" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0,0,0.6,0.4"/>
                 <Button x:Name="addEmpty" Style="{StaticResource FontStyle}" Margin="0.2,10,40.6,0.4" Content="Dodaj puste" Grid.Column="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFEEEEEE" BorderThickness="0"/>
-                <Button x:Name="saveButton" Content="Button" Grid.Column="9" HorizontalAlignment="Left" Margin="64.8,4,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
+                <Button x:Name="openLeftImage" Style="{StaticResource FontStyle}"  Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" Margin="0, 5, 0, 5" />
+                <Button x:Name="openRightImage" Style="{StaticResource FontStyle}" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0, 5, 0, 5" />
+                <Button x:Name="saveButton" Style="{StaticResource FontStyle}" Content="Zapisz" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" Margin="0, 5, 0, 5" />
             </Grid>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -51,14 +53,13 @@
             </Grid>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140*"/>
                     <ColumnDefinition Width="130*"/>
-                    <ColumnDefinition Width="128*"/>
-                    <ColumnDefinition Width="126*"/>
+                    <ColumnDefinition Width="140*"/>
+                    <ColumnDefinition Width="205*"/>
+                    <ColumnDefinition Width="140*"/>
                     <ColumnDefinition Width="130*"/>
-                    <ColumnDefinition Width="129*"/>
-                    <ColumnDefinition Width="126*"/>
-                    <ColumnDefinition Width="128*"/>
-                    <ColumnDefinition Width="130*"/>
+                    <ColumnDefinition Width="140*"/>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="31*"/>
                     <ColumnDefinition Width="79*"/>
@@ -66,14 +67,12 @@
                     <ColumnDefinition Width="79*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="openLeftImage" Style="{StaticResource FontStyle}"  Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="openRightImage" Style="{StaticResource FontStyle}" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="buttonDeleteL" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="10" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="buttonDeleteR" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="12" BorderThickness="0" Background="#FFEEEEEE" />
-                <Border BorderBrush="#FFEEEEEE" BorderThickness="0,1,1,1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
-                <RadioButton x:Name="activeCanvasL" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="2" VerticalAlignment="Center" IsChecked="True"/>
-                <Border BorderBrush="#FFEEEEEE" BorderThickness="0,1,1,1" Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
-                <RadioButton x:Name="activeCanvasR" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="6" VerticalAlignment="Center"/>
+                <Button x:Name="buttonDeleteL" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" />
+                <Button x:Name="buttonDeleteR" Style="{StaticResource FontStyle}" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="11" BorderThickness="0" Background="#FFEEEEEE" />
+                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
+                <RadioButton x:Name="activeCanvasL" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" IsChecked="True"/>
+                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
+                <RadioButton x:Name="activeCanvasR" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="5" VerticalAlignment="Center"/>
 
             </Grid>
         </Grid>
