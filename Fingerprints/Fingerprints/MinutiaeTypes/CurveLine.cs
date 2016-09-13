@@ -20,12 +20,15 @@ namespace Fingerprints
         bool newLine;
         bool clickCount = true;
         string[] points;
-
+        Button closeEventButton;
+        
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
 
-        public CurveLine(string color, string name = "Krzywa", string[] points = null)
+        public CurveLine(string color, string name = "Krzywa", string[] points = null, Button button = null)
         {
+            closeEventButton = button;
+            newLine = true;
             this.points = points;
             this.Name = name;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
@@ -39,13 +42,17 @@ namespace Fingerprints
         /// <param name="border2">Ramka 2</param>
         public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
         {
-            handlerMouseDown += (ss, ee) =>
+            closeEventButton.Click += (ss, ee) =>
             {
-                newLine = true;               
+                clickCount = false;
+                newLine = true;
             };
 
-            image.MouseDown += handlerMouseDown;
-            canvas.MouseDown += handlerMouseDown;
+            radioButton1.Unchecked += (ss, ee) =>
+            {
+                clickCount = false;
+                newLine = true;
+            };
 
             handler += (ss, ee) =>
             {
@@ -70,21 +77,43 @@ namespace Fingerprints
 
                     if (baseLine.Points.LastOrDefault() != currentPoint)
                     {
-                        Console.WriteLine(currentPoint);
+                        Console.WriteLine(currentPoint.X + " " + currentPoint.Y);
                         baseLine.Points.Add(currentPoint);
                     }
 
-                    clickCount = false;
+                    //clickCount = false;
                 }
                 if (ee.RightButton == MouseButtonState.Released && clickCount == false)
                 {
                     if (radioButton1.Name == "activeCanvasL")
                     {
-                        FileTransfer.ListL.Add(ToString());
+                        if (FileTransfer.ListL.Count > 0)
+                        {
+                            if (FileTransfer.ListL.Last().ToString() != ToString())
+                            {
+                                FileTransfer.ListL.Add(ToString());
+                            }
+                        }
+                        else
+                        {
+                            FileTransfer.ListL.Add(ToString());
+                        }
+
                     }
                     else
                     {
-                        FileTransfer.ListR.Add(ToString());
+                        if (FileTransfer.ListR.Count > 0)
+                        {
+                            if (FileTransfer.ListR.Last().ToString() != ToString())
+                            {
+                                FileTransfer.ListR.Add(ToString());
+                            }
+                        }
+                        else
+                        {
+                            FileTransfer.ListR.Add(ToString());
+                        }
+
                     }
 
                     if (radioButton1.IsChecked == false)
@@ -113,9 +142,12 @@ namespace Fingerprints
         public override string ToString()
         {
             string points = null;
-            foreach (var point in baseLine.Points)
+            if (baseLine != null && baseLine.Points.Count > 0)
             {
-                points += point.X + ";" + point.Y + ";";
+                foreach (var point in baseLine.Points)
+                {
+                    points += point.X + ";" + point.Y + ";";
+                }
             }
             return Name + ";" + points;
         }
