@@ -20,13 +20,15 @@ namespace Fingerprints
         bool newLine;
         bool clickCount = true;
         string[] points;
+        double thickness;
         Button closeEventButton;
         
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
 
-        public CurveLine(string color, string name = "Krzywa", string[] points = null, Button button = null)
+        public CurveLine(string color, double thickness, string name = "Krzywa", string[] points = null, Button button = null)
         {
+            this.thickness = thickness;
             closeEventButton = button;
             newLine = true;
             this.points = points;
@@ -63,7 +65,7 @@ namespace Fingerprints
                         baseLine = new Polyline
                         {
                             Stroke = color,
-                            StrokeThickness = 1,
+                            StrokeThickness = thickness,
                             SnapsToDevicePixels = true
                         };
                         baseLine.Tag = Name;
@@ -137,7 +139,7 @@ namespace Fingerprints
         public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
             image.MouseMove -= handler;
-            image.MouseDown -= handlerMouseDown;
+            canvas.MouseMove += handler;
         }
         public override string ToString()
         {
@@ -164,7 +166,7 @@ namespace Fingerprints
             Polyline polyLine = new Polyline()
             {
                 Stroke = color,
-                StrokeThickness = 1,
+                StrokeThickness = thickness,
                 SnapsToDevicePixels = true,
             };
             polyLine.Points = curvePoints;

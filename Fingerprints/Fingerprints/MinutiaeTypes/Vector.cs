@@ -18,14 +18,16 @@ namespace Fingerprints
         Point firstPointLine;
         Point tmp1, tmp2;
         double angle;
+        double thickness;
         int clickCount;
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector(string name, string color, double size, double x = 0, double y = 0, double angle = 0)
+        public Vector(string name, string color, double size, double thickness, double x = 0, double y = 0, double angle = 0)
         {
             this.Name = name;
             this.size = size;
+            this.thickness = thickness;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
             firstPointLine = new Point();
             firstPointLine.X = x;
@@ -63,7 +65,7 @@ namespace Fingerprints
                         drawCompleteLine(ee, canvas, size);
 
                         myPath.Stroke = color;
-                        myPath.StrokeThickness = 0.3;
+                        myPath.StrokeThickness = thickness;
                         myPath.Data = group;
                         myPath.Tag = Name;
                         canvas.AddLogicalChild(myPath);
@@ -144,7 +146,7 @@ namespace Fingerprints
             myPathFigure.EndPoint = tmp2;
             group.Children.Add(myPathFigure);
             myPath.Stroke = color;
-            myPath.StrokeThickness = 0.3;
+            myPath.StrokeThickness = thickness;
             myPath.Data = group;
             myPath.Tag = Name;
             canvas.AddLogicalChild(myPath);

@@ -73,6 +73,8 @@ namespace Fingerprints
                     selectedValue = comboBox.SelectedValue.ToString();
 
                 string kolor = minType.Where(x => x.Name == selectedValue).Select(y => y.Color).FirstOrDefault();
+                double thickness = minType.Where(x => x.Name == selectedValue).Select(y => y.Thickness).First();
+                double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
 
                 if (drawL != null && drawR != null)
                 {
@@ -99,32 +101,28 @@ namespace Fingerprints
 
                 if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 2)
                 {
-                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
-                    drawL = new Vector(selectedValue, kolor, size);
-                    drawR = new Vector(selectedValue, kolor, size);
+                    drawL = new Vector(selectedValue, kolor, size, thickness);
+                    drawR = new Vector(selectedValue, kolor, size, thickness);
                 }
                 if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 1)
                 {
-                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
-                    drawL = new SinglePoint(selectedValue, kolor, size);
-                    drawR = new SinglePoint(selectedValue, kolor, size);
+                    drawL = new SinglePoint(selectedValue, kolor, size, thickness);
+                    drawR = new SinglePoint(selectedValue, kolor, size, thickness);
                 }
                 if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 3)
                 {
-                    drawL = new CurveLine(kolor, "Krzywa", null, curveLineCloseEvent);
-                    drawR = new CurveLine(kolor, "Krzywa", null, curveLineCloseEvent);
+                    drawL = new CurveLine(kolor, thickness, "Krzywa", null, curveLineCloseEvent);
+                    drawR = new CurveLine(kolor, thickness, "Krzywa", null, curveLineCloseEvent);
                 }
                 if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 4)
                 {
-                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
-                    drawL = new Triangle(selectedValue, kolor);
-                    drawR = new Triangle(selectedValue, kolor);
+                    drawL = new Triangle(selectedValue, kolor, thickness);
+                    drawR = new Triangle(selectedValue, kolor, thickness);
                 }
                 if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 5)
                 {
-                    double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
-                    drawL = new Peak(selectedValue, kolor);
-                    drawR = new Peak(selectedValue, kolor);
+                    drawL = new Peak(selectedValue, kolor, thickness);
+                    drawR = new Peak(selectedValue, kolor, thickness);
                 }
 
                 drawL.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);

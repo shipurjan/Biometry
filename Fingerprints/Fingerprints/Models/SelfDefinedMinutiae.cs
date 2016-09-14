@@ -18,6 +18,7 @@ namespace Fingerprints
         public int TypeId { get; set; }
         public string  Color { get; set; }
         public double Size { get; set; }
+        public double Thickness { get; set; }
         public override string ToString()
         {
             return Name;

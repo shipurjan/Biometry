@@ -35,7 +35,13 @@ namespace Fingerprints
             size.Add(0.25);
             size.Add(0.5);
             size.Add(1);
-            size.Add(2);            
+            size.Add(2);
+            thicknessCombobox.Items.Add(0.3);
+            thicknessCombobox.Items.Add(0.5);
+            thicknessCombobox.Items.Add(0.7);
+            thicknessCombobox.Items.Add(1);
+            thicknessCombobox.Items.Add(1.3);
+            thicknessCombobox.Items.Add(1.5);
 
             comboBoxType.ItemsSource = drawingType;
             comboBoxSize.ItemsSource = size; 
@@ -52,7 +58,7 @@ namespace Fingerprints
         {
             try
             {                
-                Database.AddNewMinutiae(textBox.Text, 1, comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem));
+                Database.AddNewMinutiae(textBox.Text, 1, comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem), Convert.ToDouble(thicknessCombobox.SelectedItem));
                 this.Close();
             }
             catch (Exception)

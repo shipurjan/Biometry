@@ -8,13 +8,14 @@
         Title="Window1" Height="321.849" Width="559.664">
     <Grid Margin="0,0,-8,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="24*"/>
-            <RowDefinition Height="28*"/>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="28*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="91*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="97*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100*"/>
@@ -22,17 +23,19 @@
             <ColumnDefinition Width="326*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="name" Content="Nazwa" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="100" Grid.Row="1"/>
-        <Label x:Name="type" Content="Typ rysowania" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="100" Grid.Row="2"/>
-        <Label x:Name="color" Content="Kolor" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="100" Grid.Row="3"/>
-        <Label x:Name="size" Content="Rozmiar" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="100" Grid.Row="4"/>
-        <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="125" Grid.Row="1"/>
-        <ComboBox x:Name="comboBoxType" Grid.Column="1" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="125" Grid.Row="2" />
+        <Label x:Name="name" Content="Nazwa" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="100" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Label x:Name="type" Content="Typ rysowania" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="100" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Label x:Name="color" Content="Kolor" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="100" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Label x:Name="size" Content="Rozmiar" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="100" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="125" Grid.Row="1" Grid.RowSpan="2"/>
+        <ComboBox x:Name="comboBoxType" Grid.Column="1" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="125" Grid.Row="2" Grid.RowSpan="2" />
         <Button x:Name="buttonColorPicker" Grid.Column="1" Grid.Row="3" Width="125" HorizontalAlignment="Left" ></Button>
-        <ComboBox x:Name="comboBoxSize" Grid.Column="1" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="125" Grid.Row="4" Grid.RowSpan="2"/>
-        <Button x:Name="add" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="0,15,0,0" Grid.Row="5" VerticalAlignment="Top" Width="125" Click="add_Click"/>
-        <ListBox x:Name="listBox" Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="10,0,0,0" Grid.Row="1" Grid.RowSpan="5" VerticalAlignment="Top" Width="232"/>
-        <Button x:Name="delete" Content="Usuń" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="232" Click="delete_Click"/>
+        <ComboBox x:Name="comboBoxSize" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="125" Grid.Row="4"/>
+        <Button x:Name="add" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="8,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="125" Click="add_Click"/>
+        <ListBox x:Name="listBox" Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="10,0,0,0" Grid.Row="1" Grid.RowSpan="6" VerticalAlignment="Top" Width="232"/>
+        <Button x:Name="delete" Content="Usuń" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="232" Click="delete_Click"/>
+        <Label x:Name="thicknessLabel" Content="Rozmiar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="0"/>
+        <ComboBox x:Name="thicknessCombobox" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="125" Grid.Row="5"/>
 
     </Grid>
 </Window>

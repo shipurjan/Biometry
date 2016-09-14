@@ -14,11 +14,13 @@ namespace Fingerprints
     {
         Brush color;
         double size;
+        double thickness;
         Point singlePoint = new Point();
         MouseButtonEventHandler handler = null;
 
-        public SinglePoint(string name, string color, double size, double x = 0, double y = 0)
+        public SinglePoint(string name, string color, double size, double thickness, double x = 0, double y = 0)
         {
+            this.thickness = thickness;
             this.Name = name;
             this.size = size;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
@@ -38,7 +40,7 @@ namespace Fingerprints
                     myEllipseGeometry.RadiusY = 2 * size;
                     Path myPath = new Path();
                     myPath.Stroke = color;
-                    myPath.StrokeThickness = 0.3;
+                    myPath.StrokeThickness = thickness;
                     myPath.Data = myEllipseGeometry;
                     //myPath.Opacity = 0.5;
                     myPath.Tag = Name;

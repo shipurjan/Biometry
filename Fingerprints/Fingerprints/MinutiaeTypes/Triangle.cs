@@ -22,10 +22,12 @@ namespace Fingerprints
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
+        double thickness;
 
 
-        public Triangle(string name, string color, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0)
+        public Triangle(string name, string color, double thickness, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0)
         {
+            this.thickness = thickness;
             this.Name = name;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
             firstPointLine = new Point();
@@ -58,7 +60,7 @@ namespace Fingerprints
                         drawCompleteLine(ee, canvas, clickCount);
 
                         myPath.Stroke = color;
-                        myPath.StrokeThickness = 0.3;
+                        myPath.StrokeThickness = thickness;
                         myPath.Data = group;
                         myPath.Tag = Name;
                         //canvas.Children.Add(myPath);
@@ -71,7 +73,7 @@ namespace Fingerprints
                         group.Children.Add(linetmp);
                         drawCompleteLine(ee, canvas, clickCount);
                         myPath.Stroke = color;
-                        myPath.StrokeThickness = 0.3;
+                        myPath.StrokeThickness = thickness;
                         myPath.Data = group;
                         myPath.Tag = Name;
                         canvas.Children.RemoveAt(canvas.Children.Count - 1);
@@ -86,7 +88,7 @@ namespace Fingerprints
                         clickCount++;
                         drawCompleteLine(ee, canvas, clickCount);
                         myPath.Stroke = color;
-                        myPath.StrokeThickness = 0.3;
+                        myPath.StrokeThickness = thickness;
                         myPath.Data = group;
                         myPath.Tag = Name;
                         //System.Threading.Thread.Sleep(450);
@@ -176,7 +178,7 @@ namespace Fingerprints
             group.Children.Add(myThirdPathFigure);
 
             myPath.Stroke = color;
-            myPath.StrokeThickness = 0.3;
+            myPath.StrokeThickness = thickness;
             myPath.Data = group;
             myPath.Tag = Name;
             //canvas.Children.Add(myPath);
