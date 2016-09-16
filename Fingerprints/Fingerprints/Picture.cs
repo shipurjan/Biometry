@@ -136,7 +136,7 @@ namespace Fingerprints
                 }
                 else if (type.TypeId == 3)
                 {
-                    CurveLine c = new CurveLine(type.Color, type.Thickness, type.Name, tmp);
+                    CurveLine c = new CurveLine(type.Name, type.Color, type.Thickness, tmp);
                     c.DrawFromFile(canvas);
                 }
                 else if (type.TypeId == 4)

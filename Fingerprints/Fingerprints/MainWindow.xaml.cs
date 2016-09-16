@@ -111,8 +111,8 @@ namespace Fingerprints
                 }
                 if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 3)
                 {
-                    drawL = new CurveLine(kolor, thickness, "Krzywa", null, curveLineCloseEvent);
-                    drawR = new CurveLine(kolor, thickness, "Krzywa", null, curveLineCloseEvent);
+                    drawL = new CurveLine(selectedValue, kolor, thickness, null, curveLineCloseEvent);
+                    drawR = new CurveLine(selectedValue, kolor, thickness, null, curveLineCloseEvent);
                 }
                 if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 4)
                 {

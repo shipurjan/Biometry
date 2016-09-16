@@ -26,7 +26,7 @@ namespace Fingerprints
         MouseButtonEventHandler handlerMouseDown = null;
         MouseEventHandler handler = null;
 
-        public CurveLine(string color, double thickness, string name = "Krzywa", string[] points = null, Button button = null)
+        public CurveLine(string name, string color, double thickness, string[] points = null, Button button = null)
         {
             this.thickness = thickness;
             closeEventButton = button;
