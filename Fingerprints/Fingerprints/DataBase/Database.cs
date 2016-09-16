@@ -12,15 +12,15 @@ namespace Fingerprints
         /// <summary>
         /// Na razie dodaje rzeczy na sztywno do jednej tabeli, potem to trzeba bedzie zmienic jakos ;o
         /// </summary>
-
+        public static int currentProject = 0;
         static public void InitialData()
         {
-            AddNewMinutiae("Por", 1, 1, "Czerwony", 1, 1);
-            AddNewMinutiae("Rozwidlenie",1 ,2 , "Zielony", 1.2, 1);
-            AddNewMinutiae("Dowolna",1 ,3 , "Niebieski", 1, 1);
+            AddNewMinutiae("Por", 1, "Czerwony", 1, 1);
+            AddNewMinutiae("Rozwidlenie", 2 , "Zielony", 1.2, 1);
+            AddNewMinutiae("Dowolna", 3, "Niebieski", 1, 1);
         }
 
-        static public void AddNewMinutiae(string name, int projectid, int drawType, string color, double size, double thickness)
+        static public void AddNewMinutiae(string name, int drawType, string color, double size, double thickness)
         {
             using (var db = new FingerContext())
             {
@@ -28,7 +28,7 @@ namespace Fingerprints
                 var SelfDefinedMinutiae = new SelfDefinedMinutiae()
                 {
                     Name = name,
-                    ProjectId = projectid,
+                    ProjectId = currentProject,
                     TypeId = q,
                     Color = color,
                     Size = size,
@@ -49,7 +49,6 @@ namespace Fingerprints
             }
         }
 
-
         static public List<SelfDefinedMinutiae> ShowSelfDefinedMinutiae()
         {
             using (var db = new FingerContext())
@@ -58,8 +57,26 @@ namespace Fingerprints
                 return q;
             }
         }
-
-
+        static public void AddNewProject(string name)
+        {
+            using (var db = new FingerContext())
+            {
+                var Project = new Project()
+                {
+                    Name = name
+                };
+                db.Projects.Add(Project);
+                db.SaveChanges();
+            }
+        }
+        static public List<Project> ShowProject()
+        {
+            using (var db = new FingerContext())
+            {
+                var q = db.Projects.AsEnumerable().ToList();
+                return q;
+            }
+        }
 
     }
 }

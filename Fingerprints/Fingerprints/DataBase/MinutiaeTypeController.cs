@@ -12,7 +12,7 @@ namespace Fingerprints
         {
             using (var db = new FingerContext())
             {
-                var q = db.SelfDefinedMinutiaes.ToList();
+                var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
                 return q;
             }
         }

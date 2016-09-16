@@ -1,0 +1,18 @@
+﻿<Window x:Class="Fingerprints.Windows.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Fingerprints.Windows"
+        mc:Ignorable="d"
+        Title="Window1" Height="294.958" Width="569.748">
+    <Grid Height="265" VerticalAlignment="Top" Margin="0,0,0,-1">
+        <Label x:Name="title" Content="Wybierz projekt" HorizontalAlignment="Left" Height="32" Margin="10,12,0,0" VerticalAlignment="Top" Width="101"/>
+        <ListBox x:Name="project_list" HorizontalAlignment="Left" Height="124" Margin="10,56,0,0" VerticalAlignment="Top" Width="214"/>
+        <Button x:Name="open_project_button" Content="Otwórz projekt" HorizontalAlignment="Left" Height="22" Margin="10,195,0,0" VerticalAlignment="Top" Width="214" Click="open_project_button_Click"/>
+        <Label x:Name="add" Content="Dodaj projekt" HorizontalAlignment="Left" Height="32" Margin="258,158,0,0" VerticalAlignment="Top" Width="84"/>
+        <Button x:Name="add_button" Content="Dodaj" HorizontalAlignment="Left" Height="22" Margin="258,195,0,0" VerticalAlignment="Top" Width="226" Click="add_button_Click"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="32" Margin="356,158,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="128"/>
+
+    </Grid>
+</Window>
