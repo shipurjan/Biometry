@@ -150,7 +150,7 @@ namespace Fingerprints
             return Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + Math.Floor(secondPointLine.X).ToString() + ";" + Math.Floor(secondPointLine.Y).ToString() + ";" + Math.Floor(thirdPointLine.X).ToString() + ";" + Math.Floor(thirdPointLine.Y).ToString();
         }
 
-        public void DrawFromFile(OverridedCanvas canvas)
+        public override void DrawFromFile(OverridedCanvas canvas)
         {
             Path myPath = new Path();
             LineGeometry myFirstPathFigure = new LineGeometry();

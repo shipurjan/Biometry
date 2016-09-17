@@ -12,6 +12,6 @@ namespace Fingerprints
         void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2);
         void DeleteEvent(Image image, OverridedCanvas canvas);
 
-        void DrawFromFile();
+        void DrawFromFile(OverridedCanvas canvas);
     }
 }

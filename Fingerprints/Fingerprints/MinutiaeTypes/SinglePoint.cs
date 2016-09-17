@@ -71,7 +71,7 @@ namespace Fingerprints
             return Name + ";" + Math.Floor(singlePoint.X).ToString() + ";" + Math.Floor(singlePoint.Y).ToString();
         }
 
-        public void DrawFromFile(OverridedCanvas canvas)
+        public override void DrawFromFile(OverridedCanvas canvas)
         {
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             myEllipseGeometry.Center = singlePoint;

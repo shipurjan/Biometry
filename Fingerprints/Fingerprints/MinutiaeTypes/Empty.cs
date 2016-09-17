@@ -44,7 +44,7 @@ namespace Fingerprints
             //canvas.AddLogicalChild(myPath);
         }
 
-        public void DrawFromFile(OverridedCanvas canvas)
+        public override void DrawFromFile(OverridedCanvas canvas)
         {
             Point singlePoint = new Point(1, 1);
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();

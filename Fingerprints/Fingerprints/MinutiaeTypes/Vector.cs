@@ -130,7 +130,7 @@ namespace Fingerprints
             return Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + angle.ToString();
         }
 
-        public void DrawFromFile(OverridedCanvas canvas)
+        public override void DrawFromFile(OverridedCanvas canvas)
         {
             Path myPath = new Path();
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();

@@ -118,7 +118,7 @@ namespace Fingerprints
         private void loadMinutiae(List<string> list, OverridedCanvas canvas)
         {
             List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().Show();
-
+            IDraw draw = null;
             foreach (var item in list)
             {
                 string[] tmp = item.Split(';');
@@ -126,34 +126,30 @@ namespace Fingerprints
                 var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
                 if (type.TypeId == 1)
                 {
-                    SinglePoint p = new SinglePoint(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]));
-                    p.DrawFromFile(canvas);
+                    draw = new SinglePoint(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]));
                 }
                 else if (type.TypeId == 2)
                 {
-                    Vector v = new Vector(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]));
-                    v.DrawFromFile(canvas);
+                    draw = new Vector(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]));
                 }
                 else if (type.TypeId == 3)
                 {
-                    CurveLine c = new CurveLine(type.Name, type.Color, type.Thickness, tmp);
-                    c.DrawFromFile(canvas);
+                    draw = new CurveLine(type.Name, type.Color, type.Thickness, tmp);
                 }
                 else if (type.TypeId == 4)
                 {
-                    Triangle t = new Triangle(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
-                    t.DrawFromFile(canvas);
+                    draw = new Triangle(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
                 }
                 else if (type.TypeId == 5)
                 {
-                    Peak p = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
-                    p.DrawFromFile(canvas);
+                    draw = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
                 }
                 else if (type.TypeId == 6)
                 {
-                    Empty emptyObject = new Empty();
-                    emptyObject.DrawFromFile(canvas);
+                    draw = new Empty();
                 }
+
+                draw.DrawFromFile(canvas);
 
             }
         }

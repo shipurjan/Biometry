@@ -154,7 +154,7 @@ namespace Fingerprints
             return Name + ";" + points;
         }
 
-        public void DrawFromFile(OverridedCanvas canvas)
+        public override void DrawFromFile(OverridedCanvas canvas)
         {
             List<Point> curvePoint = new List<Point>();
             PointCollection curvePoints = new PointCollection();
