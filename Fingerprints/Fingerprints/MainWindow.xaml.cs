@@ -22,10 +22,9 @@ namespace Fingerprints
     public partial class MainWindow : Window
     {
         public BrushConverter converter = new System.Windows.Media.BrushConverter();
-        Minutiae mL;
-        Minutiae mR;
         IDraw drawL;
         IDraw drawR;
+        Helper helper;
         MinutiaeTypeController controller;
         SelectionChangedEventHandler handler = null;
         public MainWindow()
@@ -36,6 +35,7 @@ namespace Fingerprints
             p.InitializeL();
             radioButtonEventInit();
             controller = new MinutiaeTypeController();
+            helper = new Helper(this, controller);
             comboBox.ItemsSource = controller.Show();
             comboBoxChanged();
             InitTable();
@@ -95,33 +95,9 @@ namespace Fingerprints
                     FileTransfer.ListR.Add("Puste");
                     listBoxImageR.Items.Add("Puste");
                 }
-                
 
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 2)
-                {
-                    drawL = new Vector(selectedValue, kolor, size, thickness);
-                    drawR = new Vector(selectedValue, kolor, size, thickness);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 1)
-                {
-                    drawL = new SinglePoint(selectedValue, kolor, size, thickness);
-                    drawR = new SinglePoint(selectedValue, kolor, size, thickness);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 3)
-                {
-                    drawL = new CurveLine(selectedValue, kolor, thickness, null, curveLineCloseEvent);
-                    drawR = new CurveLine(selectedValue, kolor, thickness, null, curveLineCloseEvent);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 4)
-                {
-                    drawL = new Triangle(selectedValue, kolor, thickness);
-                    drawR = new Triangle(selectedValue, kolor, thickness);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 5)
-                {
-                    drawL = new Peak(selectedValue, kolor, thickness);
-                    drawR = new Peak(selectedValue, kolor, thickness);
-                }
+                drawL = helper.GetMinutiaeTypeToDraw;
+                drawR = helper.GetMinutiaeTypeToDraw;
 
                 drawL.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);
                 drawR.Draw(canvasImageR, imageR, activeCanvasR, activeCanvasL);
