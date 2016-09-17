@@ -26,7 +26,6 @@ namespace Fingerprints
         Minutiae mR;
         IDraw drawL;
         IDraw drawR;
-        List<SelfDefinedMinutiae> minType;
         MinutiaeTypeController controller;
         SelectionChangedEventHandler handler = null;
         public MainWindow()
@@ -36,10 +35,8 @@ namespace Fingerprints
             p.InitializeR();
             p.InitializeL();
             radioButtonEventInit();
-            minType = new List<SelfDefinedMinutiae>();
             controller = new MinutiaeTypeController();
-            minType = controller.Show();
-            comboBox.ItemsSource = minType;
+            comboBox.ItemsSource = controller.Show();
             comboBoxChanged();
             InitTable();
             addEmpty.Click += addEmpty_Click;
@@ -72,9 +69,9 @@ namespace Fingerprints
                 if (comboBox.SelectedValue != null)
                     selectedValue = comboBox.SelectedValue.ToString();
 
-                string kolor = minType.Where(x => x.Name == selectedValue).Select(y => y.Color).FirstOrDefault();
-                double thickness = minType.Where(x => x.Name == selectedValue).Select(y => y.Thickness).First();
-                double size = minType.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
+                string kolor = controller.GetColorOfSelectedMinutiae(selectedValue);
+                double thickness = controller.GetThicknessOfSelectedMinutiae(selectedValue);
+                double size = controller.GetSizeOfSelectedMinutiae(selectedValue);
 
                 if (drawL != null && drawR != null)
                 {
@@ -98,28 +95,29 @@ namespace Fingerprints
                     FileTransfer.ListR.Add("Puste");
                     listBoxImageR.Items.Add("Puste");
                 }
+                
 
-                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 2)
+                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 2)
                 {
                     drawL = new Vector(selectedValue, kolor, size, thickness);
                     drawR = new Vector(selectedValue, kolor, size, thickness);
                 }
-                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 1)
+                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 1)
                 {
                     drawL = new SinglePoint(selectedValue, kolor, size, thickness);
                     drawR = new SinglePoint(selectedValue, kolor, size, thickness);
                 }
-                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 3)
+                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 3)
                 {
                     drawL = new CurveLine(selectedValue, kolor, thickness, null, curveLineCloseEvent);
                     drawR = new CurveLine(selectedValue, kolor, thickness, null, curveLineCloseEvent);
                 }
-                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 4)
+                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 4)
                 {
                     drawL = new Triangle(selectedValue, kolor, thickness);
                     drawR = new Triangle(selectedValue, kolor, thickness);
                 }
-                if (minType.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First() == 5)
+                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 5)
                 {
                     drawL = new Peak(selectedValue, kolor, thickness);
                     drawR = new Peak(selectedValue, kolor, thickness);
@@ -140,8 +138,7 @@ namespace Fingerprints
             Window1 win = new Window1();
             win.ShowDialog();
             comboBox.SelectionChanged -= handler;
-            minType = controller.Show();
-            comboBox.ItemsSource = minType;
+            comboBox.ItemsSource = controller.Show();
             comboBoxChanged();
         }
 
