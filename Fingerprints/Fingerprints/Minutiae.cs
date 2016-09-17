@@ -12,5 +12,7 @@ namespace Fingerprints
         public string Name;
         public virtual void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2) { }
         public virtual void DeleteEvent(Image image, OverridedCanvas canvas) { }
+
+        public virtual void DrawFromFile() { }
     }
 }

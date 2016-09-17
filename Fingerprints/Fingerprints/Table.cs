@@ -17,18 +17,18 @@ namespace Fingerprints
         ListBox listBoxL, listBoxR, listBoxD;
         Button buttonLeft, buttonRight;
         ComboBox combobox;
-        public Table(OverridedCanvas canvasImageL, OverridedCanvas canvasImageR, ListBox listBoxImageL, ListBox listBoxImageR, ListBox listboxDelete, Button buttonDeleteLeft, Button buttonDeleteRight, ComboBox combobox)
+        public Table(MainWindow wm)
         {
-            this.combobox = combobox;
-            this.listBoxD = listboxDelete;
-            this.canvasL = canvasImageL;
-            this.canvasR = canvasImageR;
-            this.listBoxL = listBoxImageL;
-            this.listBoxR = listBoxImageR;
-            this.buttonLeft = buttonDeleteLeft;
-            this.buttonRight = buttonDeleteRight;
-            listBoxSelectionChanged(listBoxImageL, canvasImageL);
-            listBoxSelectionChanged(listBoxImageR, canvasImageR);
+            this.combobox = wm.comboBox;
+            this.listBoxD = wm.listBoxDelete;
+            this.canvasL = wm.canvasImageL;
+            this.canvasR = wm.canvasImageR;
+            this.listBoxL = wm.listBoxImageL;
+            this.listBoxR = wm.listBoxImageR;
+            this.buttonLeft = wm.buttonDeleteL;
+            this.buttonRight = wm.buttonDeleteR;
+            listBoxSelectionChanged(wm.listBoxImageL, wm.canvasImageL);
+            listBoxSelectionChanged(wm.listBoxImageR, wm.canvasImageR);
             canvasLeftChildAdded();
             canvasRightChildAdded();
             listBoxD.SelectionChanged += (ss, ee) =>
