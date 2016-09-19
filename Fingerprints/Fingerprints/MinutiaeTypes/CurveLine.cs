@@ -139,7 +139,7 @@ namespace Fingerprints
         public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
             image.MouseMove -= handler;
-            canvas.MouseMove += handler;
+            canvas.MouseMove -= handler;
         }
         public override string ToString()
         {
