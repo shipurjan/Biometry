@@ -24,7 +24,7 @@ namespace Fingerprints
         Button closeEventButton;
         
         MouseButtonEventHandler handlerMouseDown = null;
-        MouseEventHandler handler = null;
+        MouseButtonEventHandler handler = null;
 
         public CurveLine(string name, string color, double thickness, string[] points = null, Button button = null)
         {
@@ -73,9 +73,8 @@ namespace Fingerprints
                         canvas.AddLogicalChild(baseLine);
                         newLine = false; 
                     }
-                    currentPoint.X = Math.Floor(ee.GetPosition(canvas).X +0.5);
-                    currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y +0.5);
-                    
+                    currentPoint.X = Math.Floor(ee.GetPosition(canvas).X);
+                    currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y);
 
                     if (baseLine.Points.LastOrDefault() != currentPoint)
                     {
@@ -132,14 +131,16 @@ namespace Fingerprints
                     }
                 }
             };
-            image.MouseMove += handler;
-            canvas.MouseMove += handler;
+            //image.MouseMove += handler;
+            image.MouseRightButtonDown += handler;
+            //canvas.MouseMove += handler;
         }
 
         public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
-            image.MouseMove -= handler;
-            canvas.MouseMove -= handler;
+            //image.MouseMove -= handler;
+            image.MouseRightButtonDown += handler;
+            //canvas.MouseMove -= handler;
         }
         public override string ToString()
         {
