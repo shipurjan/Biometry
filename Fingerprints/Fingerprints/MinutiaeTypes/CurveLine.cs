@@ -15,7 +15,7 @@ namespace Fingerprints
     class CurveLine : Minutiae
     {
         Brush color;
-        Polyline baseLine;
+        GeometryGroup oldGroup;
         Point currentPoint;
         bool newLine;
         bool clickCount = true;
@@ -23,8 +23,7 @@ namespace Fingerprints
         double thickness;
         Button closeEventButton;
         
-        MouseButtonEventHandler handlerMouseDown = null;
-        MouseButtonEventHandler handler = null;
+        MouseEventHandler handler = null;
 
         public CurveLine(string name, string color, double thickness, string[] points = null, Button button = null)
         {
@@ -60,26 +59,38 @@ namespace Fingerprints
             {
                 if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
                 {
+                    if (currentPoint == new Point(0, 0))
+                    {
+                        currentPoint = ee.GetPosition(canvas);
+                    }
+
+                    LineGeometry lineGeo = new LineGeometry();
+                    lineGeo.StartPoint = new Point(Math.Floor(currentPoint.X), Math.Floor(currentPoint.Y));
+                    lineGeo.EndPoint = new Point(Math.Floor(ee.GetPosition(canvas).X), Math.Floor(ee.GetPosition(canvas).Y));
+
+                    currentPoint = lineGeo.EndPoint;
+
+                    GeometryGroup newGroup = new GeometryGroup();
+                    newGroup.Children.Add(lineGeo);
+
+                    Path path = new Path();
+                    path.Stroke = color;
+                    path.Tag = Name;
+                    path.Fill = color;
+                    path.StrokeThickness = thickness;
+                    path.SnapsToDevicePixels = true;
+                    path.Data = newGroup;
+
                     if (newLine)
                     {
-                        baseLine = new Polyline
-                        {
-                            Stroke = color,
-                            StrokeThickness = thickness,
-                            SnapsToDevicePixels = true
-                        };
-                        baseLine.Tag = Name;
-                        baseLine.SnapsToDevicePixels = true;
-                        canvas.AddLogicalChild(baseLine);
-                        newLine = false; 
+                        canvas.Children.Add(path);
+                        newLine = false;
                     }
-                    currentPoint.X = Math.Floor(ee.GetPosition(canvas).X);
-                    currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y);
-
-                    if (baseLine.Points.LastOrDefault() != currentPoint)
+                    else
                     {
-                        Console.WriteLine(currentPoint.X + " " + currentPoint.Y);
-                        baseLine.Points.Add(currentPoint);
+                        oldGroup = (GeometryGroup)((Path)canvas.Children[canvas.Children.Count - 1]).Data;
+                        oldGroup.Children.Add(newGroup.Children.FirstOrDefault());
+                        ((Path)canvas.Children[canvas.Children.Count - 1]).Data = oldGroup;
                     }
 
                     //clickCount = false;
@@ -131,26 +142,25 @@ namespace Fingerprints
                     }
                 }
             };
-            //image.MouseMove += handler;
-            image.MouseRightButtonDown += handler;
-            //canvas.MouseMove += handler;
+            image.MouseMove += handler;
+            canvas.MouseMove += handler;
         }
 
         public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
-            //image.MouseMove -= handler;
-            image.MouseRightButtonDown += handler;
-            //canvas.MouseMove -= handler;
+            image.MouseMove -= handler;
+            canvas.MouseMove -= handler;
         }
         public override string ToString()
         {
             string points = null;
-            if (baseLine != null && baseLine.Points.Count > 0)
+            if (oldGroup != null && oldGroup.Children.Count > 0)
             {
-                foreach (var point in baseLine.Points)
+                foreach (var point in oldGroup.Children)
                 {
-                    points += point.X + ";" + point.Y + ";";
+                    points += ((LineGeometry)point).StartPoint.X + ";" + ((LineGeometry)point).StartPoint.Y + ";";
                 }
+                points += (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.X) + " " + (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.X);
             }
             return Name + ";" + points;
         }
@@ -177,4 +187,3 @@ namespace Fingerprints
 
     }
 }
-
