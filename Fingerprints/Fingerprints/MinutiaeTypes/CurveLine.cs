@@ -160,7 +160,7 @@ namespace Fingerprints
                 {
                     points += ((LineGeometry)point).StartPoint.X + ";" + ((LineGeometry)point).StartPoint.Y + ";";
                 }
-                points += (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.X) + " " + (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.X);
+                points += (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.X) + ";" + (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.Y);
             }
             return Name + ";" + points;
         }
@@ -169,7 +169,7 @@ namespace Fingerprints
         {
             GeometryGroup newGroup = new GeometryGroup();
 
-            for (int i = 1; i < points.Count() - 4; i += 2)
+            for (int i = 1; i < points.Count() - 3; i += 2)
             {
                 LineGeometry lineGeo = new LineGeometry();
                 lineGeo.StartPoint = new Point(Convert.ToInt32(points[i]), Convert.ToInt32(points[i + 1]));
