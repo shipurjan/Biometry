@@ -73,7 +73,7 @@
                 <RadioButton x:Name="activeCanvasL" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" IsChecked="True"/>
                 <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
                 <RadioButton x:Name="activeCanvasR" Style="{StaticResource FontStyle}" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="5" VerticalAlignment="Center"/>
-                <Button x:Name="curveLineCloseEvent" Style="{StaticResource FontStyle}" Content="Zakończ" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="3" BorderThickness="0" Background="#FFEEEEEE" Margin="41.8,0,33.8,0" />
+                <Button x:Name="curveLineCloseEvent" Style="{StaticResource FontStyle}" Visibility="Hidden" Content="Zakończ" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="3" BorderThickness="0" Background="#FFEEEEEE" Margin="41.8,0,33.8,0" />
 
             </Grid>
         </Grid>
