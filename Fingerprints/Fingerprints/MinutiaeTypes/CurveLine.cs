@@ -18,6 +18,7 @@ namespace Fingerprints
         GeometryGroup oldGroup;
         Point currentPoint;
         bool newLine;
+        Polyline baseLine;
         bool clickCount = true;
         string[] points;
         double thickness;
@@ -89,86 +90,29 @@ namespace Fingerprints
             {
                 if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
                 {
-                    if (currentPoint == new Point(0, 0) || newLine)
-                    {
-                        currentPoint = ee.GetPosition(canvas);
-                    }
-
-                    LineGeometry lineGeo = new LineGeometry();
-                    lineGeo.StartPoint = new Point(Math.Floor(currentPoint.X), Math.Floor(currentPoint.Y));
-                    lineGeo.EndPoint = new Point(Math.Floor(ee.GetPosition(canvas).X), Math.Floor(ee.GetPosition(canvas).Y));
-
-                    currentPoint = lineGeo.EndPoint;
-
-                    GeometryGroup newGroup = new GeometryGroup();
-                    newGroup.Children.Add(lineGeo);
-
-                    Path path = new Path();
-                    path.Stroke = color;
-                    path.Tag = Name;
-                    path.Fill = color;
-                    path.StrokeThickness = thickness;
-                    path.SnapsToDevicePixels = true;
-                    path.Data = newGroup;
-
                     if (newLine)
                     {
-                        canvas.AddLogicalChild(path);
+                        baseLine = new Polyline
+                        {
+                            Stroke = color,
+                            StrokeThickness = thickness,
+                            SnapsToDevicePixels = true,
+                            StrokeLineJoin = PenLineJoin.Miter,
+                            StrokeMiterLimit = 2,
+                            Tag = Name,
+                        };
+                        canvas.AddLogicalChild(baseLine);
                         newLine = false;
                     }
-                    else
+                    currentPoint.X = Math.Floor(ee.GetPosition(canvas).X + 0.5);
+                    currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y + 0.5);
+
+
+                    if (baseLine.Points.LastOrDefault() != currentPoint)
                     {
-                        oldGroup = (GeometryGroup)((Path)canvas.Children[canvas.Children.Count - 1]).Data;
-                        oldGroup.Children.Add(newGroup.Children.FirstOrDefault());
-                        ((Path)canvas.Children[canvas.Children.Count - 1]).Data = oldGroup;
+                        baseLine.Points.Add(currentPoint);
                     }
                 }
-                //else if (ee.RightButton == MouseButtonState.Released && clickCount == false)
-                //{
-                //    if (radioButton1.Name == "activeCanvasL")
-                //    {
-                //        if (FileTransfer.ListL.Count > 0)
-                //        {
-                //            if (FileTransfer.ListL.Last().ToString() != ToString())
-                //            {
-                //                FileTransfer.ListL.Add(ToString());
-                //            }
-                //        }
-                //        else
-                //        {
-                //            FileTransfer.ListL.Add(ToString());
-                //        }
-
-                //    }
-                //    else
-                //    {
-                //        if (FileTransfer.ListR.Count > 0)
-                //        {
-                //            if (FileTransfer.ListR.Last().ToString() != ToString())
-                //            {
-                //                FileTransfer.ListR.Add(ToString());
-                //            }
-                //        }
-                //        else
-                //        {
-                //            FileTransfer.ListR.Add(ToString());
-                //        }
-
-                //    }
-
-                //    if (radioButton1.IsChecked == false)
-                //    {
-                //        radioButton2.IsChecked = false;
-                //        radioButton1.IsChecked = true;
-                //        clickCount = true;
-                //    }
-                //    else
-                //    {
-                //        radioButton1.IsChecked = false;
-                //        radioButton2.IsChecked = true;
-                //        clickCount = true;
-                //    }
-                //}
             };
             image.MouseMove += handler;
             canvas.MouseMove += handler;
@@ -182,37 +126,36 @@ namespace Fingerprints
         public override string ToString()
         {
             string points = null;
-            if (oldGroup != null && oldGroup.Children.Count > 0)
+            if (baseLine != null && baseLine.Points.Count > 0)
             {
-                foreach (var point in oldGroup.Children)
+                foreach (var point in baseLine.Points)
                 {
-                    points += ((LineGeometry)point).StartPoint.X + ";" + ((LineGeometry)point).StartPoint.Y + ";";
+                    points += point.X + ";" + point.Y + ";";
                 }
-                points += (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.X) + ";" + (((LineGeometry)oldGroup.Children.LastOrDefault()).EndPoint.Y);
             }
             return Name + ";" + points;
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
         {
-            GeometryGroup newGroup = new GeometryGroup();
-
-            for (int i = 1; i < points.Count() - 3; i += 2)
+            List<Point> curvePoint = new List<Point>();
+            PointCollection curvePoints = new PointCollection();
+            for (int i = 1; i < points.Count() - 2; i += 2)
             {
-                LineGeometry lineGeo = new LineGeometry();
-                lineGeo.StartPoint = new Point(Convert.ToInt32(points[i]), Convert.ToInt32(points[i + 1]));
-                lineGeo.EndPoint = new Point(Convert.ToInt32(points[i + 2]), Convert.ToInt32(points[i + 3]));
-                newGroup.Children.Add(lineGeo);
+                curvePoints.Add(new Point(Convert.ToInt32(points[i]), Convert.ToInt32(points[i + 1])));
             }
 
-            Path path = new Path();
-            path.Stroke = color;
-            path.Tag = Name;
-            path.Fill = color;
-            path.StrokeThickness = thickness;
-            path.SnapsToDevicePixels = true;
-            path.Data = newGroup;
-            canvas.AddLogicalChild(path);
+            Polyline polyLine = new Polyline()
+            {
+                Stroke = color,
+                StrokeThickness = thickness,
+                SnapsToDevicePixels = true,
+                StrokeLineJoin = PenLineJoin.Miter,
+                StrokeMiterLimit = 2,
+                Tag = Name,
+            };
+            polyLine.Points = curvePoints;
+            canvas.AddLogicalChild(polyLine);
         }
     }
 }
