@@ -181,8 +181,6 @@ namespace Fingerprints
             }
             
         }
-
-
         private void radioButtonEventInit()
         {
             activeCanvasL.Checked += activeCanvasL_CheckedChanged;

@@ -53,13 +53,43 @@ namespace Fingerprints
             {
                 clickCount = false;
                 newLine = true;
+
+                if (radioButton1.Name == "activeCanvasL")
+                {
+                    if (FileTransfer.ListL.Count > 0)
+                    {
+                        if (FileTransfer.ListL.Last().ToString() != ToString())
+                        {
+                            FileTransfer.ListL.Add(ToString());
+                        }
+                    }
+                    else
+                    {
+                        FileTransfer.ListL.Add(ToString());
+                    }
+
+                }
+                else
+                {
+                    if (FileTransfer.ListR.Count > 0)
+                    {
+                        if (FileTransfer.ListR.Last().ToString() != ToString())
+                        {
+                            FileTransfer.ListR.Add(ToString());
+                        }
+                    }
+                    else
+                    {
+                        FileTransfer.ListR.Add(ToString());
+                    }
+                }
             };
 
             handler += (ss, ee) =>
             {
                 if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
                 {
-                    if (currentPoint == new Point(0, 0))
+                    if (currentPoint == new Point(0, 0) || newLine)
                     {
                         currentPoint = ee.GetPosition(canvas);
                     }
@@ -92,55 +122,53 @@ namespace Fingerprints
                         oldGroup.Children.Add(newGroup.Children.FirstOrDefault());
                         ((Path)canvas.Children[canvas.Children.Count - 1]).Data = oldGroup;
                     }
-
-                    //clickCount = false;
                 }
-                if (ee.RightButton == MouseButtonState.Released && clickCount == false)
-                {
-                    if (radioButton1.Name == "activeCanvasL")
-                    {
-                        if (FileTransfer.ListL.Count > 0)
-                        {
-                            if (FileTransfer.ListL.Last().ToString() != ToString())
-                            {
-                                FileTransfer.ListL.Add(ToString());
-                            }
-                        }
-                        else
-                        {
-                            FileTransfer.ListL.Add(ToString());
-                        }
+                //else if (ee.RightButton == MouseButtonState.Released && clickCount == false)
+                //{
+                //    if (radioButton1.Name == "activeCanvasL")
+                //    {
+                //        if (FileTransfer.ListL.Count > 0)
+                //        {
+                //            if (FileTransfer.ListL.Last().ToString() != ToString())
+                //            {
+                //                FileTransfer.ListL.Add(ToString());
+                //            }
+                //        }
+                //        else
+                //        {
+                //            FileTransfer.ListL.Add(ToString());
+                //        }
 
-                    }
-                    else
-                    {
-                        if (FileTransfer.ListR.Count > 0)
-                        {
-                            if (FileTransfer.ListR.Last().ToString() != ToString())
-                            {
-                                FileTransfer.ListR.Add(ToString());
-                            }
-                        }
-                        else
-                        {
-                            FileTransfer.ListR.Add(ToString());
-                        }
+                //    }
+                //    else
+                //    {
+                //        if (FileTransfer.ListR.Count > 0)
+                //        {
+                //            if (FileTransfer.ListR.Last().ToString() != ToString())
+                //            {
+                //                FileTransfer.ListR.Add(ToString());
+                //            }
+                //        }
+                //        else
+                //        {
+                //            FileTransfer.ListR.Add(ToString());
+                //        }
 
-                    }
+                //    }
 
-                    if (radioButton1.IsChecked == false)
-                    {
-                        radioButton2.IsChecked = false;
-                        radioButton1.IsChecked = true;
-                        clickCount = true;
-                    }
-                    else
-                    {
-                        radioButton1.IsChecked = false;
-                        radioButton2.IsChecked = true;
-                        clickCount = true;
-                    }
-                }
+                //    if (radioButton1.IsChecked == false)
+                //    {
+                //        radioButton2.IsChecked = false;
+                //        radioButton1.IsChecked = true;
+                //        clickCount = true;
+                //    }
+                //    else
+                //    {
+                //        radioButton1.IsChecked = false;
+                //        radioButton2.IsChecked = true;
+                //        clickCount = true;
+                //    }
+                //}
             };
             image.MouseMove += handler;
             canvas.MouseMove += handler;
@@ -186,6 +214,5 @@ namespace Fingerprints
             path.Data = newGroup;
             canvas.AddLogicalChild(path);
         }
-
     }
 }

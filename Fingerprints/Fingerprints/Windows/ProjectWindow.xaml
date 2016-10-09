@@ -11,7 +11,7 @@
         <ListBox x:Name="project_list" HorizontalAlignment="Left" Height="124" Margin="10,42,0,0" VerticalAlignment="Top" Width="250"/>
         <Button x:Name="open_project_button" Content="Otwórz projekt" HorizontalAlignment="Left" BorderThickness="0" Background="#FFEEEEEE" Height="22" Margin="275,42,0,0" VerticalAlignment="Top" Width="214" Click="open_project_button_Click"/>
         <Button x:Name="add_button" Content="Dodaj projekt" HorizontalAlignment="Left" Height="22" BorderThickness="0" Background="#FFEEEEEE" Margin="275,178,0,0" VerticalAlignment="Top" Width="226" Click="add_button_Click"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" Margin="10,175,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="248"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" Margin="10,175,0,0" TextWrapping="Wrap" Text="Nowy projekt" VerticalAlignment="Top" Width="248"/>
 
     </Grid>
 </Window>
