@@ -117,14 +117,20 @@ namespace Fingerprints
 
         private void loadMinutiae(List<string> list, OverridedCanvas canvas)
         {
-            List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().Show();
+            List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
+
             IDraw draw = null;
             foreach (var item in list)
             {
                 string[] tmp = item.Split(';');
                 
                 var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
-                if (type.TypeId == 1)
+
+                if(type == null)
+                {
+                    draw = new Empty();
+                }
+                else if (type.TypeId == 1)
                 {
                     draw = new SinglePoint(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]));
                 }
@@ -144,7 +150,7 @@ namespace Fingerprints
                 {
                     draw = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
                 }
-                else if (type.TypeId == 6)
+                else
                 {
                     draw = new Empty();
                 }

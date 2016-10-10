@@ -34,7 +34,7 @@
         <Button x:Name="add" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="0,5,0,0" Grid.Row="6" VerticalAlignment="Top" Width="125" Click="add_Click"/>
         <ListBox x:Name="listBox" Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="10,0,0,0" Grid.Row="1" Grid.RowSpan="6" VerticalAlignment="Top" Width="232"/>
         <Button x:Name="delete" Content="Usuń" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="232" Click="delete_Click"/>
-        <Label x:Name="thicknessLabel" Content="Rozmiar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="0"/>
+        <Label x:Name="thicknessLabel" Content="Grubość linii" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="0"/>
         <ComboBox x:Name="thicknessCombobox" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="125" Grid.Row="5"/>
 
     </Grid>

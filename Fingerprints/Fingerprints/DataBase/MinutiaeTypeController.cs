@@ -17,6 +17,15 @@ namespace Fingerprints
             }
         }
 
+        public List<SelfDefinedMinutiae> GetAllMinutiaeTypes()
+        {
+            using (var db = new FingerContext())
+            {
+                var q = db.SelfDefinedMinutiaes.ToList();
+                return q;
+            }
+        }
+
         public int GetTypeIdOfSelectedMinutiae(string selectedValue)
         {
             using (var db = new FingerContext())
