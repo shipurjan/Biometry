@@ -35,6 +35,12 @@ namespace Fingerprints.Windows
             listBoxRefresh();
         }
 
+        private void delete_button_Click(object sender, RoutedEventArgs e)
+        {
+            Database.DeleteProject(project_list.SelectedValue as Project);
+            listBoxRefresh();
+        }
+
         private void open_project_button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -43,13 +49,13 @@ namespace Fingerprints.Windows
                 Database.currentProject = project.ProjectID;
                 MainWindow win = new MainWindow();
                 win.Show();
-                this.Close();
-                
+                this.Close();                
             }
             catch
             {
                 Console.Beep();
             }
         }
+
     }
 }

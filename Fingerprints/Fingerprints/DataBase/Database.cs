@@ -53,7 +53,7 @@ namespace Fingerprints
         {
             using (var db = new FingerContext())
             {
-                var q = db.SelfDefinedMinutiaes.AsEnumerable().ToList();
+                var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == currentProject).AsEnumerable().ToList();
                 return q;
             }
         }
@@ -66,6 +66,16 @@ namespace Fingerprints
                     Name = name
                 };
                 db.Projects.Add(Project);
+                db.SaveChanges();
+            }
+        }
+
+        static public void DeleteProject(Project project)
+        {
+            using (var db = new FingerContext())
+            {
+                db.Projects.Attach(project);
+                db.Projects.Remove(project);
                 db.SaveChanges();
             }
         }
