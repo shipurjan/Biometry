@@ -26,8 +26,15 @@ namespace Fingerprints
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
             Window1.colorPicked = colorPicker.SelectedColor.ToString();
             this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Wybierz kolor");
+            }
         }
     }
 }

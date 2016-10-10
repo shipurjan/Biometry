@@ -49,7 +49,10 @@ namespace Fingerprints
             {
                 ColorPicker colorPicker = new ColorPicker();
                 colorPicker.ShowDialog();
-                buttonColorPicker.Background = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(colorPicked);
+                if (colorPicked != null)
+                {
+                    buttonColorPicker.Background = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(colorPicked);
+                }
             };
             listBoxRefresh();
         }
