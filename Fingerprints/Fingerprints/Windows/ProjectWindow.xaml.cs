@@ -37,8 +37,11 @@ namespace Fingerprints.Windows
 
         private void delete_button_Click(object sender, RoutedEventArgs e)
         {
+            if (project_list.SelectedValue != null)
+            {
             Database.DeleteProject(project_list.SelectedValue as Project);
             listBoxRefresh();
+            }
         }
 
         private void open_project_button_Click(object sender, RoutedEventArgs e)

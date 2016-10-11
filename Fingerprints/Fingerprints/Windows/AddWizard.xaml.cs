@@ -67,14 +67,17 @@ namespace Fingerprints
             catch (Exception)
             {
 
-                throw;
+                MessageBox.Show("Uzupełnij dane");
             }
         }
 
         private void delete_Click(object sender, RoutedEventArgs e)
         {
-            Database.DeleteMinutiae(listBox.SelectedValue as SelfDefinedMinutiae);
-            listBoxRefresh();
+            if (listBox.SelectedValue != null)
+            {
+                Database.DeleteMinutiae(listBox.SelectedValue as SelfDefinedMinutiae);
+                listBoxRefresh();
+            }
         }
 
         private void listBoxRefresh()
