@@ -62,12 +62,11 @@ namespace Fingerprints
         {
             handler += (ss, ee) =>
             {
-                borderLeft.BorderBrush = Brushes.DeepSkyBlue;
-                borderRight.BorderBrush = Brushes.Black;
-
                 string selectedValue = "";
                 if (comboBox.SelectedValue != null)
                     selectedValue = comboBox.SelectedValue.ToString();
+
+                resetBordersAndRadioButtons();
 
                 string kolor = controller.GetColorOfSelectedMinutiae(selectedValue);
                 double thickness = controller.GetThicknessOfSelectedMinutiae(selectedValue);
@@ -140,6 +139,11 @@ namespace Fingerprints
             listBoxImageR.Items.RemoveAt(index);
             canvasImageR.Children.RemoveAt(index);
             FileTransfer.ListR.RemoveAt(index);
+        }
+
+        private void resetBordersAndRadioButtons()
+        {
+            activeCanvasL.IsChecked = true;
         }
 
         void activeCanvasL_CheckedChanged(object sender, EventArgs e)
