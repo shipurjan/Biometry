@@ -22,6 +22,7 @@ namespace Fingerprints
         public static string colorPicked;
         public Window1()
         {
+            colorPicked = "";
             InitializeComponent();
             List<string> drawingType = new List<string>();
             List<string> colors = new List<string>();
@@ -49,7 +50,8 @@ namespace Fingerprints
             {
                 ColorPicker colorPicker = new ColorPicker();
                 colorPicker.ShowDialog();
-                if (colorPicked != null)
+
+                if (colorPicked != "")
                 {
                     buttonColorPicker.Background = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(colorPicked);
                 }
