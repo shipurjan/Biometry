@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Fingerprints.Windows"
         mc:Ignorable="d"
         Style="{StaticResource FontStyle}"
-        Title="Window1" Height="294.958" Width="525.748" WindowStartupLocation="CenterScreen">
+        Title="Minutiae" Height="294.958" Width="525.748" WindowStartupLocation="CenterScreen">
     <Grid Height="265" VerticalAlignment="Top" Margin="0,0,0,-1">
         <Label x:Name="title" Content="Wybierz projekt" HorizontalAlignment="Left" Height="30" Margin="68,10,0,0" VerticalAlignment="Top" Width="123"/>
         <ListBox x:Name="project_list" HorizontalAlignment="Left" Height="124" Margin="10,42,0,0" VerticalAlignment="Top" Width="250"/>

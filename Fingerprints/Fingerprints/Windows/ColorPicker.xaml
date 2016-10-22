@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
-        Title="ColorPicker" Height="350" Width="300">
+        Title="Kolor" Height="350" Width="300">
     
     <Grid>
         <xctk:ColorCanvas x:Name="colorPicker" />
