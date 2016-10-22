@@ -37,10 +37,11 @@ namespace Fingerprints.Windows
 
         private void delete_button_Click(object sender, RoutedEventArgs e)
         {
-            if (project_list.SelectedValue != null)
+
+            if (project_list.SelectedValue != null && MessageBox.Show("Czy na pewno chcesz usunąć projekt?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-            Database.DeleteProject(project_list.SelectedValue as Project);
-            listBoxRefresh();
+                Database.DeleteProject(project_list.SelectedValue as Project);
+                listBoxRefresh();
             }
         }
 
@@ -52,7 +53,7 @@ namespace Fingerprints.Windows
                 Database.currentProject = project.ProjectID;
                 MainWindow win = new MainWindow();
                 win.Show();
-                this.Close();                
+                this.Close();
             }
             catch
             {

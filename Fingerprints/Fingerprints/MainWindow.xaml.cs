@@ -144,6 +144,8 @@ namespace Fingerprints
         private void resetBordersAndRadioButtons()
         {
             activeCanvasL.IsChecked = true;
+            borderRight.BorderBrush = Brushes.Black;
+            borderLeft.BorderBrush = Brushes.DeepSkyBlue;
         }
 
         void activeCanvasL_CheckedChanged(object sender, EventArgs e)
