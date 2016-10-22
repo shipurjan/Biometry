@@ -38,7 +38,7 @@
         <Button x:Name="buttonColorPicker" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
         <ComboBox x:Name="comboBoxSize" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7"/>
         <Button x:Name="add" BorderThickness="0" Background="#FFEEEEEE" Content="Dodaj" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="add_Click"/>
-        <ListBox x:Name="listBox" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="2" Grid.Row="1" Grid.RowSpan="9" VerticalAlignment="Stretch" Width="250"/>
+        <ListBox x:Name="listBox"  Grid.Column="2" Grid.Row="1" Grid.RowSpan="9" VerticalAlignment="Stretch" Width="250"/>
         <Button x:Name="delete" BorderThickness="0" Background="#FFEEEEEE" Content="Usuń" Grid.Column="2" Grid.Row="11" VerticalAlignment="Stretch" Width="250" Click="delete_Click"/>
         <Label x:Name="thicknessLabel" Content="Grubość linii" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="9" Grid.Column="0" Padding="5,1"/>
         <ComboBox x:Name="thicknessCombobox" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="9"/>

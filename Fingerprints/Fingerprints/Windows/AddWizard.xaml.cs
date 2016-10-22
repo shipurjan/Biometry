@@ -75,7 +75,7 @@ namespace Fingerprints
 
         private void delete_Click(object sender, RoutedEventArgs e)
         {
-            if (listBox.SelectedValue != null)
+            if (listBox.SelectedValue != null && MessageBox.Show("Czy na pewno chcesz usunąć minucje?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Database.DeleteMinutiae(listBox.SelectedValue as SelfDefinedMinutiae);
                 listBoxRefresh();
