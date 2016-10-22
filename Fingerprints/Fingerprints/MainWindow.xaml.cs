@@ -90,7 +90,7 @@ namespace Fingerprints
                     myPath.Opacity = 0;
                     myPath.Name = "Puste";
                     myPath.Tag = "Puste";
-                    canvasImageR.Children.Add(myPath);
+                    canvasImageR.AddLogicalChild(myPath);
                     FileTransfer.ListR.Add("Puste");
                     listBoxImageR.Items.Add("Puste");
                 }
