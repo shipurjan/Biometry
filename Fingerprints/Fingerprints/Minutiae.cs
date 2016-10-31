@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace Fingerprints
 {
-    abstract class Minutiae : IDraw
+    public abstract class Minutiae : IDraw
     {
         public string Name;
         public virtual void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2) { }

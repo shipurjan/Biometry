@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace Fingerprints
 {
-    class OverridedCanvas : Canvas
+    public class OverridedCanvas : Canvas
     {
         public event EventHandler ChildAdded;
         public event EventHandler ChildRemoved;

@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class CurveLine : Minutiae
+    public class CurveLine : Minutiae
     {
         Brush color;
         GeometryGroup oldGroup;
@@ -128,9 +128,9 @@ namespace Fingerprints
             string points = null;
             if (baseLine != null && baseLine.Points.Count > 0)
             {
-                foreach (var point in baseLine.Points)
+                foreach (var point in convertLinesToPoints(baseLine.Points))
                 {
-                    points += point.X + ";" + point.Y + ";";
+                    //points += point.X + ";" + point.Y + ";";
                 }
             }
             return Name + ";" + points;
@@ -157,5 +157,41 @@ namespace Fingerprints
             polyLine.Points = curvePoints;
             canvas.AddLogicalChild(polyLine);
         }
+
+        public PointCollection convertLinesToPoints(PointCollection points)
+        {
+            double a, b, c = 0;
+            PointCollection all = new PointCollection();
+
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                a = calculateA(points[i], points[i + 1]);
+                b = calculateB(points[i], points[i + 1]);
+                c = calculateC(points[i], points[i + 1]);
+                Point p2 = points[i + 1]; // important assignment becouse is a bug when "points[i + 1]" is in for loop
+                for (double j = points[i].X; j <= p2.X; j++)
+                {
+                    Point p = new Point() { X = j, Y = ((-a * j) - c) / b };
+                    all.Add(p);
+                }
+            }
+            return all;
+        }
+
+        public double calculateA(Point point1, Point point2)
+        {
+            return point1.Y - point2.Y;
+        }
+
+        public double calculateB(Point point1, Point point2)
+        {
+            return point2.X - point1.X;
+        }
+
+        public double calculateC(Point point1, Point point2)
+        {
+            return (point1.X - point2.X) * point1.Y + (point2.Y - point1.Y) * point1.X;
+        }
+
     }
 }
