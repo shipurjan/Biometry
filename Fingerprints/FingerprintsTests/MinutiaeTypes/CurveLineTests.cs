@@ -62,6 +62,60 @@ namespace Fingerprints.Tests
         }
 
         [TestMethod()]
+        public void convertLinesToPointsTest2()
+        {
+            Point p1 = new Point() { X = 20, Y = 25 };
+            Point p2 = new Point() { X = 25, Y = 20 };
+            PointCollection points = new PointCollection();
+            points.Add(p1);
+            points.Add(p2);
+
+            PointCollection expected = new PointCollection();
+            expected.Add(p1);
+            expected.Add(new Point() { X = 21, Y = 24 });
+            expected.Add(new Point() { X = 22, Y = 23 });
+            expected.Add(new Point() { X = 23, Y = 22 });
+            expected.Add(new Point() { X = 24, Y = 21 });
+            expected.Add(p2);
+
+
+            PointCollection actual = curve.convertLinesToPoints(points);
+
+            //Assert.AreEqual<PointCollection>(expected, actual);
+            for (int i = 0; i < actual.Count - 1; i++)
+            {
+                Assert.AreEqual(actual[i], expected[i]);
+            }
+        }
+
+        [TestMethod()]
+        public void convertLinesToPointsTest3()
+        {
+            Point p1 = new Point() { X = 25, Y = 20 };
+            Point p2 = new Point() { X = 20, Y = 25 };
+            PointCollection points = new PointCollection();
+            points.Add(p1);
+            points.Add(p2);
+
+            PointCollection expected = new PointCollection();
+            expected.Add(p1);
+            expected.Add(new Point() { X = 24, Y = 21 });
+            expected.Add(new Point() { X = 23, Y = 22 });
+            expected.Add(new Point() { X = 22, Y = 23 });
+            expected.Add(new Point() { X = 21, Y = 24 });
+            expected.Add(p2);
+
+
+            PointCollection actual = curve.convertLinesToPoints(points);
+
+            //Assert.AreEqual<PointCollection>(expected, actual);
+            for (int i = 0; i < actual.Count - 1; i++)
+            {
+                Assert.AreEqual(actual[i], expected[i]);
+            }
+        }
+
+        [TestMethod()]
         public void calculateATest()
         {
             double expected = -131;

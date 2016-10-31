@@ -161,21 +161,36 @@ namespace Fingerprints
         public PointCollection convertLinesToPoints(PointCollection points)
         {
             double a, b, c = 0;
-            PointCollection all = new PointCollection();
+            PointCollection convertedPoints = new PointCollection();
 
             for (int i = 0; i < points.Count - 1; i++)
             {
-                a = calculateA(points[i], points[i + 1]);
-                b = calculateB(points[i], points[i + 1]);
-                c = calculateC(points[i], points[i + 1]);
-                Point p2 = points[i + 1]; // important assignment becouse is a bug when "points[i + 1]" is in for loop
-                for (double j = points[i].X; j <= p2.X; j++)
+                Point p1, p2;
+                p1 = points[i];
+                p2 = points[i + 1];
+
+                a = calculateA(p1, p2);
+                b = calculateB(p1, p2);
+                c = calculateC(p1, p2);
+
+                if (p1.X < p2.X)
                 {
-                    Point p = new Point() { X = j, Y = ((-a * j) - c) / b };
-                    all.Add(p);
+
+                    for (double x = p1.X; x <= p2.X; x++)
+                    {
+                        convertedPoints.Add(createPoint(a, b, c, x));
+                    }
                 }
+                else
+                {
+                    for (double x = p1.X; x >= p2.X; x--)
+                    {
+                        convertedPoints.Add(createPoint(a, b, c, x));
+                    }
+                }
+
             }
-            return all;
+            return convertedPoints;
         }
 
         public double calculateA(Point point1, Point point2)
@@ -191,6 +206,11 @@ namespace Fingerprints
         public double calculateC(Point point1, Point point2)
         {
             return (point1.X - point2.X) * point1.Y + (point2.Y - point1.Y) * point1.X;
+        }
+
+        public Point createPoint(double a, double b, double c, double x)
+        {
+            return new Point() { X = x, Y = ((-a * x) - c) / b };
         }
 
     }
