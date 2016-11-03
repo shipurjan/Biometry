@@ -107,7 +107,6 @@ namespace Fingerprints
                     currentPoint.X = Math.Floor(ee.GetPosition(canvas).X + 0.5);
                     currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y + 0.5);
 
-
                     if (baseLine.Points.LastOrDefault() != currentPoint)
                     {
                         baseLine.Points.Add(currentPoint);
@@ -130,7 +129,6 @@ namespace Fingerprints
             {
                 foreach (var point in convertLinesToPoints(baseLine.Points))
                 {
-                    Console.WriteLine(point.X + " " + point.Y);
                     points += point.X + ";" + point.Y + ";";
                 }
             }
@@ -175,7 +173,7 @@ namespace Fingerprints
                 b = calculateB(p1, p2);
                 c = calculateC(p1, p2);
 
-                if (p1.X < p2.X)
+                if (p1.X < p2.X && b != 0)
                 {
 
                     for (double x = p1.X; x <= p2.X; x++)
@@ -184,11 +182,12 @@ namespace Fingerprints
                         convertedPoints = fillSpaceBetweenPointsAndAddPoint(convertedPoints, createdPoint);
                     }
                 }
-                else
+                else if(b != 0)
                 {
                     for (double x = p1.X; x >= p2.X; x--)
                     {
                         Point createdPoint = createPoint(a, b, c, x);
+                        Console.WriteLine(createdPoint.X + " " + createdPoint.Y + " b:" + b);
                         convertedPoints = fillSpaceBetweenPointsAndAddPoint(convertedPoints, createdPoint);
                     }
                 }
