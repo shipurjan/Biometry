@@ -130,7 +130,8 @@ namespace Fingerprints
             {
                 foreach (var point in convertLinesToPoints(baseLine.Points))
                 {
-                    //points += point.X + ";" + point.Y + ";";
+                    Console.WriteLine(point.X + " " + point.Y);
+                    points += point.X + ";" + point.Y + ";";
                 }
             }
             return Name + ";" + points;
@@ -158,6 +159,7 @@ namespace Fingerprints
             canvas.AddLogicalChild(polyLine);
         }
 
+        // Converter
         public PointCollection convertLinesToPoints(PointCollection points)
         {
             double a, b, c = 0;
@@ -178,19 +180,44 @@ namespace Fingerprints
 
                     for (double x = p1.X; x <= p2.X; x++)
                     {
-                        convertedPoints.Add(createPoint(a, b, c, x));
+                        Point createdPoint = createPoint(a, b, c, x);
+                        convertedPoints = fillSpaceBetweenPointsAndAddPoint(convertedPoints, createdPoint);
                     }
                 }
                 else
                 {
                     for (double x = p1.X; x >= p2.X; x--)
                     {
-                        convertedPoints.Add(createPoint(a, b, c, x));
+                        Point createdPoint = createPoint(a, b, c, x);
+                        convertedPoints = fillSpaceBetweenPointsAndAddPoint(convertedPoints, createdPoint);
                     }
                 }
 
             }
             return convertedPoints;
+        }
+
+        public PointCollection fillSpaceBetweenPointsAndAddPoint(PointCollection points, Point p1)
+        {
+            if (points.LastOrDefault() != new Point() { X = 0, Y = 0 })
+            {
+                while (lengthOfLine(p1, points.LastOrDefault()) > 1.5)
+                {
+                    Point lastPoint = points.LastOrDefault();
+                    if (p1.Y < lastPoint.Y)
+                    {
+                        lastPoint.Y -= 1;
+                    }
+                    else
+                    {
+                        lastPoint.Y += 1;
+                    }
+                    points.Add(lastPoint);
+                }
+            }
+            points.Add(p1);
+
+            return points;
         }
 
         public double calculateA(Point point1, Point point2)
@@ -210,7 +237,12 @@ namespace Fingerprints
 
         public Point createPoint(double a, double b, double c, double x)
         {
-            return new Point() { X = x, Y = ((-a * x) - c) / b };
+            return new Point() { X = x, Y = Math.Floor(((-a * x) - c) / b) };
+        }
+
+        public double lengthOfLine(Point p1, Point p2)
+        {
+            return Math.Sqrt(Math.Pow((p2.X - p1.X), 2) + Math.Pow((p2.Y - p1.Y), 2));
         }
 
     }

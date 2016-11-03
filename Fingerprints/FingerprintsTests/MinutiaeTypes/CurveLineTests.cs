@@ -116,6 +116,36 @@ namespace Fingerprints.Tests
         }
 
         [TestMethod()]
+        public void convertLinesToPointsTest4()
+        {
+            Point p1 = new Point() { X = 5, Y = 12 };
+            Point p2 = new Point() { X = 8, Y = 4 };
+            PointCollection points = new PointCollection();
+            points.Add(p1);
+            points.Add(p2);
+
+            PointCollection expected = new PointCollection();
+            expected.Add(p1);
+            expected.Add(new Point() { X = 5, Y = 11 });
+            expected.Add(new Point() { X = 5, Y = 10 });
+            expected.Add(new Point() { X = 6, Y = 9 });
+            expected.Add(new Point() { X = 6, Y = 8 });
+            expected.Add(new Point() { X = 6, Y = 7 });
+            expected.Add(new Point() { X = 7, Y = 6 });
+            expected.Add(new Point() { X = 7, Y = 5 });
+            expected.Add(p2);
+
+
+            PointCollection actual = curve.convertLinesToPoints(points);
+
+            //Assert.AreEqual<PointCollection>(expected, actual);
+            for (int i = 0; i < actual.Count - 1; i++)
+            {
+                Assert.AreEqual(actual[i], expected[i]);
+            }
+        }
+
+        [TestMethod()]
         public void calculateATest()
         {
             double expected = -131;
@@ -143,6 +173,31 @@ namespace Fingerprints.Tests
             double actual = curve.calculateC(points[0], points[1]);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void lengthOfLineTest()
+        {
+            Point p1 = new Point() { X = 5, Y = 12 };
+            Point p2 = new Point() { X = 6, Y = 9 };
+
+            double expected = 3.16;
+
+            double actual = Math.Round(curve.lengthOfLine(p1, p2), 2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void fillSpaceBetweenPointsAndAddPointTest()
+        {
+            Point p1 = new Point() { X = 5, Y = 12 };
+            Point p2 = new Point() { X = 6, Y = 9 };
+
+            PointCollection points = new PointCollection();
+            points.Add(p1);
+
+            PointCollection pointsReturned = curve.fillSpaceBetweenPointsAndAddPoint(points, p2);
         }
     }
 }
