@@ -187,7 +187,6 @@ namespace Fingerprints
                     for (double x = p1.X; x >= p2.X; x--)
                     {
                         Point createdPoint = createPoint(a, b, c, x);
-                        Console.WriteLine(createdPoint.X + " " + createdPoint.Y + " b:" + b);
                         convertedPoints = fillSpaceBetweenPointsAndAddPoint(convertedPoints, createdPoint);
                     }
                 }
