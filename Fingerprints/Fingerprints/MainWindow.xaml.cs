@@ -38,7 +38,7 @@ namespace Fingerprints
             comboBoxChanged();
             InitTable();
             addEmpty.Click += addEmpty_Click;
-            
+
             //Database.InitialData();
             this.Closed += (ss, ee) =>
             {
@@ -58,24 +58,21 @@ namespace Fingerprints
 
         public void comboBoxChanged()
         {
-            handler += (ss, ee) =>
+            comboBox.SelectionChanged += (ss, ee) =>
             {
-                drawing.startNewDrawing(comboBox.SelectedValue.ToString());
+                if (comboBox.SelectedValue != null)
+                {
+                    drawing.startNewDrawing(comboBox.SelectedValue.ToString());
+                }
             };
-            comboBox.SelectionChanged += handler;
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
         }
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)
         {
             Window1 win = new Window1();
             win.ShowDialog();
-            comboBox.SelectionChanged -= handler;
+            drawing.stopDrawing();
             comboBox.ItemsSource = controller.Show();
-            comboBoxChanged();
         }
 
         private void leftMenuClick_Delete(object sender, RoutedEventArgs e)
@@ -129,7 +126,7 @@ namespace Fingerprints
         private void addEmpty_Click(object sender, EventArgs e)
         {
             Empty empty = new Empty();
-            if(activeCanvasL.IsChecked == true)
+            if (activeCanvasL.IsChecked == true)
             {
                 empty.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);
                 FileTransfer.ListL.Add("Puste");
@@ -139,7 +136,7 @@ namespace Fingerprints
                 empty.Draw(canvasImageR, imageR, activeCanvasR, activeCanvasL);
                 FileTransfer.ListR.Add("Puste");
             }
-            
+
         }
         private void radioButtonEventInit()
         {
