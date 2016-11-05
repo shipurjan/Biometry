@@ -30,6 +30,7 @@ namespace Fingerprints
         public MainWindow()
         {
             InitializeComponent();
+            Application.Current.MainWindow = this;
             Picture p = new Picture(this);
             p.InitializeR();
             p.InitializeL();

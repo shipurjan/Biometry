@@ -54,36 +54,8 @@ namespace Fingerprints
             {
                 clickCount = false;
                 newLine = true;
-
-                if (radioButton1.Name == "activeCanvasL")
-                {
-                    if (FileTransfer.ListL.Count > 0)
-                    {
-                        if (FileTransfer.ListL.Last().ToString() != ToString())
-                        {
-                            FileTransfer.ListL.Add(ToString());
-                        }
-                    }
-                    else
-                    {
-                        FileTransfer.ListL.Add(ToString());
-                    }
-
-                }
-                else
-                {
-                    if (FileTransfer.ListR.Count > 0)
-                    {
-                        if (FileTransfer.ListR.Last().ToString() != ToString())
-                        {
-                            FileTransfer.ListR.Add(ToString());
-                        }
-                    }
-                    else
-                    {
-                        FileTransfer.ListR.Add(ToString());
-                    }
-                }
+                this.AddElementToSaveList();
+                this.baseLine = null;
             };
 
             handler += (ss, ee) =>
