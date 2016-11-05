@@ -38,7 +38,7 @@ namespace Fingerprints
                 }
                 if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 3)
                 {
-                    draw = new CurveLine(selectedValue, kolor, thickness, null, mw.curveLineCloseEvent);
+                    draw = new CurveLine(selectedValue, kolor, thickness, null);
                 }
                 if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 4)
                 {

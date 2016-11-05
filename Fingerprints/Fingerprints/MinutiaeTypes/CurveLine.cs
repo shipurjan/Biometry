@@ -44,12 +44,6 @@ namespace Fingerprints
         /// <param name="border2">Ramka 2</param>
         public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
         {
-            closeEventButton.Click += (ss, ee) =>
-            {
-                clickCount = false;
-                newLine = true;
-            };
-
             radioButton1.Unchecked += (ss, ee) =>
             {
                 clickCount = false;
