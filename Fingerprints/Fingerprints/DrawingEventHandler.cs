@@ -21,7 +21,7 @@ namespace Fingerprints
             helper = new Helper(window, controller);
         }
 
-        public void startNewDrawing(string minutiaeName)
+        public void startNewDrawing(string minutiaeName, int index = 0)
         {
             resetBordersAndRadioButtons();
 
