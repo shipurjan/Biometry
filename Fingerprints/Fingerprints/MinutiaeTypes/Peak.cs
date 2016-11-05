@@ -88,7 +88,6 @@ namespace Fingerprints
                         myPath.StrokeThickness = thickness;
                         myPath.Data = group;
                         myPath.Tag = Name;
-                        //System.Threading.Thread.Sleep(450);
                         canvas.Children.RemoveAt(canvas.Children.Count - 1);
                         canvas.AddLogicalChild(myPath);
                         radioButton1.IsChecked = false;

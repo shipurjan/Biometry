@@ -13,10 +13,6 @@ namespace Fingerprints
 {
     class Empty : Minutiae
     {
-        public Empty()
-        {
-
-        }
         public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
         {
             Point singlePoint = new Point(1, 1);
