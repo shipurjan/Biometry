@@ -50,6 +50,8 @@ namespace Fingerprints
 
             saveButton.Click += (ss, ee) =>
             {
+                drawL.DeleteEvent(imageL, canvasImageL);
+                drawR.DeleteEvent(imageR, canvasImageR);
                 FileTransfer.Save();
             };
         }
