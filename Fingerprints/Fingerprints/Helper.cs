@@ -16,40 +16,33 @@ namespace Fingerprints
             this.controller = controller;
         }
 
-        public IDraw GetMinutiaeTypeToDraw
+        public IDraw GetMinutiaeTypeToDraw(string minutiaeName)
         {
-            get  
+            string kolor = controller.GetColorOfSelectedMinutiae(minutiaeName);
+            double thickness = controller.GetThicknessOfSelectedMinutiae(minutiaeName);
+            double size = controller.GetSizeOfSelectedMinutiae(minutiaeName);
+            IDraw draw = null;
+            if (controller.GetTypeIdOfSelectedMinutiae(minutiaeName) == 2)
             {
-                string selectedValue = "";
-                if (mw.comboBox.SelectedValue != null)
-                    selectedValue = mw.comboBox.SelectedValue.ToString();
-
-                string kolor = controller.GetColorOfSelectedMinutiae(selectedValue);
-                double thickness = controller.GetThicknessOfSelectedMinutiae(selectedValue);
-                double size = controller.GetSizeOfSelectedMinutiae(selectedValue);
-                IDraw draw = null;
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 2)
-                {
-                    draw = new Vector(selectedValue, kolor, size, thickness);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 1)
-                {
-                    draw = new SinglePoint(selectedValue, kolor, size, thickness);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 3)
-                {
-                    draw = new CurveLine(selectedValue, kolor, thickness, null);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 4)
-                {
-                    draw = new Triangle(selectedValue, kolor, thickness);
-                }
-                if (controller.GetTypeIdOfSelectedMinutiae(selectedValue) == 5)
-                {
-                    draw = new Peak(selectedValue, kolor, thickness);
-                }
-                return draw;
+                draw = new Vector(minutiaeName, kolor, size, thickness);
             }
+            if (controller.GetTypeIdOfSelectedMinutiae(minutiaeName) == 1)
+            {
+                draw = new SinglePoint(minutiaeName, kolor, size, thickness);
+            }
+            if (controller.GetTypeIdOfSelectedMinutiae(minutiaeName) == 3)
+            {
+                draw = new CurveLine(minutiaeName, kolor, thickness, null);
+            }
+            if (controller.GetTypeIdOfSelectedMinutiae(minutiaeName) == 4)
+            {
+                draw = new Triangle(minutiaeName, kolor, thickness);
+            }
+            if (controller.GetTypeIdOfSelectedMinutiae(minutiaeName) == 5)
+            {
+                draw = new Peak(minutiaeName, kolor, thickness);
+            }
+            return draw;
         }
     }
 }

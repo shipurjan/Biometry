@@ -21,22 +21,19 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
-        public BrushConverter converter = new System.Windows.Media.BrushConverter();
-        IDraw drawL;
-        IDraw drawR;
-        Helper helper;
         MinutiaeTypeController controller;
         SelectionChangedEventHandler handler = null;
+        DrawingEventHandler drawing;
         public MainWindow()
         {
             InitializeComponent();
             Application.Current.MainWindow = this;
             Picture p = new Picture(this);
+            drawing = new DrawingEventHandler();
             p.InitializeR();
             p.InitializeL();
             radioButtonEventInit();
             controller = new MinutiaeTypeController();
-            helper = new Helper(this, controller);
             comboBox.ItemsSource = controller.Show();
             comboBoxChanged();
             InitTable();
@@ -50,8 +47,6 @@ namespace Fingerprints
 
             saveButton.Click += (ss, ee) =>
             {
-                drawL.DeleteEvent(imageL, canvasImageL);
-                drawR.DeleteEvent(imageR, canvasImageR);
                 FileTransfer.Save();
             };
         }
@@ -65,44 +60,7 @@ namespace Fingerprints
         {
             handler += (ss, ee) =>
             {
-                string selectedValue = "";
-                if (comboBox.SelectedValue != null)
-                    selectedValue = comboBox.SelectedValue.ToString();
-
-                resetBordersAndRadioButtons();
-
-                string kolor = controller.GetColorOfSelectedMinutiae(selectedValue);
-                double thickness = controller.GetThicknessOfSelectedMinutiae(selectedValue);
-                double size = controller.GetSizeOfSelectedMinutiae(selectedValue);
-
-                if (drawL != null && drawR != null)
-                {
-                    drawL.DeleteEvent(imageL, canvasImageL);
-                    drawR.DeleteEvent(imageR, canvasImageR);
-                }
-                if (listBoxImageL.Items.Count != listBoxImageR.Items.Count)
-                {
-                    Point singlePoint = new Point(1,1);                    
-                    EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-                    myEllipseGeometry.Center = singlePoint;
-                    myEllipseGeometry.RadiusX = 0;
-                    myEllipseGeometry.RadiusY = 0;
-                    Path myPath = new Path();
-                    myPath.StrokeThickness = 0.3;
-                    myPath.Data = myEllipseGeometry;
-                    myPath.Opacity = 0;
-                    myPath.Name = "Puste";
-                    myPath.Tag = "Puste";
-                    canvasImageR.AddLogicalChild(myPath);
-                    FileTransfer.ListR.Add("Puste");
-                    listBoxImageR.Items.Add("Puste");
-                }
-
-                drawL = helper.GetMinutiaeTypeToDraw;
-                drawR = helper.GetMinutiaeTypeToDraw;
-
-                drawL.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);
-                drawR.Draw(canvasImageR, imageR, activeCanvasR, activeCanvasL);
+                drawing.startNewDrawing(comboBox.SelectedValue.ToString());
             };
             comboBox.SelectionChanged += handler;
         }
@@ -142,13 +100,6 @@ namespace Fingerprints
             listBoxImageR.Items.RemoveAt(index);
             canvasImageR.Children.RemoveAt(index);
             FileTransfer.ListR.RemoveAt(index);
-        }
-
-        private void resetBordersAndRadioButtons()
-        {
-            activeCanvasL.IsChecked = true;
-            borderRight.BorderBrush = Brushes.Black;
-            borderLeft.BorderBrush = Brushes.DeepSkyBlue;
         }
 
         void activeCanvasL_CheckedChanged(object sender, EventArgs e)

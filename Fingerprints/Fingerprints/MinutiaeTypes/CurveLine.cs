@@ -15,11 +15,9 @@ namespace Fingerprints
     public class CurveLine : Minutiae
     {
         Brush color;
-        GeometryGroup oldGroup;
         Point currentPoint;
         bool newLine;
         Polyline baseLine;
-        bool clickCount = true;
         string[] points;
         double thickness;
         Button closeEventButton;
@@ -46,7 +44,6 @@ namespace Fingerprints
         {
             radioButton1.Unchecked += (ss, ee) =>
             {
-                clickCount = false;
                 newLine = true;
                 this.AddElementToSaveList();
                 this.baseLine = null;
