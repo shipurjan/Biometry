@@ -22,7 +22,6 @@ namespace Fingerprints
     public partial class MainWindow : Window
     {
         MinutiaeTypeController controller;
-        SelectionChangedEventHandler handler = null;
         DrawingEventHandler drawing;
         public MainWindow()
         {
@@ -37,6 +36,7 @@ namespace Fingerprints
             comboBox.ItemsSource = controller.Show();
             comboBoxChanged();
             InitTable();
+
             addEmpty.Click += addEmpty_Click;
 
             //Database.InitialData();

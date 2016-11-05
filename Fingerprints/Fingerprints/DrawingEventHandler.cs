@@ -35,20 +35,7 @@ namespace Fingerprints
             }
             if (window.listBoxImageL.Items.Count != window.listBoxImageR.Items.Count)
             {
-                Point singlePoint = new Point(1, 1);
-                EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-                myEllipseGeometry.Center = singlePoint;
-                myEllipseGeometry.RadiusX = 0;
-                myEllipseGeometry.RadiusY = 0;
-                Path myPath = new Path();
-                myPath.StrokeThickness = 0.3;
-                myPath.Data = myEllipseGeometry;
-                myPath.Opacity = 0;
-                myPath.Name = "Puste";
-                myPath.Tag = "Puste";
-                window.canvasImageR.AddLogicalChild(myPath);
-                FileTransfer.ListR.Add("Puste");
-                window.listBoxImageR.Items.Add("Puste");
+                insertEmpty();
             }
 
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
@@ -69,6 +56,24 @@ namespace Fingerprints
             window.activeCanvasL.IsChecked = true;
             window.borderRight.BorderBrush = Brushes.Black;
             window.borderLeft.BorderBrush = Brushes.DeepSkyBlue;
+        }
+
+        private void insertEmpty()
+        {
+            Point singlePoint = new Point(1, 1);
+            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+            myEllipseGeometry.Center = singlePoint;
+            myEllipseGeometry.RadiusX = 0;
+            myEllipseGeometry.RadiusY = 0;
+            Path myPath = new Path();
+            myPath.StrokeThickness = 0.3;
+            myPath.Data = myEllipseGeometry;
+            myPath.Opacity = 0;
+            myPath.Name = "Puste";
+            myPath.Tag = "Puste";
+            window.canvasImageR.AddLogicalChild(myPath);
+            FileTransfer.ListR.Add("Puste");
+            window.listBoxImageR.Items.Add("Puste");
         }
     }
 }
