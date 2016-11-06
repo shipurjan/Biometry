@@ -47,28 +47,7 @@ namespace Fingerprints
                     canvas.AddLogicalChild(myPath, index);
                     radioButton1.IsChecked = false;
                     radioButton2.IsChecked = true;
-                    if (radioButton1.Name == "activeCanvasL")
-                    {
-                        if (index > -1)
-                        {
-                            FileTransfer.ListL.Insert(index, ToString());
-                        }
-                        else
-                        {
-                            FileTransfer.ListL.Add(ToString());
-                        }
-                    }
-                    else
-                    {
-                        if (index > -1)
-                        {
-                            FileTransfer.ListR.Insert(index, ToString());
-                        }
-                        else
-                        {
-                            FileTransfer.ListR.Add(ToString());
-                        }
-                    }
+                    AddElementToSaveList(index);
                 }
 
             };
