@@ -29,7 +29,7 @@ namespace Fingerprints
             double thickness = controller.GetThicknessOfSelectedMinutiae(minutiaeName);
             double size = controller.GetSizeOfSelectedMinutiae(minutiaeName);
 
-            if (drawL != null && drawR != null)
+            if (canStopDrawing())
             {
                 stopDrawing();
             }
@@ -58,8 +58,14 @@ namespace Fingerprints
             window.borderLeft.BorderBrush = Brushes.DeepSkyBlue;
         }
 
+        public bool canStopDrawing()
+        {
+            return drawL != null && drawR != null;
+        }
+
         public bool canInsertEmpty()
         {
+            //warunki do wstawienia pustego elementu
             return window.listBoxImageL.Items.Count != window.listBoxImageR.Items.Count;
         }
 

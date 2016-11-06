@@ -51,14 +51,12 @@ namespace Fingerprints
                     {
                         if (index > -1)
                         {
-
                             FileTransfer.ListL.Insert(index, ToString());
                         }
                         else
                         {
                             FileTransfer.ListL.Add(ToString());
                         }
-
                     }
                     else
                     {
