@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class Table : Minutiae
+    class Table : AppInstance
     {
         OverridedCanvas canvasL, canvasR;
         ListBox listBoxL, listBoxR, listBoxD;
