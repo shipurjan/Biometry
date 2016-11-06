@@ -21,7 +21,7 @@ namespace Fingerprints
         string[] points;
         double thickness;
         Button closeEventButton;
-        
+
         MouseEventHandler handler = null;
 
         public CurveLine(string name, string color, double thickness, string[] points = null, Button button = null)
@@ -94,8 +94,9 @@ namespace Fingerprints
                 {
                     points += point.X + ";" + point.Y + ";";
                 }
+                return Name + ";" + points;
             }
-            return Name + ";" + points;
+            return "";
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
@@ -145,7 +146,7 @@ namespace Fingerprints
                         convertedPoints = fillSpaceBetweenPointsAndAddPoint(convertedPoints, createdPoint);
                     }
                 }
-                else if(b != 0)
+                else if (b != 0)
                 {
                     for (double x = p1.X; x >= p2.X; x--)
                     {

@@ -19,34 +19,32 @@ namespace Fingerprints
         {
             if (!window.activeCanvasL.IsChecked.Value)
             {
-                if (FileTransfer.ListL.Count > 0)
-                {
-                    if (FileTransfer.ListL.Last().ToString() != ToString())
-                    {
-                        FileTransfer.ListL.Add(ToString());
-                    }
-                }
-                else
-                {
-                    FileTransfer.ListL.Add(ToString());
-                }
+                insertStringToList(FileTransfer.ListL);
 
             }
             else
             {
-                if (FileTransfer.ListR.Count > 0)
+                insertStringToList(FileTransfer.ListR);
+            }
+
+        }
+
+        private void insertStringToList(List<string> list)
+        {
+            if (ToString() != "")
+            {
+                if (list.Count > 0)
                 {
-                    if (FileTransfer.ListR.Last().ToString() != ToString())
+                    if (list.Last().ToString() != ToString())
                     {
-                        FileTransfer.ListR.Add(ToString());
+                        list.Add(ToString());
                     }
                 }
                 else
                 {
-                    FileTransfer.ListR.Add(ToString());
+                    list.Add(ToString());
                 }
             }
-
         }
     }
 }
