@@ -36,7 +36,7 @@
                     <ColumnDefinition Width="162*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="3" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0,0,0.6,0.4"/>
+                <ComboBox x:Name="comboBox" Text="--Wybierz--" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="3" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0,0,0.6,0.4"/>
                 <Button x:Name="addEmpty" Margin="0.2,10,40.6,0.4" Content="Dodaj puste" Grid.Column="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFEEEEEE" BorderThickness="0"/>
                 <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" Margin="0, 5, 0, 5" />
                 <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0, 5, 0, 5" />

@@ -33,7 +33,7 @@ namespace Fingerprints
             {
                 stopDrawing();
             }
-            if (window.listBoxImageL.Items.Count != window.listBoxImageR.Items.Count)
+            if (canInsertEmpty())
             {
                 insertEmpty();
             }
@@ -56,6 +56,11 @@ namespace Fingerprints
             window.activeCanvasL.IsChecked = true;
             window.borderRight.BorderBrush = Brushes.Black;
             window.borderLeft.BorderBrush = Brushes.DeepSkyBlue;
+        }
+
+        public bool canInsertEmpty()
+        {
+            return window.listBoxImageL.Items.Count != window.listBoxImageR.Items.Count;
         }
 
         private void insertEmpty()

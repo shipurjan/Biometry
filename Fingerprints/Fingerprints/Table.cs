@@ -17,18 +17,18 @@ namespace Fingerprints
         ListBox listBoxL, listBoxR, listBoxD;
         Button buttonLeft, buttonRight;
         ComboBox combobox;
-        public Table(MainWindow wm)
+        public Table()
         {
-            this.combobox = wm.comboBox;
-            this.listBoxD = wm.listBoxDelete;
-            this.canvasL = wm.canvasImageL;
-            this.canvasR = wm.canvasImageR;
-            this.listBoxL = wm.listBoxImageL;
-            this.listBoxR = wm.listBoxImageR;
-            this.buttonLeft = wm.buttonDeleteL;
-            this.buttonRight = wm.buttonDeleteR;
-            listBoxSelectionChanged(wm.listBoxImageL, wm.canvasImageL);
-            listBoxSelectionChanged(wm.listBoxImageR, wm.canvasImageR);
+            this.combobox = window.comboBox;
+            this.listBoxD = window.listBoxDelete;
+            this.canvasL = window.canvasImageL;
+            this.canvasR = window.canvasImageR;
+            this.listBoxL = window.listBoxImageL;
+            this.listBoxR = window.listBoxImageR;
+            this.buttonLeft = window.buttonDeleteL;
+            this.buttonRight = window.buttonDeleteR;
+            listBoxSelectionChanged(window.listBoxImageL, window.canvasImageL);
+            listBoxSelectionChanged(window.listBoxImageR, window.canvasImageR);
             canvasLeftChildAdded();
             canvasRightChildAdded();
             listBoxD.SelectionChanged += (ss, ee) =>
@@ -63,6 +63,7 @@ namespace Fingerprints
             cmL.Items.Add(contextMenuLeftInsert(minType));
             cmL.Items.Add(deleteMenuContext(listBoxL, canvasL));
 
+            cmR.Items.Add(contextMenuRightInsert(minType));
             cmR.Items.Add(deleteMenuContext(listBoxR, canvasR));
 
             listBoxR.ContextMenu = cmR;
@@ -82,12 +83,36 @@ namespace Fingerprints
                     if (index == -1) { return; }
                     listBoxL.UnselectAll();
                     window.drawing.startNewDrawing(type.Name, index);
+                    window.activeCanvasL.IsChecked = true;
+                    window.activeCanvasR.IsChecked = false;
+                    window.comboBox.SelectedIndex = -1;
                 };
                 mi.Items.Add(nMenu);
             }
             return mi;
         }
 
+        private MenuItem contextMenuRightInsert(List<SelfDefinedMinutiae> minType)
+        {
+            MenuItem mi = new MenuItem() { Header = "Wstaw" };
+
+            foreach (var type in minType)
+            {
+                MenuItem nMenu = new MenuItem() { Header = type.Name };
+                nMenu.Click += (ss, ee) =>
+                {
+                    int index = listBoxR.SelectedIndex;
+                    if (index == -1) { return; }
+                    listBoxR.UnselectAll();
+                    window.drawing.startNewDrawing(type.Name, index);
+                    window.activeCanvasL.IsChecked = false;
+                    window.activeCanvasR.IsChecked = true;
+                    window.comboBox.SelectedIndex = -1;
+                };
+                mi.Items.Add(nMenu);
+            }
+            return mi;
+        }
         private MenuItem deleteMenuContext(ListBox listbox, OverridedCanvas canvas)
         {
             MenuItem usun = new MenuItem() { Header = "Usuń" };

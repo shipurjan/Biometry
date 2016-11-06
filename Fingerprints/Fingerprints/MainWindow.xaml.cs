@@ -53,7 +53,7 @@ namespace Fingerprints
 
         public void InitTable()
         {
-            Table table = new Table(this);
+            Table table = new Table();
         }
 
         public void comboBoxChanged()
