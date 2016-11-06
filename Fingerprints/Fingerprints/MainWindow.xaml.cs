@@ -22,7 +22,7 @@ namespace Fingerprints
     public partial class MainWindow : Window
     {
         MinutiaeTypeController controller;
-        DrawingEventHandler drawing;
+        public DrawingEventHandler drawing;
         public MainWindow()
         {
             InitializeComponent();

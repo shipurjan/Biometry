@@ -37,7 +37,7 @@ namespace Fingerprints
             tmp2 = new Point();
         }
 
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
+        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = 0)
         {
 
             handler += (ss, ee) =>

@@ -8,19 +8,14 @@ using System.Windows.Controls;
 
 namespace Fingerprints
 {
-    public class Minutiae : IDraw
+    public class Minutiae : AppInstance, IDraw
     {
-        public Minutiae()
-        {
-            window = (MainWindow)Application.Current.MainWindow;
-        }
-        public MainWindow window { get; set; }
         public string Name;
-        public virtual void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2) { }
+        public virtual void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = -1) { }
         public virtual void DeleteEvent(Image image, OverridedCanvas canvas) { }
         public virtual void DrawFromFile(OverridedCanvas canvas) { }
 
-        public void AddElementToSaveList()
+        public void AddElementToSaveList(int index = -1)
         {
             if (!window.activeCanvasL.IsChecked.Value)
             {

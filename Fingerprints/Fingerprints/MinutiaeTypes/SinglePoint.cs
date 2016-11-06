@@ -27,8 +27,8 @@ namespace Fingerprints
             singlePoint.X = x;
             singlePoint.Y = y;
         }
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
-        {            
+        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = -1)
+        {
             handler += (ss, ee) =>
             {
                 if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
@@ -44,16 +44,32 @@ namespace Fingerprints
                     myPath.Data = myEllipseGeometry;
                     //myPath.Opacity = 0.5;
                     myPath.Tag = Name;
-                    canvas.AddLogicalChild(myPath);
+                    canvas.AddLogicalChild(myPath, index);
                     radioButton1.IsChecked = false;
                     radioButton2.IsChecked = true;
                     if (radioButton1.Name == "activeCanvasL")
                     {
-                        FileTransfer.ListL.Add(ToString());
+                        if (index > -1)
+                        {
+
+                            FileTransfer.ListL.Insert(index, ToString());
+                        }
+                        else
+                        {
+                            FileTransfer.ListL.Add(ToString());
+                        }
+
                     }
                     else
                     {
-                        FileTransfer.ListR.Add(ToString());
+                        if (index > -1)
+                        {
+                            FileTransfer.ListR.Insert(index, ToString());
+                        }
+                        else
+                        {
+                            FileTransfer.ListR.Add(ToString());
+                        }
                     }
                 }
 

@@ -9,7 +9,7 @@ namespace Fingerprints
 {
     interface IDraw
     {
-        void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2);
+        void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = -1);
         void DeleteEvent(Image image, OverridedCanvas canvas);
 
         void DrawFromFile(OverridedCanvas canvas);

@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class Table
+    class Table : Minutiae
     {
         OverridedCanvas canvasL, canvasR;
         ListBox listBoxL, listBoxR, listBoxD;
@@ -36,7 +36,7 @@ namespace Fingerprints
                 if (listBoxD.SelectedIndex != -1)
                 {
                     int index = listBoxD.SelectedIndex;
-                    if (listBoxL.Items.Count > index )
+                    if (listBoxL.Items.Count > index)
                     {
                         deleteLeft(index);
                     }
@@ -49,7 +49,7 @@ namespace Fingerprints
             };
 
             contextMenu();
-            
+
         }
 
         private void contextMenu()
@@ -60,7 +60,7 @@ namespace Fingerprints
             ContextMenu cmL = new ContextMenu();
             ContextMenu cmR = new ContextMenu();
 
-            //cmL.Items.Add(contextMenuLeftInsert(minType));
+            cmL.Items.Add(contextMenuLeftInsert(minType));
             cmL.Items.Add(deleteMenuContext(listBoxL, canvasL));
 
             cmR.Items.Add(deleteMenuContext(listBoxR, canvasR));
@@ -75,13 +75,13 @@ namespace Fingerprints
 
             foreach (var type in minType)
             {
-                
                 MenuItem nMenu = new MenuItem() { Header = type.Name };
                 nMenu.Click += (ss, ee) =>
                 {
                     int index = listBoxL.SelectedIndex;
-                    if (index == -1)  {return; }
+                    if (index == -1) { return; }
                     listBoxL.UnselectAll();
+                    window.drawing.startNewDrawing(type.Name, index);
                 };
                 mi.Items.Add(nMenu);
             }
@@ -141,7 +141,7 @@ namespace Fingerprints
                 listBoxL.Items.Clear();
 
                 foreach (var item in canvasL.Children)
-                {                    
+                {
                     if (item.GetType().Name == "Path")
                     {
                         Path q = (Path)item;
@@ -163,7 +163,7 @@ namespace Fingerprints
             {
                 listBoxR.Items.Clear();
                 foreach (var item in canvasR.Children)
-                {                    
+                {
                     if (item.GetType().Name == "Path")
                     {
                         Path q = (Path)item;

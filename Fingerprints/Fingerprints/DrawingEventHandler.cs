@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class DrawingEventHandler : Minutiae
+    public class DrawingEventHandler : Minutiae
     {
         IDraw drawL;
         IDraw drawR;
@@ -21,7 +21,7 @@ namespace Fingerprints
             helper = new Helper(window, controller);
         }
 
-        public void startNewDrawing(string minutiaeName, int index = 0)
+        public void startNewDrawing(string minutiaeName, int index = -1)
         {
             resetBordersAndRadioButtons();
 
@@ -41,8 +41,8 @@ namespace Fingerprints
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
 
-            drawL.Draw(window.canvasImageL, window.imageL, window.activeCanvasL, window.activeCanvasR);
-            drawR.Draw(window.canvasImageR, window.imageR, window.activeCanvasR, window.activeCanvasL);
+            drawL.Draw(window.canvasImageL, window.imageL, window.activeCanvasL, window.activeCanvasR, index);
+            drawR.Draw(window.canvasImageR, window.imageR, window.activeCanvasR, window.activeCanvasL, index);
         }
 
         public void stopDrawing()

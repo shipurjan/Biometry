@@ -13,7 +13,7 @@ namespace Fingerprints
 {
     class Empty : Minutiae
     {
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2)
+        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = 0)
         {
             Point singlePoint = new Point(1, 1);
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
