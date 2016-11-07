@@ -31,7 +31,7 @@ namespace Fingerprints
         {
             handler += (ss, ee) =>
             {
-                if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
+                if (ee.RightButton == MouseButtonState.Pressed)
                 {
                     singlePoint = ee.GetPosition(canvas);
                     EllipseGeometry myEllipseGeometry = new EllipseGeometry();

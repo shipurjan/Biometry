@@ -35,7 +35,7 @@ namespace Fingerprints
             }
             if (canInsertEmpty())
             {
-                insertEmpty();
+                //insertEmpty();
             }
 
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);

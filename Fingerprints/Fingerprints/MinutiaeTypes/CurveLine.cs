@@ -51,7 +51,7 @@ namespace Fingerprints
 
             handler += (ss, ee) =>
             {
-                if (ee.RightButton == MouseButtonState.Pressed && radioButton1.IsChecked == true)
+                if (ee.RightButton == MouseButtonState.Pressed)
                 {
                     if (newLine)
                     {

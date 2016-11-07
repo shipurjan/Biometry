@@ -47,7 +47,7 @@ namespace Fingerprints
                 EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                 LineGeometry myPathFigure = new LineGeometry();
                 myPathFigure.StartPoint = new Point(0, 0);
-                if (radioButton1.IsChecked == true)
+                if (true)
                 {
                     if (clickCount == 0)
                     {

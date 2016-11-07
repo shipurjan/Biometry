@@ -49,68 +49,66 @@ namespace Fingerprints
             {
                 Path myPath = new Path();
 
-                if (radioButton1.IsChecked == true)
+                if (clickCount == 0)
                 {
-                    if (clickCount == 0)
-                    {
-                        tmp1 = ee.GetPosition(canvas);
-                        firstPointLine = tmp1;
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, clickCount);
+                    tmp1 = ee.GetPosition(canvas);
+                    firstPointLine = tmp1;
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, clickCount);
 
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        //canvas.Children.Add(myPath);
-                        canvas.AddLogicalChild(myPath);
-                        clickCount++;
-                    }
-                    else if (clickCount == 1)
-                    {
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, clickCount);
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                        canvas.AddLogicalChild(myPath);
-                        clickCount++;
-                    }
-                    else if (clickCount == 2)
-                    {
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, clickCount);
-                        clickCount++;
-                        drawCompleteLine(ee, canvas, clickCount);
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        //System.Threading.Thread.Sleep(450);
-                        canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                        canvas.AddLogicalChild(myPath);
-                        radioButton1.IsChecked = false;
-                        radioButton2.IsChecked = true;
-                        //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
-                        clickCount = 0;
-                        if (radioButton1.Name == "activeCanvasL")
-                        {
-                            FileTransfer.ListL.Add(ToString());
-                        }
-                        else
-                        {
-                            FileTransfer.ListR.Add(ToString());
-                        }
-                        group = null;
-                        group = new GeometryGroup();
-                    }
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    //canvas.Children.Add(myPath);
+                    canvas.AddLogicalChild(myPath);
+                    clickCount++;
                 }
-               
+                else if (clickCount == 1)
+                {
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, clickCount);
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
+                    canvas.AddLogicalChild(myPath);
+                    clickCount++;
+                }
+                else if (clickCount == 2)
+                {
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, clickCount);
+                    clickCount++;
+                    drawCompleteLine(ee, canvas, clickCount);
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    //System.Threading.Thread.Sleep(450);
+                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
+                    canvas.AddLogicalChild(myPath);
+                    radioButton1.IsChecked = false;
+                    radioButton2.IsChecked = true;
+                    //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                    clickCount = 0;
+                    if (radioButton1.Name == "activeCanvasL")
+                    {
+                        FileTransfer.ListL.Add(ToString());
+                    }
+                    else
+                    {
+                        FileTransfer.ListR.Add(ToString());
+                    }
+                    group = null;
+                    group = new GeometryGroup();
+                }
+
+
             };
 
             mouseMove += (ss, ee) =>
@@ -130,20 +128,20 @@ namespace Fingerprints
             {
                 tmp2 = ee.GetPosition(canvas);
                 secondPointLine = tmp2;
-                ((LineGeometry)group.Children[clickCount-1]).StartPoint = tmp1;
-                ((LineGeometry)group.Children[clickCount-1]).EndPoint = tmp2;
+                ((LineGeometry)group.Children[clickCount - 1]).StartPoint = tmp1;
+                ((LineGeometry)group.Children[clickCount - 1]).EndPoint = tmp2;
             }
             else if (clickCount == 2)
             {
                 tmp2 = ee.GetPosition(canvas);
                 thirdPointLine = tmp2;
-                ((LineGeometry)group.Children[clickCount-1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
-                ((LineGeometry)group.Children[clickCount-1]).EndPoint = tmp2;
+                ((LineGeometry)group.Children[clickCount - 1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
+                ((LineGeometry)group.Children[clickCount - 1]).EndPoint = tmp2;
             }
             else if (clickCount == 3)
             {
-                ((LineGeometry)group.Children[clickCount-1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
-                ((LineGeometry)group.Children[clickCount-1]).EndPoint = ((LineGeometry)group.Children[0]).StartPoint;
+                ((LineGeometry)group.Children[clickCount - 1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
+                ((LineGeometry)group.Children[clickCount - 1]).EndPoint = ((LineGeometry)group.Children[0]).StartPoint;
             }
 
         }

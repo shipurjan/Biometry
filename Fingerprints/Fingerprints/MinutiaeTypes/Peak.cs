@@ -49,63 +49,61 @@ namespace Fingerprints
             {
                 Path myPath = new Path();
 
-                if (radioButton1.IsChecked == true)
+                if (clickCount == 0)
                 {
-                    if (clickCount == 0)
-                    {
-                        tmp1 = ee.GetPosition(canvas);
-                        firstPointLine = tmp1;
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, clickCount);
+                    tmp1 = ee.GetPosition(canvas);
+                    firstPointLine = tmp1;
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, clickCount);
 
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        canvas.AddLogicalChild(myPath);
-                        clickCount++;
-                    }
-                    else if (clickCount == 1)
-                    {
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, clickCount);
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                        canvas.AddLogicalChild(myPath);
-                        clickCount++;
-                    }
-                    else if (clickCount == 2)
-                    {
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, clickCount);
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                        canvas.AddLogicalChild(myPath);
-                        radioButton1.IsChecked = false;
-                        radioButton2.IsChecked = true;
-                        //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
-                        clickCount = 0;
-                        if (radioButton1.Name == "activeCanvasL")
-                        {
-                            FileTransfer.ListL.Add(ToString());
-                        }
-                        else
-                        {
-                            FileTransfer.ListR.Add(ToString());
-                        }
-                        group = null;
-                        group = new GeometryGroup();
-                    }
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    canvas.AddLogicalChild(myPath);
+                    clickCount++;
                 }
+                else if (clickCount == 1)
+                {
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, clickCount);
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
+                    canvas.AddLogicalChild(myPath);
+                    clickCount++;
+                }
+                else if (clickCount == 2)
+                {
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, clickCount);
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
+                    canvas.AddLogicalChild(myPath);
+                    radioButton1.IsChecked = false;
+                    radioButton2.IsChecked = true;
+                    //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                    clickCount = 0;
+                    if (radioButton1.Name == "activeCanvasL")
+                    {
+                        FileTransfer.ListL.Add(ToString());
+                    }
+                    else
+                    {
+                        FileTransfer.ListR.Add(ToString());
+                    }
+                    group = null;
+                    group = new GeometryGroup();
+                }
+
 
             };
 

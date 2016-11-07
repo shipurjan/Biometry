@@ -20,13 +20,11 @@ namespace Fingerprints
             if (!window.activeCanvasL.IsChecked.Value)
             {
                 insertStringToList(FileTransfer.ListL, index);
-
             }
             else
             {
                 insertStringToList(FileTransfer.ListR, index);
             }
-
         }
 
         private void insertStringToList(List<string> list, int index = -1)
