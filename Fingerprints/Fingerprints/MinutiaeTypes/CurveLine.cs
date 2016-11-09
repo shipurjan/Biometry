@@ -42,7 +42,13 @@ namespace Fingerprints
         /// <param name="border2">Ramka 2</param>
         public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
-            window.acceptCurveButton.Click += (ss, ee) =>
+            window.acceptLeftCurveButton.Click += (ss, ee) =>
+            {
+                newLine = true;
+                this.AddElementToSaveList(canvas.Tag.ToString(), index);
+                this.baseLine = null;
+            };
+            window.acceptRightCurveButton.Click += (ss, ee) =>
             {
                 newLine = true;
                 this.AddElementToSaveList(canvas.Tag.ToString(), index);

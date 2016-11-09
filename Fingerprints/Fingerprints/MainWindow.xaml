@@ -69,7 +69,8 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" />
                 <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="11" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="acceptCurveButton" Content="Akceptuj" Grid.Column="3" Margin="33,0,32,0"></Button>
+                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">

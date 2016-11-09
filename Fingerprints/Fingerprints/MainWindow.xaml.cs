@@ -41,7 +41,7 @@ namespace Fingerprints
             //Database.InitialData();
             this.Closing += (ss, ee) =>
             {
-                if(MessageBox.Show("Czy zapisać zmiany?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if(anyChildrensToSave() && MessageBox.Show("Czy zapisać zmiany?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     FileTransfer.Save();
                 }
@@ -138,6 +138,11 @@ namespace Fingerprints
             //    empty.Draw(canvasImageR, imageR);
             //    FileTransfer.ListR.Add("Puste");
             //}
+        }
+
+        public bool anyChildrensToSave()
+        {
+            return canvasImageL.Children.Count > 0 && canvasImageR.Children.Count > 0;
         }
     }
 }
