@@ -46,25 +46,7 @@ namespace Fingerprints
             window.acceptLeftCurveButton.Visibility = Visibility.Visible;
             window.acceptRightCurveButton.Visibility = Visibility.Visible;
 
-            if (canvas.Tag.ToString() == "Left")
-            {
-                window.acceptLeftCurveButton.Click += (ss, ee) =>
-                {
-                    newLine = true;
-                    this.AddElementToSaveList(canvas.Tag.ToString(), index);
-                    this.baseLine = null;
-                };
-            }
-            else
-            {
-                window.acceptRightCurveButton.Click += (ss, ee) =>
-                {
-                    newLine = true;
-                    this.AddElementToSaveList(canvas.Tag.ToString(), index);
-                    this.baseLine = null;
-                };
-            }
-
+            acceptButtonsClickEvents(canvas, index);
 
             handler += (ss, ee) =>
             {
@@ -118,6 +100,27 @@ namespace Fingerprints
             return "";
         }
 
+        public void acceptButtonsClickEvents(OverridedCanvas canvas, int index = -1)
+        {
+            if (canvas.Tag.ToString() == "Left")
+            {
+                window.acceptLeftCurveButton.Click += (ss, ee) =>
+                {
+                    newLine = true;
+                    this.AddElementToSaveList(canvas.Tag.ToString(), index);
+                    this.baseLine = null;
+                };
+            }
+            else
+            {
+                window.acceptRightCurveButton.Click += (ss, ee) =>
+                {
+                    newLine = true;
+                    this.AddElementToSaveList(canvas.Tag.ToString(), index);
+                    this.baseLine = null;
+                };
+            }
+        }
         public override void DrawFromFile(OverridedCanvas canvas)
         {
             List<Point> curvePoint = new List<Point>();

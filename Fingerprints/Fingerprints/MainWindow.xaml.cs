@@ -39,18 +39,6 @@ namespace Fingerprints
             addEmpty.Click += addEmpty_Click;
 
             //Database.InitialData();
-            this.Closing += (ss, ee) =>
-            {
-                if(anyChildrensToSave() && MessageBox.Show("Czy zapisać zmiany?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    FileTransfer.Save();
-                }
-            };
-
-            saveButton.Click += (ss, ee) =>
-            {
-                FileTransfer.Save();
-            };
         }
 
         public void InitTable()
@@ -75,6 +63,22 @@ namespace Fingerprints
             win.ShowDialog();
             drawing.stopDrawing();
             comboBox.ItemsSource = controller.Show();
+        }
+
+        public void saveEvents()
+        {
+            this.Closing += (ss, ee) =>
+            {
+                if (anyChildrensToSave() && MessageBox.Show("Czy zapisać zmiany?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    FileTransfer.Save();
+                }
+            };
+
+            saveButton.Click += (ss, ee) =>
+            {
+                FileTransfer.Save();
+            };
         }
 
         private void leftMenuClick_Delete(object sender, RoutedEventArgs e)
@@ -142,7 +146,7 @@ namespace Fingerprints
 
         public bool anyChildrensToSave()
         {
-            return canvasImageL.Children.Count > 0 && canvasImageR.Children.Count > 0;
+            return canvasImageL.Children.Count > 0 || canvasImageR.Children.Count > 0;
         }
     }
 }
