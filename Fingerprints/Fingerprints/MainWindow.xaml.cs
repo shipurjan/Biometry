@@ -128,12 +128,12 @@ namespace Fingerprints
             Empty empty = new Empty();
             if (activeCanvasL.IsChecked == true)
             {
-                empty.Draw(canvasImageL, imageL, activeCanvasL, activeCanvasR);
+                empty.Draw(canvasImageL, imageL);
                 FileTransfer.ListL.Add("Puste");
             }
             else
             {
-                empty.Draw(canvasImageR, imageR, activeCanvasR, activeCanvasL);
+                empty.Draw(canvasImageR, imageR);
                 FileTransfer.ListR.Add("Puste");
             }
 

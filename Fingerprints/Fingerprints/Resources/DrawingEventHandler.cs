@@ -41,8 +41,8 @@ namespace Fingerprints
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
 
-            drawL.Draw(window.canvasImageL, window.imageL, window.activeCanvasL, window.activeCanvasR, index);
-            drawR.Draw(window.canvasImageR, window.imageR, window.activeCanvasR, window.activeCanvasL, index);
+            drawL.Draw(window.canvasImageL, window.imageL, index);
+            drawR.Draw(window.canvasImageR, window.imageR, index);
         }
 
         public void stopDrawing()

@@ -27,7 +27,7 @@ namespace Fingerprints
             singlePoint.X = x;
             singlePoint.Y = y;
         }
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = -1)
+        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             handler += (ss, ee) =>
             {
@@ -45,9 +45,7 @@ namespace Fingerprints
                     //myPath.Opacity = 0.5;
                     myPath.Tag = Name;
                     canvas.AddLogicalChild(myPath, index);
-                    radioButton1.IsChecked = false;
-                    radioButton2.IsChecked = true;
-                    AddElementToSaveList(index);
+                    AddElementToSaveList(canvas.Tag.ToString(), index);
                 }
 
             };

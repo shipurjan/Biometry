@@ -164,7 +164,7 @@ namespace Fingerprints
             canvasL.ChildAdded += (ss, ee) =>
             {
                 listBoxL.Items.Clear();
-
+                
                 foreach (var item in canvasL.Children)
                 {
                     if (item.GetType().Name == "Path")

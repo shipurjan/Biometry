@@ -37,12 +37,12 @@ namespace Fingerprints
             tmp2 = new Point();
         }
 
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = 0)
+        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
 
             handler += (ss, ee) =>
             {
-                
+
                 Path myPath = new Path();
                 EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                 LineGeometry myPathFigure = new LineGeometry();
@@ -74,25 +74,16 @@ namespace Fingerprints
                     }
                     else
                     {
-                        radioButton1.IsChecked = false;
-                        radioButton2.IsChecked = true;
-                        if (radioButton1.Name == "activeCanvasL")
-                        {
-                            FileTransfer.ListL.Add(ToString());
-                        }
-                        else
-                        {
-                            FileTransfer.ListR.Add(ToString());
-                        }
+                        AddElementToSaveList(canvas.Tag.ToString(), index);
                         canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                         clickCount = 0;
                         group = null;
                         group = new GeometryGroup();
                     }
                 }
-               
+
             };
-            
+
             mouseMove += (ss, ee) =>
             {
                 if (clickCount == 1)
@@ -135,7 +126,7 @@ namespace Fingerprints
             Path myPath = new Path();
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             LineGeometry myPathFigure = new LineGeometry();
-            
+
             myEllipseGeometry.Center = firstPointLine;
             myEllipseGeometry.RadiusX = 2 * size;
             myEllipseGeometry.RadiusY = 2 * size;

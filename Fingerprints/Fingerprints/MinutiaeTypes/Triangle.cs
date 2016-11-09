@@ -43,7 +43,7 @@ namespace Fingerprints
             tmp2 = new Point();
         }
 
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = 0)
+        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             handler += (ss, ee) =>
             {
@@ -92,18 +92,9 @@ namespace Fingerprints
                     //System.Threading.Thread.Sleep(450);
                     canvas.Children.RemoveAt(canvas.Children.Count - 1);
                     canvas.AddLogicalChild(myPath);
-                    radioButton1.IsChecked = false;
-                    radioButton2.IsChecked = true;
                     //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     clickCount = 0;
-                    if (radioButton1.Name == "activeCanvasL")
-                    {
-                        FileTransfer.ListL.Add(ToString());
-                    }
-                    else
-                    {
-                        FileTransfer.ListR.Add(ToString());
-                    }
+                    AddElementToSaveList(canvas.Tag.ToString(), index);
                     group = null;
                     group = new GeometryGroup();
                 }

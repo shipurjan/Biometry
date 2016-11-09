@@ -40,12 +40,12 @@ namespace Fingerprints
         /// <param name="image">Aktualny obrazek</param>
         /// <param name="border1">Ramka 1</param>
         /// <param name="border2">Ramka 2</param>
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = 0)
+        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
-            radioButton1.Unchecked += (ss, ee) =>
+            window.acceptCurveButton.Click += (ss, ee) =>
             {
                 newLine = true;
-                this.AddElementToSaveList();
+                this.AddElementToSaveList(canvas.Tag.ToString(), index);
                 this.baseLine = null;
             };
 

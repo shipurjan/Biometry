@@ -13,7 +13,7 @@ namespace Fingerprints
 {
     class Empty : Minutiae
     {
-        public override void Draw(OverridedCanvas canvas, Image image, RadioButton radioButton1, RadioButton radioButton2, int index = 0)
+        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             Point singlePoint = new Point(1, 1);
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
@@ -27,17 +27,8 @@ namespace Fingerprints
             myPath.Name = "Puste";
             myPath.Tag = "Puste";
             canvas.AddLogicalChild(myPath);
-            radioButton1.IsChecked = false;
-            radioButton2.IsChecked = true;
-            if (radioButton1.Name == "activeCanvasL")
-            {
-                FileTransfer.ListL.Add(ToString());
-            }
-            else
-            {
-                FileTransfer.ListR.Add(ToString());
-            }
-            //canvas.AddLogicalChild(myPath);
+            AddElementToSaveList(canvas.Tag.ToString(), index);
+            canvas.AddLogicalChild(myPath);
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
@@ -53,14 +44,6 @@ namespace Fingerprints
             myPath.Opacity = 1;
             myPath.Name = "Puste";
             myPath.Tag = "Puste";
-            //if (canvas.Tag.ToString() == "Left")
-            //{
-            //    FileTransfer.ListL.Add(ToString());
-            //}
-            //if (canvas.Tag.ToString() == "Right")
-            //{
-            //    FileTransfer.ListR.Add(ToString());
-            //}
             canvas.AddLogicalChild(myPath);
         }
 
