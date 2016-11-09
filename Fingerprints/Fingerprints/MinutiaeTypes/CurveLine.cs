@@ -32,6 +32,7 @@ namespace Fingerprints
             this.points = points;
             this.Name = name;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
+
         }
         /// <summary>
         /// Dodaje handlery do myszy, rysuje linie ciagla, zapisuje jako liste puktow
@@ -42,18 +43,28 @@ namespace Fingerprints
         /// <param name="border2">Ramka 2</param>
         public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
-            window.acceptLeftCurveButton.Click += (ss, ee) =>
+            window.acceptLeftCurveButton.Visibility = Visibility.Visible;
+            window.acceptRightCurveButton.Visibility = Visibility.Visible;
+
+            if (canvas.Tag.ToString() == "Left")
             {
-                newLine = true;
-                this.AddElementToSaveList(canvas.Tag.ToString(), index);
-                this.baseLine = null;
-            };
-            window.acceptRightCurveButton.Click += (ss, ee) =>
+                window.acceptLeftCurveButton.Click += (ss, ee) =>
+                {
+                    newLine = true;
+                    this.AddElementToSaveList(canvas.Tag.ToString(), index);
+                    this.baseLine = null;
+                };
+            }
+            else
             {
-                newLine = true;
-                this.AddElementToSaveList(canvas.Tag.ToString(), index);
-                this.baseLine = null;
-            };
+                window.acceptRightCurveButton.Click += (ss, ee) =>
+                {
+                    newLine = true;
+                    this.AddElementToSaveList(canvas.Tag.ToString(), index);
+                    this.baseLine = null;
+                };
+            }
+
 
             handler += (ss, ee) =>
             {
@@ -88,6 +99,8 @@ namespace Fingerprints
 
         public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
+            window.acceptLeftCurveButton.Visibility = Visibility.Hidden;
+            window.acceptRightCurveButton.Visibility = Visibility.Hidden;
             image.MouseMove -= handler;
             canvas.MouseMove -= handler;
         }
