@@ -69,10 +69,6 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" />
                 <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="11" BorderThickness="0" Background="#FFEEEEEE" />
-                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
-                <RadioButton x:Name="activeCanvasL" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" IsChecked="True"/>
-                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ></Border>
-                <RadioButton x:Name="activeCanvasR" Content="Aktywuj" HorizontalAlignment="Center" Grid.Column="5" VerticalAlignment="Center"/>
                 <Button x:Name="acceptCurveButton" Content="Akceptuj" Grid.Column="3" Margin="33,0,32,0"></Button>
             </Grid>
         </Grid>

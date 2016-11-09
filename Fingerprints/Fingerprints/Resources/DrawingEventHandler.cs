@@ -53,7 +53,6 @@ namespace Fingerprints
 
         private void resetBordersAndRadioButtons()
         {
-            window.activeCanvasL.IsChecked = true;
             window.borderRight.BorderBrush = Brushes.Black;
             window.borderLeft.BorderBrush = Brushes.DeepSkyBlue;
         }

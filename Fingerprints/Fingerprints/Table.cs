@@ -83,8 +83,6 @@ namespace Fingerprints
                     if (index == -1) { return; }
                     listBoxL.UnselectAll();
                     window.drawing.startNewDrawing(type.Name, index);
-                    window.activeCanvasL.IsChecked = true;
-                    window.activeCanvasR.IsChecked = false;
                     window.comboBox.SelectedIndex = -1;
                 };
                 mi.Items.Add(nMenu);
@@ -105,8 +103,6 @@ namespace Fingerprints
                     if (index == -1) { return; }
                     listBoxR.UnselectAll();
                     window.drawing.startNewDrawing(type.Name, index);
-                    window.activeCanvasL.IsChecked = false;
-                    window.activeCanvasR.IsChecked = true;
                     window.comboBox.SelectedIndex = -1;
                 };
                 mi.Items.Add(nMenu);
@@ -149,14 +145,16 @@ namespace Fingerprints
         {
             listBoxL.Items.RemoveAt(index);
             canvasL.Children.RemoveAt(index);
-            FileTransfer.ListL.RemoveAt(index);
+            if (FileTransfer.ListL.Count > index)
+                FileTransfer.ListL.RemoveAt(index);
         }
 
         private void deleteRight(int index)
         {
             listBoxR.Items.RemoveAt(index);
             canvasR.Children.RemoveAt(index);
-            FileTransfer.ListR.RemoveAt(index);
+            if (FileTransfer.ListR.Count > index)
+                FileTransfer.ListR.RemoveAt(index);
         }
 
         private void canvasLeftChildAdded()
@@ -164,7 +162,7 @@ namespace Fingerprints
             canvasL.ChildAdded += (ss, ee) =>
             {
                 listBoxL.Items.Clear();
-                
+
                 foreach (var item in canvasL.Children)
                 {
                     if (item.GetType().Name == "Path")
