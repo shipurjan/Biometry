@@ -39,9 +39,12 @@ namespace Fingerprints
             addEmpty.Click += addEmpty_Click;
 
             //Database.InitialData();
-            this.Closed += (ss, ee) =>
+            this.Closing += (ss, ee) =>
             {
-                FileTransfer.Save();
+                if(MessageBox.Show("Czy zapisać zmiany?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    FileTransfer.Save();
+                }
             };
 
             saveButton.Click += (ss, ee) =>
@@ -135,7 +138,6 @@ namespace Fingerprints
             //    empty.Draw(canvasImageR, imageR);
             //    FileTransfer.ListR.Add("Puste");
             //}
-
         }
     }
 }
