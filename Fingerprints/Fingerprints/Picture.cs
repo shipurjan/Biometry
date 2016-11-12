@@ -16,9 +16,13 @@ namespace Fingerprints
     {
         Point firstPoint = new Point();
         MainWindow mw;
+        Helper helper;
+        MinutiaeTypeController controller;
         public Picture(MainWindow mw)
         {
             this.mw = mw;
+            controller = new MinutiaeTypeController();
+            helper = new Helper(this.mw, controller);
         }
 
         public void InitializeL()
@@ -63,9 +67,18 @@ namespace Fingerprints
                         loadMinutiae(FileTransfer.ListR, canvasImage);
                     }
                 }
-                //fillEmpty();
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
                 Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
+
+                if (helper.canInsertEmpty())
+                {
+                    while (helper.canInsertEmpty())
+                    {
+                        helper.insertEmpty();
+                    }
+                    helper.deleteUnnecessaryEmpty();
+
+                }
             };
 
 

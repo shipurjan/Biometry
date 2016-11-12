@@ -132,16 +132,12 @@ namespace Fingerprints
         private void addEmpty_Click(object sender, EventArgs e)
         {
             Empty empty = new Empty();
-            //if (activeCanvasL.IsChecked == true)
-            //{
-            //    empty.Draw(canvasImageL, imageL);
-            //    FileTransfer.ListL.Add("Puste");
-            //}
-            //else
-            //{
-            //    empty.Draw(canvasImageR, imageR);
-            //    FileTransfer.ListR.Add("Puste");
-            //}
+            if (canvasImageL.Children.Count > canvasImageR.Children.Count)
+                empty.Draw(canvasImageR, imageR);
+            else if (canvasImageL.Children.Count < canvasImageR.Children.Count)
+                empty.Draw(this.canvasImageL, imageR, 0);
+            else
+                MessageBox.Show("Nie można dodać pustego, jeżeli mamy tyle samo elementów");
         }
 
         public bool anyChildrensToSave()
