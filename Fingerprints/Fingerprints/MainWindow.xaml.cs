@@ -35,6 +35,7 @@ namespace Fingerprints
             comboBox.ItemsSource = controller.Show();
             comboBoxChanged();
             InitTable();
+            saveEvents();
 
             addEmpty.Click += addEmpty_Click;
 
@@ -69,7 +70,7 @@ namespace Fingerprints
         {
             this.Closing += (ss, ee) =>
             {
-                if (anyChildrensToSave() && MessageBox.Show("Czy zapisać zmiany?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (anyChildrensToSave() && MessageBox.Show("Czy zapisać zmiany?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     FileTransfer.Save();
                 }
@@ -146,6 +147,8 @@ namespace Fingerprints
 
         public bool anyChildrensToSave()
         {
+            Console.WriteLine(canvasImageL.Children.Count);
+            Console.WriteLine(canvasImageR.Children.Count);
             return canvasImageL.Children.Count > 0 || canvasImageR.Children.Count > 0;
         }
     }
