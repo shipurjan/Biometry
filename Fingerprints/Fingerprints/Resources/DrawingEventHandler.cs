@@ -33,10 +33,6 @@ namespace Fingerprints
             {
                 stopDrawing();
             }
-            if (canInsertEmpty())
-            {
-                //insertEmpty();
-            }
 
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
@@ -64,26 +60,30 @@ namespace Fingerprints
 
         public bool canInsertEmpty()
         {
-            //warunki do wstawienia pustego elementu
             return window.listBoxImageL.Items.Count != window.listBoxImageR.Items.Count;
         }
 
         private void insertEmpty()
         {
-            Point singlePoint = new Point(1, 1);
-            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-            myEllipseGeometry.Center = singlePoint;
-            myEllipseGeometry.RadiusX = 0;
-            myEllipseGeometry.RadiusY = 0;
-            Path myPath = new Path();
-            myPath.StrokeThickness = 0.3;
-            myPath.Data = myEllipseGeometry;
-            myPath.Opacity = 0;
-            myPath.Name = "Puste";
-            myPath.Tag = "Puste";
-            window.canvasImageR.AddLogicalChild(myPath);
-            FileTransfer.ListR.Add("Puste");
-            window.listBoxImageR.Items.Add("Puste");
+            Empty empty = new Empty();
+            if (window.canvasImageL.Children.Count > window.canvasImageR.Children.Count)
+                empty.Draw(window.canvasImageR, window.imageR);
+            else if (window.canvasImageL.Children.Count < window.canvasImageR.Children.Count)
+                empty.Draw(window.canvasImageL, window.imageR);
+        }
+        private void deleteUnnecessaryEmpty()
+        {
+            while (((string)window.listBoxImageL.Items[window.listBoxImageL.Items.Count - 1] == "Puste" && (string)window.listBoxImageR.Items[window.listBoxImageR.Items.Count - 1] == "Puste"))
+            {
+                window.listBoxImageL.Items.RemoveAt(window.listBoxImageL.Items.Count - 1);
+                window.canvasImageL.Children.RemoveAt(window.listBoxImageL.Items.Count - 1);
+                if (FileTransfer.ListL.Count > window.listBoxImageL.Items.Count)
+                    FileTransfer.ListL.RemoveAt(window.listBoxImageL.Items.Count);
+                window.listBoxImageR.Items.RemoveAt(window.listBoxImageR.Items.Count - 1);
+                window.canvasImageR.Children.RemoveAt(window.listBoxImageR.Items.Count - 1);
+                if (FileTransfer.ListR.Count > window.listBoxImageR.Items.Count)
+                    FileTransfer.ListR.RemoveAt(window.listBoxImageR.Items.Count);
+            }
         }
     }
 }
