@@ -68,7 +68,7 @@ namespace Fingerprints
                         myPath.StrokeThickness = thickness;
                         myPath.Data = group;
                         myPath.Tag = Name;
-                        canvas.AddLogicalChild(myPath);
+                        canvas.AddLogicalChild(myPath, index);
 
                         clickCount++;
                     }

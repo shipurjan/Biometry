@@ -36,7 +36,7 @@ namespace Fingerprints
 
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
-
+            
             drawL.Draw(window.canvasImageL, window.imageL, index);
             drawR.Draw(window.canvasImageR, window.imageR, index);
         }

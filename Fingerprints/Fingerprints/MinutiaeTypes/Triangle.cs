@@ -61,8 +61,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    //canvas.Children.Add(myPath);
-                    canvas.AddLogicalChild(myPath);
+                    canvas.AddLogicalChild(myPath, index);
                     clickCount++;
                 }
                 else if (clickCount == 1)
@@ -74,8 +73,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                    canvas.AddLogicalChild(myPath);
+                    deleteAndAdd(canvas, myPath, index);
                     clickCount++;
                 }
                 else if (clickCount == 2)
@@ -89,9 +87,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    //System.Threading.Thread.Sleep(450);
-                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                    canvas.AddLogicalChild(myPath);
+                    deleteAndAdd(canvas, myPath, index);
                     //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     clickCount = 0;
                     AddElementToSaveList(canvas.Tag.ToString(), index);
@@ -112,6 +108,21 @@ namespace Fingerprints
             image.MouseMove += mouseMove;
             image.MouseRightButtonDown += handler;
             canvas.MouseRightButtonDown += handler;
+        }
+
+        public void deleteAndAdd(OverridedCanvas canvas, Path myPath, int index = -1)
+        {
+            if (index == -1)
+            {
+                canvas.Children.RemoveAt(canvas.Children.Count - 1);
+            }
+            else
+            {
+                canvas.Children.RemoveAt(index);
+            }
+
+            canvas.AddLogicalChild(myPath, index);
+
         }
         private void drawCompleteLine(MouseEventArgs ee, OverridedCanvas canvas, int clickCount)
         {
