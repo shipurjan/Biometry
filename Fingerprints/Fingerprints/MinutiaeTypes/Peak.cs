@@ -61,7 +61,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    canvas.AddLogicalChild(myPath);
+                    canvas.AddLogicalChild(myPath, index);
                     clickCount++;
                 }
                 else if (clickCount == 1)
@@ -73,8 +73,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                    canvas.AddLogicalChild(myPath);
+                    deleteAndAdd(canvas, myPath, index);
                     clickCount++;
                 }
                 else if (clickCount == 2)
@@ -86,8 +85,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                    canvas.AddLogicalChild(myPath);
+                    deleteAndAdd(canvas, myPath, index);
                     AddElementToSaveList(canvas.Tag.ToString(), index);
                     group = null;
                     group = new GeometryGroup();
@@ -135,6 +133,21 @@ namespace Fingerprints
         public override string ToString()
         {
             return Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + Math.Floor(secondPointLine.X).ToString() + ";" + Math.Floor(secondPointLine.Y).ToString() + ";" + Math.Floor(thirdPointLine.X).ToString() + ";" + Math.Floor(thirdPointLine.Y).ToString();
+        }
+
+        public void deleteAndAdd(OverridedCanvas canvas, Path myPath, int index = -1)
+        {
+            if (index == -1)
+            {
+                canvas.Children.RemoveAt(canvas.Children.Count - 1);
+            }
+            else
+            {
+                canvas.Children.RemoveAt(index);
+            }
+
+            canvas.AddLogicalChild(myPath, index);
+
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)

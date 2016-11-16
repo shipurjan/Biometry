@@ -63,7 +63,7 @@ namespace Fingerprints
                             StrokeMiterLimit = 2,
                             Tag = Name,
                         };
-                        canvas.AddLogicalChild(baseLine);
+                        canvas.AddLogicalChild(baseLine, index);
                         newLine = false;
                     }
                     currentPoint.X = Math.Floor(ee.GetPosition(canvas).X + 0.5);
