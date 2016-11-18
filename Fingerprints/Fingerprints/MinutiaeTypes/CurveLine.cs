@@ -65,6 +65,7 @@ namespace Fingerprints
                         };
                         canvas.AddLogicalChild(baseLine, index);
                         newLine = false;
+                        index = -1;
                     }
                     currentPoint.X = Math.Floor(ee.GetPosition(canvas).X + 0.5);
                     currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y + 0.5);

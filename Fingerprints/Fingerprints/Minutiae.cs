@@ -29,7 +29,7 @@ namespace Fingerprints
 
         private void insertStringToList(List<string> list, int index = -1)
         {
-            //if (ToString() != "" && list.LastOrDefault() != ToString())
+            //if (ToString() != "" && list.LastOrDefault() != ToString()) zakomentowane ponieważ nie dodawalo kilku pustych pod rząd 
             //{
                 if (index > -1)
                 {

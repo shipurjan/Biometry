@@ -143,8 +143,6 @@ namespace Fingerprints
 
         public bool anyChildrensToSave()
         {
-            Console.WriteLine(canvasImageL.Children.Count);
-            Console.WriteLine(canvasImageR.Children.Count);
             return canvasImageL.Children.Count > 0 || canvasImageR.Children.Count > 0;
         }
     }

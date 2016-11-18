@@ -90,6 +90,7 @@ namespace Fingerprints
                     group = null;
                     group = new GeometryGroup();
                     clickCount = 0;
+                    index = -1;
                 }
 
 

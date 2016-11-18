@@ -44,9 +44,9 @@ namespace Fingerprints
                     myPath.Data = myEllipseGeometry;
                     //myPath.Opacity = 0.5;
                     myPath.Tag = Name;
-                    Console.WriteLine(index);
                     canvas.AddLogicalChild(myPath, index);
                     AddElementToSaveList(canvas.Tag.ToString(), index);
+                    index = -1;
                 }
 
             };

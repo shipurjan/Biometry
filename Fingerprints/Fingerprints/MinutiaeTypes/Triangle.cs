@@ -91,6 +91,7 @@ namespace Fingerprints
                     //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     clickCount = 0;
                     AddElementToSaveList(canvas.Tag.ToString(), index);
+                    index = -1;
                     group = null;
                     group = new GeometryGroup();
                 }

@@ -28,7 +28,6 @@ namespace Fingerprints
             myPath.Tag = "Puste";
             canvas.AddLogicalChild(myPath);
             AddElementToSaveList(canvas.Tag.ToString(), index);
-            // canvas.AddLogicalChild(myPath);
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
