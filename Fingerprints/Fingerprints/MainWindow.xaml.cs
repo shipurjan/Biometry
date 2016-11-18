@@ -70,7 +70,7 @@ namespace Fingerprints
         {
             this.Closing += (ss, ee) =>
             {
-                if (anyChildrensToSave() && MessageBox.Show("Czy zapisać zmiany?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Czy zapisać zmiany?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     FileTransfer.Save();
                 }

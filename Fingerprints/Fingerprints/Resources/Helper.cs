@@ -20,14 +20,14 @@ namespace Fingerprints
         {
             return mw.listBoxImageL.Items.Count != mw.listBoxImageR.Items.Count;
         }
-
+        m
         public void insertEmpty()
         {
             Empty empty = new Empty();
             if (mw.canvasImageL.Children.Count > mw.canvasImageR.Children.Count)
                 empty.Draw(mw.canvasImageR, mw.imageR);
             else if (mw.canvasImageL.Children.Count < mw.canvasImageR.Children.Count)
-                empty.Draw(mw.canvasImageL, mw.imageR);
+                empty.Draw(mw.canvasImageL, mw.imageL);
         }
         public void deleteUnnecessaryEmpty()
         {

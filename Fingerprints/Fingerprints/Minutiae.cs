@@ -29,8 +29,8 @@ namespace Fingerprints
 
         private void insertStringToList(List<string> list, int index = -1)
         {
-            if (ToString() != "" && list.LastOrDefault() != ToString())
-            {
+            //if (ToString() != "" && list.LastOrDefault() != ToString())
+            //{
                 if (index > -1)
                 {
                     list.Insert(index, ToString());
@@ -39,7 +39,7 @@ namespace Fingerprints
                 {
                     list.Add(ToString());
                 }
-            }
+            //}
         }
     }
 }
