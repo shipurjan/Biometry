@@ -20,7 +20,7 @@ namespace Fingerprints
         {
             return mw.listBoxImageL.Items.Count != mw.listBoxImageR.Items.Count;
         }
-        m
+        
         public void insertEmpty()
         {
             Empty empty = new Empty();
