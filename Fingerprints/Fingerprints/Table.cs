@@ -25,8 +25,7 @@ namespace Fingerprints
             this.canvasR = window.canvasImageR;
             this.listBoxL = window.listBoxImageL;
             this.listBoxR = window.listBoxImageR;
-            this.buttonLeft = window.buttonDeleteL;
-            this.buttonRight = window.buttonDeleteR;
+
             listBoxSelectionChanged(window.listBoxImageL, window.canvasImageL);
             listBoxSelectionChanged(window.listBoxImageR, window.canvasImageR);
             canvasLeftChildAdded();
@@ -222,32 +221,32 @@ namespace Fingerprints
         {
             listBox.SelectionChanged += (ss, ee) =>
             {
-                if (canvas.Tag.ToString() == "Left")
-                {
-                    buttonLeft.Click += (s, e) =>
-                    {
-                        if (listBox.SelectedIndex != -1)
-                        {
-                            canvas.Children.RemoveAt(listBox.SelectedIndex);
-                            FileTransfer.ListL.RemoveAt(listBox.SelectedIndex);
-                            listBox.Items.RemoveAt(listBox.SelectedIndex);
-                            deleteListRefresh();
-                        }
-                    };
-                }
-                else
-                {
-                    buttonRight.Click += (s, e) =>
-                    {
-                        if (listBox.SelectedIndex != -1)
-                        {
-                            canvas.Children.RemoveAt(listBox.SelectedIndex);
-                            FileTransfer.ListR.RemoveAt(listBox.SelectedIndex);
-                            listBox.Items.RemoveAt(listBox.SelectedIndex);
-                            deleteListRefresh();
-                        }
-                    };
-                }
+                //if (canvas.Tag.ToString() == "Left")
+                //{
+                //    buttonLeft.Click += (s, e) =>
+                //    {
+                //        if (listBox.SelectedIndex != -1)
+                //        {
+                //            canvas.Children.RemoveAt(listBox.SelectedIndex);
+                //            FileTransfer.ListL.RemoveAt(listBox.SelectedIndex);
+                //            listBox.Items.RemoveAt(listBox.SelectedIndex);
+                //            deleteListRefresh();
+                //        }
+                //    };
+                //}
+                //else
+                //{
+                //    buttonRight.Click += (s, e) =>
+                //    {
+                //        if (listBox.SelectedIndex != -1)
+                //        {
+                //            canvas.Children.RemoveAt(listBox.SelectedIndex);
+                //            FileTransfer.ListR.RemoveAt(listBox.SelectedIndex);
+                //            listBox.Items.RemoveAt(listBox.SelectedIndex);
+                //            deleteListRefresh();
+                //        }
+                //    };
+                //}
                 for (int i = 0; i < canvas.Children.Count; i++)
                 {
                     if (canvas.Children[i] != null)

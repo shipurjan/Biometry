@@ -29,22 +29,23 @@ namespace Fingerprints
             double thickness = controller.GetThicknessOfSelectedMinutiae(minutiaeName);
             double size = controller.GetSizeOfSelectedMinutiae(minutiaeName);
 
-            if (canStopDrawing())
-            {
-                stopDrawing();
-            }
+            stopDrawing();
 
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
-            
+
             drawL.Draw(window.canvasImageL, window.imageL, index);
             drawR.Draw(window.canvasImageR, window.imageR, index);
         }
 
         public void stopDrawing()
         {
-            drawL.DeleteEvent(window.imageL, window.canvasImageL);
-            drawR.DeleteEvent(window.imageR, window.canvasImageR);
+
+            if (canStopDrawing())
+            {
+                drawL.DeleteEvent(window.imageL, window.canvasImageL);
+                drawR.DeleteEvent(window.imageR, window.canvasImageR);
+            }
         }
 
         private void resetBordersAndRadioButtons()

@@ -37,10 +37,9 @@
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="comboBox" Text="--Wybierz--" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="3" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0,0,0.6,0.4"/>
-                <Button x:Name="addEmpty" Margin="0,6,10,4" Visibility="Visible" Content="Dodaj puste" Grid.Column="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFEEEEEE" BorderThickness="0" RenderTransformOrigin="-7.806,2.625"/>
                 <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" Margin="0, 5, 0, 5" />
                 <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0, 5, 0, 5" />
-                <Button x:Name="saveButton" Content="Zapisz" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" Margin="0, 5, 0, 5" />
+                <Button x:Name="saveButton" Content="Zapisz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" Margin="0, 5, 0, 5" />
             </Grid>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -62,19 +61,16 @@
                     <ColumnDefinition Width="140*"/>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="31*"/>
-                    <ColumnDefinition Width="79*"/>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="79*"/>
+                    <ColumnDefinition Width="163*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="buttonDeleteL" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" />
-                <Button x:Name="buttonDeleteR" Content="Usuń" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="rightMenuClick_Delete" Grid.Column="11" BorderThickness="0" Background="#FFEEEEEE" />
                 <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
                 <Button x:Name="acceptRightCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button x:Name="addEmpty"  BorderThickness="0" Background="#FFEEEEEE" Content="Dodaj puste" Grid.Column="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
+            <Grid.RowDefinitions>   
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="90*"/>
