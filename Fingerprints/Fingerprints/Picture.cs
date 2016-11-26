@@ -163,6 +163,10 @@ namespace Fingerprints
                 {
                     draw = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
                 }
+                else if (type.TypeId == 6)
+                {
+                    draw = new Segment(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]));
+                }
                 else
                 {
                     draw = new Empty();

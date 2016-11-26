@@ -32,6 +32,7 @@ namespace Fingerprints
             drawingType.Add("Krzywa dowolna");
             drawingType.Add("Trojkat");
             drawingType.Add("Daszek");
+            drawingType.Add("Odcinek");
             size.Add(0.1);
             size.Add(0.25);
             size.Add(0.5);

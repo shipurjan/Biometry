@@ -72,6 +72,10 @@ namespace Fingerprints
             {
                 draw = new Peak(minutiaeName, kolor, thickness);
             }
+            if (controller.GetTypeIdOfSelectedMinutiae(minutiaeName) == 6)
+            {
+                draw = new Segment(minutiaeName, kolor, thickness);
+            }
             return draw;
         }
     }
