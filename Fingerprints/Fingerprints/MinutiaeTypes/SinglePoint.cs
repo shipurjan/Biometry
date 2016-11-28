@@ -33,6 +33,9 @@ namespace Fingerprints
             {
                 if (ee.RightButton == MouseButtonState.Pressed)
                 {
+
+                    MinutiaeTypeController controller = new MinutiaeTypeController();
+                    Helper helper = new Helper(window, controller);
                     singlePoint = ee.GetPosition(canvas);
                     EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                     myEllipseGeometry.Center = singlePoint;
@@ -44,8 +47,11 @@ namespace Fingerprints
                     myPath.Data = myEllipseGeometry;
                     //myPath.Opacity = 0.5;
                     myPath.Tag = Name;
+                    helper.DeleteEmptyAtIndex(canvas, index);
+                    if (index == -1)
+                        helper.AddEmptyToOpositeSite(canvas, index);
                     canvas.AddLogicalChild(myPath, index);
-                    AddElementToSaveList(canvas.Tag.ToString(), index);
+                    AddElementToSaveList(canvas.Tag.ToString(), index);                    
                     index = -1;
                 }
 
