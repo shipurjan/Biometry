@@ -15,6 +15,18 @@ namespace Fingerprints
         public virtual void DeleteEvent(Image image, OverridedCanvas canvas) { }
         public virtual void DrawFromFile(OverridedCanvas canvas) { }
 
+        public void deleteChildWithGivenIndex(string canvasType, int index)
+        {
+            if (canvasType == "Left")
+            {
+                deleteLeft(index);
+            }
+            else
+            {
+                deleteRight(index);
+            }
+        }
+
         public void AddElementToSaveList(string listType, int index = -1)
         {
             if (listType == "Left")

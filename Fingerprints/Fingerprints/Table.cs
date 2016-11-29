@@ -135,35 +135,11 @@ namespace Fingerprints
             return usun;
         }
 
-        private void addLeftAtIndex(int index, string name, UIElement child, string cords)
-        {
-            listBoxL.Items.Insert(index, name);
-            canvasL.Children.Insert(index, child);
-            FileTransfer.ListL.Insert(index, cords);
-        }
-
-        private void deleteLeft(int index)
-        {
-            listBoxL.Items.RemoveAt(index);
-            canvasL.Children.RemoveAt(index);
-            if (FileTransfer.ListL.Count > index)
-                FileTransfer.ListL.RemoveAt(index);
-        }
-
-        private void deleteRight(int index)
-        {
-            listBoxR.Items.RemoveAt(index);
-            canvasR.Children.RemoveAt(index);
-            if (FileTransfer.ListR.Count > index)
-                FileTransfer.ListR.RemoveAt(index);
-        }
-
         private void canvasLeftChildAdded()
         {
             canvasL.ChildAdded += (ss, ee) =>
             {
                 listBoxL.Items.Clear();
-
                 foreach (var item in canvasL.Children)
                 {
                     if (item.GetType().Name == "Path")
@@ -221,32 +197,6 @@ namespace Fingerprints
         {
             listBox.SelectionChanged += (ss, ee) =>
             {
-                //if (canvas.Tag.ToString() == "Left")
-                //{
-                //    buttonLeft.Click += (s, e) =>
-                //    {
-                //        if (listBox.SelectedIndex != -1)
-                //        {
-                //            canvas.Children.RemoveAt(listBox.SelectedIndex);
-                //            FileTransfer.ListL.RemoveAt(listBox.SelectedIndex);
-                //            listBox.Items.RemoveAt(listBox.SelectedIndex);
-                //            deleteListRefresh();
-                //        }
-                //    };
-                //}
-                //else
-                //{
-                //    buttonRight.Click += (s, e) =>
-                //    {
-                //        if (listBox.SelectedIndex != -1)
-                //        {
-                //            canvas.Children.RemoveAt(listBox.SelectedIndex);
-                //            FileTransfer.ListR.RemoveAt(listBox.SelectedIndex);
-                //            listBox.Items.RemoveAt(listBox.SelectedIndex);
-                //            deleteListRefresh();
-                //        }
-                //    };
-                //}
                 for (int i = 0; i < canvas.Children.Count; i++)
                 {
                     if (canvas.Children[i] != null)
