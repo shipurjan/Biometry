@@ -68,6 +68,7 @@ namespace Fingerprints
                         myPath.StrokeThickness = thickness;
                         myPath.Data = group;
                         myPath.Tag = Name;
+                        deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
                         canvas.AddLogicalChild(myPath, index);
 
                         clickCount++;

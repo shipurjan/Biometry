@@ -57,7 +57,8 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    canvas.AddLogicalChild(myPath);
+                    deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
+                    canvas.AddLogicalChild(myPath, index);
                     clickCount++;
                 }
                 else
@@ -69,8 +70,9 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    canvas.Children.RemoveAt(canvas.Children.Count - 1);
-                    canvas.AddLogicalChild(myPath);
+                    //canvas.Children.RemoveAt(canvas.Children.Count - 1);
+                    //canvas.AddLogicalChild(myPath, index);
+                    deleteAndAdd(canvas, myPath, index);
                     clickCount = 0;
                     AddElementToSaveList(canvas.Tag.ToString(), index);
                     group = null;
