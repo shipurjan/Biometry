@@ -25,29 +25,44 @@ namespace Fingerprints
         {
             resetBordersAndRadioButtons();
 
-            string kolor = controller.GetColorOfSelectedMinutiae(minutiaeName);
-            double thickness = controller.GetThicknessOfSelectedMinutiae(minutiaeName);
-            double size = controller.GetSizeOfSelectedMinutiae(minutiaeName);
+            startLeftDrawing(minutiaeName, index);
+            startRightDrawing(minutiaeName, index);
+        }
 
-            stopDrawing();
-
+        public void startLeftDrawing(string minutiaeName, int index = -1)
+        {
+            stopLeftDrawing();
             drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
-            drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
-
             drawL.Draw(window.canvasImageL, window.imageL, index);
+        }
+        public void startRightDrawing(string minutiaeName, int index = -1)
+        {
+            stopRightDrawing();
+            drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawR.Draw(window.canvasImageR, window.imageR, index);
         }
 
         public void stopDrawing()
         {
+            stopLeftDrawing();
+            stopRightDrawing();
+        }
 
-            if (canStopDrawing())
+        public void stopLeftDrawing()
+        {
+            if (drawL != null)
             {
                 drawL.DeleteEvent(window.imageL, window.canvasImageL);
-                drawR.DeleteEvent(window.imageR, window.canvasImageR);
             }
         }
 
+        public void stopRightDrawing()
+        {
+            if (drawR != null)
+            {
+                drawR.DeleteEvent(window.imageR, window.canvasImageR);
+            }
+        }
         private void resetBordersAndRadioButtons()
         {
             window.borderRight.BorderBrush = Brushes.Black;
@@ -67,6 +82,7 @@ namespace Fingerprints
         private void insertEmpty()
         {
             Empty empty = new Empty();
+
             if (window.canvasImageL.Children.Count > window.canvasImageR.Children.Count)
                 empty.Draw(window.canvasImageR, window.imageR);
             else if (window.canvasImageL.Children.Count < window.canvasImageR.Children.Count)
@@ -78,10 +94,13 @@ namespace Fingerprints
             {
                 window.listBoxImageL.Items.RemoveAt(window.listBoxImageL.Items.Count - 1);
                 window.canvasImageL.Children.RemoveAt(window.listBoxImageL.Items.Count - 1);
+
                 if (FileTransfer.ListL.Count > window.listBoxImageL.Items.Count)
                     FileTransfer.ListL.RemoveAt(window.listBoxImageL.Items.Count);
+
                 window.listBoxImageR.Items.RemoveAt(window.listBoxImageR.Items.Count - 1);
                 window.canvasImageR.Children.RemoveAt(window.listBoxImageR.Items.Count - 1);
+
                 if (FileTransfer.ListR.Count > window.listBoxImageR.Items.Count)
                     FileTransfer.ListR.RemoveAt(window.listBoxImageR.Items.Count);
             }

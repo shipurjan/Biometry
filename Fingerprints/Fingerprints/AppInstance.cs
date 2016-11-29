@@ -9,6 +9,8 @@ namespace Fingerprints
 {
     public class AppInstance
     {
+        public int leftChildIndex { get; set; }
+        public int rightChildIndex { get; set; }
         public MainWindow window { get; set; }
         public AppInstance()
         {
@@ -21,8 +23,10 @@ namespace Fingerprints
             {
                 return;
             }
+
             window.listBoxImageL.Items.RemoveAt(index);
             window.canvasImageL.Children.RemoveAt(index);
+
             if (FileTransfer.ListL.Count > index)
                 FileTransfer.ListL.RemoveAt(index);
         }
@@ -33,8 +37,10 @@ namespace Fingerprints
             {
                 return;
             }
+
             window.listBoxImageR.Items.RemoveAt(index);
             window.canvasImageR.Children.RemoveAt(index);
+
             if (FileTransfer.ListR.Count > index)
                 FileTransfer.ListR.RemoveAt(index);
         }

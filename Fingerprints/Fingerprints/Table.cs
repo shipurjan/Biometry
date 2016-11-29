@@ -15,7 +15,6 @@ namespace Fingerprints
     {
         OverridedCanvas canvasL, canvasR;
         ListBox listBoxL, listBoxR, listBoxD;
-        Button buttonLeft, buttonRight;
         ComboBox combobox;
         public Table()
         {
@@ -81,9 +80,9 @@ namespace Fingerprints
                     int index = listBoxL.SelectedIndex;
                     if (index == -1) { return; }
                     listBoxL.UnselectAll();
-                    deleteLeft(index);
-                    window.comboBox.SelectedIndex = index; //TODO 
-                    window.drawing.startNewDrawing(type.Name, index);
+                    //window.comboBox.SelectedIndex = index; //TODO 
+                    window.drawing.startRightDrawing(type.Name);
+                    window.drawing.startLeftDrawing(type.Name, index);
                 };
                 mi.Items.Add(nMenu);
             }
@@ -102,9 +101,9 @@ namespace Fingerprints
                     int index = listBoxR.SelectedIndex;
                     if (index == -1) { return; }
                     listBoxR.UnselectAll();
-                    deleteRight(index);
-                    window.comboBox.SelectedIndex = index;
-                    window.drawing.startNewDrawing(type.Name, index);
+                    //window.comboBox.SelectedIndex = index; //TODO 
+                    window.drawing.startLeftDrawing(type.Name);
+                    window.drawing.startRightDrawing(type.Name, index);
                 };
                 mi.Items.Add(nMenu);
             }
@@ -208,6 +207,15 @@ namespace Fingerprints
                 if (listBox.SelectedIndex != -1)
                 {
                     canvas.Children[listBox.SelectedIndex].Opacity = 1;
+                }
+
+                if (listBox.Name.ToString() == "listBoxImageL")
+                {
+                    leftChildIndex = listBox.SelectedIndex;
+                }
+                else
+                {
+                    rightChildIndex = listBox.SelectedIndex;
                 }
             };
         }

@@ -50,6 +50,7 @@ namespace Fingerprints
                     helper.DeleteEmptyAtIndex(canvas, index);
                     if (index == -1)
                         helper.AddEmptyToOpositeSite(canvas, index);
+                    deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
                     canvas.AddLogicalChild(myPath, index);
                     AddElementToSaveList(canvas.Tag.ToString(), index);                    
                     index = -1;
