@@ -29,6 +29,13 @@ namespace Fingerprints
             listBoxSelectionChanged(window.listBoxImageR, window.canvasImageR);
             canvasLeftChildAdded();
             canvasRightChildAdded();
+            deleteRowEvent();
+            contextMenu();
+
+        }
+
+        public void deleteRowEvent()
+        {
             listBoxD.SelectionChanged += (ss, ee) =>
             {
                 if (listBoxD.SelectedIndex != -1)
@@ -45,9 +52,6 @@ namespace Fingerprints
                     listBoxD.Items.RemoveAt(index);
                 }
             };
-
-            contextMenu();
-
         }
 
         private void contextMenu()
