@@ -77,33 +77,5 @@ namespace Fingerprints
             }
             return draw;
         }
-
-        public void AddEmptyToOpositeSite(OverridedCanvas canvas, int index)
-        {
-            Empty empty = new Empty();
-            if (canvas == mw.canvasImageL && CanvasCountEqual())
-                empty.Draw(mw.canvasImageR, mw.imageR);
-            else if (canvas == mw.canvasImageR && CanvasCountEqual())
-                empty.Draw(mw.canvasImageL, mw.imageL);
-        }
-
-        public void DeleteEmptyAtIndex(OverridedCanvas canvas, int index)
-        {
-            if (index == -1)
-                index = canvas.Children.Count - 1;
-            string name = canvas.Children[index].GetType().Name;
-            string tag = "";
-            if (name == "Path")
-            {
-                Path q = (Path)canvas.Children[index];
-                tag = q.Tag.ToString();
-            }
-            if (tag == "Puste")
-                canvas.Children.RemoveAt(index);
-        }
-        public bool CanvasCountEqual()
-        {
-            return (mw.canvasImageL.Children.Count == mw.canvasImageR.Children.Count);
-        }
     }
 }

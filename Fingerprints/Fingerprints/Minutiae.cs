@@ -41,17 +41,48 @@ namespace Fingerprints
 
         private void insertStringToList(List<string> list, int index = -1)
         {
-            //if (ToString() != "" && list.LastOrDefault() != ToString()) zakomentowane ponieważ nie dodawalo kilku pustych pod rząd 
-            //{
-                if (index > -1)
-                {
-                    list.Insert(index, ToString());
-                }
-                else
-                {
-                    list.Add(ToString());
-                }
-            //}
+            if (index > -1)
+            {
+                list.Insert(index, ToString());
+            }
+            else
+            {
+                list.Add(ToString());
+            }
+
+        }
+        public void DeleteEmptyAtIndex(OverridedCanvas canvas, int index)
+        {
+            if (index == -1)
+                index = canvas.Children.Count - 1;
+            string name = canvas.Children[index].GetType().Name;
+            string tag = "";
+            if (name == "Path")
+            {
+                System.Windows.Shapes.Path q = (System.Windows.Shapes.Path)canvas.Children[index];
+                tag = q.Tag.ToString();
+            }
+            if (tag == "Puste")
+                canvas.Children.RemoveAt(index);
+        }
+
+        public void AddEmptyToOpositeSite(OverridedCanvas canvas, int index)
+        {
+            if (index >=0 )
+            {
+                return;
+            }
+
+            Empty empty = new Empty();
+
+            if (canvas == window.canvasImageL && CanvasCountEqual())
+                empty.Draw(window.canvasImageR, window.imageR);
+            else if (canvas == window.canvasImageR && CanvasCountEqual())
+                empty.Draw(window.canvasImageL, window.imageL);
+        }
+        public bool CanvasCountEqual()
+        {
+            return (window.canvasImageL.Children.Count == window.canvasImageR.Children.Count);
         }
     }
 }
