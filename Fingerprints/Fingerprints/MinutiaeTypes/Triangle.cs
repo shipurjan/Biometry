@@ -54,6 +54,10 @@ namespace Fingerprints
                     tmp1 = ee.GetPosition(canvas);
                     firstPointLine = tmp1;
                     var linetmp = new LineGeometry();
+
+                    DeleteEmptyAtIndex(canvas, index);
+                    AddEmptyToOpositeSite(canvas, index);
+
                     group.Children.Add(linetmp);
                     drawCompleteLine(ee, canvas, clickCount);
 
@@ -61,7 +65,6 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
-                    deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
                     canvas.AddLogicalChild(myPath, index);
                     clickCount++;
                 }

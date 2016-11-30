@@ -63,7 +63,9 @@ namespace Fingerprints
                             StrokeMiterLimit = 2,
                             Tag = Name,
                         };
-                        deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
+
+                        DeleteEmptyAtIndex(canvas, index);
+                        AddEmptyToOpositeSite(canvas, index);
                         canvas.AddLogicalChild(baseLine, index);
                         newLine = false;
                         index = -1;
