@@ -29,29 +29,7 @@ namespace Fingerprints
         }
         public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
-            handler += (ss, ee) =>
-            {
-                if (ee.RightButton == MouseButtonState.Pressed)
-                {
-                    singlePoint = ee.GetPosition(canvas);
-                    EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-                    myEllipseGeometry.Center = singlePoint;
-                    myEllipseGeometry.RadiusX = 2 * size;
-                    myEllipseGeometry.RadiusY = 2 * size;
-                    Path myPath = new Path();
-                    myPath.Stroke = color;
-                    myPath.StrokeThickness = thickness;
-                    myPath.Data = myEllipseGeometry;
-                    //myPath.Opacity = 0.5;
-                    myPath.Tag = Name;
-                    DeleteEmptyAtIndex(canvas, index);
-                    AddEmptyToOpositeSite(canvas, index);
-                    canvas.AddLogicalChild(myPath, index);
-                    AddElementToSaveList(canvas.Tag.ToString(), index);                    
-                    index = -1;
-                }
-
-            };
+            AddHandler(canvas, image, index);
             image.MouseRightButtonDown += handler;
         }
 
@@ -78,6 +56,39 @@ namespace Fingerprints
             myPath.Opacity = 0.5;
             myPath.Tag = Name;
             canvas.AddLogicalChild(myPath);
+        }
+
+        private void AddHandler(OverridedCanvas canvas, Image image, int index)
+        {
+            handler += (ss, ee) =>
+            {
+                if (ee.RightButton == MouseButtonState.Pressed)
+                    AddToCanvas(ss, ee, canvas, image, index);
+            };
+        }
+
+        private void AddToCanvas(object sender, MouseButtonEventArgs ee, OverridedCanvas canvas, Image image, int index)
+        {
+            singlePoint = ee.GetPosition(canvas);
+
+            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+            myEllipseGeometry.Center = singlePoint;
+            myEllipseGeometry.RadiusX = 2 * size;
+            myEllipseGeometry.RadiusY = 2 * size;
+            Path myPath = new Path();
+
+            myPath.Stroke = color;
+            myPath.StrokeThickness = thickness;
+            myPath.Data = myEllipseGeometry;
+            //myPath.Opacity = 0.5;
+            myPath.Tag = Name;
+
+            DeleteEmptyAtIndex(canvas, index);
+            AddEmptyToOpositeSite(canvas, index);
+
+            canvas.AddLogicalChild(myPath, index);
+            AddElementToSaveList(canvas.Tag.ToString(), index);
+            index = -1;
         }
     }
 }
