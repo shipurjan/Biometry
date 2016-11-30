@@ -69,8 +69,10 @@ namespace Fingerprints
                         myPath.Data = group;
                         myPath.Tag = Name;
                         deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
+                        DeleteEmptyAtIndex(canvas, index);
+                        AddEmptyToOpositeSite(canvas, index);
                         canvas.AddLogicalChild(myPath, index);
-
+                                               
                         clickCount++;
                     }
                     else
