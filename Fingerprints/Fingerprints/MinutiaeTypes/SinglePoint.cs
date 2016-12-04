@@ -88,7 +88,6 @@ namespace Fingerprints
 
             DeleteEmptyAtIndex(canvas, index);
             AddEmptyToOpositeSite(canvas, index);
-            Console.WriteLine(index);
             canvas.AddLogicalChild(myPath, index);
             AddElementToSaveList(canvas.Tag.ToString(), index);
         }

@@ -125,14 +125,20 @@ namespace Fingerprints
                 }
                 listbox.Items.RemoveAt(index);
                 canvas.Children.RemoveAt(index);
+                Empty empty = new Empty();
                 if (canvas.Tag.ToString() == "Left")
                 {
                     FileTransfer.ListL.RemoveAt(index);
+
+                    empty.Draw(window.canvasImageL, window.imageL, index);
                 }
                 else
                 {
                     FileTransfer.ListR.RemoveAt(index);
+
+                    empty.Draw(window.canvasImageR, window.imageR, index);
                 }
+
             };
 
             return usun;

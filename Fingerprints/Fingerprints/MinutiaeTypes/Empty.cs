@@ -26,7 +26,7 @@ namespace Fingerprints
             myPath.Opacity = 1;
             myPath.Name = "Puste";
             myPath.Tag = "Puste";
-            canvas.AddLogicalChild(myPath);
+            canvas.AddLogicalChild(myPath, index);
             AddElementToSaveList(canvas.Tag.ToString(), index);
         }
 
