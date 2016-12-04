@@ -32,7 +32,6 @@ namespace Fingerprints
             canvasRightChildAdded();
             deleteRowEvent();
             contextMenu();
-
         }
 
         public void deleteRowEvent()
