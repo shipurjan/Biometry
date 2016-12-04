@@ -53,6 +53,10 @@ namespace Fingerprints
         }
         public void DeleteEmptyAtIndex(OverridedCanvas canvas, int index)
         {
+            if (canvas.Children.Count == 0)
+            {
+                return;
+            }
             if (index == -1)
                 index = canvas.Children.Count - 1;
             string name = canvas.Children[index].GetType().Name;

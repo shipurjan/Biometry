@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Fingerprints.Resources;
 
 namespace Fingerprints
 {
@@ -198,30 +199,54 @@ namespace Fingerprints
         }
         private void listBoxSelectionChanged(ListBox listBox, OverridedCanvas canvas)
         {
-            listBox.SelectionChanged += (ss, ee) =>
+            listBox.SelectionChangedEvent(() => SelectionChangedMethod(listBox, canvas));
+        }
+
+        private void SelectionChangedMethod(ListBox listBox, OverridedCanvas canvas)
+        {
+            for (int i = 0; i < canvas.Children.Count; i++)
             {
-                for (int i = 0; i < canvas.Children.Count; i++)
+                if (canvas.Children[i] != null)
                 {
-                    if (canvas.Children[i] != null)
-                    {
-                        canvas.Children[i].Opacity = 0.5;
-                    }
+                    canvas.Children[i].Opacity = 0.5;
                 }
+            }
 
-                if (listBox.SelectedIndex != -1)
-                {
-                    canvas.Children[listBox.SelectedIndex].Opacity = 1;
-                }
+            if (listBox.SelectedIndex != -1)
+            {
+                canvas.Children[listBox.SelectedIndex].Opacity = 1;
+            }
 
-                if (listBox.Name.ToString() == "listBoxImageL")
-                {
-                    leftChildIndex = listBox.SelectedIndex;
-                }
-                else
-                {
-                    rightChildIndex = listBox.SelectedIndex;
-                }
-            };
+            if (listBox.Name.ToString() == "listBoxImageL")
+            {
+                leftChildIndex = listBox.SelectedIndex;
+
+                drawRightIfEmpty();
+            }
+            else
+            {
+                rightChildIndex = listBox.SelectedIndex;
+
+                drawLeftIfEmpty();
+            }
+        }
+
+        private void drawRightIfEmpty()
+        {
+            if (leftChildIndex > -1 && window.listBoxImageR.Items.Count > leftChildIndex && window.listBoxImageR.Items[leftChildIndex].ToString() == "Puste")
+            {
+                window.drawing.startRightDrawing(window.listBoxImageL.Items[leftChildIndex].ToString(), leftChildIndex);
+                window.drawing.startLeftDrawing(window.listBoxImageL.Items[leftChildIndex].ToString());
+            }
+        }
+
+        private void drawLeftIfEmpty()
+        {
+            if(rightChildIndex > -1 && window.listBoxImageL.Items.Count > rightChildIndex && window.listBoxImageL.Items[rightChildIndex].ToString() == "Puste")
+            {
+                window.drawing.startLeftDrawing(window.listBoxImageR.Items[rightChildIndex].ToString(), rightChildIndex);
+                window.drawing.startRightDrawing(window.listBoxImageR.Items[rightChildIndex].ToString());
+            }
         }
     }
 }

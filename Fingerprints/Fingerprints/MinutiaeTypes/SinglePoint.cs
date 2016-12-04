@@ -63,7 +63,10 @@ namespace Fingerprints
             handler += (ss, ee) =>
             {
                 if (ee.RightButton == MouseButtonState.Pressed)
+                {
                     AddToCanvas(ss, ee, canvas, image, index);
+                    index = -1;
+                }
             };
         }
 
@@ -85,10 +88,9 @@ namespace Fingerprints
 
             DeleteEmptyAtIndex(canvas, index);
             AddEmptyToOpositeSite(canvas, index);
-
+            Console.WriteLine(index);
             canvas.AddLogicalChild(myPath, index);
             AddElementToSaveList(canvas.Tag.ToString(), index);
-            index = -1;
         }
     }
 }
