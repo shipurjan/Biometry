@@ -22,6 +22,7 @@ namespace Fingerprints
     public partial class MainWindow : Window
     {
         MinutiaeTypeController controller;
+        SelectionChangedEventHandler comboboxHandler = null;
         public DrawingEventHandler drawing;
         public MainWindow()
         {
@@ -33,29 +34,38 @@ namespace Fingerprints
             p.InitializeL();
             controller = new MinutiaeTypeController();
             comboBox.ItemsSource = controller.Show();
-            comboBoxChanged();
             InitTable();
             saveEvents();
-
+            comboBoxChanged();
             addEmpty.Click += addEmpty_Click;
 
             //Database.InitialData();
         }
 
-        public void InitTable()
+        public void comboBoxChanged(bool stopListening = false)
         {
-            Table table = new Table();
-        }
-
-        public void comboBoxChanged()
-        {
-            comboBox.SelectionChanged += (ss, ee) =>
+            comboboxHandler += (ss, ee) =>
             {
                 if (comboBox.SelectedValue != null)
                 {
                     drawing.startNewDrawing(comboBox.SelectedValue.ToString());
                 }
             };
+
+            comboBox.SelectionChanged += comboboxHandler;
+        }
+
+        public void setComboboxTitle(int index = -1)
+        {
+            Console.WriteLine("setTitle => " + index);
+            comboBox.SelectionChanged -= comboboxHandler;
+            comboBox.SelectedIndex = index;
+            comboBox.SelectionChanged += comboboxHandler;
+        }
+
+        public void InitTable()
+        {
+            Table table = new Table();
         }
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)

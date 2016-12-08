@@ -84,7 +84,8 @@ namespace Fingerprints
                     int index = listBoxL.SelectedIndex;
                     if (index == -1) { return; }
                     listBoxL.UnselectAll();
-                    //window.comboBox.SelectedIndex = index; //TODO 
+                    Console.WriteLine("setTitle => " );
+                    window.setComboboxTitle(minType.FindIndex(a => a.Name == type.Name));
                     window.drawing.startRightDrawing(type.Name);
                     window.drawing.startLeftDrawing(type.Name, index);
                 };
@@ -105,7 +106,7 @@ namespace Fingerprints
                     int index = listBoxR.SelectedIndex;
                     if (index == -1) { return; }
                     listBoxR.UnselectAll();
-                    //window.comboBox.SelectedIndex = index; //TODO 
+                    window.setComboboxTitle(minType.FindIndex(a => a.Name == type.Name));
                     window.drawing.startLeftDrawing(type.Name);
                     window.drawing.startRightDrawing(type.Name, index);
                 };
