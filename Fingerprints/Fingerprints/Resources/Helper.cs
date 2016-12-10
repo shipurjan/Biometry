@@ -46,7 +46,6 @@ namespace Fingerprints
             }
         }
 
-
         public IDraw GetMinutiaeTypeToDraw(string minutiaeName)
         {
             string color = controller.GetColorOfSelectedMinutiae(minutiaeName);

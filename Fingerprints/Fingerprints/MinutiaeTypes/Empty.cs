@@ -48,7 +48,7 @@ namespace Fingerprints
 
         public override string ToString()
         {
-            return "Puste";
+            return 0 + ";" + "Puste";
         }
     }
 }
