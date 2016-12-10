@@ -38,7 +38,6 @@ namespace Fingerprints
             saveEvents();
             comboBoxChanged();
             addEmpty.Click += addEmpty_Click;
-
             //Database.InitialData();
         }
 
