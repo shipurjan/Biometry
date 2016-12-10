@@ -47,43 +47,39 @@ namespace Fingerprints
                 EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                 LineGeometry myPathFigure = new LineGeometry();
                 myPathFigure.StartPoint = new Point(0, 0);
-                if (true)
+                if (clickCount == 0)
                 {
-                    if (clickCount == 0)
-                    {
-                        tmp1 = ee.GetPosition(canvas);
-                        firstPointLine = tmp1;
-                        myPathFigure.StartPoint = tmp1;
+                    tmp1 = ee.GetPosition(canvas);
+                    firstPointLine = tmp1;
+                    myPathFigure.StartPoint = tmp1;
 
-                        myEllipseGeometry.Center = tmp1;
-                        myEllipseGeometry.RadiusX = 2 * size;
-                        myEllipseGeometry.RadiusY = 2 * size;
-                        group.Children.Add(myEllipseGeometry);
+                    myEllipseGeometry.Center = tmp1;
+                    myEllipseGeometry.RadiusX = 2 * size;
+                    myEllipseGeometry.RadiusY = 2 * size;
+                    group.Children.Add(myEllipseGeometry);
 
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, size);
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, size);
 
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        DeleteEmptyAtIndex(canvas, index);
-                        AddEmptyToOpositeSite(canvas, index);
-                        canvas.AddLogicalChild(myPath, index);
-                                               
-                        clickCount++;
-                    }
-                    else
-                    {
-                        AddElementToSaveList(canvas.Tag.ToString(), index);
-                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
-                        clickCount = 0;
-                        addEmptyLastLineIfIndexOnLastElement(index);
-                        index = -1;
-                        group = null;
-                        group = new GeometryGroup();
-                    }
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    DeleteEmptyAtIndex(canvas, index);
+                    AddEmptyToOpositeSite(canvas, index);
+                    canvas.AddLogicalChild(myPath, index);
+                                           
+                    clickCount++;
+                }
+                else
+                {
+                    AddElementToSaveList(canvas.Tag.ToString(), index);
+                    canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                    clickCount = 0;
+                    index = -1;
+                    group = null;
+                    group = new GeometryGroup();
                 }
 
             };

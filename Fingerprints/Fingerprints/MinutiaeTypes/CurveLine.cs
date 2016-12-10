@@ -67,7 +67,6 @@ namespace Fingerprints
                         DeleteEmptyAtIndex(canvas, index);
                         AddEmptyToOpositeSite(canvas, index);
                         canvas.AddLogicalChild(baseLine, index);
-                        addEmptyLastLineIfIndexOnLastElement(index);
                         newLine = false;
                         index = -1;
                     }
