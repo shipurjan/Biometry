@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Fingerprints
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector(string name, string color, double size, double thickness, double x = 0, double y = 0, double angle = 0)
+        public Vector(string name, string color, double size, double thickness, double x = 0, double y = 0, double angle = 0, long id = 0) : base(id)
         {
             this.Name = name;
             this.size = size;
@@ -47,43 +48,44 @@ namespace Fingerprints
                 EllipseGeometry myEllipseGeometry = new EllipseGeometry();
                 LineGeometry myPathFigure = new LineGeometry();
                 myPathFigure.StartPoint = new Point(0, 0);
-                if (true)
+
+                if (clickCount == 0)
                 {
-                    if (clickCount == 0)
-                    {
-                        tmp1 = ee.GetPosition(canvas);
-                        firstPointLine = tmp1;
-                        myPathFigure.StartPoint = tmp1;
+                    id = UnixDate.GetCurrentUnixTimestampMillis();
+                    tmp1 = ee.GetPosition(canvas);
+                    firstPointLine = tmp1;
+                    myPathFigure.StartPoint = tmp1;
 
-                        myEllipseGeometry.Center = tmp1;
-                        myEllipseGeometry.RadiusX = 2 * size;
-                        myEllipseGeometry.RadiusY = 2 * size;
-                        group.Children.Add(myEllipseGeometry);
+                    myEllipseGeometry.Center = tmp1;
+                    myEllipseGeometry.RadiusX = 2 * size;
+                    myEllipseGeometry.RadiusY = 2 * size;
+                    group.Children.Add(myEllipseGeometry);
 
-                        var linetmp = new LineGeometry();
-                        group.Children.Add(linetmp);
-                        drawCompleteLine(ee, canvas, size);
+                    var linetmp = new LineGeometry();
+                    group.Children.Add(linetmp);
+                    drawCompleteLine(ee, canvas, size);
 
-                        myPath.Stroke = color;
-                        myPath.StrokeThickness = thickness;
-                        myPath.Data = group;
-                        myPath.Tag = Name;
-                        DeleteEmptyAtIndex(canvas, index);
-                        AddEmptyToOpositeSite(canvas, index);
-                        canvas.AddLogicalChild(myPath, index);
-                                               
-                        clickCount++;
-                    }
-                    else
-                    {
-                        AddElementToSaveList(canvas.Tag.ToString(), index);
-                        canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
-                        clickCount = 0;
-                        index = -1;
-                        group = null;
-                        group = new GeometryGroup();
-                    }
+                    myPath.Stroke = color;
+                    myPath.StrokeThickness = thickness;
+                    myPath.Data = group;
+                    myPath.Tag = Name;
+                    myPath.Uid = id.ToString();
+                    DeleteEmptyAtIndex(canvas, index);
+                    AddEmptyToOpositeSite(canvas, index);
+                    canvas.AddLogicalChild(myPath, index);
+
+                    clickCount++;
                 }
+                else
+                {
+                    AddElementToSaveList(canvas.Tag.ToString(), index);
+                    canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
+                    clickCount = 0;
+                    index = -1;
+                    group = null;
+                    group = new GeometryGroup();
+                }
+
 
             };
 
@@ -121,7 +123,7 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + angle.ToString();
+            return id + ";" + Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + angle.ToString();
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
@@ -143,8 +145,9 @@ namespace Fingerprints
             myPath.StrokeThickness = thickness;
             myPath.Data = group;
             myPath.Tag = Name;
+            myPath.Opacity = 0.5;
+            myPath.Uid = id.ToString();
             canvas.AddLogicalChild(myPath);
-            canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
         }
     }
 }

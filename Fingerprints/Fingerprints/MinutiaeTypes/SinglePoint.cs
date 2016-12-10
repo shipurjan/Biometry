@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Fingerprints
         Point singlePoint = new Point();
         MouseButtonEventHandler handler = null;
 
-        public SinglePoint(string name, string color, double size, double thickness, double x = 0, double y = 0)
+        public SinglePoint(string name, string color, double size, double thickness, double x = 0, double y = 0, long id = 0):base(id)
         {
             this.thickness = thickness;
             this.Name = name;
@@ -40,7 +41,7 @@ namespace Fingerprints
 
         public override string ToString()
         {
-            return Name + ";" + Math.Floor(singlePoint.X).ToString() + ";" + Math.Floor(singlePoint.Y).ToString();
+            return id + ";" + Name + ";" + Math.Floor(singlePoint.X).ToString() + ";" + Math.Floor(singlePoint.Y).ToString();
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
@@ -55,6 +56,7 @@ namespace Fingerprints
             myPath.Data = myEllipseGeometry;
             myPath.Opacity = 0.5;
             myPath.Tag = Name;
+            myPath.Uid = id.ToString();
             canvas.AddLogicalChild(myPath);
         }
 
@@ -73,6 +75,7 @@ namespace Fingerprints
         private void AddToCanvas(object sender, MouseButtonEventArgs ee, OverridedCanvas canvas, Image image, int index)
         {
             singlePoint = ee.GetPosition(canvas);
+            id = UnixDate.GetCurrentUnixTimestampMillis();
 
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             myEllipseGeometry.Center = singlePoint;
@@ -83,8 +86,8 @@ namespace Fingerprints
             myPath.Stroke = color;
             myPath.StrokeThickness = thickness;
             myPath.Data = myEllipseGeometry;
-            //myPath.Opacity = 0.5;
             myPath.Tag = Name;
+            myPath.Uid = id.ToString();
 
             DeleteEmptyAtIndex(canvas, index);
             AddEmptyToOpositeSite(canvas, index);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Fingerprints
         double thickness;
 
 
-        public Triangle(string name, string color, double thickness, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0)
+        public Triangle(string name, string color, double thickness, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0, long id = 0) : base(id)
         {
             this.thickness = thickness;
             this.Name = name;
@@ -48,9 +49,10 @@ namespace Fingerprints
             handler += (ss, ee) =>
             {
                 Path myPath = new Path();
-
+                
                 if (clickCount == 0)
                 {
+                    id = UnixDate.GetCurrentUnixTimestampMillis();
                     tmp1 = ee.GetPosition(canvas);
                     firstPointLine = tmp1;
                     var linetmp = new LineGeometry();
@@ -65,6 +67,8 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
+                    myPath.Uid = id.ToString();
+
                     canvas.AddLogicalChild(myPath, index);
                     clickCount++;
                 }
@@ -77,6 +81,8 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
+                    myPath.Uid = id.ToString();
+
                     deleteAndAdd(canvas, myPath, index);
                     clickCount++;
                 }
@@ -91,8 +97,9 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
+                    myPath.Uid = id.ToString();
+
                     deleteAndAdd(canvas, myPath, index);
-                    //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                     clickCount = 0;
                     AddElementToSaveList(canvas.Tag.ToString(), index);
                     index = -1;
@@ -160,7 +167,7 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + Math.Floor(secondPointLine.X).ToString() + ";" + Math.Floor(secondPointLine.Y).ToString() + ";" + Math.Floor(thirdPointLine.X).ToString() + ";" + Math.Floor(thirdPointLine.Y).ToString();
+            return id + ";" + Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + Math.Floor(secondPointLine.X).ToString() + ";" + Math.Floor(secondPointLine.Y).ToString() + ";" + Math.Floor(thirdPointLine.X).ToString() + ";" + Math.Floor(thirdPointLine.Y).ToString();
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
@@ -186,9 +193,10 @@ namespace Fingerprints
             myPath.StrokeThickness = thickness;
             myPath.Data = group;
             myPath.Tag = Name;
-            //canvas.Children.Add(myPath);
+            myPath.Opacity = 0.5;
+            myPath.Uid = id.ToString();
+
             canvas.AddLogicalChild(myPath);
-            //canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
         }
     }
 }

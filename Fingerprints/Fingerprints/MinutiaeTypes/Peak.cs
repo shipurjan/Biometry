@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Fingerprints
         double thickness;
 
 
-        public Peak(string name, string color, double thickness, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0)
+        public Peak(string name, string color, double thickness, double x1 = 0, double y1 = 0, double x2 = 0, double y2 = 0, double x3 = 0, double y3 = 0, long id = 0) : base(id)
         {
             this.thickness = thickness;
             this.Name = name;
@@ -48,9 +49,10 @@ namespace Fingerprints
             handler += (ss, ee) =>
             {
                 Path myPath = new Path();
-
+                
                 if (clickCount == 0)
                 {
+                    id = UnixDate.GetCurrentUnixTimestampMillis();
                     tmp1 = ee.GetPosition(canvas);
                     firstPointLine = tmp1;
                     var linetmp = new LineGeometry();
@@ -64,6 +66,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
+                    myPath.Uid = id.ToString();
                     canvas.AddLogicalChild(myPath, index);
                     clickCount++;
                 }
@@ -76,6 +79,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
+                    myPath.Uid = id.ToString();
                     deleteAndAdd(canvas, myPath, index);
                     clickCount++;
                 }
@@ -88,6 +92,7 @@ namespace Fingerprints
                     myPath.StrokeThickness = thickness;
                     myPath.Data = group;
                     myPath.Tag = Name;
+                    myPath.Uid = id.ToString();
                     deleteAndAdd(canvas, myPath, index);
                     AddElementToSaveList(canvas.Tag.ToString(), index);
                     group = null;
@@ -95,8 +100,6 @@ namespace Fingerprints
                     clickCount = 0;
                     index = -1;
                 }
-
-
             };
 
             mouseMove += (ss, ee) =>
@@ -126,7 +129,6 @@ namespace Fingerprints
                 ((LineGeometry)group.Children[clickCount - 1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
                 ((LineGeometry)group.Children[clickCount - 1]).EndPoint = tmp2;
             }
-
         }
         public override void DeleteEvent(Image image, OverridedCanvas canvas)
         {
@@ -136,7 +138,7 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + Math.Floor(secondPointLine.X).ToString() + ";" + Math.Floor(secondPointLine.Y).ToString() + ";" + Math.Floor(thirdPointLine.X).ToString() + ";" + Math.Floor(thirdPointLine.Y).ToString();
+            return id + ";" + Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + Math.Floor(secondPointLine.X).ToString() + ";" + Math.Floor(secondPointLine.Y).ToString() + ";" + Math.Floor(thirdPointLine.X).ToString() + ";" + Math.Floor(thirdPointLine.Y).ToString();
         }
 
         public void deleteAndAdd(OverridedCanvas canvas, Path myPath, int index = -1)
@@ -151,7 +153,6 @@ namespace Fingerprints
             }
 
             canvas.AddLogicalChild(myPath, index);
-
         }
 
         public override void DrawFromFile(OverridedCanvas canvas)
@@ -172,6 +173,7 @@ namespace Fingerprints
             myPath.StrokeThickness = thickness;
             myPath.Data = group;
             myPath.Tag = Name;
+            myPath.Uid = id.ToString();
             canvas.AddLogicalChild(myPath);
             canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
         }

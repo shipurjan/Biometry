@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,14 +21,12 @@ namespace Fingerprints
         Polyline baseLine;
         string[] points;
         double thickness;
-        Button closeEventButton;
 
         MouseEventHandler handler = null;
 
-        public CurveLine(string name, string color, double thickness, string[] points = null, Button button = null)
+        public CurveLine(string name, string color, double thickness, string[] points = null, long id = 0) : base(id)
         {
             this.thickness = thickness;
-            closeEventButton = button;
             newLine = true;
             this.points = points;
             this.Name = name;
@@ -63,7 +62,8 @@ namespace Fingerprints
                             StrokeMiterLimit = 2,
                             Tag = Name,
                         };
-
+                        id = UnixDate.GetCurrentUnixTimestampMillis();
+                        baseLine.Uid = id.ToString();
                         DeleteEmptyAtIndex(canvas, index);
                         AddEmptyToOpositeSite(canvas, index);
                         canvas.AddLogicalChild(baseLine, index);
@@ -99,7 +99,7 @@ namespace Fingerprints
                 {
                     points += point.X + ";" + point.Y + ";";
                 }
-                return Name + ";" + points;
+                return id + ";" + Name + ";" + points;
             }
             return "";
         }
@@ -129,7 +129,7 @@ namespace Fingerprints
         {
             List<Point> curvePoint = new List<Point>();
             PointCollection curvePoints = new PointCollection();
-            for (int i = 1; i < points.Count() - 2; i += 2)
+            for (int i = 2; i < points.Count() - 2; i += 2)
             {
                 curvePoints.Add(new Point(Convert.ToInt32(points[i]), Convert.ToInt32(points[i + 1])));
             }
@@ -142,9 +142,11 @@ namespace Fingerprints
                 StrokeLineJoin = PenLineJoin.Miter,
                 StrokeMiterLimit = 2,
                 Tag = Name,
+                Uid = id.ToString(),
             };
             polyLine.Points = curvePoints;
             canvas.AddLogicalChild(polyLine);
+            canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
         }
 
         // Converter

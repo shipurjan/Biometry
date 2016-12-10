@@ -56,7 +56,6 @@ namespace Fingerprints
 
         public void setComboboxTitle(int index = -1)
         {
-            Console.WriteLine("setTitle => " + index);
             comboBox.SelectionChanged -= comboboxHandler;
             comboBox.SelectedIndex = index;
             comboBox.SelectionChanged += comboboxHandler;

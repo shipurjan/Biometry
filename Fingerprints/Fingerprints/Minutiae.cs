@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,11 @@ namespace Fingerprints
     public class Minutiae : AppInstance, IDraw
     {
         public string Name;
+        public long id { get; set; }
+        public Minutiae(long id = 0)
+        {
+            this.id = id;
+        }
         public virtual void Draw(OverridedCanvas canvas, Image image, int index = -1) { }
         public virtual void DeleteEvent(Image image, OverridedCanvas canvas) { }
         public virtual void DrawFromFile(OverridedCanvas canvas) { }

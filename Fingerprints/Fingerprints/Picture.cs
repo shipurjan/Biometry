@@ -137,7 +137,7 @@ namespace Fingerprints
             {
                 string[] tmp = item.Split(';');
                 
-                var type = minutiaeList.Where(x => x.Name == tmp[0]).FirstOrDefault();
+                var type = minutiaeList.Where(x => x.Name == tmp[1]).FirstOrDefault();
 
                 if(type == null)
                 {
@@ -145,27 +145,27 @@ namespace Fingerprints
                 }
                 else if (type.TypeId == 1)
                 {
-                    draw = new SinglePoint(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]));
+                    draw = new SinglePoint(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToInt64(tmp[0]));
                 }
                 else if (type.TypeId == 2)
                 {
-                    draw = new Vector(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]));
+                    draw = new Vector(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToInt64(tmp[0]));
                 }
                 else if (type.TypeId == 3)
                 {
-                    draw = new CurveLine(type.Name, type.Color, type.Thickness, tmp);
+                    draw = new CurveLine(type.Name, type.Color, type.Thickness, tmp, Convert.ToInt64(tmp[0]));
                 }
                 else if (type.TypeId == 4)
                 {
-                    draw = new Triangle(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
+                    draw = new Triangle(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]), Convert.ToDouble(tmp[7]), Convert.ToInt64(tmp[0]));
                 }
                 else if (type.TypeId == 5)
                 {
-                    draw = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]));
+                    draw = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]), Convert.ToDouble(tmp[7]), Convert.ToInt64(tmp[0]));
                 }
                 else if (type.TypeId == 6)
                 {
-                    draw = new Segment(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[1]), Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]));
+                    draw = new Segment(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToInt64(tmp[0]));
                 }
                 else
                 {
