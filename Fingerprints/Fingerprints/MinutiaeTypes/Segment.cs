@@ -80,6 +80,7 @@ namespace Fingerprints
                     AddElementToSaveList(canvas.Tag.ToString(), index);
                     group = null;
                     group = new GeometryGroup();
+                    addEmptyLastLineIfIndexOnLastElement(index);
                     index = -1;
                 }
 

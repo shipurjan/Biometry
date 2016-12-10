@@ -65,6 +65,7 @@ namespace Fingerprints
                 if (ee.RightButton == MouseButtonState.Pressed)
                 {
                     AddToCanvas(ss, ee, canvas, image, index);
+                    addEmptyLastLineIfIndexOnLastElement(index);
                     index = -1;
                 }
             };

@@ -38,10 +38,12 @@ namespace Fingerprints
         {
             return mw.imageL.Source != null ? true : false;
         }
+
         private bool checkIfImageREmpty()
         {
             return mw.imageR.Source != null ? true : false;
         }
+
         public void deleteUnnecessaryEmpty()
         {
             while ((mw.listBoxImageL.Items.Count - 1 >= 0 && (string)mw.listBoxImageL.Items[mw.listBoxImageL.Items.Count - 1] == "Puste" && (string)mw.listBoxImageR.Items[mw.listBoxImageR.Items.Count - 1] == "Puste"))
@@ -58,6 +60,13 @@ namespace Fingerprints
             }
         }
 
+        public void addEmptyOnLastLine()
+        {
+            Empty emptyL = new Empty();
+            Empty emptyR = new Empty();
+            emptyR.Draw(mw.canvasImageR, mw.imageR);
+            emptyL.Draw(mw.canvasImageL, mw.imageL);
+        }
 
         public IDraw GetMinutiaeTypeToDraw(string minutiaeName)
         {

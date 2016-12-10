@@ -69,6 +69,19 @@ namespace Fingerprints
             if (tag == "Puste")
                 canvas.Children.RemoveAt(index);
         }
+        private void addEmptyOnLastLine()
+        {
+            Empty emptyL = new Empty();
+            Empty emptyR = new Empty();
+            emptyR.Draw(window.canvasImageR, window.imageR);
+            emptyL.Draw(window.canvasImageL, window.imageL);
+        }
+
+        protected void addEmptyLastLineIfIndexOnLastElement(int index)
+        {
+            if (index == -1)
+                addEmptyOnLastLine();
+        }
 
         public void AddEmptyToOpositeSite(OverridedCanvas canvas, int index)
         {

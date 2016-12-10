@@ -77,7 +77,7 @@ namespace Fingerprints
                         helper.insertEmpty();
                     }
                     helper.deleteUnnecessaryEmpty();
-
+                    helper.addEmptyOnLastLine();
                 }
             };
 

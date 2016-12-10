@@ -93,6 +93,7 @@ namespace Fingerprints
                     group = null;
                     group = new GeometryGroup();
                     clickCount = 0;
+                    addEmptyLastLineIfIndexOnLastElement(index);
                     index = -1;
                 }
 
