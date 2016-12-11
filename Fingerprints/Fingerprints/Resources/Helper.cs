@@ -19,9 +19,12 @@ namespace Fingerprints
 
         public bool canInsertEmpty()
         {
+            return (checkCanvasChildrenCount() && checkIfImageLEmpty() && checkIfImageREmpty() == true) ? true:false;
+        }
+        private bool checkCanvasChildrenCount()
+        {
             return mw.listBoxImageL.Items.Count != mw.listBoxImageR.Items.Count;
         }
-        
         public void insertEmpty()
         {
             Empty empty = new Empty();
@@ -30,6 +33,17 @@ namespace Fingerprints
             else if (mw.canvasImageL.Children.Count < mw.canvasImageR.Children.Count)
                 empty.Draw(mw.canvasImageL, mw.imageL);
         }
+
+        private bool checkIfImageLEmpty()
+        {
+            return mw.imageL.Source != null ? true : false;
+        }
+
+        private bool checkIfImageREmpty()
+        {
+            return mw.imageR.Source != null ? true : false;
+        }
+
         public void deleteUnnecessaryEmpty()
         {
             while ((mw.listBoxImageL.Items.Count - 1 >= 0 && (string)mw.listBoxImageL.Items[mw.listBoxImageL.Items.Count - 1] == "Puste" && (string)mw.listBoxImageR.Items[mw.listBoxImageR.Items.Count - 1] == "Puste"))
@@ -44,6 +58,14 @@ namespace Fingerprints
                 if (FileTransfer.ListR.Count > mw.listBoxImageR.Items.Count)
                     FileTransfer.ListR.RemoveAt(mw.listBoxImageR.Items.Count);
             }
+        }
+
+        public void addEmptyOnLastLine()
+        {
+            Empty emptyL = new Empty();
+            Empty emptyR = new Empty();
+            emptyR.Draw(mw.canvasImageR, mw.imageR);
+            emptyL.Draw(mw.canvasImageL, mw.imageL);
         }
 
         public IDraw GetMinutiaeTypeToDraw(string minutiaeName)
