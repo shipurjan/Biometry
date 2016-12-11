@@ -39,7 +39,7 @@
                 <ComboBox x:Name="comboBox" Text="--Wybierz--" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="3" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0,0,0.6,0.4"/>
                 <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1"  Margin="0, 5, 0, 5" />
                 <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0, 5, 0, 5" />
-                <Button x:Name="saveButton" Content="Zapisz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="leftMenuClick_Delete" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" Margin="0, 5, 0, 5" />
+                <Button x:Name="saveButton" Content="Zapisz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" Margin="0, 5, 0, 5" />
             </Grid>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
