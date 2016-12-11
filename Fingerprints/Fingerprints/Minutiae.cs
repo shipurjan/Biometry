@@ -67,7 +67,9 @@ namespace Fingerprints
                 tag = q.Tag.ToString();
             }
             if (tag == "Puste")
-                canvas.Children.RemoveAt(index);
+            {
+                deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
+            }
         }
         private void addEmptyOnLastLine()
         {
