@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace Fingerprints
 {
@@ -55,8 +56,62 @@ namespace Fingerprints
             {
                 list.Add(ToString());
             }
-
         }
+
+        public long getIdForMinutiae(string canvasType, int index)
+        {
+            if (index > -1)
+            {
+                if (canvasType == "Left")
+                {
+                    return Convert.ToInt64(window.canvasImageR.Children[index].Uid);
+                }
+                else
+                {
+                    return Convert.ToInt64(window.canvasImageL.Children[index].Uid);
+                }
+            }
+            else
+            {
+                if (canvasType == "Left")
+                {
+                    return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListR, FileTransfer.ListL);
+                }
+                else
+                {
+                    return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListL, FileTransfer.ListR);
+                }
+            }
+            return UnixDate.GetCurrentUnixTimestampMillis();
+        }
+
+        public long getLastIdOfMinutiaeWithIsNotEmpty(List<string> list1, List<string> list2)
+        {
+            if (list1.Count == 0)
+            {
+                return UnixDate.GetCurrentUnixTimestampMillis();
+            }
+
+            for (int i = list1.Count - 1; i >= 0; i++)
+            {
+                string[] tmp1 = list1[i].Split(';');
+                string[] tmp2 = list2[i].Split(';');
+                if (tmp2[1] == tmp1[1])
+                {
+                    return UnixDate.GetCurrentUnixTimestampMillis();
+                }
+                else
+                {
+                    if (tmp1[1] == "Puste")
+                    {
+                        return UnixDate.GetCurrentUnixTimestampMillis();
+                    }
+                    return Convert.ToInt64(tmp1[0]);
+                }
+            }
+            return UnixDate.GetCurrentUnixTimestampMillis();
+        }
+
         public void DeleteEmptyAtIndex(OverridedCanvas canvas, int index)
         {
             if (canvas.Children.Count == 0)
@@ -74,6 +129,7 @@ namespace Fingerprints
             }
             if (tag == "Puste")
             {
+                //canvas.Children.RemoveAt(index);
                 deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
             }
         }

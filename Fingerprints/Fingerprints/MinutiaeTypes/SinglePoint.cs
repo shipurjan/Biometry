@@ -75,7 +75,7 @@ namespace Fingerprints
         private void AddToCanvas(object sender, MouseButtonEventArgs ee, OverridedCanvas canvas, Image image, int index)
         {
             singlePoint = ee.GetPosition(canvas);
-            id = UnixDate.GetCurrentUnixTimestampMillis();
+            id = getIdForMinutiae(canvas.Tag.ToString(), index);
 
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             myEllipseGeometry.Center = singlePoint;
