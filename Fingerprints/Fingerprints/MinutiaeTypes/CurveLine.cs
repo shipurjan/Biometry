@@ -62,7 +62,7 @@ namespace Fingerprints
                             StrokeMiterLimit = 2,
                             Tag = Name,
                         };
-                        id = UnixDate.GetCurrentUnixTimestampMillis();
+                        id = getIdForMinutiae(canvas.Tag.ToString(), index);
                         baseLine.Uid = id.ToString();
                         DeleteEmptyAtIndex(canvas, index);
                         AddEmptyToOpositeSite(canvas, index);

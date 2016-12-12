@@ -52,7 +52,7 @@ namespace Fingerprints
                 
                 if (clickCount == 0)
                 {
-                    id = UnixDate.GetCurrentUnixTimestampMillis();
+                    id = getIdForMinutiae(canvas.Tag.ToString(), index);
                     tmp1 = ee.GetPosition(canvas);
                     firstPointLine = tmp1;
                     var linetmp = new LineGeometry();
