@@ -118,8 +118,16 @@ namespace Fingerprints
             {
                 return;
             }
+
+            if (index > -1)
+            {
+                deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
+                return;
+            }
+
             if (index == -1)
                 index = canvas.Children.Count - 1;
+
             string name = canvas.Children[index].GetType().Name;
             string tag = "";
             if (name == "Path")
@@ -129,7 +137,6 @@ namespace Fingerprints
             }
             if (tag == "Puste")
             {
-                //canvas.Children.RemoveAt(index);
                 deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
             }
         }
