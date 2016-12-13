@@ -64,11 +64,12 @@ namespace Fingerprints
             {
                 if (canvasType == "Left")
                 {
-                    return Convert.ToInt64(window.canvasImageR.Children[index].Uid);
+                    
+                    return window.canvasImageR.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageR.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
                 }
                 else
                 {
-                    return Convert.ToInt64(window.canvasImageL.Children[index].Uid);
+                    return window.canvasImageL.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageL.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
                 }
             }
             else
