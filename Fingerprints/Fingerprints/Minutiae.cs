@@ -62,28 +62,36 @@ namespace Fingerprints
         {
             if (index > -1)
             {
-                if (canvasType == "Left")
-                {
-                    
-                    return window.canvasImageR.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageR.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
-                }
-                else
-                {
-                    return window.canvasImageL.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageL.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
-                }
+                return getIdOfSpecificMinutiae(canvasType, index);
             }
             else
             {
-                if (canvasType == "Left")
-                {
-                    return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListR, FileTransfer.ListL);
-                }
-                else
-                {
-                    return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListL, FileTransfer.ListR);
-                }
+                return getIdOfLastMinutiae(canvasType);
             }
-            return UnixDate.GetCurrentUnixTimestampMillis();
+        }
+
+        public long getIdOfLastMinutiae(string canvasType)
+        {
+            if (canvasType == "Left")
+            {
+                return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListR, FileTransfer.ListL);
+            }
+            else
+            {
+                return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListL, FileTransfer.ListR);
+            }
+        }
+
+        public long getIdOfSpecificMinutiae(string canvasType, int index)
+        {
+            if (canvasType == "Left")
+            {
+                return window.canvasImageR.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageR.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
+            }
+            else
+            {
+                return window.canvasImageL.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageL.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
+            }
         }
 
         public long getLastIdOfMinutiaeWithIsNotEmpty(List<string> list1, List<string> list2)
@@ -157,7 +165,7 @@ namespace Fingerprints
 
         public void AddEmptyToOpositeSite(OverridedCanvas canvas, int index)
         {
-            if (index >=0 )
+            if (index >= 0)
             {
                 return;
             }
