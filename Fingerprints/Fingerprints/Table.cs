@@ -210,31 +210,41 @@ namespace Fingerprints
             {
                 leftChildIndex = listBox.SelectedIndex;
 
-                drawRightIfEmpty();
+                drawAfterClickOnMinutiaeByLeftIndex();
             }
             else
             {
                 rightChildIndex = listBox.SelectedIndex;
 
-                drawLeftIfEmpty();
+                drawAfterClickOnMinutiaeByRightIndex();
             }
         }
 
-        private void drawRightIfEmpty()
+        private void drawAfterClickOnMinutiaeByRightIndex()
         {
             if (canDrawAfterClickOnMinutiae(leftChildIndex, listBoxL, listBoxR))
             {
                 window.drawing.startRightDrawing(window.listBoxImageL.Items[leftChildIndex].ToString(), leftChildIndex);
                 window.drawing.startLeftDrawing(window.listBoxImageL.Items[leftChildIndex].ToString());
             }
+            else if(canDrawAferClickOnEmptyObject(leftChildIndex, listBoxL, listBoxR))
+            {
+                window.drawing.startLeftDrawing(window.listBoxImageR.Items[leftChildIndex].ToString(), leftChildIndex);
+                window.drawing.startRightDrawing(window.listBoxImageR.Items[leftChildIndex].ToString());
+            }
         }
 
-        private void drawLeftIfEmpty()
+        private void drawAfterClickOnMinutiaeByLeftIndex()
         {
             if (canDrawAfterClickOnMinutiae(rightChildIndex, listBoxR, listBoxL))
             {
                 window.drawing.startLeftDrawing(window.listBoxImageR.Items[rightChildIndex].ToString(), rightChildIndex);
                 window.drawing.startRightDrawing(window.listBoxImageR.Items[rightChildIndex].ToString());
+            }
+            else if (canDrawAferClickOnEmptyObject(rightChildIndex, listBoxR, listBoxL))
+            {
+                window.drawing.startLeftDrawing(window.listBoxImageL.Items[rightChildIndex].ToString());
+                window.drawing.startRightDrawing(window.listBoxImageL.Items[rightChildIndex].ToString(), rightChildIndex);
             }
         }
 
@@ -255,6 +265,31 @@ namespace Fingerprints
             else if (list2.Items[index].ToString() == "Puste" && list1.Items[index].ToString() == "Puste")
             {
                 return false;
+            }
+
+            return true;
+        }
+
+        private bool canDrawAferClickOnEmptyObject(int index, ListBox list1, ListBox list2)
+        {
+            if (true)
+            {
+                if (index < 0)
+                {
+                    return false;
+                }
+                else if (list1.Items.Count <= index)
+                {
+                    return false;
+                }
+                else if (list2.Items[index].ToString() == "Puste" && list1.Items[index].ToString() == "Puste")
+                {
+                    return false;
+                }
+                else if (list2.Items[index].ToString() != "Puste" && list1.Items[index].ToString() != "Puste")
+                {
+                    return false;
+                }
             }
 
             return true;
