@@ -238,21 +238,21 @@ namespace Fingerprints
             }
         }
 
-        private bool canDrawAfterClickOnMinutiae(int index, ListBox listL, ListBox ListR)
+        private bool canDrawAfterClickOnMinutiae(int index, ListBox list1, ListBox list2)
         {
             if (index < 0)
             {
                 return false;
             }
-            else if (ListR.Items.Count <= index)
+            else if (list2.Items.Count <= index)
             {
                 return false;
             }
-            else if (ListR.Items[index].ToString() != "Puste")
+            else if (list2.Items[index].ToString() != "Puste")
             {
                 return false;
             }
-            else if (ListR.Items[index].ToString() == "Puste" && listL.Items[index].ToString() == "Puste")
+            else if (list2.Items[index].ToString() == "Puste" && list1.Items[index].ToString() == "Puste")
             {
                 return false;
             }
