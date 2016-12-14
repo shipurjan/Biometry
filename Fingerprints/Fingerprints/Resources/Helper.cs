@@ -19,9 +19,9 @@ namespace Fingerprints
 
         public bool canInsertEmpty()
         {
-            return (checkCanvasChildrenCount() && checkIfImageLEmpty() && checkIfImageREmpty() == true) ? true:false;
+            return (checkIfImageLEmpty() && checkIfImageREmpty() == true) ? true:false;
         }
-        private bool checkCanvasChildrenCount()
+        public bool checkCanvasChildrenCount()
         {
             return mw.listBoxImageL.Items.Count != mw.listBoxImageR.Items.Count;
         }
@@ -32,6 +32,7 @@ namespace Fingerprints
                 empty.Draw(mw.canvasImageR, mw.imageR);
             else if (mw.canvasImageL.Children.Count < mw.canvasImageR.Children.Count)
                 empty.Draw(mw.canvasImageL, mw.imageL);
+            else return;
         }
 
         private bool checkIfImageLEmpty()

@@ -53,8 +53,14 @@ namespace Fingerprints
                         FileTransfer.ListL.Clear();
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
-                        canvasImage.Children.Clear();                        
-                        loadMinutiae(FileTransfer.ListL, canvasImage);                        
+                        canvasImage.Children.Clear();
+                        fillEmptyListWithEmpty();
+                        sortMinutiaeListLById();
+                        deleteEmptyLine();
+                        loadMinutiae(FileTransfer.ListL, canvasImage);
+                        mw.canvasImageR.Children.Clear();
+                        loadMinutiae(FileTransfer.ListR, mw.canvasImageR);
+
                     }
                     else
                     {
@@ -64,7 +70,12 @@ namespace Fingerprints
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();
                         canvasImage.Children.Clear();
+                        fillEmptyListWithEmpty();
+                        sortMinutiaeListRById();
+                        deleteEmptyLine();
                         loadMinutiae(FileTransfer.ListR, canvasImage);
+                        mw.canvasImageL.Children.Clear();
+                        loadMinutiae(FileTransfer.ListL, mw.canvasImageL);
                     }
                 }
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
@@ -72,7 +83,7 @@ namespace Fingerprints
 
                 if (helper.canInsertEmpty())
                 {
-                    while (helper.canInsertEmpty())
+                    while (helper.checkCanvasChildrenCount())
                     {
                         helper.insertEmpty();
                     }
@@ -196,6 +207,143 @@ namespace Fingerprints
                 }
             }
         }
+
+        private void sortMinutiaeListRById()
+        {
+            for (int indexFrom = 0; indexFrom < FileTransfer.ListL.Count(); indexFrom++)
+            {
+                string minutiaeIdL = getIdFromListElement(FileTransfer.ListL[indexFrom]);
+                if (minutiaeIdL == "0")
+                    continue;
+
+                for (int indexTo = 0; indexTo < FileTransfer.ListR.Count(); indexTo++)
+                {
+                    var minutiaeIdR = getIdFromListElement(FileTransfer.ListR[indexTo]);
+                    if (minutiaeIdL == minutiaeIdR)
+                    {
+                        swapElementsR(indexFrom, indexTo);
+                        break;
+                    }
+                    if (indexTo == FileTransfer.ListR.Count() - 1)
+                    {
+                        FileTransfer.ListR.Insert(indexFrom, "0;Puste");
+                        FileTransfer.ListL.Add("0;Puste");
+                        break;
+                    }
+
+                    // checkIfInsertNeededR(indexFrom, indexTo);
+                }
+            }
+        }
+
+        private void sortMinutiaeListLById()
+        {
+            for (int indexFrom = 0; indexFrom < FileTransfer.ListR.Count(); indexFrom++)
+            {
+                string minutiaeIdR = getIdFromListElement(FileTransfer.ListR[indexFrom]);
+                if (minutiaeIdR == "0")
+                    continue;
+
+                for (int indexTo = 0; indexTo < FileTransfer.ListL.Count(); indexTo++)
+                {
+                    var minutiaeIdL = getIdFromListElement(FileTransfer.ListL[indexTo]);
+                    if (minutiaeIdL == minutiaeIdR)
+                    {
+                        swapElementsL(indexFrom, indexTo);
+                        break;
+                    }
+                    if (indexTo == FileTransfer.ListL.Count() - 1)
+                    {
+                        FileTransfer.ListL.Insert(indexFrom, "0;Puste");
+                        FileTransfer.ListR.Add("0;Puste");
+                        break;
+                    }
+
+                    //checkIfInsertNeededL(indexFrom, indexTo);
+
+                }
+                
+            }
+        }
+
+        private void fillEmptyListWithEmpty()
+        {
+            if (FileTransfer.ListL.Count() > FileTransfer.ListR.Count())
+            {
+                for (int i = FileTransfer.ListR.Count(); i < FileTransfer.ListL.Count(); i++)
+                    FileTransfer.ListR.Add("0;Puste");
+            }
+            else
+            {
+                for (int i = FileTransfer.ListL.Count(); i < FileTransfer.ListR.Count(); i++)
+                    FileTransfer.ListL.Add("0;Puste");
+            }
+        }
+
+        private void checkIfInsertNeededR(int indexFrom, int indexTo)
+        {
+            if (indexTo == FileTransfer.ListR.Count() - 1)
+            {
+                FileTransfer.ListR.Insert(indexFrom -1 , "0;Puste");
+                FileTransfer.ListL.Add("0;Puste");
+            }                               
+        }
+
+        private void checkIfInsertNeededL(int indexFrom, int indexTo)
+        {
+            if (indexTo == FileTransfer.ListL.Count() - 1)
+            {             
+                FileTransfer.ListL.Insert(indexFrom - 1, "0;Puste");
+                FileTransfer.ListR.Add("0;Puste");             
+            }
+        }
+
+        private string getIdFromListElement(string listElement)
+        {
+            return listElement.Split(';')[0];
+        }
+
+        private void swapElementsR(int indexFrom, int indexTo)
+        {
+            var tmp = FileTransfer.ListR[indexFrom];
+            FileTransfer.ListR[indexFrom] = FileTransfer.ListR[indexTo];
+            FileTransfer.ListR[indexTo] = tmp;
+        }
+
+        private void swapElementsL(int indexFrom, int indexTo)
+        {
+            var tmp = FileTransfer.ListL[indexFrom];
+            FileTransfer.ListL[indexFrom] = FileTransfer.ListL[indexTo];
+            FileTransfer.ListL[indexTo] = tmp;
+        }
+
+        private void deleteEmptyLine()
+        {
+            if (FileTransfer.ListL.Count == 0 || FileTransfer.ListR.Count() == 0)
+            {
+                return;
+            }
+            int count = FileTransfer.ListL.Count();
+            for (int index = 0; index < count; index++)
+            {
+                if (FileTransfer.ListL[index] == "0;Puste" && FileTransfer.ListR[index] == "0;Puste")
+                {
+                    FileTransfer.ListL.RemoveAt(index);
+                    FileTransfer.ListR.RemoveAt(index);
+                    count--;
+                    index--;
+                }
+            }
+        }
+
+        //private void sortMinutiaeList()
+        //{
+        //    if (FileTransfer.ListL.Count() > FileTransfer.ListR.Count())
+        //        sortMinutiaeListRById();
+        //    else
+        //        sortMinutiaeListLById();
+        //}
+
 
 
     }
