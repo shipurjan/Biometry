@@ -17,10 +17,9 @@ namespace Fingerprints
         {
             if (LeftImagePath != null)
             {
-                deleteAllEmptyTypes(ListL);
                 using (StreamWriter writerL = new StreamWriter(LeftImagePath))
                 {
-                    foreach (var item in ListL)
+                    foreach (var item in deleteAllEmptyTypes(ListL))
                     {
                         writerL.WriteLine(item);
                     }
@@ -29,10 +28,9 @@ namespace Fingerprints
 
             if (RightImagePath != null)
             {
-                deleteAllEmptyTypes(ListR);
                 using (StreamWriter writerR = new StreamWriter(RightImagePath))
                 {
-                    foreach (var item in ListR)
+                    foreach (var item in deleteAllEmptyTypes(ListR))
                     {
                         writerR.WriteLine(item);
                     }
@@ -67,16 +65,18 @@ namespace Fingerprints
             }
         }
 
-        private static void deleteAllEmptyTypes(List<string> list)
+        private static List<string> deleteAllEmptyTypes(List<string> list)
         {
-            for (int i = 0; i < list.Count; i++)
+            List<string> temp = new List<string>();
+            foreach (var item in list)
             {
-                if (getNameFromListElement(list[i]) == "Puste")
+                if (getNameFromListElement(item) != "Puste")
                 {
-                    list.Remove(list[i]);
-                    i -= 1;
+                    temp.Add(item);
                 }
             }
+
+            return temp;
         }
 
         private static string getNameFromListElement(string listElement)

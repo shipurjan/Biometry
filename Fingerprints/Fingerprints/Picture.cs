@@ -39,7 +39,7 @@ namespace Fingerprints
             button.Click += (ss, ee) =>
             {   
                 OpenFileDialog openFile = new OpenFileDialog();
-                openFile.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+                openFile.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.bmp) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.bmp";
                 if (openFile.ShowDialog() == true)
                 {
                     image.Source = new BitmapImage(new Uri(openFile.FileName));

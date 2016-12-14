@@ -101,24 +101,21 @@ namespace Fingerprints
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
 
-            for (int i = list1.Count - 1; i >= 0; i--)
+            string[] tmp1 = list1.LastOrDefault().Split(';');
+            string[] tmp2 = list2.LastOrDefault().Split(';');
+
+            if (tmp2[1] == tmp1[1])
             {
-                string[] tmp1 = list1[i].Split(';');
-                string[] tmp2 = list2[i].Split(';');
-                if (tmp2[1] == tmp1[1])
-                {
-                    return UnixDate.GetCurrentUnixTimestampMillis();
-                }
-                else
-                {
-                    if (tmp1[1] == "Puste")
-                    {
-                        return UnixDate.GetCurrentUnixTimestampMillis();
-                    }
-                    return Convert.ToInt64(tmp1[0]);
-                }
+                return UnixDate.GetCurrentUnixTimestampMillis();
             }
-            return UnixDate.GetCurrentUnixTimestampMillis();
+            else if (tmp1[1] == "Puste")
+            {
+                return UnixDate.GetCurrentUnixTimestampMillis();
+            }
+            else
+            {
+                return Convert.ToInt64(tmp1[0]);
+            }
         }
 
         public void DeleteEmptyAtIndex(OverridedCanvas canvas, int index)
