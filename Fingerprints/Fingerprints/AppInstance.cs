@@ -44,5 +44,17 @@ namespace Fingerprints
             if (FileTransfer.ListR.Count > index)
                 FileTransfer.ListR.RemoveAt(index);
         }
+
+        public Shape castChildObject(UIElement child)
+        {
+            if (child.GetType().Name == "Path")
+            {
+                return (Path)child;
+            }
+            else
+            {
+                return (Polyline)child;
+            }
+        }
     }
 }

@@ -74,11 +74,11 @@ namespace Fingerprints
         {
             if (canvasType == "Left")
             {
-                return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListR, FileTransfer.ListL);
+                return getLastIdOfMinutiaeWithIsNotEmpty(window.canvasImageR, window.canvasImageL);
             }
             else
             {
-                return getLastIdOfMinutiaeWithIsNotEmpty(FileTransfer.ListL, FileTransfer.ListR);
+                return getLastIdOfMinutiaeWithIsNotEmpty(window.canvasImageL, window.canvasImageR);
             }
         }
 
@@ -94,27 +94,27 @@ namespace Fingerprints
             }
         }
 
-        public long getLastIdOfMinutiaeWithIsNotEmpty(List<string> list1, List<string> list2)
+        public long getLastIdOfMinutiaeWithIsNotEmpty(OverridedCanvas canvas1, OverridedCanvas canvas2)
         {
-            if (list1.Count == 0)
+            if (canvas1.Children.Count == 0)
             {
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
 
-            string[] tmp1 = list1.LastOrDefault().Split(';');
-            string[] tmp2 = list2.LastOrDefault().Split(';');
+            Shape child1 = castChildObject(canvas1.Children[window.canvasImageL.Children.Count - 1]);
+            Shape child2 = castChildObject(canvas2.Children[window.canvasImageR.Children.Count - 1]);
 
-            if (tmp2[1] == tmp1[1])
+            if (child1.Tag == child2.Tag)
             {
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
-            else if (tmp1[1] == "Puste")
+            else if (child1.Tag.ToString() == "Puste")
             {
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
             else
             {
-                return Convert.ToInt64(tmp1[0]);
+                return Convert.ToInt64(child1.Uid);
             }
         }
 
