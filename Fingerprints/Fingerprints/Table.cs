@@ -149,19 +149,11 @@ namespace Fingerprints
             canvasL.ChildAdded += (ss, ee) =>
             {
                 listBoxL.Items.Clear();
-                foreach (var item in canvasL.Children)
+                foreach (UIElement item in canvasL.Children)
                 {
-                    if (item.GetType().Name == "Path")
-                    {
-                        Path q = (Path)item;
-                        listBoxL.Items.Add(q.Tag);
-                    }
-                    else if (item.GetType().Name == "Polyline")
-                    {
-                        Polyline q = (Polyline)item;
-                        listBoxL.Items.Add(q.Tag);
-                    }
+                    listBoxL.Items.Add(castChildObject(item).Tag);
                 }
+
                 deleteListRefresh();
             };
         }
@@ -171,19 +163,11 @@ namespace Fingerprints
             canvasR.ChildAdded += (ss, ee) =>
             {
                 listBoxR.Items.Clear();
-                foreach (var item in canvasR.Children)
+                foreach (UIElement item in canvasR.Children)
                 {
-                    if (item.GetType().Name == "Path")
-                    {
-                        Path q = (Path)item;
-                        listBoxR.Items.Add(q.Tag);
-                    }
-                    else if (item.GetType().Name == "Polyline")
-                    {
-                        Polyline q = (Polyline)item;
-                        listBoxR.Items.Add(q.Tag);
-                    }
+                    listBoxR.Items.Add(castChildObject(item).Tag);
                 }
+
                 deleteListRefresh();
             };
         }
@@ -235,8 +219,8 @@ namespace Fingerprints
                 drawLeftIfEmpty();
             }
 
-            
-            
+
+
         }
 
         private void drawRightIfEmpty()
@@ -290,7 +274,7 @@ namespace Fingerprints
             {
                 return false;
             }
-            else if(window.listBoxImageL.Items[rightChildIndex].ToString() != "Puste")
+            else if (window.listBoxImageL.Items[rightChildIndex].ToString() != "Puste")
             {
                 return false;
             }
@@ -304,11 +288,11 @@ namespace Fingerprints
             {
                 return false;
             }
-            else if(listbox1.Items.Count <= index)
+            else if (listbox1.Items.Count <= index)
             {
                 return false;
             }
-            else if(listbox1.Items[index].ToString() != "Puste")
+            else if (listbox1.Items[index].ToString() != "Puste")
             {
                 return false;
             }
