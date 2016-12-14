@@ -45,15 +45,15 @@ namespace Fingerprints
                 FileTransfer.ListR.RemoveAt(index);
         }
 
-        public Shape castChildObject(UIElement child)
+        public System.Windows.Shapes.Shape castChildObject(UIElement child)
         {
             if (child.GetType().Name == "Path")
             {
-                return (Path)child;
+                return (System.Windows.Shapes.Path)child;
             }
             else
             {
-                return (Polyline)child;
+                return (System.Windows.Shapes.Polyline)child;
             }
         }
     }
