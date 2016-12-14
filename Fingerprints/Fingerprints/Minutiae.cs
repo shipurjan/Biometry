@@ -92,9 +92,7 @@ namespace Fingerprints
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
 
-            int listCount = list1.Count < list2.Count ? list1.Count : list2.Count;
-
-            for (int i = listCount - 1; i >= 0; i--)
+            for (int i = list1.Count - 1; i >= 0; i--)
             {
                 string[] tmp1 = list1[i].Split(';');
                 string[] tmp2 = list2[i].Split(';');
