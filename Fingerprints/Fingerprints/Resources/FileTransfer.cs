@@ -19,7 +19,7 @@ namespace Fingerprints
             {
                 using (StreamWriter writerL = new StreamWriter(LeftImagePath))
                 {
-                    foreach (var item in deleteAllEmptyTypes(ListL))
+                    foreach (var item in getListWithoutEmptyObjects(ListL))
                     {
                         writerL.WriteLine(item);
                     }
@@ -30,7 +30,7 @@ namespace Fingerprints
             {
                 using (StreamWriter writerR = new StreamWriter(RightImagePath))
                 {
-                    foreach (var item in deleteAllEmptyTypes(ListR))
+                    foreach (var item in getListWithoutEmptyObjects(ListR))
                     {
                         writerR.WriteLine(item);
                     }
@@ -65,7 +65,7 @@ namespace Fingerprints
             }
         }
 
-        private static List<string> deleteAllEmptyTypes(List<string> list)
+        private static List<string> getListWithoutEmptyObjects(List<string> list)
         {
             List<string> temp = new List<string>();
             foreach (var item in list)
