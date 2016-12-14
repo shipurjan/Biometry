@@ -218,14 +218,11 @@ namespace Fingerprints
 
                 drawLeftIfEmpty();
             }
-
-
-
         }
 
         private void drawRightIfEmpty()
         {
-            if (canDrawAfterCLickOnRightTable())
+            if (canDrawAfterClickOnMinutiae(leftChildIndex, listBoxL, listBoxR))
             {
                 window.drawing.startRightDrawing(window.listBoxImageL.Items[leftChildIndex].ToString(), leftChildIndex);
                 window.drawing.startLeftDrawing(window.listBoxImageL.Items[leftChildIndex].ToString());
@@ -234,65 +231,28 @@ namespace Fingerprints
 
         private void drawLeftIfEmpty()
         {
-            if (canDrawAfterCLickOnLeftTable())
+            if (canDrawAfterClickOnMinutiae(rightChildIndex, listBoxR, listBoxL))
             {
                 window.drawing.startLeftDrawing(window.listBoxImageR.Items[rightChildIndex].ToString(), rightChildIndex);
                 window.drawing.startRightDrawing(window.listBoxImageR.Items[rightChildIndex].ToString());
             }
-            //    else
-            //    {
-            //        window.drawing.startLeftDrawing(window.listBoxImageL.Items[rightChildIndex].ToString());
-            //        window.drawing.startRightDrawing(window.listBoxImageL.Items[rightChildIndex].ToString(), rightChildIndex);
-            //    }
         }
 
-        private bool canDrawAfterCLickOnRightTable()
-        {
-            if (leftChildIndex < 0)
-            {
-                return false;
-            }
-            else if (window.listBoxImageR.Items.Count <= leftChildIndex)
-            {
-                return false;
-            }
-            else if (window.listBoxImageR.Items[leftChildIndex].ToString() != "Puste")
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool canDrawAfterCLickOnLeftTable()
-        {
-            if (rightChildIndex < 0)
-            {
-                return false;
-            }
-            else if (window.listBoxImageL.Items.Count <= rightChildIndex)
-            {
-                return false;
-            }
-            else if (window.listBoxImageL.Items[rightChildIndex].ToString() != "Puste")
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool canDrawAfterClickOnMinutiae(int index, ListBox listbox1)
+        private bool canDrawAfterClickOnMinutiae(int index, ListBox listL, ListBox ListR)
         {
             if (index < 0)
             {
                 return false;
             }
-            else if (listbox1.Items.Count <= index)
+            else if (ListR.Items.Count <= index)
             {
                 return false;
             }
-            else if (listbox1.Items[index].ToString() != "Puste")
+            else if (ListR.Items[index].ToString() != "Puste")
+            {
+                return false;
+            }
+            else if (ListR.Items[index].ToString() == "Puste" && listL.Items[index].ToString() == "Puste")
             {
                 return false;
             }
