@@ -113,31 +113,6 @@ namespace Fingerprints
             canvasImageR.Children.RemoveAt(index);
             FileTransfer.ListR.RemoveAt(index);
         }
-
-        void activeCanvasL_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb != null)
-            {
-                if (rb.IsChecked == true)
-                {
-                    borderRight.BorderBrush = Brushes.Black;
-                    borderLeft.BorderBrush = Brushes.DeepSkyBlue;
-                }
-            }
-        }
-        void activeCanvasR_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb != null)
-            {
-                if (rb.IsChecked == true)
-                {
-                    borderLeft.BorderBrush = Brushes.Black;
-                    borderRight.BorderBrush = Brushes.DeepSkyBlue;
-                }
-            }
-        }
         private void addEmpty_Click(object sender, EventArgs e)
         {
             Empty empty = new Empty();

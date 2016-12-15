@@ -109,7 +109,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
-    <Compile Include="BorderColor.cs" />
     <Compile Include="MinutiaeTypes\Segment.cs" />
     <Compile Include="Resources\DrawingEventHandler.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />

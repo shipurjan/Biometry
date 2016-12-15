@@ -23,8 +23,6 @@ namespace Fingerprints
 
         public void startNewDrawing(string minutiaeName, int index = -1)
         {
-            resetBordersAndRadioButtons();
-
             startLeftDrawing(minutiaeName, index);
             startRightDrawing(minutiaeName, index);
         }
@@ -62,11 +60,6 @@ namespace Fingerprints
             {
                 drawR.DeleteEvent(window.imageR, window.canvasImageR);
             }
-        }
-        private void resetBordersAndRadioButtons()
-        {
-            window.borderRight.BorderBrush = Brushes.Black;
-            window.borderLeft.BorderBrush = Brushes.DeepSkyBlue;
         }
 
         public bool canStopDrawing()
