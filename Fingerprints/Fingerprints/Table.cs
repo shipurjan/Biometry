@@ -210,13 +210,13 @@ namespace Fingerprints
             {
                 leftChildIndex = listBox.SelectedIndex;
 
-                drawByLeftTableClick(leftChildIndex);
+                drawByLeftTableClick();
             }
             else
             {
                 rightChildIndex = listBox.SelectedIndex;
 
-                //drawAfterClickOnMinutiaeByRightIndex();
+                drawByRightTableClick();
             }
             window.textBoxTest.Text = "LEFT=>" + leftChildIndex + "    RIGHT=>" + rightChildIndex;
         }
@@ -233,7 +233,7 @@ namespace Fingerprints
             }
         }
 
-        private void drawByLeftTableClick(int leftChildIndex)
+        private void drawByLeftTableClick()
         {
             if (clickedEmpty(listBoxL, listBoxR))
             {
