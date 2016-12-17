@@ -218,7 +218,6 @@ namespace Fingerprints
 
                 drawByRightTableClick();
             }
-            window.textBoxTest.Text = "LEFT=>" + leftChildIndex + "    RIGHT=>" + rightChildIndex;
         }
 
         private void drawByRightTableClick()
