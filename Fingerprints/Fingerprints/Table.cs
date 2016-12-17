@@ -210,59 +210,69 @@ namespace Fingerprints
             {
                 leftChildIndex = listBox.SelectedIndex;
 
-                drawAfterClickOnMinutiaeByLeftIndex();
+                drawByLeftTableClick(leftChildIndex);
             }
             else
             {
                 rightChildIndex = listBox.SelectedIndex;
 
-                drawAfterClickOnMinutiaeByRightIndex();
+                //drawAfterClickOnMinutiaeByRightIndex();
+            }
+            window.textBoxTest.Text = "LEFT=>" + leftChildIndex + "    RIGHT=>" + rightChildIndex;
+        }
+
+        private void drawByRightTableClick()
+        {
+            if (clickedEmpty(listBoxR, listBoxL))
+            {
+                clickOnEmptyObject("Right");
+            }
+            else if (clickedMinutiae(listBoxR, listBoxL))
+            {
+                clickOnMinutiaeObject("Right");
             }
         }
 
-        private void drawAfterClickOnMinutiaeByRightIndex()
+        private void drawByLeftTableClick(int leftChildIndex)
         {
-            if (canDrawAfterClickOnMinutiae(leftChildIndex, listBoxL, listBoxR))
+            if (clickedEmpty(listBoxL, listBoxR))
             {
-                window.drawing.startRightDrawing(window.listBoxImageL.Items[leftChildIndex].ToString(), leftChildIndex);
-                window.drawing.startLeftDrawing(window.listBoxImageL.Items[leftChildIndex].ToString());
+                clickOnEmptyObject("Left");
             }
-            else if(canDrawAferClickOnEmptyObject(leftChildIndex, listBoxL, listBoxR))
+            else if (clickedMinutiae(listBoxL, listBoxR))
             {
-                window.drawing.startLeftDrawing(window.listBoxImageR.Items[leftChildIndex].ToString(), leftChildIndex);
-                window.drawing.startRightDrawing(window.listBoxImageR.Items[leftChildIndex].ToString());
+                clickOnMinutiaeObject("Left");
             }
         }
 
-        private void drawAfterClickOnMinutiaeByLeftIndex()
+        private bool clickedMinutiae(ListBox listboxPrimary, ListBox listboxSecondary)
         {
-            if (canDrawAfterClickOnMinutiae(rightChildIndex, listBoxR, listBoxL))
+            if (listboxPrimary.SelectedIndex < 0)
             {
-                window.drawing.startLeftDrawing(window.listBoxImageR.Items[rightChildIndex].ToString(), rightChildIndex);
-                window.drawing.startRightDrawing(window.listBoxImageR.Items[rightChildIndex].ToString());
+                return false;
             }
-            else if (canDrawAferClickOnEmptyObject(rightChildIndex, listBoxR, listBoxL))
+            else if (listboxPrimary.SelectedItem.ToString() == "Puste")
             {
-                window.drawing.startLeftDrawing(window.listBoxImageL.Items[rightChildIndex].ToString());
-                window.drawing.startRightDrawing(window.listBoxImageL.Items[rightChildIndex].ToString(), rightChildIndex);
+                return false;
             }
+            else if (listboxSecondary.Items[listboxPrimary.SelectedIndex].ToString() != "Puste")
+            {
+                return false;
+            }
+            return true;
         }
 
-        private bool canDrawAfterClickOnMinutiae(int index, ListBox list1, ListBox list2)
+        private bool clickedEmpty(ListBox listboxPrimary, ListBox listboxSecondary)
         {
-            if (index < 0)
+            if (listboxPrimary.SelectedIndex < 0)
             {
                 return false;
             }
-            else if (list2.Items.Count <= index)
+            else if (listboxPrimary.SelectedItem.ToString() != "Puste")
             {
                 return false;
             }
-            else if (list2.Items[index].ToString() != "Puste")
-            {
-                return false;
-            }
-            else if (list2.Items[index].ToString() == "Puste" && list1.Items[index].ToString() == "Puste")
+            else if (listboxSecondary.Items[listboxPrimary.SelectedIndex].ToString() == "Puste")
             {
                 return false;
             }
@@ -270,29 +280,31 @@ namespace Fingerprints
             return true;
         }
 
-        private bool canDrawAferClickOnEmptyObject(int index, ListBox list1, ListBox list2)
+        private void clickOnMinutiaeObject(string side)
         {
-            if (true)
+            if (side == "Left")
             {
-                if (index < 0)
-                {
-                    return false;
-                }
-                else if (list1.Items.Count <= index)
-                {
-                    return false;
-                }
-                else if (list2.Items[index].ToString() == "Puste" && list1.Items[index].ToString() == "Puste")
-                {
-                    return false;
-                }
-                else if (list2.Items[index].ToString() != "Puste" && list1.Items[index].ToString() != "Puste")
-                {
-                    return false;
-                }
+                window.drawing.startRightDrawing(window.listBoxImageL.SelectedItem.ToString(), window.listBoxImageL.SelectedIndex);
+                window.drawing.startLeftDrawing(window.listBoxImageL.SelectedItem.ToString());
             }
-
-            return true;
+            else
+            {
+                window.drawing.startLeftDrawing(window.listBoxImageR.SelectedItem.ToString(), window.listBoxImageR.SelectedIndex);
+                window.drawing.startRightDrawing(window.listBoxImageR.SelectedItem.ToString());
+            }
+        }
+        private void clickOnEmptyObject(string side)
+        {
+            if (side == "Left")
+            {
+                window.drawing.startLeftDrawing(window.listBoxImageR.Items[window.listBoxImageL.SelectedIndex].ToString(), window.listBoxImageL.SelectedIndex);
+                window.drawing.startRightDrawing(window.listBoxImageR.Items[window.listBoxImageL.SelectedIndex].ToString());
+            }
+            else
+            {
+                window.drawing.startRightDrawing(window.listBoxImageL.Items[window.listBoxImageR.SelectedIndex].ToString(), window.listBoxImageR.SelectedIndex);
+                window.drawing.startLeftDrawing(window.listBoxImageL.Items[window.listBoxImageR.SelectedIndex].ToString());
+            }
         }
     }
 }
