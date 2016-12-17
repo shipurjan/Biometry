@@ -54,7 +54,8 @@ namespace Fingerprints
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
                         canvasImage.Children.Clear();
-                        fillEmptyListWithEmpty();
+                        if (helper.canInsertEmpty())
+                            fillEmptyListWithEmpty();
                         sortMinutiaeListLById();
                         deleteEmptyLine();
                         loadMinutiae(FileTransfer.ListL, canvasImage);
@@ -70,7 +71,8 @@ namespace Fingerprints
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();
                         canvasImage.Children.Clear();
-                        fillEmptyListWithEmpty();
+                        if (helper.canInsertEmpty())
+                            fillEmptyListWithEmpty();
                         sortMinutiaeListRById();
                         deleteEmptyLine();
                         loadMinutiae(FileTransfer.ListR, canvasImage);
@@ -83,10 +85,10 @@ namespace Fingerprints
 
                 if (helper.canInsertEmpty())
                 {
-                    while (helper.checkCanvasChildrenCount())
-                    {
-                        helper.insertEmpty();
-                    }
+                    //while (helper.checkCanvasChildrenCount())
+                    //{
+                    //    helper.insertEmpty();
+                    //}
                     helper.deleteUnnecessaryEmpty();
                     helper.addEmptyOnLastLine();
                 }
@@ -230,8 +232,6 @@ namespace Fingerprints
                         FileTransfer.ListL.Add("0;Puste");
                         break;
                     }
-
-                    // checkIfInsertNeededR(indexFrom, indexTo);
                 }
             }
         }
@@ -258,8 +258,6 @@ namespace Fingerprints
                         FileTransfer.ListR.Add("0;Puste");
                         break;
                     }
-
-                    //checkIfInsertNeededL(indexFrom, indexTo);
 
                 }
                 
