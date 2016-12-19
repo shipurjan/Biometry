@@ -31,7 +31,6 @@ namespace Fingerprints
             this.points = points;
             this.Name = name;
             this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
-
         }
         /// <summary>
         /// Dodaje handlery do myszy, rysuje linie ciagla, zapisuje jako liste puktow
@@ -57,7 +56,6 @@ namespace Fingerprints
                         {
                             Stroke = color,
                             StrokeThickness = thickness,
-                            //SnapsToDevicePixels = true,
                             StrokeLineJoin = PenLineJoin.Miter,
                             StrokeMiterLimit = 0,
                             Tag = Name,
@@ -75,7 +73,7 @@ namespace Fingerprints
 
                     if (baseLine.Points.LastOrDefault() != currentPoint)
                     {
-                        baseLine.Points.Add(new Point(currentPoint.X, currentPoint.Y));
+                        baseLine.Points.Add(currentPoint);
                     }
                 }
             };

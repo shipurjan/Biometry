@@ -26,7 +26,6 @@ namespace Fingerprints
         public DrawingEventHandler drawing;
         public MainWindow()
         {
-            //Database.InitialData();
             InitializeComponent();
             Application.Current.MainWindow = this;
             Picture p = new Picture(this);
