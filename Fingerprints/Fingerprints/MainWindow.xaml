@@ -64,8 +64,8 @@
                     <ColumnDefinition Width="163*"/>
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Visible" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Visible" Background="#FFEEEEEE" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
                 <Button x:Name="addEmpty"  BorderThickness="0" Background="#FFEEEEEE" Content="Dodaj puste" Grid.Column="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </Grid>

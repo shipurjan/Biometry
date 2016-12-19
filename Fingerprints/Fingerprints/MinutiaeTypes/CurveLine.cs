@@ -57,9 +57,9 @@ namespace Fingerprints
                         {
                             Stroke = color,
                             StrokeThickness = thickness,
-                            SnapsToDevicePixels = true,
+                            //SnapsToDevicePixels = true,
                             StrokeLineJoin = PenLineJoin.Miter,
-                            StrokeMiterLimit = 2,
+                            StrokeMiterLimit = 0,
                             Tag = Name,
                         };
                         id = getIdForMinutiae(canvas.Tag.ToString(), index);
@@ -70,17 +70,52 @@ namespace Fingerprints
                         newLine = false;
                         index = -1;
                     }
-                    currentPoint.X = Math.Floor(ee.GetPosition(canvas).X + 0.5);
-                    currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y + 0.5);
+                    currentPoint.X = Math.Floor(ee.GetPosition(canvas).X);
+                    currentPoint.Y = Math.Floor(ee.GetPosition(canvas).Y);
+
+                    baseLine.Points.Add(new Point(0.5, 0.5));
+                    baseLine.Points.Add(new Point(1.5, 0.5));
+                    //baseLine.Points.Add(new Point(10.5, 10.5));
+                    //baseLine.Points.Add(new Point(0.5, 10.5));
 
                     if (baseLine.Points.LastOrDefault() != currentPoint)
                     {
-                        baseLine.Points.Add(currentPoint);
+                        baseLine.Points.Add(new Point(currentPoint.X, currentPoint.Y + 0.5));
+                    }
+
+                    if (baseLine.Points.LastOrDefault() != currentPoint & false)
+                    {
+                        Point last = baseLine.Points.LastOrDefault();
+
+                        if (last.X < currentPoint.X && last.Y == currentPoint.Y)
+                        {
+                            baseLine.Points.Add(new Point(currentPoint.X, currentPoint.Y));
+                        }
+                        if (last.X < currentPoint.X && last.Y < currentPoint.Y)
+                        {
+                            baseLine.Points.Add(new Point(currentPoint.X, currentPoint.Y));
+                        }
+                        else if (last.Y < currentPoint.Y && last.X == currentPoint.X)
+                        {
+                            baseLine.Points.Add(new Point(currentPoint.X, currentPoint.Y));
+                        }
+                        else if (last.Y < currentPoint.Y && last.X < currentPoint.X)
+                        {
+                            baseLine.Points.Add(new Point(currentPoint.X, currentPoint.Y));
+                        }
+                        //else if (baseLine.Points.LastOrDefault().X > currentPoint.X)
+                        //{
+                        //    baseLine.Points.Add(new Point(currentPoint.X, currentPoint.Y - 0.5));
+                        //}
+                        //else if (baseLine.Points.LastOrDefault().Y > currentPoint.Y)
+                        //{
+                        //    baseLine.Points.Add(new Point(currentPoint.X - 0.5, currentPoint.Y));
+                        //}
                     }
                 }
             };
             image.MouseMove += handler;
-            canvas.MouseMove += handler;
+            //canvas.MouseMove += handler;
         }
 
         public override void DeleteEvent(Image image, OverridedCanvas canvas)
@@ -88,7 +123,7 @@ namespace Fingerprints
             window.acceptLeftCurveButton.Visibility = Visibility.Hidden;
             window.acceptRightCurveButton.Visibility = Visibility.Hidden;
             image.MouseMove -= handler;
-            canvas.MouseMove -= handler;
+            //canvas.MouseMove -= handler;
         }
         public override string ToString()
         {
