@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
+        Title="Fingerprints" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
     <Grid>
         <Grid.RowDefinitions>
             <!--topMenuBar-->
@@ -122,7 +122,7 @@
             <!--leftCanvas-->
             <Grid Grid.Column="0">
                 <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
-                    <Canvas HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
+                    <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
                         <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
                         <local:OverridedCanvas x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
                     </Canvas>
@@ -132,7 +132,7 @@
             <!--rightCanvas-->
             <Grid Grid.Column="1">
                 <Border x:Name="borderRight" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch">
-                    <Canvas HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
+                    <Canvas Name="canvasAreaRight" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
                         <Image x:Name="imageR" Tag="Right" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
                         <local:OverridedCanvas x:Name="canvasImageR" SnapsToDevicePixels="True" Tag="Right" Canvas.Left="0" Canvas.Top="0"/>
                     </Canvas>

@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Kreator minucji" Height="320" Width="550">
+        Title="Kreator minucji" Height="320" Width="550" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="22*"/>
@@ -36,19 +36,18 @@
             <ColumnDefinition Width="319*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="name" Content="Nazwa" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Padding="5,1"/>
-        <Label x:Name="type" Content="Typ rysowania" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Padding="5,1"/>
-        <Label x:Name="color" Content="Kolor" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Padding="5,1"/>
-        <Label x:Name="size" Content="Rozmiar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7" Padding="5,1"/>
-        <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1"/>
-        <ComboBox x:Name="comboBoxType" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3"/>
-        <Button x:Name="buttonColorPicker" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-        <ComboBox x:Name="comboBoxSize" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7"/>
-        <Button x:Name="add" BorderThickness="0" Background="#FFEEEEEE" Content="Dodaj" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="add_Click"/>
+        <Label x:Name="name" Content="Nazwa" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Padding="5,1"/>
+        <Label x:Name="type" Content="Typ rysowania" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Padding="5,1"/>
+        <Label x:Name="color" Content="Kolor" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="5" Padding="5,1"/>
+        <Label x:Name="size" Content="Rozmiar" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="7" Padding="5,1"/>
+        <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Stretch" Height="25" VerticalAlignment="Stretch" Grid.Row="1"/>
+        <ComboBox x:Name="comboBoxType" Background="#FFEEEEEE" Grid.Column="1" Height="25" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3"/>
+        <Button x:Name="buttonColorPicker" BorderThickness="0" Background="#FFEEEEEE" Height="25" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource MaterialDesignFlatButton}"></Button>
+        <ComboBox x:Name="comboBoxSize" BorderThickness="0" Background="#FFEEEEEE" Height="25" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7"/>
+        <Button x:Name="add" BorderThickness="0" Background="#FFEEEEEE" Content="Dodaj" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="25" Click="add_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
         <ListBox x:Name="listBox"  Grid.Column="2" Grid.Row="1" Grid.RowSpan="9" VerticalAlignment="Stretch" Width="250"/>
-        <Button x:Name="delete" BorderThickness="0" Background="#FFEEEEEE" Content="Usuń" Grid.Column="2" Grid.Row="11" VerticalAlignment="Stretch" Width="250" Click="delete_Click"/>
-        <Label x:Name="thicknessLabel" Content="Grubość linii" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="9" Grid.Column="0" Padding="5,1"/>
-        <ComboBox x:Name="thicknessCombobox" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="9"/>
-
+        <Button x:Name="delete" BorderThickness="0" Background="#FFEEEEEE" Content="Usuń" Grid.Column="2" Grid.Row="11" Height="25" VerticalAlignment="Stretch" Width="250" Click="delete_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
+        <Label x:Name="thicknessLabel" Content="Grubość linii" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="9" Grid.Column="0" Padding="5,1"/>
+        <ComboBox x:Name="thicknessCombobox" BorderThickness="0" Background="#FFEEEEEE" Height="25" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="9"/>
     </Grid>
 </Window>
