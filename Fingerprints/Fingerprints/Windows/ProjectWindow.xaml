@@ -17,10 +17,10 @@
     <Grid Height="265" VerticalAlignment="Top" Margin="0,0,0,-1">
         <Label x:Name="title" Content="Wybierz projekt" HorizontalAlignment="Left" Height="30" Margin="68,10,0,0" VerticalAlignment="Top" Width="123"/>
         <ListBox x:Name="project_list" HorizontalAlignment="Left" Height="124" Margin="10,42,0,0" VerticalAlignment="Top" Width="250"/>
-        <Button x:Name="open_project_button" Content="Otwórz projekt" HorizontalAlignment="Left" BorderThickness="0" Background="#FFEEEEEE" Height="25" Margin="275,42,0,0" VerticalAlignment="Top" Width="226" Click="open_project_button_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
-        <Button x:Name="add_button" Content="Dodaj projekt" HorizontalAlignment="Left" Height="25" BorderThickness="0" Background="#FFEEEEEE" Margin="10,210,0,0" VerticalAlignment="Top" Width="250" Click="add_button_Click" Style="{StaticResource MaterialDesignFlatButton}"/>
+        <Button x:Name="open_project_button" Content="Otwórz projekt" HorizontalAlignment="Left" Margin="275,42,0,0" VerticalAlignment="Top" Width="226" Click="open_project_button_Click" Style="{StaticResource buttonStyles}"/>
+        <Button x:Name="add_button" Content="Dodaj projekt" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="250" Click="add_button_Click" Style="{StaticResource buttonStyles}"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" Margin="10,180,0,0" TextWrapping="Wrap" Text="Nowy projekt" VerticalAlignment="Top" Width="250"/>
-        <Button x:Name="delete_buttton" Content="Usuń projekt" HorizontalAlignment="Left" Height="25" BorderThickness="0" Background="#FFEEEEEE" Margin="275,144,0,0" VerticalAlignment="Top" Width="226" Click="delete_button_Click" Style="{StaticResource MaterialDesignFlatButton}">
+        <Button x:Name="delete_buttton" Content="Usuń projekt" HorizontalAlignment="Left" Margin="275,144,0,0" VerticalAlignment="Top" Width="226" Click="delete_button_Click" Style="{StaticResource buttonStyles}">
 
         </Button>
 

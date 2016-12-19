@@ -11,6 +11,11 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.grey.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Button" x:Key="buttonStyles" BasedOn="{StaticResource MaterialDesignFlatButton}" >
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Background" Value="#FFEEEEEE" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

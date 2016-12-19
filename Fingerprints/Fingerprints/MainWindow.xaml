@@ -63,8 +63,8 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" Width="150" Height="25" Grid.Row="1" Background="#FFEEEEEE" Style="{StaticResource MaterialDesignFlatButton}"/>
-                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Background="#FFEEEEEE" Width="150" Height="25" Style="{StaticResource MaterialDesignFlatButton}" Margin="46,0,45,2"></Button>
+                <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
             <!--comboBox-->
@@ -88,8 +88,8 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" Background="#FFEEEEEE" Grid.Row="1" Width="150" Height="25" Style="{StaticResource MaterialDesignFlatButton}" Margin="46,0,45,2"/>
-                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Background="#FFEEEEEE" Width="150" Height="25" Style="{StaticResource MaterialDesignFlatButton}" Margin="46,0,45,2"></Button>
+                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
             <!--aboveTable-->
@@ -101,8 +101,8 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Width="150" Height="25" Background="#FFEEEEEE" Style="{StaticResource MaterialDesignFlatButton}"/>
-                <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Width="150" Height="25" Background="#FFEEEEEE" Style="{StaticResource MaterialDesignFlatButton}"/>
+                <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Style="{StaticResource buttonStyles}"/>
             </Grid>
         </Grid>
 
