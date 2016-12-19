@@ -6,156 +6,193 @@
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        Style="{StaticResource FontStyle}"
-        Title="Minutiae" MinHeight="500" MinWidth="900" WindowStartupLocation="CenterScreen">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Fingerprints" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="62*"/>
-            <RowDefinition Height="259*"/>
+            <!--topMenuBar-->
+            <RowDefinition Height="30"/>
+
+            <!--topButtons-->
+            <RowDefinition Height="16*" MaxHeight="80" MinHeight="50"/>
+
+            <!--canvasesAndTable-->
+            <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
+
+        <!--topMenuBar-->
         <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="140*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="100*"/>
-                <RowDefinition Height="70*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="130*"/>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="205*"/>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="130*"/>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="31*"/>
-                    <ColumnDefinition Width="162*"/>
-                    <ColumnDefinition Width="41*"/>
-                </Grid.ColumnDefinitions>
-                <ComboBox x:Name="comboBox" Text="--Wybierz--" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Grid.Column="3" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0,0,0.6,0.4"/>
-                <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderThickness="0" Background="#FFEEEEEE" Grid.Column="1"  Margin="0, 5, 0, 5" />
-                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Column="5" BorderThickness="0" Background="#FFEEEEEE" Grid.ColumnSpan="1" Margin="0, 5, 0, 5" />
-                <Button x:Name="saveButton" Content="Zapisz" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" BorderThickness="0" Background="#FFEEEEEE" Margin="0, 5, 0, 5" />
-            </Grid>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                </Grid.ColumnDefinitions>
-                <Menu x:Name="mainMenu" IsMainMenu="True" Background="#FFEEEEEE" Style="{StaticResource FontStyle}"  VerticalAlignment="Center" >
-                    <MenuItem Header="_Plik">
+            <materialDesign:ColorZone Mode="PrimaryMid">
+                <Menu x:Name="mainMenu" IsMainMenu="True" Height="30" VerticalAlignment="Top">
+                    <MenuItem Header="_Plik" Height="30">
                         <MenuItem Header="Nowa minucja" Click="wizardAdd_Click"/>
                     </MenuItem>
                 </Menu>
+            </materialDesign:ColorZone>
+        </Grid>
+
+        <!--topButtons-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <!--left-->
+                <ColumnDefinition Width="26*"/>
+
+                <!--comboBox-->
+                <ColumnDefinition Width="28*"/>
+
+                <!--right-->
+                <ColumnDefinition Width="26*"/>
+
+                <!--aboveTable-->
+                <ColumnDefinition Width="20*" MaxWidth="300" MinWidth="250"/>
+            </Grid.ColumnDefinitions>
+
+            <!--left-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
-            <Grid Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="130*"/>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="205*"/>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="130*"/>
-                    <ColumnDefinition Width="140*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="31*"/>
-                    <ColumnDefinition Width="163*"/>
-                    <ColumnDefinition Width="41*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" BorderThickness="0" Visibility="Hidden" Background="#FFEEEEEE" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-                <Button x:Name="addEmpty"  BorderThickness="0" Background="#FFEEEEEE" Content="Dodaj puste" Grid.Column="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+            <!--comboBox-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150" MaxWidth="250" Margin="30 0 30 0" />
+            </Grid>
+
+            <!--right-->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
+            </Grid>
+
+            <!--aboveTable-->
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Style="{StaticResource buttonStyles}"/>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="90*"/>
-            </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="0.3*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.4*"/>
-                </Grid.ColumnDefinitions>
-                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                <TextBlock x:Name="textBlock1" Grid.Column="4" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center" />
-                <TextBlock x:Name="textBlock2" Grid.Column="5" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center" />
-            </Grid>
+        <!--canvasesAndTable-->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <!--leftCanvas-->
+                <ColumnDefinition Width="40*" />
 
-            <Grid Grid.Row="1" Margin="0, -1, 0, 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="0.3*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.4*"/>
-                </Grid.ColumnDefinitions>
-                <Border BorderBrush="#FFEEEEEE" Margin="0, 0, -1, 0" BorderThickness="1,1,1,1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                <Border BorderBrush="#FFEEEEEE" BorderThickness="0,0,0,1" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,1" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                <Border BorderBrush="#FFEEEEEE" Margin=" -1, 0, 0, 0" BorderThickness="1,1,1,1" Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                <TextBlock  Text="Lp." HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="3"/>
-                <TextBlock  Text="Typ 1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="4"/>
-                <TextBlock  Text="Typ 2" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="5"/>
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="6">
-                    <Label.Content>
-                        <fa:ImageAwesome Icon="Trash" Opacity="0.5"></fa:ImageAwesome>
-                    </Label.Content>
-                </Label>
-            </Grid>
+                <!--rightCanvas-->
+                <ColumnDefinition Width="40*" />
 
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="0.3*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.4*"/>
-                </Grid.ColumnDefinitions>
-                <ListBox x:Name="listBoxLp" Grid.Column="3"/>
-                <ListBox x:Name="listBoxImageL" Grid.Column="4"/>
-                <ListBox x:Name="listBoxImageR" Grid.Column="5" >
-                </ListBox>
-                <ListBox x:Name="listBoxDelete" Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                </ListBox>
+                <!--table-->
+                <ColumnDefinition Width="20*" MaxWidth="300" MinWidth="250"/>
+            </Grid.ColumnDefinitions>
 
-            </Grid>
-
-            <Grid Grid.Row="0" Grid.RowSpan="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="0.3*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.4*"/>
-                </Grid.ColumnDefinitions>
-                <Border x:Name="borderLeft" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch" Grid.Column="0">
-                    <Canvas HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                        <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill"  />
+            <!--leftCanvas-->
+            <Grid Grid.Column="0">
+                <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
+                    <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
+                        <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
                         <local:OverridedCanvas x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
                     </Canvas>
                 </Border>
-                <Border x:Name="borderRight" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch"  Grid.Column="1">
-                    <Canvas HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
+            </Grid>
+
+            <!--rightCanvas-->
+            <Grid Grid.Column="1">
+                <Border x:Name="borderRight" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch">
+                    <Canvas Name="canvasAreaRight" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
                         <Image x:Name="imageR" Tag="Right" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
                         <local:OverridedCanvas x:Name="canvasImageR" SnapsToDevicePixels="True" Tag="Right" Canvas.Left="0" Canvas.Top="0"/>
                     </Canvas>
                 </Border>
+            </Grid>
+
+            <!--table-->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="25" MaxHeight="30"/>
+                    <RowDefinition MinHeight="25" MaxHeight="30"/>
+                    <RowDefinition Height="100*"/>
+                </Grid.RowDefinitions>
+
+                <!--first header-->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                    <TextBlock x:Name="textBlock1" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center" />
+                    <TextBlock x:Name="textBlock2" Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center" />
+                </Grid>
+
+                <!--second header-->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="#FFEEEEEE" Margin="0, -1, -1, 0" BorderThickness="0,1,1,1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                    <Border BorderBrush="#FFEEEEEE" BorderThickness="0,0,0,1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                    <Border BorderBrush="#FFEEEEEE" Margin=" -1, -1, 0, 0" BorderThickness="1,1,1,1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
+                    <materialDesign:PackIcon Kind="Delete" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="25" />
+                    <TextBlock  Text="Typ 1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1"/>
+                    <TextBlock  Text="Typ 2" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="2"/>
+
+                </Grid>
+
+                <!--listboxes-->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    </Border>
+                    <ListBox x:Name="listBoxImageL" Grid.Column="1" />
+                    <ListBox x:Name="listBoxImageR" Grid.Column="2" />
+                    <ListBox x:Name="listBoxDelete" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
