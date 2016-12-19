@@ -26,6 +26,7 @@ namespace Fingerprints
         public DrawingEventHandler drawing;
         public MainWindow()
         {
+            //Database.InitialData();
             InitializeComponent();
             Application.Current.MainWindow = this;
             Picture p = new Picture(this);
@@ -38,7 +39,6 @@ namespace Fingerprints
             saveEvents();
             comboBoxChanged();
             addEmpty.Click += addEmpty_Click;
-            //Database.InitialData();
         }
 
         public void comboBoxChanged(bool stopListening = false)

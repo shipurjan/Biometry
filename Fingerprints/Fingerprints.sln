@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fingerprints", "Fingerprints\Fingerprints.csproj", "{2DA886E3-F43F-4B06-910D-A4E8EB4EBE24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintsTests", "FingerprintsTests\FingerprintsTests.csproj", "{80FFE75F-B614-4A63-8FB0-3886F66E3D8A}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FingerprintsSetup", "FingerprintsSetup\FingerprintsSetup.vdproj", "{4CF610A2-4596-4575-BFD3-FE78799DBF60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,8 @@ Global
 		{80FFE75F-B614-4A63-8FB0-3886F66E3D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80FFE75F-B614-4A63-8FB0-3886F66E3D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80FFE75F-B614-4A63-8FB0-3886F66E3D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF610A2-4596-4575-BFD3-FE78799DBF60}.Debug|Any CPU.ActiveCfg = Debug
+		{4CF610A2-4596-4575-BFD3-FE78799DBF60}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
