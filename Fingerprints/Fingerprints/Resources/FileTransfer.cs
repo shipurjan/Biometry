@@ -86,7 +86,8 @@ namespace Fingerprints
 
         public static void ConvertToXytAndSave(string path)
         {
-            saveVectorToXYT(ListL, path);
+            saveVectorToXYT(ListL, getPath(path, LeftImagePath));
+            saveVectorToXYT(ListR, getPath(path, RightImagePath));
         }
 
         private static void saveVectorToXYT(List <string> list, string path)
@@ -113,6 +114,23 @@ namespace Fingerprints
                 angle = 360 - angle;
             }
             return array[2] + " " + array[3] + " " + angle;
+        }
+
+        private static string getPath(string path, string choosedFile)
+        {
+            string[] pathSegments = path.Split('.');
+            string[] choosedFileSegments = choosedFile.Split('.');
+            string[] tmpSegments = choosedFileSegments[choosedFileSegments.Count() - 2].Split('\\');
+            pathSegments[pathSegments.Count() - 2] += "_" + tmpSegments.LastOrDefault() + ".";
+
+            string tmp = "";
+
+            foreach (string segment in pathSegments)
+            {
+                tmp += segment;
+            }
+
+            return tmp;
         }
     }
 }
