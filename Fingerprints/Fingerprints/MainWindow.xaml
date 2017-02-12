@@ -33,6 +33,7 @@
                 <Menu x:Name="mainMenu" IsMainMenu="True" Height="30" VerticalAlignment="Top">
                     <MenuItem Header="_Plik" Height="30">
                         <MenuItem Header="Nowa minucja" Click="wizardAdd_Click"/>
+                        <MenuItem Header="Zapisz jako" Click="saveAs_Click"/>
                     </MenuItem>
                 </Menu>
             </materialDesign:ColorZone>

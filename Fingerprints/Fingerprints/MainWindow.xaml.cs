@@ -127,5 +127,26 @@ namespace Fingerprints
         {
             return canvasImageL.Children.Count > 0 || canvasImageR.Children.Count > 0;
         }
+
+        private void saveAs_Click(object sender, RoutedEventArgs e)
+        {
+            // Displays a SaveFileDialog so the user can save the Image
+            // assigned to Button2.
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "ANSI|*.xyt";
+            saveFileDialog1.Title = "Save an Image File";
+            saveFileDialog1.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.
+            if (saveFileDialog1.FileName != "")
+            {
+                switch (saveFileDialog1.FilterIndex)
+                {
+                    case 1:
+                        FileTransfer.ConvertToXytAndSave(saveFileDialog1.FileName);
+                        break;
+                }
+            }
+        }
     }
 }

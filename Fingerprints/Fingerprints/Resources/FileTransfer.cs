@@ -83,5 +83,36 @@ namespace Fingerprints
         {
             return listElement.Split(';')[1];
         }
+
+        public static void ConvertToXytAndSave(string path)
+        {
+            saveVectorToXYT(ListL, path);
+        }
+
+        private static void saveVectorToXYT(List <string> list, string path)
+        {
+            using (StreamWriter writerL = new StreamWriter(path))
+            {
+                foreach (var item in getListWithoutEmptyObjects(list))
+                {
+                    writerL.WriteLine(getStringToXYT(item));
+                }
+            }
+        }
+
+        private static string getStringToXYT(string item)
+        {
+            string[] array = item.Split(';');
+            int angle = (int)Math.Round(Convert.ToDouble(array[4]) * 180 / 3.14);
+            if (angle < 0)
+            {
+                angle *= -1;
+            }
+            else
+            {
+                angle = 360 - angle;
+            }
+            return array[2] + " " + array[3] + " " + angle;
+        }
     }
 }

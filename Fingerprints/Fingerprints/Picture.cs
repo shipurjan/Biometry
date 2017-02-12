@@ -85,10 +85,6 @@ namespace Fingerprints
 
                 if (helper.canInsertEmpty())
                 {
-                    //while (helper.checkCanvasChildrenCount())
-                    //{
-                    //    helper.insertEmpty();
-                    //}
                     helper.deleteUnnecessaryEmpty();
                     helper.addEmptyOnLastLine();
                 }
