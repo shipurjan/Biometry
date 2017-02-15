@@ -65,25 +65,6 @@ namespace Fingerprints
             }
         }
 
-        private static List<string> getListWithoutEmptyObjects(List<string> list)
-        {
-            List<string> temp = new List<string>();
-            foreach (var item in list)
-            {
-                if (getNameFromListElement(item) != "Puste")
-                {
-                    temp.Add(item);
-                }
-            }
-
-            return temp;
-        }
-
-        private static string getNameFromListElement(string listElement)
-        {
-            return listElement.Split(';')[1];
-        }
-
         public static void ConvertToXytAndSave(string path)
         {
             saveVectorToXYT(ListL, getPath(path, LeftImagePath));
@@ -94,7 +75,7 @@ namespace Fingerprints
         {
             using (StreamWriter writerL = new StreamWriter(path))
             {
-                foreach (var item in getListWithoutEmptyObjects(list))
+                foreach (var item in getVectorList(list))
                 {
                     writerL.WriteLine(getStringToXYT(item));
                 }
@@ -131,6 +112,43 @@ namespace Fingerprints
             }
 
             return tmp;
+        }
+
+        private static List<string> getListWithoutEmptyObjects(List<string> list)
+        {
+            List<string> temp = new List<string>();
+            foreach (var item in list)
+            {
+                if (getNameFromListElement(item) != "Puste")
+                {
+                    temp.Add(item);
+                }
+            }
+
+            return temp;
+        }
+
+        private static string getNameFromListElement(string listElement)
+        {
+            return listElement.Split(';')[1];
+        }
+
+        private static List<string> getVectorList(List<string> list)
+        {
+            List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
+            List<string> vectorsList = new List<string>();
+            foreach (var item in list)
+            {
+                string[] tmp = item.Split(';');
+                var type = minutiaeList.Where(x => x.Name == tmp[1]).FirstOrDefault();
+
+                if (type != null && type.TypeId == 2)
+                {
+                    vectorsList.Add(item);
+                }
+            }
+
+            return vectorsList;
         }
     }
 }
