@@ -121,7 +121,9 @@
     <Compile Include="MinutiaeTypes\Peak.cs" />
     <Compile Include="MinutiaeTypes\Triangle.cs" />
     <Compile Include="Resources\OverridedCanvas.cs" />
+    <Compile Include="Resources\Transformer.cs" />
     <Compile Include="Resources\UnixDate.cs" />
+    <Compile Include="Resources\Utils.cs" />
     <Compile Include="Windows\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
