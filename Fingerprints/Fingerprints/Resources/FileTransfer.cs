@@ -84,32 +84,6 @@ namespace Fingerprints
             SaveFile(getPath(path, RightImagePath), transformer.getBozorthFormat(ListR));
         }
 
-        private static void saveVectorToXYT(List <string> list, string path)
-        {
-            using (StreamWriter writerL = new StreamWriter(path))
-            {
-                foreach (var item in getVectorList(list))
-                {
-                    writerL.WriteLine(getStringToXYT(item));
-                }
-            }
-        }
-
-        private static string getStringToXYT(string item)
-        {
-            string[] array = item.Split(';');
-            int angle = (int)Math.Round(Convert.ToDouble(array[4]) * 180 / 3.14);
-            if (angle < 0)
-            {
-                angle *= -1;
-            }
-            else
-            {
-                angle = 360 - angle;
-            }
-            return array[2] + " " + array[3] + " " + angle;
-        }
-
         public static string getPath(string path, string choosedFile)
         {
             string[] pathSegments = path.Split('.');
@@ -144,24 +118,6 @@ namespace Fingerprints
         private static string getNameFromListElement(string listElement)
         {
             return listElement.Split(';')[1];
-        }
-
-        private static List<string> getVectorList(List<string> list)
-        {
-            List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
-            List<string> vectorsList = new List<string>();
-            foreach (var item in list)
-            {
-                string[] tmp = item.Split(';');
-                var type = minutiaeList.Where(x => x.Name == tmp[1]).FirstOrDefault();
-
-                if (type != null && type.TypeId == 2)
-                {
-                    vectorsList.Add(item);
-                }
-            }
-
-            return vectorsList;
         }
     }
 }
