@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Fingerprints.Resources;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fingerprints.Resources.Tests
 {
@@ -12,7 +7,7 @@ namespace Fingerprints.Resources.Tests
     public class TransformerTests
     {
         Transformer transformer;
-        List<string> minutiaeData;
+        Dictionary<string, string> minutiaeData;
         [ClassInitialize()]
         public static void ClassInit(TestContext context)
         {
@@ -23,25 +18,27 @@ namespace Fingerprints.Resources.Tests
         public void Initialize()
         {
             transformer = new Transformer();
-            minutiaeData = new List<string>();
-            minutiaeData.Add("1487502148306;Daszek;161;356;194;328;208;371");
-            minutiaeData.Add("1486934055194;Prosta;233;385;-1,02784518636331");
-        }
-
-        [TestMethod()]
-        public void geBozorthFormatTest()
-        {
-            List<string> expected = new List<string>();
-            expected.Add("194 328 255");
-            expected.Add("233 385 59");
-            List<string> actual = transformer.getBozorthFormat(minutiaeData);
+            minutiaeData = new Dictionary<string, string>();
+            minutiaeData.Add("peak", "1487502148306;Daszek;161;356;194;328;208;371");
+            minutiaeData.Add("vector", "1486934055194;Prosta;233;385;-1,02784518636331");
         }
 
         [TestMethod()]
         public void transformPeakToXYTest()
         {
-            string excepted = "192 328 ";
-            string actual = transformer.transformPeakToXYT(minutiaeData[0]);
+            string expected = "194 328 255";
+            string actual = transformer.transformPeakToXYT(minutiaeData["peak"]);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void transformVectorToXYTTest()
+        {
+            string expected = "233 385 59";
+            string actual = transformer.transformVectorToXYT(minutiaeData["vector"]);
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

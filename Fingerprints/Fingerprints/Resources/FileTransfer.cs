@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Resources;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,17 @@ namespace Fingerprints
                 }
             }
         }
+
+        public static void SaveFile(string path, List<string> list)
+        {
+            using (StreamWriter writer = new StreamWriter(path))
+            {
+                foreach (var item in list)
+                {
+                    writer.WriteLine(item);
+                }
+            }
+        }
         public static void LoadLeftFile()
         {
             if (File.Exists(LeftImagePath))
@@ -67,8 +79,9 @@ namespace Fingerprints
 
         public static void ConvertToXytAndSave(string path)
         {
-            saveVectorToXYT(ListL, getPath(path, LeftImagePath));
-            saveVectorToXYT(ListR, getPath(path, RightImagePath));
+            Transformer transformer = new Transformer();
+            SaveFile(getPath(path, LeftImagePath), transformer.getBozorthFormat(ListL));
+            SaveFile(getPath(path, RightImagePath), transformer.getBozorthFormat(ListR));
         }
 
         private static void saveVectorToXYT(List <string> list, string path)
@@ -97,7 +110,7 @@ namespace Fingerprints
             return array[2] + " " + array[3] + " " + angle;
         }
 
-        private static string getPath(string path, string choosedFile)
+        public static string getPath(string path, string choosedFile)
         {
             string[] pathSegments = path.Split('.');
             string[] choosedFileSegments = choosedFile.Split('.');

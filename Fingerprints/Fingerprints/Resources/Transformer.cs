@@ -19,8 +19,6 @@ namespace Fingerprints.Resources
         {
             List<string> bozorthList = new List<string>();
 
-            List<string> temp = new List<string>();
-
             foreach (string item in minutiaeList)
             {
                 switch (getMinutiaeDrawingType(item))
@@ -56,9 +54,8 @@ namespace Fingerprints.Resources
         public string transformVectorToXYT(string item)
         {
             string[] array = item.Split(';');
-            double angle = Convert.ToDouble(array[4]) * 180 / 3.14;
 
-            return array[2] + " " + array[3] + " " + Utils.angleInDegrees(angle);
+            return array[2] + " " + array[3] + " " + Utils.angleInDegrees(Convert.ToDouble(array[4]));
         }
         public List<string> getListWithoutEmptyObjects(List<string> list)
         {
