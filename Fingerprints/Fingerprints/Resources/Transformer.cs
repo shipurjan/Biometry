@@ -43,12 +43,31 @@ namespace Fingerprints.Resources
             Point firstPoint = new Point(Convert.ToInt16(array[2]), Convert.ToInt16(array[3]));
             Point secondPoint = new Point(Convert.ToInt16(array[4]), Convert.ToInt16(array[5]));
             Point thirdPoint = new Point(Convert.ToInt16(array[6]), Convert.ToInt16(array[7]));
-            Point middlePoint = new Point((firstPoint.X + thirdPoint.X) / 2, (firstPoint.Y + thirdPoint.Y) / 2);
+            // Tworzymy 2 wektory
+            Point vectorA = new Point(firstPoint.X - secondPoint.X, firstPoint.Y - secondPoint.Y);
+            Point vectorB = new Point(thirdPoint.X - secondPoint.X, thirdPoint.Y - secondPoint.Y);
+
+            // Wyznaczamy wektory jednostkowe
+            Point unitVectorA = new Point(vectorA.X / vectorLenght(vectorA), vectorA.Y / vectorLenght(vectorA));
+            Point unitVectorB = new Point(vectorB.X / vectorLenght(vectorB), vectorB.Y / vectorLenght(vectorB));
+
+            // Wyznaczamy wektor dwusiecznej kata
+            Point bisectVector = new Point((unitVectorA.X + unitVectorB.X) / 2, (unitVectorA.Y + unitVectorB.Y) / 2);
+
+            // Wyznaczamy punkt koncoy wektora dwusiecznej
+            Point middlePoint = new Point(secondPoint.X + bisectVector.X, secondPoint.Y + bisectVector.Y);
+
+            //Wyznaczamy kat do płaszczyzny 
             double deltaX = middlePoint.X - secondPoint.X;
             double deltaY = middlePoint.Y - secondPoint.Y;
             double angleInRadian = Math.Atan2(deltaY, deltaX);
 
             return secondPoint.X + " " + secondPoint.Y + " " + Utils.angleInDegrees(angleInRadian);
+        }
+
+        public double vectorLenght(Point vector)
+        {
+            return Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
         }
 
         public string transformVectorToXYT(string item)
