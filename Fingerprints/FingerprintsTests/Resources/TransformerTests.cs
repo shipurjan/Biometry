@@ -26,7 +26,7 @@ namespace Fingerprints.Resources.Tests
         [TestMethod()]
         public void transformPeakToXYTest()
         {
-            string expected = "194 328 255";
+            string expected = "194 328 254";
             string actual = transformer.transformPeakToXYT(minutiaeData["peak"]);
 
             Assert.AreEqual(expected, actual);
