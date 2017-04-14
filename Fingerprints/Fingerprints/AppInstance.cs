@@ -11,12 +11,16 @@ namespace Fingerprints
     {
         public int leftChildIndex { get; set; }
         public int rightChildIndex { get; set; }
-        public MainWindow window { get; set; }
+        public MainWindow mainWindow { get; set; }
         public AppInstance()
         {
-            window = (MainWindow)Application.Current.MainWindow;
+            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
+        /// <summary>
+        /// Delete drawing object at specific index from left elements (canvas, image, file)
+        /// </summary>
+        /// <param name="index"></param>
         public void deleteLeft(int index)
         {
             if (index == -1)
@@ -24,13 +28,17 @@ namespace Fingerprints
                 return;
             }
 
-            window.listBoxImageL.Items.RemoveAt(index);
-            window.canvasImageL.Children.RemoveAt(index);
+            mainWindow.listBoxImageL.Items.RemoveAt(index);
+            mainWindow.canvasImageL.Children.RemoveAt(index);
 
             if (FileTransfer.ListL.Count > index)
                 FileTransfer.ListL.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Delete drawing object at specific index from right elements (canvas, image, file)
+        /// </summary>
+        /// <param name="index"></param>
         public void deleteRight(int index)
         {
             if (index == -1)
@@ -38,13 +46,18 @@ namespace Fingerprints
                 return;
             }
 
-            window.listBoxImageR.Items.RemoveAt(index);
-            window.canvasImageR.Children.RemoveAt(index);
+            mainWindow.listBoxImageR.Items.RemoveAt(index);
+            mainWindow.canvasImageR.Children.RemoveAt(index);
 
             if (FileTransfer.ListR.Count > index)
                 FileTransfer.ListR.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Cast canvas child to Shape
+        /// </summary>
+        /// <param name="child"></param>
+        /// <returns></returns>
         public System.Windows.Shapes.Shape castChildObject(UIElement child)
         {
             if (child.GetType().Name == "Path")

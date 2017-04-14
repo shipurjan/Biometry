@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class Segment : Minutiae
+    class Segment : Minutiae, IDraw
     {
         Brush color;
         Point tmp1, tmp2;
@@ -40,7 +40,7 @@ namespace Fingerprints
             tmp2 = new Point();
         }
 
-        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
+        public void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             handler += (ss, ee) =>
             {
@@ -109,7 +109,7 @@ namespace Fingerprints
             }
         }
 
-        public override void DeleteEvent(Image image, OverridedCanvas canvas)
+        public void DeleteEvent(Image image, OverridedCanvas canvas)
         {
             image.MouseRightButtonDown -= handler;
             image.MouseMove -= mouseMove;
@@ -133,7 +133,7 @@ namespace Fingerprints
             canvas.AddLogicalChild(myPath, index);
         }
 
-        public override void DrawFromFile(OverridedCanvas canvas)
+        public void DrawFromFile(OverridedCanvas canvas)
         {
             Path myPath = new Path();
             LineGeometry myFirstPathFigure = new LineGeometry();
