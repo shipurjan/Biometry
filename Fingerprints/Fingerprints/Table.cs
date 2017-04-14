@@ -85,8 +85,8 @@ namespace Fingerprints
                     if (index == -1) { return; }
                     listBoxL.UnselectAll();
                     window.setComboboxTitle(minType.FindIndex(a => a.Name == type.Name));
-                    window.drawing.startRightDrawing(type.Name);
-                    window.drawing.startLeftDrawing(type.Name, index);
+                    window.drawer.startRightDrawing(type.Name);
+                    window.drawer.startLeftDrawing(type.Name, index);
                 };
                 mi.Items.Add(nMenu);
             }
@@ -106,8 +106,8 @@ namespace Fingerprints
                     if (index == -1) { return; }
                     listBoxR.UnselectAll();
                     window.setComboboxTitle(minType.FindIndex(a => a.Name == type.Name));
-                    window.drawing.startLeftDrawing(type.Name);
-                    window.drawing.startRightDrawing(type.Name, index);
+                    window.drawer.startLeftDrawing(type.Name);
+                    window.drawer.startRightDrawing(type.Name, index);
                 };
                 mi.Items.Add(nMenu);
             }
@@ -283,26 +283,26 @@ namespace Fingerprints
         {
             if (side == "Left")
             {
-                window.drawing.startRightDrawing(window.listBoxImageL.SelectedItem.ToString(), window.listBoxImageL.SelectedIndex);
-                window.drawing.startLeftDrawing(window.listBoxImageL.SelectedItem.ToString());
+                window.drawer.startRightDrawing(window.listBoxImageL.SelectedItem.ToString(), window.listBoxImageL.SelectedIndex);
+                window.drawer.startLeftDrawing(window.listBoxImageL.SelectedItem.ToString());
             }
             else
             {
-                window.drawing.startLeftDrawing(window.listBoxImageR.SelectedItem.ToString(), window.listBoxImageR.SelectedIndex);
-                window.drawing.startRightDrawing(window.listBoxImageR.SelectedItem.ToString());
+                window.drawer.startLeftDrawing(window.listBoxImageR.SelectedItem.ToString(), window.listBoxImageR.SelectedIndex);
+                window.drawer.startRightDrawing(window.listBoxImageR.SelectedItem.ToString());
             }
         }
         private void clickOnEmptyObject(string side)
         {
             if (side == "Left")
             {
-                window.drawing.startLeftDrawing(window.listBoxImageR.Items[window.listBoxImageL.SelectedIndex].ToString(), window.listBoxImageL.SelectedIndex);
-                window.drawing.startRightDrawing(window.listBoxImageR.Items[window.listBoxImageL.SelectedIndex].ToString());
+                window.drawer.startLeftDrawing(window.listBoxImageR.Items[window.listBoxImageL.SelectedIndex].ToString(), window.listBoxImageL.SelectedIndex);
+                window.drawer.startRightDrawing(window.listBoxImageR.Items[window.listBoxImageL.SelectedIndex].ToString());
             }
             else
             {
-                window.drawing.startRightDrawing(window.listBoxImageL.Items[window.listBoxImageR.SelectedIndex].ToString(), window.listBoxImageR.SelectedIndex);
-                window.drawing.startLeftDrawing(window.listBoxImageL.Items[window.listBoxImageR.SelectedIndex].ToString());
+                window.drawer.startRightDrawing(window.listBoxImageL.Items[window.listBoxImageR.SelectedIndex].ToString(), window.listBoxImageR.SelectedIndex);
+                window.drawer.startLeftDrawing(window.listBoxImageL.Items[window.listBoxImageR.SelectedIndex].ToString());
             }
         }
     }

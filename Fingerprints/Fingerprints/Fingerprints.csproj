@@ -114,7 +114,7 @@
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
     <Compile Include="MinutiaeTypes\Segment.cs" />
-    <Compile Include="Resources\DrawingEventHandler.cs" />
+    <Compile Include="Resources\DrawService.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />
     <Compile Include="Resources\Helper.cs" />
     <Compile Include="MinutiaeTypes\Empty.cs" />

@@ -9,13 +9,13 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    public class DrawingEventHandler : Minutiae
+    public class DrawService : AppInstance
     {
         IDraw drawL;
         IDraw drawR;
         Helper helper;
         MinutiaeTypeController controller;
-        public DrawingEventHandler()
+        public DrawService()
         {
             controller = new MinutiaeTypeController();
             helper = new Helper(window, controller);

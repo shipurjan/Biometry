@@ -23,15 +23,15 @@ namespace Fingerprints
     {
         MinutiaeTypeController controller;
         SelectionChangedEventHandler comboboxHandler = null;
-        public DrawingEventHandler drawing;
+        public DrawService drawer;
         public MainWindow()
         {
             InitializeComponent();
             Application.Current.MainWindow = this;
-            Picture p = new Picture(this);
-            drawing = new DrawingEventHandler();
-            p.InitializeR();
-            p.InitializeL();
+            Picture picture = new Picture(this);
+            drawer = new DrawService();
+            picture.InitializeR();
+            picture.InitializeL();
             controller = new MinutiaeTypeController();
             comboBox.ItemsSource = controller.Show();
             InitTable();
@@ -40,13 +40,13 @@ namespace Fingerprints
             addEmpty.Click += addEmpty_Click;
         }
 
-        public void comboBoxChanged(bool stopListening = false)
+        public void comboBoxChanged()
         {
             comboboxHandler += (ss, ee) =>
             {
                 if (comboBox.SelectedValue != null)
                 {
-                    drawing.startNewDrawing(comboBox.SelectedValue.ToString());
+                    drawer.startNewDrawing(comboBox.SelectedValue.ToString());
                 }
             };
 
@@ -69,7 +69,7 @@ namespace Fingerprints
         {
             Window1 win = new Window1();
             win.ShowDialog();
-            drawing.stopDrawing();
+            drawer.stopDrawing();
             comboBox.ItemsSource = controller.Show();
         }
 
@@ -88,30 +88,6 @@ namespace Fingerprints
                 FileTransfer.Save();
             };
         }
-
-        private void leftMenuClick_Delete(object sender, RoutedEventArgs e)
-        {
-            int index = listBoxImageL.SelectedIndex;
-            if (index == -1)
-            {
-                return;
-            }
-            listBoxImageL.Items.RemoveAt(index);
-            canvasImageL.Children.RemoveAt(index);
-            FileTransfer.ListL.RemoveAt(index);
-        }
-        private void rightMenuClick_Delete(object sender, RoutedEventArgs e)
-        {
-            int index = listBoxImageR.SelectedIndex;
-            if (index == -1)
-            {
-                return;
-            }
-
-            listBoxImageR.Items.RemoveAt(index);
-            canvasImageR.Children.RemoveAt(index);
-            FileTransfer.ListR.RemoveAt(index);
-        }
         private void addEmpty_Click(object sender, EventArgs e)
         {
             Empty empty = new Empty();
@@ -121,11 +97,6 @@ namespace Fingerprints
                 empty.Draw(this.canvasImageL, imageR, 0);
             else
                 MessageBox.Show("Nie można dodać pustego, jeżeli mamy tyle samo elementów");
-        }
-
-        public bool anyChildrensToSave()
-        {
-            return canvasImageL.Children.Count > 0 || canvasImageR.Children.Count > 0;
         }
 
         private void saveAs_Click(object sender, RoutedEventArgs e)
