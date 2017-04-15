@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    public class Minutiae : AppInstance
+    public abstract class Minutiae : AppInstance
     {
         public string Name;
         public long id { get; set; }
