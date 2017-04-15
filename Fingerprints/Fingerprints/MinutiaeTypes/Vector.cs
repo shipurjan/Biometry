@@ -1,4 +1,5 @@
 ﻿using Fingerprints.Resources;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,6 +149,21 @@ namespace Fingerprints
             myPath.Opacity = 0.5;
             myPath.Uid = id.ToString();
             canvas.AddLogicalChild(myPath);
+        }
+
+        public string ToJson()
+        {
+            JObject minutiaeJson = new JObject();
+            minutiaeJson["id"] = id;
+            minutiaeJson["name"] = Name;
+            minutiaeJson["angle"] = angle;
+
+            minutiaeJson["points"] = new JArray()
+            {
+                firstPointLine.ToJObject()
+            };
+
+            return minutiaeJson.ToString();
         }
     }
 }

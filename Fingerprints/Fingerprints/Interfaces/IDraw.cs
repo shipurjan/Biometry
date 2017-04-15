@@ -11,7 +11,7 @@ namespace Fingerprints
     {
         void Draw(OverridedCanvas canvas, Image image, int index = -1);
         void DeleteEvent(Image image, OverridedCanvas canvas);
-
         void DrawFromFile(OverridedCanvas canvas);
+        string ToJson();
     }
 }

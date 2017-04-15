@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,15 @@ namespace Fingerprints
             myPath.Name = "Puste";
             myPath.Tag = "Puste";
             canvas.AddLogicalChild(myPath);
+        }
+
+        public string ToJson()
+        {
+            JObject minutiaeJson = new JObject();
+            minutiaeJson["id"] = 0;
+            minutiaeJson["name"] = "Puste";
+
+            return minutiaeJson.ToString();
         }
 
         public override string ToString()
