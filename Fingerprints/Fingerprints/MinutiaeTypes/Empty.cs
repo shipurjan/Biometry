@@ -11,9 +11,13 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class Empty : Minutiae
+    class Empty : Minutiae, IDraw
     {
-        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
+        public void DeleteEvent(Image image, OverridedCanvas canvas)
+        {
+        }
+
+        public void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             Point singlePoint = new Point(1, 1);
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
@@ -30,7 +34,7 @@ namespace Fingerprints
             AddElementToSaveList(canvas.Tag.ToString(), index);
         }
 
-        public override void DrawFromFile(OverridedCanvas canvas)
+        public void DrawFromFile(OverridedCanvas canvas)
         {
             Point singlePoint = new Point(1, 1);
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();

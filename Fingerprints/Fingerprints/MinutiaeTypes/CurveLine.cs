@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    public class CurveLine : Minutiae
+    public class CurveLine : Minutiae, IDraw
     {
         Brush color;
         Point currentPoint;
@@ -39,10 +39,10 @@ namespace Fingerprints
         /// <param name="image">Aktualny obrazek</param>
         /// <param name="border1">Ramka 1</param>
         /// <param name="border2">Ramka 2</param>
-        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
+        public void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
-            window.acceptLeftCurveButton.Visibility = Visibility.Visible;
-            window.acceptRightCurveButton.Visibility = Visibility.Visible;
+            mainWindow.acceptLeftCurveButton.Visibility = Visibility.Visible;
+            mainWindow.acceptRightCurveButton.Visibility = Visibility.Visible;
 
             acceptButtonsClickEvents(canvas, index);
 
@@ -81,10 +81,10 @@ namespace Fingerprints
             canvas.MouseMove += handler;
         }
 
-        public override void DeleteEvent(Image image, OverridedCanvas canvas)
+        public void DeleteEvent(Image image, OverridedCanvas canvas)
         {
-            window.acceptLeftCurveButton.Visibility = Visibility.Hidden;
-            window.acceptRightCurveButton.Visibility = Visibility.Hidden;
+            mainWindow.acceptLeftCurveButton.Visibility = Visibility.Hidden;
+            mainWindow.acceptRightCurveButton.Visibility = Visibility.Hidden;
             image.MouseMove -= handler;
             canvas.MouseMove -= handler;
         }
@@ -106,7 +106,7 @@ namespace Fingerprints
         {
             if (canvas.Tag.ToString() == "Left")
             {
-                window.acceptLeftCurveButton.Click += (ss, ee) =>
+                mainWindow.acceptLeftCurveButton.Click += (ss, ee) =>
                 {
                     newLine = true;
                     this.AddElementToSaveList(canvas.Tag.ToString(), index);
@@ -115,7 +115,7 @@ namespace Fingerprints
             }
             else
             {
-                window.acceptRightCurveButton.Click += (ss, ee) =>
+                mainWindow.acceptRightCurveButton.Click += (ss, ee) =>
                 {
                     newLine = true;
                     this.AddElementToSaveList(canvas.Tag.ToString(), index);
@@ -123,7 +123,7 @@ namespace Fingerprints
                 };
             }
         }
-        public override void DrawFromFile(OverridedCanvas canvas)
+        public void DrawFromFile(OverridedCanvas canvas)
         {
             List<Point> curvePoint = new List<Point>();
             PointCollection curvePoints = new PointCollection();

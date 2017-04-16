@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 namespace Fingerprints
 {
-    class SinglePoint : Minutiae
+    class SinglePoint : Minutiae, IDraw
     {
         Brush color;
         double size;
@@ -28,13 +28,13 @@ namespace Fingerprints
             singlePoint.X = x;
             singlePoint.Y = y;
         }
-        public override void Draw(OverridedCanvas canvas, Image image, int index = -1)
+        public void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             AddHandler(canvas, image, index);
             image.MouseRightButtonDown += handler;
         }
 
-        public override void DeleteEvent(Image image, OverridedCanvas canvas)
+        public void DeleteEvent(Image image, OverridedCanvas canvas)
         {
             image.MouseRightButtonDown -= handler;
         }
@@ -44,7 +44,7 @@ namespace Fingerprints
             return id + ";" + Name + ";" + Math.Floor(singlePoint.X).ToString() + ";" + Math.Floor(singlePoint.Y).ToString();
         }
 
-        public override void DrawFromFile(OverridedCanvas canvas)
+        public void DrawFromFile(OverridedCanvas canvas)
         {
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             myEllipseGeometry.Center = singlePoint;

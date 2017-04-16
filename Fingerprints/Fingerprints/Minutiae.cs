@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    public class Minutiae : AppInstance, IDraw
+    public abstract class Minutiae : AppInstance
     {
         public string Name;
         public long id { get; set; }
@@ -18,9 +18,6 @@ namespace Fingerprints
         {
             this.id = id;
         }
-        public virtual void Draw(OverridedCanvas canvas, Image image, int index = -1) { }
-        public virtual void DeleteEvent(Image image, OverridedCanvas canvas) { }
-        public virtual void DrawFromFile(OverridedCanvas canvas) { }
 
         public void deleteChildWithGivenIndex(string canvasType, int index)
         {
@@ -74,11 +71,11 @@ namespace Fingerprints
         {
             if (canvasType == "Left")
             {
-                return getLastIdOfMinutiaeWithIsNotEmpty(window.canvasImageR, window.canvasImageL);
+                return getLastIdOfMinutiaeWithIsNotEmpty(mainWindow.canvasImageR, mainWindow.canvasImageL);
             }
             else
             {
-                return getLastIdOfMinutiaeWithIsNotEmpty(window.canvasImageL, window.canvasImageR);
+                return getLastIdOfMinutiaeWithIsNotEmpty(mainWindow.canvasImageL, mainWindow.canvasImageR);
             }
         }
 
@@ -86,11 +83,11 @@ namespace Fingerprints
         {
             if (canvasType == "Left")
             {
-                return window.canvasImageR.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageR.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
+                return mainWindow.canvasImageR.Children[index].Uid != "" ? Convert.ToInt64(mainWindow.canvasImageR.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
             }
             else
             {
-                return window.canvasImageL.Children[index].Uid != "" ? Convert.ToInt64(window.canvasImageL.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
+                return mainWindow.canvasImageL.Children[index].Uid != "" ? Convert.ToInt64(mainWindow.canvasImageL.Children[index].Uid) : UnixDate.GetCurrentUnixTimestampMillis();
             }
         }
 
@@ -101,8 +98,8 @@ namespace Fingerprints
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
 
-            Shape child1 = castChildObject(canvas1.Children[window.canvasImageL.Children.Count - 1]);
-            Shape child2 = castChildObject(canvas2.Children[window.canvasImageR.Children.Count - 1]);
+            Shape child1 = castChildObject(canvas1.Children[mainWindow.canvasImageL.Children.Count - 1]);
+            Shape child2 = castChildObject(canvas2.Children[mainWindow.canvasImageR.Children.Count - 1]);
 
             if (child1.Tag == child2.Tag)
             {
@@ -150,8 +147,8 @@ namespace Fingerprints
         {
             Empty emptyL = new Empty();
             Empty emptyR = new Empty();
-            emptyR.Draw(window.canvasImageR, window.imageR);
-            emptyL.Draw(window.canvasImageL, window.imageL);
+            emptyR.Draw(mainWindow.canvasImageR, mainWindow.imageR);
+            emptyL.Draw(mainWindow.canvasImageL, mainWindow.imageL);
         }
 
         protected void addEmptyLastLineIfIndexOnLastElement(int index)
@@ -169,14 +166,14 @@ namespace Fingerprints
 
             Empty empty = new Empty();
 
-            if (canvas == window.canvasImageL && CanvasCountEqual())
-                empty.Draw(window.canvasImageR, window.imageR);
-            else if (canvas == window.canvasImageR && CanvasCountEqual())
-                empty.Draw(window.canvasImageL, window.imageL);
+            if (canvas == mainWindow.canvasImageL && CanvasCountEqual())
+                empty.Draw(mainWindow.canvasImageR, mainWindow.imageR);
+            else if (canvas == mainWindow.canvasImageR && CanvasCountEqual())
+                empty.Draw(mainWindow.canvasImageL, mainWindow.imageL);
         }
         public bool CanvasCountEqual()
         {
-            return (window.canvasImageL.Children.Count == window.canvasImageR.Children.Count);
+            return (mainWindow.canvasImageL.Children.Count == mainWindow.canvasImageR.Children.Count);
         }
     }
 }
