@@ -16,12 +16,6 @@ namespace Fingerprints
     {
         public MinutiaState state;
         public Brush color;
-        //public string Name;
-        // public long id { get; set; }
-        //public Minutiae(long id = 0)
-        //{
-        //    this.id = id;
-        //}
 
 
         protected void ConvertStateColorToBrush()

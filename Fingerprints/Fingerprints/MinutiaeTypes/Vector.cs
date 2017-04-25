@@ -21,7 +21,6 @@ namespace Fingerprints
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
 
-        MinutiaState state;
         public Vector(MinutiaState state)
         {
             this.state = state;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,10 @@ namespace Fingerprints
         public double Angle { get; set; }
         public long Id { get; set; }
 
-        public MinutiaState()
+        public string ToJson()
         {
-
+            return JsonConvert.SerializeObject(this);
         }
-
-
 
     }
 }
