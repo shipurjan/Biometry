@@ -1,4 +1,5 @@
 ﻿using Fingerprints.Resources;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,7 @@ namespace Fingerprints
         }
         public override string ToString()
         {
+            Console.WriteLine(ToJson());
             string points = null;
             if (baseLine != null && baseLine.Points.Count > 0)
             {
@@ -100,6 +102,23 @@ namespace Fingerprints
                 return id + ";" + Name + ";" + points;
             }
             return "";
+        }
+
+        public string ToJson()
+        {
+            JObject minutiaeJson = new JObject();
+            minutiaeJson["id"] = id;
+            minutiaeJson["name"] = Name;
+
+            JArray pointsArray = new JArray();
+            foreach (var point in convertLinesToPoints(baseLine.Points))
+            {
+                pointsArray.Add(point.ToJObject());
+            }
+
+            minutiaeJson["points"] = pointsArray;
+
+            return minutiaeJson.ToString();
         }
 
         public void acceptButtonsClickEvents(OverridedCanvas canvas, int index = -1)
@@ -232,6 +251,5 @@ namespace Fingerprints
         {
             return Math.Sqrt(Math.Pow((p2.X - p1.X), 2) + Math.Pow((p2.Y - p1.Y), 2));
         }
-
     }
 }

@@ -1,0 +1,189 @@
+<Project>
+  <Name>Untitled</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Untitled</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Interface">
+        <Name>IDraw</Name>
+        <Access>Public</Access>
+        <Location left="282" top="444" />
+        <Size width="340" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">void Draw(OverridedCanvas canvas, Image image, int index = -1)</Member>
+        <Member type="Method">void DeleteEvent(Image image, OverridedCanvas canvas)</Member>
+        <Member type="Method">void DrawFromFile(OverridedCanvas canvas)</Member>
+        <Member type="Method">string ToJson()</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>Minutiae</Name>
+        <Access>Public</Access>
+        <Location left="947" top="444" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">SelfDefinedMinutiae model</Member>
+        <Member type="Field">int id</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Vector</Name>
+        <Access>Public</Access>
+        <Location left="698" top="788" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AppInstance</Name>
+        <Access>Public</Access>
+        <Location left="947" top="98" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MinutiaeFactory</Name>
+        <Access>Public</Access>
+        <Location left="1768" top="403" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Create(string m)</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>UserMinutiaeFactory</Name>
+        <Access>Public</Access>
+        <Location left="1592" top="697" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Create(string m)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DrawService</Name>
+        <Access>Public</Access>
+        <Location left="1178" top="1458" />
+        <Size width="408" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">MinutiaeFactory factory</Member>
+        <Member type="Constructor">public DrawService(MinutiaeFactory factory)</Member>
+        <Member type="Method">public void StartNewDrawing(string minutiaeName, int index = -1)</Member>
+        <Member type="Method">public void StartNewDrawing(string FilePath)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>StartNewDrawing(string minutiaeName, int index = -1) 
+{
+IDraw draw = factory.create(minutiaeName);
+}</Text>
+        <Location left="1594" top="1505" />
+        <Size width="319" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>DrawService drawService = new DrawService(new UserMinutiaeFactory());
+lub
+DrawService drawService = new DrawService(new FileFactory());</Text>
+        <Location left="1178" top="1372" />
+        <Size width="401" height="75" />
+      </Entity>
+      <Entity type="Class">
+        <Name>FileMinutiaeFactory</Name>
+        <Access>Public</Access>
+        <Location left="1943" top="697" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Create(string m)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>public void Create(m)
+{ 
+  switch(name)
+  {
+     case "Vector"
+       return new UserVector(state...);
+  }
+}
+
+state zawiera tylko:
+minutiaeName, color, size, thickness</Text>
+        <Location left="1374" top="948" />
+        <Size width="381" height="192" />
+      </Entity>
+      <Entity type="Class">
+        <Name>UserVector</Name>
+        <Access>Public</Access>
+        <Location left="535" top="1058" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>FileVector</Name>
+        <Access>Public</Access>
+        <Location left="847" top="1058" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>public void Create(json)
+{ 
+ JObject obj = parseJson(json);
+switch(obj["name"])
+{
+  case "Vector":
+     return new FileVector(obj);
+}
+}
+
+state zawiera tylko:
+minutiaeName, color, size, thickeness, angle, List&lt;Point&gt; points</Text>
+        <Location left="1921" top="948" />
+        <Size width="376" height="192" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>StartNewDrawing(string FilePath)  ????
+{
+  foreach(minutiaesInFile as minutiaeJson)
+{
+
+}
+  IDraw draw = factory.create(Json)
+}</Text>
+        <Location left="1594" top="1589" />
+        <Size width="316" height="158" />
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Realization" first="2" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="2" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="1" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="5" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="9" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="11" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="12" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
