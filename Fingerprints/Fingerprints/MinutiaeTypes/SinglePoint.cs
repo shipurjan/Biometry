@@ -14,21 +14,16 @@ namespace Fingerprints
 {
     class SinglePoint : Minutiae, IDraw
     {
-        Brush color;
-        double size;
-        double thickness;
-        Point singlePoint = new Point();
+
         MouseButtonEventHandler handler = null;
 
-        public SinglePoint(string name, string color, double size, double thickness, double x = 0, double y = 0, long id = 0):base(id)
+        public SinglePoint(MinutiaState state)
         {
-            this.thickness = thickness;
-            this.Name = name;
-            this.size = size;
-            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
-            singlePoint.X = x;
-            singlePoint.Y = y;
+            this.state = state;
+            ConvertStateColorToBrush();
         }
+
+
         public void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             AddHandler(canvas, image, index);
@@ -42,22 +37,23 @@ namespace Fingerprints
 
         public override string ToString()
         {
-            return id + ";" + Name + ";" + Math.Floor(singlePoint.X).ToString() + ";" + Math.Floor(singlePoint.Y).ToString();
+            return state.Id + ";" + state.Minutia.Name + ";" + Math.Floor(state.Points[0].X).ToString() + ";" + Math.Floor(state.Points[0].Y).ToString();
         }
 
         public void DrawFromFile(OverridedCanvas canvas)
         {
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-            myEllipseGeometry.Center = singlePoint;
-            myEllipseGeometry.RadiusX = 2 * size;
-            myEllipseGeometry.RadiusY = 2 * size;
+            myEllipseGeometry.Center = state.Points[0];
+            myEllipseGeometry.Center = state.Points[0];
+            myEllipseGeometry.RadiusX = 2 * state.Minutia.Size;
+            myEllipseGeometry.RadiusY = 2 * state.Minutia.Size;
             Path myPath = new Path();
             myPath.Stroke = color;
             myPath.StrokeThickness = 0.3;
             myPath.Data = myEllipseGeometry;
             myPath.Opacity = 0.5;
-            myPath.Tag = Name;
-            myPath.Uid = id.ToString();
+            myPath.Tag = state.Minutia.Name;
+            myPath.Uid = state.Id.ToString();
             canvas.AddLogicalChild(myPath);
         }
 
@@ -75,20 +71,20 @@ namespace Fingerprints
 
         private void AddToCanvas(object sender, MouseButtonEventArgs ee, OverridedCanvas canvas, Image image, int index)
         {
-            singlePoint = ee.GetPosition(canvas);
-            id = getIdForMinutiae(canvas.Tag.ToString(), index);
+            state.Points[0] = ee.GetPosition(canvas);
+            state.Id = getIdForMinutiae(canvas.Tag.ToString(), index);
 
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-            myEllipseGeometry.Center = singlePoint;
-            myEllipseGeometry.RadiusX = 2 * size;
-            myEllipseGeometry.RadiusY = 2 * size;
+            myEllipseGeometry.Center = state.Points[0];
+            myEllipseGeometry.RadiusX = 2 * state.Minutia.Size; ;
+            myEllipseGeometry.RadiusY = 2 * state.Minutia.Size; ;
             Path myPath = new Path();
 
             myPath.Stroke = color;
-            myPath.StrokeThickness = thickness;
+            myPath.StrokeThickness = state.Minutia.Thickness;
             myPath.Data = myEllipseGeometry;
-            myPath.Tag = Name;
-            myPath.Uid = id.ToString();
+            myPath.Tag = state.Minutia.Name;
+            myPath.Uid = state.Id.ToString();
 
             DeleteEmptyAtIndex(canvas, index);
             AddEmptyToOpositeSite(canvas, index);
@@ -99,11 +95,11 @@ namespace Fingerprints
         public string ToJson()
         {
             JObject minutiaeJson = new JObject();
-            minutiaeJson["id"] = id;
-            minutiaeJson["name"] = Name;
+            minutiaeJson["id"] = state.Id;
+            minutiaeJson["name"] = state.Minutia.Name;
             minutiaeJson["points"] = new JArray()
             {
-                singlePoint.ToJObject()
+                state.Points[0].ToJObject()
             };
 
             return minutiaeJson.ToString();

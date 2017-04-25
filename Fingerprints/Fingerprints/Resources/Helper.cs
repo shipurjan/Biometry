@@ -71,30 +71,37 @@ namespace Fingerprints
 
         public IDraw GetMinutiaeTypeToDraw(string minutiaeName)
         {
-            string color = controller.GetColorOfSelectedMinutiae(minutiaeName);
-            double thickness = controller.GetThicknessOfSelectedMinutiae(minutiaeName);
-            double size = controller.GetSizeOfSelectedMinutiae(minutiaeName);
+            MinutiaState state = new MinutiaState
+            {
+                Minutia = new SelfDefinedMinutiae
+                {
+                    Color = controller.GetColorOfSelectedMinutiae(minutiaeName),
+                    Thickness = controller.GetThicknessOfSelectedMinutiae(minutiaeName),
+                    Size = controller.GetSizeOfSelectedMinutiae(minutiaeName),
+                    TypeId = controller.GetTypeIdOfSelectedMinutiae(minutiaeName)
+                }
+            };
             IDraw draw = null;
 
-            switch (controller.GetTypeIdOfSelectedMinutiae(minutiaeName))
+            switch (state.Minutia.TypeId)
             {
                 case 1:
-                    draw = new SinglePoint(minutiaeName, color, size, thickness);
+                    draw = new SinglePoint(state);
                     break;
                 case 2:
-                    draw = new Vector(minutiaeName, color, size, thickness);
+                    draw = new Vector(state);
                     break;
                 case 3:
-                    draw = new CurveLine(minutiaeName, color, thickness, null);
+                    draw = new CurveLine(state);
                     break;
                 case 4:
-                    draw = new Triangle(minutiaeName, color, thickness);
+                    draw = new Triangle(state);
                     break;
                 case 5:
-                    draw = new Peak(minutiaeName, color, thickness);
+                    draw = new Peak(state);
                     break;
                 case 6:
-                    draw = new Segment(minutiaeName, color, thickness);
+                    draw = new Segment(state);
                     break;
             }
             return draw;

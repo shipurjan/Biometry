@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fingerprints
 {
-    class SelfDefinedMinutiae
+    public class SelfDefinedMinutiae
     {
         public int SelfDefinedMinutiaeId { get; set; }
         public string Name { get; set; }

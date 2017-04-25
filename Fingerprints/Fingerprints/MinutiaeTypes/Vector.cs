@@ -15,26 +15,17 @@ namespace Fingerprints
 {
     class Vector : Minutiae, IDraw
     {
-        Brush color;
-        double size;
-        Point firstPointLine;
         Point tmp1, tmp2;
-        double angle;
-        double thickness;
         int clickCount;
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
         GeometryGroup group = new GeometryGroup();
-        public Vector(string name, string color, double size, double thickness, double x = 0, double y = 0, double angle = 0, long id = 0) : base(id)
+
+        MinutiaState state;
+        public Vector(MinutiaState state)
         {
-            this.Name = name;
-            this.size = size;
-            this.thickness = thickness;
-            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
-            firstPointLine = new Point();
-            firstPointLine.X = x;
-            firstPointLine.Y = y;
-            this.angle = angle;
+            this.state = state;
+            ConvertStateColorToBrush();
             tmp1 = new Point();
             tmp2 = new Point();
         }
@@ -52,25 +43,25 @@ namespace Fingerprints
 
                 if (clickCount == 0)
                 {
-                    id = getIdForMinutiae(canvas.Tag.ToString(), index);
+                    state.Id = getIdForMinutiae(canvas.Tag.ToString(), index);
                     tmp1 = ee.GetPosition(canvas);
-                    firstPointLine = tmp1;
+                    state.Points[0] = tmp1;
                     myPathFigure.StartPoint = tmp1;
 
                     myEllipseGeometry.Center = tmp1;
-                    myEllipseGeometry.RadiusX = 2 * size;
-                    myEllipseGeometry.RadiusY = 2 * size;
+                    myEllipseGeometry.RadiusX = 2 * state.Minutia.Size;
+                    myEllipseGeometry.RadiusY = 2 * state.Minutia.Size;
                     group.Children.Add(myEllipseGeometry);
 
                     var linetmp = new LineGeometry();
                     group.Children.Add(linetmp);
-                    drawCompleteLine(ee, canvas, size);
+                    drawCompleteLine(ee, canvas, state.Minutia.Size);
 
                     myPath.Stroke = color;
-                    myPath.StrokeThickness = thickness;
+                    myPath.StrokeThickness = state.Minutia.Thickness;
                     myPath.Data = group;
-                    myPath.Tag = Name;
-                    myPath.Uid = id.ToString();
+                    myPath.Tag = state.Minutia.Name;
+                    myPath.Uid = state.Id.ToString();
                     DeleteEmptyAtIndex(canvas, index);
                     AddEmptyToOpositeSite(canvas, index);
                     canvas.AddLogicalChild(myPath, index);
@@ -94,7 +85,7 @@ namespace Fingerprints
             {
                 if (clickCount == 1)
                 {
-                    drawCompleteLine(ee, canvas, size);
+                    drawCompleteLine(ee, canvas, state.Minutia.Size);
                 }
             };
             image.MouseMove += mouseMove;
@@ -107,12 +98,12 @@ namespace Fingerprints
             tmp2 = ee.GetPosition(canvas);
             double deltaX = tmp2.X - tmp1.X;
             double deltaY = tmp2.Y - tmp1.Y;
-            angle = (Math.Atan2(deltaY, deltaX));
+            state.Angle = (Math.Atan2(deltaY, deltaX));
 
-            tmp2.X = tmp1.X + Math.Cos(angle) * 10;
-            tmp2.Y = tmp1.Y + Math.Sin(angle) * 10;
+            tmp2.X = tmp1.X + Math.Cos(state.Angle) * 10;
+            tmp2.Y = tmp1.Y + Math.Sin(state.Angle) * 10;
 
-            ((LineGeometry)group.Children[1]).StartPoint = new Point(tmp1.X + (2 * size) * Math.Cos(angle), tmp1.Y + (2 * size) * Math.Sin(angle));
+            ((LineGeometry)group.Children[1]).StartPoint = new Point(tmp1.X + (2 * size) * Math.Cos(state.Angle), tmp1.Y + (2 * size) * Math.Sin(state.Angle));
             ((LineGeometry)group.Children[1]).EndPoint = tmp2;
         }
 
@@ -124,7 +115,7 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            return id + ";" + Name + ";" + Math.Floor(firstPointLine.X).ToString() + ";" + Math.Floor(firstPointLine.Y).ToString() + ";" + angle.ToString();
+            return state.Id + ";" + state.Minutia.Name + ";" + Math.Floor(state.Points[0].X).ToString() + ";" + Math.Floor(state.Points[0].Y).ToString() + ";" + state.Angle.ToString();
         }
 
         public void DrawFromFile(OverridedCanvas canvas)
@@ -133,34 +124,34 @@ namespace Fingerprints
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
             LineGeometry myPathFigure = new LineGeometry();
 
-            myEllipseGeometry.Center = firstPointLine;
-            myEllipseGeometry.RadiusX = 2 * size;
-            myEllipseGeometry.RadiusY = 2 * size;
+            myEllipseGeometry.Center = state.Points[0];
+            myEllipseGeometry.RadiusX = 2 * state.Minutia.Size;
+            myEllipseGeometry.RadiusY = 2 * state.Minutia.Size;
             group.Children.Add(myEllipseGeometry);
-            tmp2.X = firstPointLine.X + Math.Cos(angle) * 10;
-            tmp2.Y = firstPointLine.Y + Math.Sin(angle) * 10;
-            myPathFigure.StartPoint = new Point(firstPointLine.X + (2 * size) * Math.Cos(angle), firstPointLine.Y + (2 * size) * Math.Sin(angle));
+            tmp2.X = state.Points[0].X + Math.Cos(state.Angle) * 10;
+            tmp2.Y = state.Points[0].Y + Math.Sin(state.Angle) * 10;
+            myPathFigure.StartPoint = new Point(state.Points[0].X + (2 * state.Minutia.Size) * Math.Cos(state.Angle), state.Points[0].Y + (2 * state.Minutia.Size) * Math.Sin(state.Angle));
             myPathFigure.EndPoint = tmp2;
             group.Children.Add(myPathFigure);
             myPath.Stroke = color;
-            myPath.StrokeThickness = thickness;
+            myPath.StrokeThickness = state.Minutia.Thickness;
             myPath.Data = group;
-            myPath.Tag = Name;
+            myPath.Tag = state.Minutia.Name;
             myPath.Opacity = 0.5;
-            myPath.Uid = id.ToString();
+            myPath.Uid = state.Id.ToString();
             canvas.AddLogicalChild(myPath);
         }
 
         public string ToJson()
         {
             JObject minutiaeJson = new JObject();
-            minutiaeJson["id"] = id;
-            minutiaeJson["name"] = Name;
-            minutiaeJson["angle"] = angle;
+            minutiaeJson["id"] = state.Id;
+            minutiaeJson["name"] = state.Minutia.Name;
+            minutiaeJson["angle"] = state.Angle;
 
             minutiaeJson["points"] = new JArray()
             {
-                firstPointLine.ToJObject()
+                state.Points[0].ToJObject()
             };
 
             return minutiaeJson.ToString();

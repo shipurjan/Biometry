@@ -140,7 +140,10 @@ namespace Fingerprints
         private void loadMinutiae(List<string> list, OverridedCanvas canvas)
         {
             List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
-
+            // TODO
+            // z Jsona zrobić listę MinutiaState
+            // foreach po liscie
+            List<MinutiaState> minutiaStateList = new List<MinutiaState>(); 
             IDraw draw = null;
             foreach (var item in list)
             {
@@ -154,27 +157,27 @@ namespace Fingerprints
                 }
                 else if (type.TypeId == 1)
                 {
-                    draw = new SinglePoint(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToInt64(tmp[0]));
+                    draw = new SinglePoint(state);
                 }
                 else if (type.TypeId == 2)
                 {
-                    draw = new Vector(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToInt64(tmp[0]));
+                    draw = new Vector(state);
                 }
                 else if (type.TypeId == 3)
                 {
-                    draw = new CurveLine(type.Name, type.Color, type.Thickness, tmp, Convert.ToInt64(tmp[0]));
+                    draw = new CurveLine(state);
                 }
                 else if (type.TypeId == 4)
                 {
-                    draw = new Triangle(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]), Convert.ToDouble(tmp[7]), Convert.ToInt64(tmp[0]));
+                    draw = new Triangle(state);
                 }
                 else if (type.TypeId == 5)
                 {
-                    draw = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]), Convert.ToDouble(tmp[7]), Convert.ToInt64(tmp[0]));
+                    draw = new Peak(state);
                 }
                 else if (type.TypeId == 6)
                 {
-                    draw = new Segment(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToInt64(tmp[0]));
+                    draw = new Segment(state);
                 }
                 else
                 {

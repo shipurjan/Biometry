@@ -16,22 +16,16 @@ namespace Fingerprints
 {
     public class CurveLine : Minutiae, IDraw
     {
-        Brush color;
         Point currentPoint;
         bool newLine;
         Polyline baseLine;
-        string[] points;
-        double thickness;
 
         MouseEventHandler handler = null;
 
-        public CurveLine(string name, string color, double thickness, string[] points = null, long id = 0) : base(id)
+        public CurveLine(MinutiaState state)
         {
-            this.thickness = thickness;
-            newLine = true;
-            this.points = points;
-            this.Name = name;
-            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(color);
+            this.state = state;
+            ConvertStateColorToBrush();
         }
         /// <summary>
         /// Dodaje handlery do myszy, rysuje linie ciagla, zapisuje jako liste puktow
@@ -56,13 +50,13 @@ namespace Fingerprints
                         baseLine = new Polyline
                         {
                             Stroke = color,
-                            StrokeThickness = thickness,
+                            StrokeThickness = state.Minutia.Thickness,
                             StrokeLineJoin = PenLineJoin.Miter,
                             StrokeMiterLimit = 0,
-                            Tag = Name,
+                            Tag = state.Minutia.Name,
                         };
-                        id = getIdForMinutiae(canvas.Tag.ToString(), index);
-                        baseLine.Uid = id.ToString();
+                        state.Id = getIdForMinutiae(canvas.Tag.ToString(), index);
+                        baseLine.Uid = state.Id.ToString();
                         DeleteEmptyAtIndex(canvas, index);
                         AddEmptyToOpositeSite(canvas, index);
                         canvas.AddLogicalChild(baseLine, index);
@@ -99,7 +93,7 @@ namespace Fingerprints
                 {
                     points += point.X + ";" + point.Y + ";";
                 }
-                return id + ";" + Name + ";" + points;
+                return state.Id + ";" + state.Minutia.Name + ";" + points;
             }
             return "";
         }
@@ -107,8 +101,8 @@ namespace Fingerprints
         public string ToJson()
         {
             JObject minutiaeJson = new JObject();
-            minutiaeJson["id"] = id;
-            minutiaeJson["name"] = Name;
+            minutiaeJson["id"] = state.Id;
+            minutiaeJson["name"] = state.Minutia.Name;
 
             JArray pointsArray = new JArray();
             foreach (var point in convertLinesToPoints(baseLine.Points))
@@ -146,20 +140,20 @@ namespace Fingerprints
         {
             List<Point> curvePoint = new List<Point>();
             PointCollection curvePoints = new PointCollection();
-            for (int i = 2; i < points.Count() - 2; i += 2)
+            for (int i = 2; i < state.Points.Count() - 2; i += 2)
             {
-                curvePoints.Add(new Point(Convert.ToInt32(points[i]), Convert.ToInt32(points[i + 1])));
+                curvePoints.Add(new Point(Convert.ToInt32(state.Points[i]), Convert.ToInt32(state.Points[i + 1])));
             }
 
             Polyline polyLine = new Polyline()
             {
                 Stroke = color,
-                StrokeThickness = thickness,
+                StrokeThickness = state.Minutia.Thickness,
                 SnapsToDevicePixels = true,
                 StrokeLineJoin = PenLineJoin.Miter,
                 StrokeMiterLimit = 2,
-                Tag = Name,
-                Uid = id.ToString(),
+                Tag = state.Minutia.Name,
+                Uid = state.Id.ToString(),
             };
             polyLine.Points = curvePoints;
             canvas.AddLogicalChild(polyLine);

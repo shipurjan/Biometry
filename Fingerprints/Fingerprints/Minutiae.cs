@@ -7,19 +7,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Fingerprints
 {
     public abstract class Minutiae : AppInstance
     {
-        public string Name;
-        public long id { get; set; }
-        public Minutiae(long id = 0)
-        {
-            this.id = id;
-        }
+        public MinutiaState state;
+        public Brush color;
+        //public string Name;
+        // public long id { get; set; }
+        //public Minutiae(long id = 0)
+        //{
+        //    this.id = id;
+        //}
 
+
+        protected void ConvertStateColorToBrush()
+        {
+            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(state.Minutia.Color);
+        }
         public void deleteChildWithGivenIndex(string canvasType, int index)
         {
             if (canvasType == "Left")
