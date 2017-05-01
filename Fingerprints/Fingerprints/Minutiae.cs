@@ -1,4 +1,5 @@
-﻿using Fingerprints.Resources;
+﻿using Fingerprints.Models;
+using Fingerprints.Resources;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -38,24 +39,30 @@ namespace Fingerprints
         {
             if (listType == "Left")
             {
-                insertStringToList(FileTransfer.ListL, index);
+                insertMinutiaStateToFile(FileTransfer.ListL, index);
             }
             else
             {
-                insertStringToList(FileTransfer.ListR, index);
+                insertMinutiaStateToFile(FileTransfer.ListR, index);
             }
         }
 
-        private void insertStringToList(List<string> list, int index = -1)
+        private void insertMinutiaStateToFile(List<MinutiaState> list, int index = -1)
         {
             if (index > -1)
             {
-                list.Insert(index, ToString());
+                list.Insert(index, state);
             }
             else
             {
-                list.Add(ToString());
+                list.Add(state);
             }
+
+            this.state = new MinutiaState()
+            {
+                Minutia = this.state.Minutia,
+                Points = new List<Point>()
+            };
         }
 
         public long getIdForMinutiae(string canvasType, int index)

@@ -1,4 +1,6 @@
-﻿using Fingerprints.Resources;
+﻿using Fingerprints.Models;
+using Fingerprints.Resources;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -71,7 +73,7 @@ namespace Fingerprints
 
         private void AddToCanvas(object sender, MouseButtonEventArgs ee, OverridedCanvas canvas, Image image, int index)
         {
-            state.Points[0] = ee.GetPosition(canvas);
+            state.Points.Insert(0, ee.GetPosition(canvas).ToFloorPoint());
             state.Id = getIdForMinutiae(canvas.Tag.ToString(), index);
 
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();

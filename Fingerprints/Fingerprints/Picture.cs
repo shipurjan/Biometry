@@ -1,4 +1,7 @@
-﻿using Microsoft.Win32;
+﻿using Fingerprints.Models;
+using Microsoft.Win32;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -137,7 +140,7 @@ namespace Fingerprints
             image.MouseUp += (ss, ee) => { image.ReleaseMouseCapture(); };
         }
 
-        private void loadMinutiae(List<string> list, OverridedCanvas canvas)
+        private void loadMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
         {
             List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
             // TODO
@@ -147,37 +150,38 @@ namespace Fingerprints
             IDraw draw = null;
             foreach (var item in list)
             {
-                string[] tmp = item.Split(';');
-                
-                var type = minutiaeList.Where(x => x.Name == tmp[1]).FirstOrDefault();
+                //string[] tmp = item.Split(';');
+                //JObject minutiaObject = JsonConvert.DeserializeObject<JObject>(item);
+                //MinutiaState state = new MinutiaState();
+                //SelfDefinedMinutiae minutia = minutiaeList.Where(x => x.Name == item.Minutia).FirstOrDefault();
 
-                if(type == null)
+                if (item.Minutia == null)
                 {
                     draw = new Empty();
                 }
-                else if (type.TypeId == 1)
+                else if (item.Minutia.TypeId == 1)
                 {
-                    draw = new SinglePoint(state);
+                    draw = new SinglePoint(item);
                 }
-                else if (type.TypeId == 2)
+                else if (item.Minutia.TypeId == 2)
                 {
-                    draw = new Vector(state);
+                    draw = new Vector(item);
                 }
-                else if (type.TypeId == 3)
+                else if (item.Minutia.TypeId == 3)
                 {
-                    draw = new CurveLine(state);
+                    draw = new CurveLine(item);
                 }
-                else if (type.TypeId == 4)
+                else if (item.Minutia.TypeId == 4)
                 {
-                    draw = new Triangle(state);
+                    draw = new Triangle(item);
                 }
-                else if (type.TypeId == 5)
+                else if (item.Minutia.TypeId == 5)
                 {
-                    draw = new Peak(state);
+                    draw = new Peak(item);
                 }
-                else if (type.TypeId == 6)
+                else if (item.Minutia.TypeId == 6)
                 {
-                    draw = new Segment(state);
+                    draw = new Segment(item);
                 }
                 else
                 {
@@ -213,13 +217,13 @@ namespace Fingerprints
         {
             for (int indexFrom = 0; indexFrom < FileTransfer.ListL.Count(); indexFrom++)
             {
-                string minutiaeIdL = getIdFromListElement(FileTransfer.ListL[indexFrom]);
+                string minutiaeIdL = FileTransfer.ListL[indexFrom].Id.ToString();
                 if (minutiaeIdL == "0")
                     continue;
 
                 for (int indexTo = 0; indexTo < FileTransfer.ListR.Count(); indexTo++)
                 {
-                    var minutiaeIdR = getIdFromListElement(FileTransfer.ListR[indexTo]);
+                    var minutiaeIdR = FileTransfer.ListR[indexTo].Id.ToString();
                     if (minutiaeIdL == minutiaeIdR)
                     {
                         swapElementsR(indexFrom, indexTo);
@@ -227,8 +231,8 @@ namespace Fingerprints
                     }
                     if (indexTo == FileTransfer.ListR.Count() - 1)
                     {
-                        FileTransfer.ListR.Insert(indexFrom, "0;Puste");
-                        FileTransfer.ListL.Add("0;Puste");
+                        FileTransfer.ListR.Insert(indexFrom, new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                        FileTransfer.ListL.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
                         break;
                     }
                 }
@@ -239,13 +243,13 @@ namespace Fingerprints
         {
             for (int indexFrom = 0; indexFrom < FileTransfer.ListR.Count(); indexFrom++)
             {
-                string minutiaeIdR = getIdFromListElement(FileTransfer.ListR[indexFrom]);
+                string minutiaeIdR = FileTransfer.ListR[indexFrom].Id.ToString();
                 if (minutiaeIdR == "0")
                     continue;
 
                 for (int indexTo = 0; indexTo < FileTransfer.ListL.Count(); indexTo++)
                 {
-                    var minutiaeIdL = getIdFromListElement(FileTransfer.ListL[indexTo]);
+                    var minutiaeIdL = FileTransfer.ListL[indexTo].Id.ToString();
                     if (minutiaeIdL == minutiaeIdR)
                     {
                         swapElementsL(indexFrom, indexTo);
@@ -253,8 +257,8 @@ namespace Fingerprints
                     }
                     if (indexTo == FileTransfer.ListL.Count() - 1)
                     {
-                        FileTransfer.ListL.Insert(indexFrom, "0;Puste");
-                        FileTransfer.ListR.Add("0;Puste");
+                        FileTransfer.ListL.Insert(indexFrom, new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                        FileTransfer.ListR.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
                         break;
                     }
 
@@ -268,12 +272,12 @@ namespace Fingerprints
             if (FileTransfer.ListL.Count() > FileTransfer.ListR.Count())
             {
                 for (int i = FileTransfer.ListR.Count(); i < FileTransfer.ListL.Count(); i++)
-                    FileTransfer.ListR.Add("0;Puste");
+                    FileTransfer.ListR.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
             }
             else
             {
                 for (int i = FileTransfer.ListL.Count(); i < FileTransfer.ListR.Count(); i++)
-                    FileTransfer.ListL.Add("0;Puste");
+                    FileTransfer.ListL.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
             }
         }
 
@@ -281,8 +285,8 @@ namespace Fingerprints
         {
             if (indexTo == FileTransfer.ListR.Count() - 1)
             {
-                FileTransfer.ListR.Insert(indexFrom -1 , "0;Puste");
-                FileTransfer.ListL.Add("0;Puste");
+                FileTransfer.ListR.Insert(indexFrom -1 , new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                FileTransfer.ListL.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
             }                               
         }
 
@@ -290,8 +294,8 @@ namespace Fingerprints
         {
             if (indexTo == FileTransfer.ListL.Count() - 1)
             {             
-                FileTransfer.ListL.Insert(indexFrom - 1, "0;Puste");
-                FileTransfer.ListR.Add("0;Puste");             
+                FileTransfer.ListL.Insert(indexFrom - 1, new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                FileTransfer.ListR.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });             
             }
         }
 
@@ -323,7 +327,7 @@ namespace Fingerprints
             int count = FileTransfer.ListL.Count();
             for (int index = 0; index < count; index++)
             {
-                if (FileTransfer.ListL[index] == "0;Puste" && FileTransfer.ListR[index] == "0;Puste")
+                if (FileTransfer.ListL[index].Id == 0 && FileTransfer.ListR[index].Id == 0)
                 {
                     FileTransfer.ListL.RemoveAt(index);
                     FileTransfer.ListR.RemoveAt(index);

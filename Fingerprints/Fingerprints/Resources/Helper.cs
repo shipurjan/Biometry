@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Fingerprints.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Shapes;
 
 namespace Fingerprints
@@ -73,13 +75,8 @@ namespace Fingerprints
         {
             MinutiaState state = new MinutiaState
             {
-                Minutia = new SelfDefinedMinutiae
-                {
-                    Color = controller.GetColorOfSelectedMinutiae(minutiaeName),
-                    Thickness = controller.GetThicknessOfSelectedMinutiae(minutiaeName),
-                    Size = controller.GetSizeOfSelectedMinutiae(minutiaeName),
-                    TypeId = controller.GetTypeIdOfSelectedMinutiae(minutiaeName)
-                }
+                Minutia = controller.GetMinutia(minutiaeName),
+                Points = new List<Point>()
             };
             IDraw draw = null;
 

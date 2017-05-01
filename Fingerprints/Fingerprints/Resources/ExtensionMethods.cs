@@ -26,5 +26,22 @@ namespace Fingerprints.Resources
 
             return jObjectPoint;
         }
+
+        public static Point ToFloorPoint(this Point point)
+        {
+            Point floorPoint = new Point();
+            floorPoint.X = Math.Floor(point.X);
+            floorPoint.Y = Math.Floor(point.Y);
+
+            return floorPoint;
+        }
+
+        public static bool AnyOrNotNull<T>(this IEnumerable<T> source)
+        {
+            if (source != null && source.Any())
+                return true;
+            else
+                return false;
+        }
     }
 }
