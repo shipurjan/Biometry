@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Fingerprints.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,12 @@ namespace Fingerprints
 {
     class Empty : Minutiae, IDraw
     {
+        public Empty()
+        {
+            this.state = new MinutiaState();
+            this.state.Minutia = new SelfDefinedMinutiae() { Name = "Puste" };
+            this.state.Id = 0;
+        }
         public void DeleteEvent(Image image, OverridedCanvas canvas)
         {
         }

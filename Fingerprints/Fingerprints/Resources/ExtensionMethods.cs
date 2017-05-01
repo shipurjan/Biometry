@@ -35,5 +35,13 @@ namespace Fingerprints.Resources
 
             return floorPoint;
         }
+
+        public static bool AnyOrNotNull<T>(this IEnumerable<T> source)
+        {
+            if (source != null && source.Any())
+                return true;
+            else
+                return false;
+        }
     }
 }

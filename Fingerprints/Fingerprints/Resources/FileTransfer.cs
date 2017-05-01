@@ -56,7 +56,10 @@ namespace Fingerprints
                 {
                     string file = readerL.ReadToEnd();
                     List<MinutiaFileState> minutiaeList = JsonConvert.DeserializeObject<List<MinutiaFileState>>(file);
-                    ListL = minutiaeList.Select(x => x.ToMinutiaState()).ToList();
+                    if (minutiaeList.AnyOrNotNull())
+                    {
+                        ListL = minutiaeList.Select(x => x.ToMinutiaState()).ToList();
+                    }
                 }
             }
         }
@@ -69,11 +72,10 @@ namespace Fingerprints
                 {
                     string file = readerR.ReadToEnd();
                     List<MinutiaFileState> minutiaeList = JsonConvert.DeserializeObject<List<MinutiaFileState>>(file);
-                    ListR = minutiaeList.Select(x => x.ToMinutiaState()).ToList();
-                    //while (!readerR.EndOfStream)
-                    //{
-                    //    ListR.Add(readerR.ReadLine());
-                    //}
+                    if (minutiaeList.AnyOrNotNull())
+                    {
+                        ListR = minutiaeList.Select(x => x.ToMinutiaState()).ToList();
+                    }
                 }
             }
         }
