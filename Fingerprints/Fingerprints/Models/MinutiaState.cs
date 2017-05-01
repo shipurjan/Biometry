@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Fingerprints.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Fingerprints
+namespace Fingerprints.Models
 {
     public class MinutiaState
     {
@@ -20,5 +21,15 @@ namespace Fingerprints
             return JsonConvert.SerializeObject(this);
         }
 
+        public MinutiaFileState ToMinutiaFileState()
+        {
+            return new MinutiaFileState()
+            {
+                Id = this.Id,
+                Name = this.Minutia.Name,
+                Angle = this.Angle,
+                Points = this.Points
+            };
+        }
     }
 }

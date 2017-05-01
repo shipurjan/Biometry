@@ -1,4 +1,5 @@
-﻿using Fingerprints.Resources;
+﻿using Fingerprints.Models;
+using Fingerprints.Resources;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace Fingerprints
                 {
                     state.Id = getIdForMinutiae(canvas.Tag.ToString(), index);
                     tmp1 = ee.GetPosition(canvas);
-                    state.Points[0] = tmp1;
+                    state.Points.Insert(0, tmp1.ToFloorPoint());
                     myPathFigure.StartPoint = tmp1;
 
                     myEllipseGeometry.Center = tmp1;

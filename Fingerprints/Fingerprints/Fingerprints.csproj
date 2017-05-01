@@ -118,6 +118,7 @@
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
     <Compile Include="MinutiaeTypes\Segment.cs" />
+    <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />
     <Compile Include="Resources\DrawService.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />

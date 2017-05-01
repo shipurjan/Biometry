@@ -1,4 +1,5 @@
-﻿using Fingerprints.Resources;
+﻿using Fingerprints.Models;
+using Fingerprints.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

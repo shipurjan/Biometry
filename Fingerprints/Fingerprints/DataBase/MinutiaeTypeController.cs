@@ -60,5 +60,14 @@ namespace Fingerprints
                 return q;
             }
         }
+
+        public SelfDefinedMinutiae GetMinutia(string name)
+        {
+            using (var db = new FingerContext())
+            {
+                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == name).First();
+                return q;
+            }
+        }
     }
 }
