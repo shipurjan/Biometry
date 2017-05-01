@@ -43,5 +43,18 @@ namespace Fingerprints.Resources
             else
                 return false;
         }
+
+        public static void ReplaceOrAddOnLastIndex<T>(this List<T> source, int index, T item)
+        {
+            if(source.Count() > index)
+            {
+                source.RemoveAt(index);
+                source.Insert(index, item);
+            }
+            else
+            {
+                source.Add(item);
+            }
+        }
     }
 }

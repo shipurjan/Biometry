@@ -40,8 +40,8 @@ namespace Fingerprints
                 if (clickCount == 0)
                 {
                     state.Id = getIdForMinutiae(canvas.Tag.ToString(), index);
-                    tmp1 = ee.GetPosition(canvas);
-                    state.Points[0] = tmp1;
+                    tmp1 = ee.GetPosition(canvas).ToFloorPoint();
+                    state.Points.ReplaceOrAddOnLastIndex(0, tmp1);
                     var linetmp = new LineGeometry();
 
                     DeleteEmptyAtIndex(canvas, index);
@@ -104,15 +104,15 @@ namespace Fingerprints
         {
             if (clickCount == 1)
             {
-                tmp2 = ee.GetPosition(canvas);
-                state.Points[1] = tmp2;
+                tmp2 = ee.GetPosition(canvas).ToFloorPoint();
+                state.Points.ReplaceOrAddOnLastIndex(1, tmp2);
                 ((LineGeometry)group.Children[clickCount - 1]).StartPoint = tmp1;
                 ((LineGeometry)group.Children[clickCount - 1]).EndPoint = tmp2;
             }
             else if (clickCount == 2)
             {
-                tmp2 = ee.GetPosition(canvas);
-                state.Points[2] = tmp2;
+                tmp2 = ee.GetPosition(canvas).ToFloorPoint();
+                state.Points.ReplaceOrAddOnLastIndex(2, tmp2);
                 ((LineGeometry)group.Children[clickCount - 1]).StartPoint = ((LineGeometry)group.Children[clickCount - 2]).EndPoint;
                 ((LineGeometry)group.Children[clickCount - 1]).EndPoint = tmp2;
             }

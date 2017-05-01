@@ -86,7 +86,6 @@ namespace Fingerprints
         }
         public override string ToString()
         {
-            Console.WriteLine(ToJson());
             string points = null;
             if (baseLine != null && baseLine.Points.Count > 0)
             {
