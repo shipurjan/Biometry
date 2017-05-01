@@ -111,7 +111,7 @@ namespace Fingerprints
             Shape child1 = castChildObject(canvas1.Children[mainWindow.canvasImageL.Children.Count - 1]);
             Shape child2 = castChildObject(canvas2.Children[mainWindow.canvasImageR.Children.Count - 1]);
 
-            if (child1.Tag == child2.Tag)
+            if (child1.Tag.ToString() == child2.Tag.ToString())
             {
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
