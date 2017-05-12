@@ -117,13 +117,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
+    <Compile Include="Factories\FileMinutiaFactory.cs" />
+    <Compile Include="Factories\MinutiaFactory.cs" />
+    <Compile Include="Factories\UserMinutiaFactory.cs" />
+    <Compile Include="MinutiaeTypes\Empty\FileEmpty.cs" />
+    <Compile Include="MinutiaeTypes\Empty\UserEmpty.cs" />
+    <Compile Include="MinutiaeTypes\SinglePoint\FileSinglePoint.cs" />
+    <Compile Include="MinutiaeTypes\SinglePoint\UserSinglePoint.cs" />
+    <Compile Include="MinutiaeTypes\Vector\FileVector.cs" />
     <Compile Include="MinutiaeTypes\Segment.cs" />
+    <Compile Include="MinutiaeTypes\Vector\UserVector.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />
     <Compile Include="Resources\DrawService.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />
     <Compile Include="Resources\Helper.cs" />
-    <Compile Include="MinutiaeTypes\Empty.cs" />
+    <Compile Include="MinutiaeTypes\Empty\Empty.cs" />
     <Compile Include="MinutiaeTypes\Peak.cs" />
     <Compile Include="MinutiaeTypes\Triangle.cs" />
     <Compile Include="Resources\OverridedCanvas.cs" />
@@ -140,11 +149,11 @@
     <Compile Include="Models\Type.cs" />
     <Compile Include="DataBase\MinutiaeTypeController.cs" />
     <Compile Include="Picture.cs" />
-    <Compile Include="MinutiaeTypes\SinglePoint.cs" />
+    <Compile Include="MinutiaeTypes\SinglePoint\SinglePoint.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\SelfDefinedMinutiae.cs" />
     <Compile Include="Table.cs" />
-    <Compile Include="MinutiaeTypes\Vector.cs" />
+    <Compile Include="MinutiaeTypes\Vector\Vector.cs" />
     <Compile Include="Resources\FileTransfer.cs" />
     <Compile Include="Windows\AddWizard.xaml.cs">
       <DependentUpon>AddWizard.xaml</DependentUpon>

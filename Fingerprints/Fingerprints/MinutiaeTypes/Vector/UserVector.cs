@@ -1,33 +1,26 @@
-﻿using Fingerprints.Models;
-using Fingerprints.Resources;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using Fingerprints.Models;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Fingerprints.Resources;
+using System.Windows;
 
-namespace Fingerprints
+namespace Fingerprints.MinutiaeTypes.Vector
 {
-    class Vector : Minutiae, IDraw
+    class UserVector : Vector, IDraw
     {
-        Point tmp1, tmp2;
-        int clickCount;
         MouseButtonEventHandler handler = null;
         MouseEventHandler mouseMove = null;
-        GeometryGroup group = new GeometryGroup();
-
-        public Vector(MinutiaState state)
+        int clickCount;
+        public UserVector(MinutiaState state) : base(state)
         {
-            this.state = state;
-            ConvertStateColorToBrush();
-            tmp1 = new Point();
-            tmp2 = new Point();
+            state.Points = new List<Point>();
         }
 
         public void Draw(OverridedCanvas canvas, Image image, int index = -1)
@@ -93,6 +86,13 @@ namespace Fingerprints
             canvas.MouseRightButtonDown += handler;
         }
 
+        public void Stop(Image image, OverridedCanvas canvas)
+        {
+            image.MouseRightButtonDown -= handler;
+            image.MouseMove -= mouseMove;
+            canvas.MouseRightButtonDown -= handler;
+        }
+
         private void drawCompleteLine(MouseEventArgs ee, Canvas canvas, double size)
         {
             tmp2 = ee.GetPosition(canvas);
@@ -105,56 +105,6 @@ namespace Fingerprints
 
             ((LineGeometry)group.Children[1]).StartPoint = new Point(tmp1.X + (2 * size) * Math.Cos(state.Angle), tmp1.Y + (2 * size) * Math.Sin(state.Angle));
             ((LineGeometry)group.Children[1]).EndPoint = tmp2;
-        }
-
-        public void DeleteEvent(Image image, OverridedCanvas canvas)
-        {
-            image.MouseRightButtonDown -= handler;
-            image.MouseMove -= mouseMove;
-            canvas.MouseRightButtonDown -= handler;
-        }
-        public override string ToString()
-        {
-            return state.Id + ";" + state.Minutia.Name + ";" + Math.Floor(state.Points[0].X).ToString() + ";" + Math.Floor(state.Points[0].Y).ToString() + ";" + state.Angle.ToString();
-        }
-
-        public void DrawFromFile(OverridedCanvas canvas)
-        {
-            Path myPath = new Path();
-            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
-            LineGeometry myPathFigure = new LineGeometry();
-
-            myEllipseGeometry.Center = state.Points[0];
-            myEllipseGeometry.RadiusX = 2 * state.Minutia.Size;
-            myEllipseGeometry.RadiusY = 2 * state.Minutia.Size;
-            group.Children.Add(myEllipseGeometry);
-            tmp2.X = state.Points[0].X + Math.Cos(state.Angle) * 10;
-            tmp2.Y = state.Points[0].Y + Math.Sin(state.Angle) * 10;
-            myPathFigure.StartPoint = new Point(state.Points[0].X + (2 * state.Minutia.Size) * Math.Cos(state.Angle), state.Points[0].Y + (2 * state.Minutia.Size) * Math.Sin(state.Angle));
-            myPathFigure.EndPoint = tmp2;
-            group.Children.Add(myPathFigure);
-            myPath.Stroke = color;
-            myPath.StrokeThickness = state.Minutia.Thickness;
-            myPath.Data = group;
-            myPath.Tag = state.Minutia.Name;
-            myPath.Opacity = 0.5;
-            myPath.Uid = state.Id.ToString();
-            canvas.AddLogicalChild(myPath);
-        }
-
-        public string ToJson()
-        {
-            JObject minutiaeJson = new JObject();
-            minutiaeJson["id"] = state.Id;
-            minutiaeJson["name"] = state.Minutia.Name;
-            minutiaeJson["angle"] = state.Angle;
-
-            minutiaeJson["points"] = new JArray()
-            {
-                state.Points[0].ToJObject()
-            };
-
-            return minutiaeJson.ToString();
         }
     }
 }

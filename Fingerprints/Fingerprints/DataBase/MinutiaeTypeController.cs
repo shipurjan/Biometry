@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,22 @@ namespace Fingerprints
             {
                 var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
                 return q;
+            }
+        }
+
+        public List<MinutiaState> getStates()
+        {
+            List<MinutiaState> states = new List<MinutiaState>();
+            using (var db = new FingerContext())
+            {
+                var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
+
+                foreach (var item in q)
+                {
+                    states.Add(new MinutiaState() { Minutia = item });
+                }
+
+                return states;
             }
         }
 

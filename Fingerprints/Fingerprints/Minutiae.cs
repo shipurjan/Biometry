@@ -1,4 +1,5 @@
-﻿using Fingerprints.Models;
+﻿using Fingerprints.MinutiaeTypes.Empty;
+using Fingerprints.Models;
 using Fingerprints.Resources;
 using Newtonsoft.Json.Linq;
 using System;
@@ -155,8 +156,8 @@ namespace Fingerprints
         }
         private void addEmptyOnLastLine()
         {
-            Empty emptyL = new Empty();
-            Empty emptyR = new Empty();
+            UserEmpty emptyL = new UserEmpty(new MinutiaState());
+            UserEmpty emptyR = new UserEmpty(new MinutiaState());
             emptyR.Draw(mainWindow.canvasImageR, mainWindow.imageR);
             emptyL.Draw(mainWindow.canvasImageL, mainWindow.imageL);
         }
@@ -174,7 +175,7 @@ namespace Fingerprints
                 return;
             }
 
-            Empty empty = new Empty();
+            UserEmpty empty = new UserEmpty(new MinutiaState());
 
             if (canvas == mainWindow.canvasImageL && CanvasCountEqual())
                 empty.Draw(mainWindow.canvasImageR, mainWindow.imageR);

@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Fingerprints.Resources;
+using Fingerprints.Models;
+using Fingerprints.MinutiaeTypes.Empty;
 
 namespace Fingerprints
 {
@@ -56,8 +58,8 @@ namespace Fingerprints
 
         private void contextMenu()
         {
-            List<SelfDefinedMinutiae> minType = new List<SelfDefinedMinutiae>();
-            minType = new MinutiaeTypeController().Show();
+            List<MinutiaState> minType = new List<MinutiaState>();
+            minType = new MinutiaeTypeController().getStates();
 
             ContextMenu cmL = new ContextMenu();
             ContextMenu cmR = new ContextMenu();
@@ -72,42 +74,42 @@ namespace Fingerprints
             listBoxL.ContextMenu = cmL;
         }
 
-        private MenuItem contextMenuLeftInsert(List<SelfDefinedMinutiae> minType)
+        private MenuItem contextMenuLeftInsert(List<MinutiaState> minType)
         {
             MenuItem mi = new MenuItem() { Header = "Wstaw" };
 
             foreach (var type in minType)
             {
-                MenuItem nMenu = new MenuItem() { Header = type.Name };
+                MenuItem nMenu = new MenuItem() { Header = type.Minutia.Name };
                 nMenu.Click += (ss, ee) =>
                 {
                     int index = listBoxL.SelectedIndex;
                     if (index == -1) { return; }
                     listBoxL.UnselectAll();
-                    mainWindow.setComboboxTitle(minType.FindIndex(a => a.Name == type.Name));
-                    mainWindow.drawer.startRightDrawing(type.Name);
-                    mainWindow.drawer.startLeftDrawing(type.Name, index);
+                    mainWindow.setComboboxTitle(minType.FindIndex(a => a.Minutia.Name == type.Minutia.Name));
+                    mainWindow.drawer.startRightDrawing(type);
+                    mainWindow.drawer.startLeftDrawing(type, index);
                 };
                 mi.Items.Add(nMenu);
             }
             return mi;
         }
 
-        private MenuItem contextMenuRightInsert(List<SelfDefinedMinutiae> minType)
+        private MenuItem contextMenuRightInsert(List<MinutiaState> minType)
         {
             MenuItem mi = new MenuItem() { Header = "Wstaw" };
 
             foreach (var type in minType)
             {
-                MenuItem nMenu = new MenuItem() { Header = type.Name };
+                MenuItem nMenu = new MenuItem() { Header = type.Minutia.Name };
                 nMenu.Click += (ss, ee) =>
                 {
                     int index = listBoxR.SelectedIndex;
                     if (index == -1) { return; }
                     listBoxR.UnselectAll();
-                    mainWindow.setComboboxTitle(minType.FindIndex(a => a.Name == type.Name));
-                    mainWindow.drawer.startLeftDrawing(type.Name);
-                    mainWindow.drawer.startRightDrawing(type.Name, index);
+                    mainWindow.setComboboxTitle(minType.FindIndex(a => a.Minutia.Name == type.Minutia.Name));
+                    mainWindow.drawer.startLeftDrawing(type);
+                    mainWindow.drawer.startRightDrawing(type, index);
                 };
                 mi.Items.Add(nMenu);
             }
@@ -125,7 +127,7 @@ namespace Fingerprints
                 }
                 listbox.Items.RemoveAt(index);
                 canvas.Children.RemoveAt(index);
-                Empty empty = new Empty();
+                UserEmpty empty = new UserEmpty(new MinutiaState());
                 if (canvas.Tag.ToString() == "Left")
                 {
                     FileTransfer.ListL.RemoveAt(index);
@@ -283,26 +285,26 @@ namespace Fingerprints
         {
             if (side == "Left")
             {
-                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageL.SelectedItem.ToString(), mainWindow.listBoxImageL.SelectedIndex);
-                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageL.SelectedItem.ToString());
+                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageL.SelectedItem as MinutiaState, mainWindow.listBoxImageL.SelectedIndex);
+                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageL.SelectedItem as MinutiaState);
             }
             else
             {
-                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageR.SelectedItem.ToString(), mainWindow.listBoxImageR.SelectedIndex);
-                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageR.SelectedItem.ToString());
+                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageR.SelectedItem as MinutiaState, mainWindow.listBoxImageR.SelectedIndex);
+                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageR.SelectedItem as MinutiaState);
             }
         }
         private void clickOnEmptyObject(string side)
         {
             if (side == "Left")
             {
-                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageR.Items[mainWindow.listBoxImageL.SelectedIndex].ToString(), mainWindow.listBoxImageL.SelectedIndex);
-                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageR.Items[mainWindow.listBoxImageL.SelectedIndex].ToString());
+                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageR.Items[mainWindow.listBoxImageL.SelectedIndex] as MinutiaState, mainWindow.listBoxImageL.SelectedIndex);
+                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageR.Items[mainWindow.listBoxImageL.SelectedIndex] as MinutiaState);
             }
             else
             {
-                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageL.Items[mainWindow.listBoxImageR.SelectedIndex].ToString(), mainWindow.listBoxImageR.SelectedIndex);
-                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageL.Items[mainWindow.listBoxImageR.SelectedIndex].ToString());
+                mainWindow.drawer.startRightDrawing(mainWindow.listBoxImageL.Items[mainWindow.listBoxImageR.SelectedIndex] as MinutiaState, mainWindow.listBoxImageR.SelectedIndex);
+                mainWindow.drawer.startLeftDrawing(mainWindow.listBoxImageL.Items[mainWindow.listBoxImageR.SelectedIndex] as MinutiaState);
             }
         }
     }

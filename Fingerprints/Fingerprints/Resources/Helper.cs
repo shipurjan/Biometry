@@ -1,4 +1,6 @@
-﻿using Fingerprints.Models;
+﻿using Fingerprints.MinutiaeTypes;
+using Fingerprints.MinutiaeTypes.Empty;
+using Fingerprints.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +31,7 @@ namespace Fingerprints
         }
         public void insertEmpty()
         {
-            Empty empty = new Empty();
+            UserEmpty empty = new UserEmpty(new MinutiaState());
             if (mw.canvasImageL.Children.Count > mw.canvasImageR.Children.Count)
                 empty.Draw(mw.canvasImageR, mw.imageR);
             else if (mw.canvasImageL.Children.Count < mw.canvasImageR.Children.Count)
@@ -65,43 +67,10 @@ namespace Fingerprints
 
         public void addEmptyOnLastLine()
         {
-            Empty emptyL = new Empty();
-            Empty emptyR = new Empty();
+            UserEmpty emptyL = new UserEmpty(new MinutiaState());
+            UserEmpty emptyR = new UserEmpty(new MinutiaState());
             emptyR.Draw(mw.canvasImageR, mw.imageR);
             emptyL.Draw(mw.canvasImageL, mw.imageL);
-        }
-
-        public IDraw GetMinutiaeTypeToDraw(string minutiaeName)
-        {
-            MinutiaState state = new MinutiaState
-            {
-                Minutia = controller.GetMinutia(minutiaeName),
-                Points = new List<Point>()
-            };
-            IDraw draw = null;
-
-            switch (state.Minutia.TypeId)
-            {
-                case 1:
-                    draw = new SinglePoint(state);
-                    break;
-                case 2:
-                    draw = new Vector(state);
-                    break;
-                case 3:
-                    draw = new CurveLine(state);
-                    break;
-                case 4:
-                    draw = new Triangle(state);
-                    break;
-                case 5:
-                    draw = new Peak(state);
-                    break;
-                case 6:
-                    draw = new Segment(state);
-                    break;
-            }
-            return draw;
         }
     }
 }

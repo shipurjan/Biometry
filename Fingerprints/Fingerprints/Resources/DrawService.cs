@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Fingerprints.Factories;
+using Fingerprints.MinutiaeTypes.Empty;
+using Fingerprints.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,28 +18,36 @@ namespace Fingerprints
         IDraw drawR;
         Helper helper;
         MinutiaeTypeController controller;
+        MinutiaFactory factory;
         public DrawService()
         {
             controller = new MinutiaeTypeController();
             helper = new Helper(mainWindow, controller);
         }
 
-        public void startNewDrawing(string minutiaeName, int index = -1)
+        public DrawService(MinutiaFactory factory)
         {
-            startLeftDrawing(minutiaeName, index);
-            startRightDrawing(minutiaeName, index);
+            this.factory = factory;
         }
 
-        public void startLeftDrawing(string minutiaeName, int index = -1)
+        public void startNewDrawing(MinutiaState state, int index = -1)
+        {
+            startLeftDrawing(state, index);
+            startRightDrawing(state, index);
+        }
+
+        public void startLeftDrawing(MinutiaState state, int index = -1)
         {
             stopLeftDrawing();
-            drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
+            //drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
+            drawL = factory.Create(state);
             drawL.Draw(mainWindow.canvasImageL, mainWindow.imageL, index);
         }
-        public void startRightDrawing(string minutiaeName, int index = -1)
+        public void startRightDrawing(MinutiaState state, int index = -1)
         {
             stopRightDrawing();
-            drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
+            //drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
+            drawR = factory.Create(state);
             drawR.Draw(mainWindow.canvasImageR, mainWindow.imageR, index);
         }
 
@@ -50,7 +61,7 @@ namespace Fingerprints
         {
             if (drawL != null)
             {
-                drawL.DeleteEvent(mainWindow.imageL, mainWindow.canvasImageL);
+                drawL.Stop(mainWindow.imageL, mainWindow.canvasImageL);
             }
         }
 
@@ -58,7 +69,7 @@ namespace Fingerprints
         {
             if (drawR != null)
             {
-                drawR.DeleteEvent(mainWindow.imageR, mainWindow.canvasImageR);
+                drawR.Stop(mainWindow.imageR, mainWindow.canvasImageR);
             }
         }
 
@@ -74,7 +85,7 @@ namespace Fingerprints
 
         private void insertEmpty()
         {
-            Empty empty = new Empty();
+            UserEmpty empty = new UserEmpty(new MinutiaState());
 
             if (mainWindow.canvasImageL.Children.Count > mainWindow.canvasImageR.Children.Count)
                 empty.Draw(mainWindow.canvasImageR, mainWindow.imageR);

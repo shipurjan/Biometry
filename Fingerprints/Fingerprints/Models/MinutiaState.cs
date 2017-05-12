@@ -31,5 +31,10 @@ namespace Fingerprints.Models
                 Points = this.Points
             };
         }
+
+        public override string ToString()
+        {
+            return Minutia.Name;
+        }
     }
 }

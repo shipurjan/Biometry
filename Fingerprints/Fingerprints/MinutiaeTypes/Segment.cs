@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    class Segment : Minutiae, IDraw
+    class Segment : Minutiae
     {
         Point tmp1, tmp2;
         int clickCount;

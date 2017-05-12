@@ -1,4 +1,6 @@
-﻿using Fingerprints.Models;
+﻿using Fingerprints.Factories;
+using Fingerprints.MinutiaeTypes.Empty;
+using Fingerprints.Models;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -61,9 +63,9 @@ namespace Fingerprints
                             fillEmptyListWithEmpty();
                         sortMinutiaeListLById();
                         deleteEmptyLine();
-                        loadMinutiae(FileTransfer.ListL, canvasImage);
+                        loadLeftMinutiae(FileTransfer.ListL, canvasImage);
                         mw.canvasImageR.Children.Clear();
-                        loadMinutiae(FileTransfer.ListR, mw.canvasImageR);
+                        loadRightMinutiae(FileTransfer.ListR, mw.canvasImageR);
 
                     }
                     else
@@ -78,9 +80,9 @@ namespace Fingerprints
                             fillEmptyListWithEmpty();
                         sortMinutiaeListRById();
                         deleteEmptyLine();
-                        loadMinutiae(FileTransfer.ListR, canvasImage);
+                        loadRightMinutiae(FileTransfer.ListR, canvasImage);
                         mw.canvasImageL.Children.Clear();
-                        loadMinutiae(FileTransfer.ListL, mw.canvasImageL);
+                        loadLeftMinutiae(FileTransfer.ListL, mw.canvasImageL);
                     }
                 }
                 Canvas.SetTop(canvasImage, Canvas.GetTop(image));
@@ -140,75 +142,42 @@ namespace Fingerprints
             image.MouseUp += (ss, ee) => { image.ReleaseMouseCapture(); };
         }
 
-        private void loadMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
+        private void loadRightMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
         {
-            List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
-            // TODO
-            // z Jsona zrobić listę MinutiaState
-            // foreach po liscie
-            List<MinutiaState> minutiaStateList = new List<MinutiaState>(); 
-            IDraw draw = null;
+            FileMinutiaFactory factory = new FileMinutiaFactory();
+            DrawService drawService = new DrawService(factory);
             foreach (var item in list)
             {
-                //string[] tmp = item.Split(';');
-                //JObject minutiaObject = JsonConvert.DeserializeObject<JObject>(item);
-                //MinutiaState state = new MinutiaState();
-                //SelfDefinedMinutiae minutia = minutiaeList.Where(x => x.Name == item.Minutia).FirstOrDefault();
+                drawService.startRightDrawing(item);
+            }
+        }
 
-                if (item.Minutia == null)
-                {
-                    draw = new Empty();
-                }
-                else if (item.Minutia.TypeId == 1)
-                {
-                    draw = new SinglePoint(item);
-                }
-                else if (item.Minutia.TypeId == 2)
-                {
-                    draw = new Vector(item);
-                }
-                else if (item.Minutia.TypeId == 3)
-                {
-                    draw = new CurveLine(item);
-                }
-                else if (item.Minutia.TypeId == 4)
-                {
-                    draw = new Triangle(item);
-                }
-                else if (item.Minutia.TypeId == 5)
-                {
-                    draw = new Peak(item);
-                }
-                else if (item.Minutia.TypeId == 6)
-                {
-                    draw = new Segment(item);
-                }
-                else
-                {
-                    draw = new Empty();
-                }
-
-                draw.DrawFromFile(canvas);
-
+        private void loadLeftMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
+        {
+            FileMinutiaFactory factory = new FileMinutiaFactory();
+            DrawService drawService = new DrawService(factory);
+            foreach (var item in list)
+            {
+                drawService.startLeftDrawing(item);
             }
         }
         private void fillEmpty()
         {
-            Empty emptyObject = new Empty();
+            FileEmpty emptyObject = new FileEmpty(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
             int l = mw.canvasImageL.Children.Count;
             int r = mw.canvasImageR.Children.Count;
             if (l > r)
             {
                 for (int i = 0; i < l-r; i++)
                 {
-                    emptyObject.DrawFromFile(mw.canvasImageR);
+                    emptyObject.Draw(mw.canvasImageR, mw.imageR);
                 }
             }
             else
             {
                 for (int i = 0; i < r - l; i++)
                 {
-                    emptyObject.DrawFromFile(mw.canvasImageL);
+                    emptyObject.Draw(mw.canvasImageL, mw.imageL);
                 }
             }
         }

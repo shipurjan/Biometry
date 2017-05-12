@@ -1,4 +1,7 @@
-﻿using Microsoft.Win32;
+﻿using Fingerprints.Factories;
+using Fingerprints.MinutiaeTypes.Empty;
+using Fingerprints.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +32,12 @@ namespace Fingerprints
             InitializeComponent();
             Application.Current.MainWindow = this;
             Picture picture = new Picture(this);
-            drawer = new DrawService();
+            UserMinutiaFactory factory = new UserMinutiaFactory();
+            drawer = new DrawService(factory);
             picture.InitializeR();
             picture.InitializeL();
             controller = new MinutiaeTypeController();
-            comboBox.ItemsSource = controller.Show();
+            comboBox.ItemsSource = controller.getStates();
             InitTable();
             saveEvents();
             comboBoxChanged();
@@ -46,7 +50,7 @@ namespace Fingerprints
             {
                 if (comboBox.SelectedValue != null)
                 {
-                    drawer.startNewDrawing(comboBox.SelectedValue.ToString());
+                    drawer.startNewDrawing(comboBox.SelectedItem as MinutiaState);
                 }
             };
 
@@ -90,7 +94,9 @@ namespace Fingerprints
         }
         private void addEmpty_Click(object sender, EventArgs e)
         {
-            Empty empty = new Empty();
+            MinutiaState state = controller.getStates().Where(x => x.Minutia.Name == "Puste").FirstOrDefault();
+            UserEmpty empty = new UserEmpty(state);
+
             if (canvasImageL.Children.Count > canvasImageR.Children.Count)
                 empty.Draw(canvasImageR, imageR);
             else if (canvasImageL.Children.Count < canvasImageR.Children.Count)

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace Fingerprints
 {
-    public class CurveLine : Minutiae, IDraw
+    public class CurveLine : Minutiae
     {
         Point currentPoint;
         bool newLine;
