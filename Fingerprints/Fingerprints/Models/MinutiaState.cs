@@ -16,6 +16,8 @@ namespace Fingerprints.Models
         public double Angle { get; set; }
         public long Id { get; set; }
 
+        public string MinutiaName { get { return Minutia.Name; } }
+
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this);

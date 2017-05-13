@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Fingerprints.Resources;
 using Fingerprints.Models;
 using Fingerprints.MinutiaeTypes.Empty;
+using System.Windows.Data;
 
 namespace Fingerprints
 {
@@ -19,8 +20,13 @@ namespace Fingerprints
         OverridedCanvas canvasL, canvasR;
         ListBox listBoxL, listBoxR, listBoxD;
         ComboBox combobox;
+        MinutiaeTypeController controller;
+        List<MinutiaState> states;
         public Table()
         {
+            controller = new MinutiaeTypeController();
+            states = controller.getStates();
+
             this.combobox = mainWindow.comboBox;
             this.listBoxD = mainWindow.listBoxDelete;
             this.canvasL = mainWindow.canvasImageL;
@@ -153,7 +159,9 @@ namespace Fingerprints
                 listBoxL.Items.Clear();
                 foreach (UIElement item in canvasL.Children)
                 {
-                    listBoxL.Items.Add(castChildObject(item).Tag);
+
+                    listBoxL.Items.Add(getListItemWithState(castChildObject(item).Tag.ToString()));
+                    //listBoxL.Items.Add(castChildObject(item).Tag.ToString());
                 }
 
                 deleteListRefresh();
@@ -167,11 +175,25 @@ namespace Fingerprints
                 listBoxR.Items.Clear();
                 foreach (UIElement item in canvasR.Children)
                 {
-                    listBoxR.Items.Add(castChildObject(item).Tag);
+                    listBoxR.Items.Add((getListItemWithState(castChildObject(item).Tag.ToString())));
+                    //listBoxR.Items.Add(castChildObject(item).Tag.ToString());
                 }
 
                 deleteListRefresh();
             };
+        }
+
+        private MinutiaState getListItemWithState(string name)
+        {
+            MinutiaState state = states
+                .Where(x => x.Minutia.Name == name)
+                .DefaultIfEmpty(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } })
+                .First();
+
+            //ListBoxItem listItem = new ListBoxItem();
+            //listItem.Content = state;
+
+            return state;
         }
 
         private void deleteListRefresh()

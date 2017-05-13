@@ -17,7 +17,7 @@ namespace Fingerprints.MinutiaeTypes.Empty
     {
         public Empty(MinutiaState state)
         {
-            this.state = new MinutiaState();
+            this.state = state;
             this.state.Minutia = new SelfDefinedMinutiae() { Name = "Puste" };
             this.state.Id = 0;
         }

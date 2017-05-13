@@ -39,14 +39,12 @@ namespace Fingerprints
         public void startLeftDrawing(MinutiaState state, int index = -1)
         {
             stopLeftDrawing();
-            //drawL = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawL = factory.Create(state);
             drawL.Draw(mainWindow.canvasImageL, mainWindow.imageL, index);
         }
         public void startRightDrawing(MinutiaState state, int index = -1)
         {
             stopRightDrawing();
-            //drawR = helper.GetMinutiaeTypeToDraw(minutiaeName);
             drawR = factory.Create(state);
             drawR.Draw(mainWindow.canvasImageR, mainWindow.imageR, index);
         }
