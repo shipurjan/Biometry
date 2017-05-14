@@ -2,6 +2,7 @@
 using Fingerprints.MinutiaeTypes.Vector;
 using Fingerprints.MinutiaeTypes.SinglePoint;
 using Fingerprints.MinutiaeTypes.Empty;
+using Fingerprints.MinutiaeTypes.Segment;
 
 namespace Fingerprints.Factories
 {
@@ -33,9 +34,9 @@ namespace Fingerprints.Factories
                 //case 5:
                 //    draw = new Peak(state);
                 //    break;
-                //case 6:
-                //    draw = new Segment(state);
-                //    break;
+                case 6:
+                    draw = new FileSegment(state);
+                    break;
                 default:
                     draw = new FileEmpty(state);
                     break;
