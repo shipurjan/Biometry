@@ -48,7 +48,6 @@ namespace Fingerprints.MinutiaeTypes.Segment
                 if (ee.RightButton == MouseButtonState.Pressed)
                 {
                     AddToCanvas(ss, ee, canvas, image, index);
-                    index = -1;
                 }
             };
 
@@ -100,6 +99,7 @@ namespace Fingerprints.MinutiaeTypes.Segment
                 deleteAndAdd(canvas, myPath, index);
                 clickCount = 0;
                 AddElementToSaveList(canvas.Tag.ToString(), index);
+                canvas.Children[canvas.Children.Count - 1].Opacity = 0.5;
                 group = null;
                 group = new GeometryGroup();
                 index = -1;

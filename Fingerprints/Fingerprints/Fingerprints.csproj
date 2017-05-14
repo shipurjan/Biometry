@@ -122,6 +122,9 @@
     <Compile Include="Factories\UserMinutiaFactory.cs" />
     <Compile Include="MinutiaeTypes\Empty\FileEmpty.cs" />
     <Compile Include="MinutiaeTypes\Empty\UserEmpty.cs" />
+    <Compile Include="MinutiaeTypes\Peak\FilePeak.cs" />
+    <Compile Include="MinutiaeTypes\Peak\Peak.cs" />
+    <Compile Include="MinutiaeTypes\Peak\UserPeak.cs" />
     <Compile Include="MinutiaeTypes\Segment\FileSegment.cs" />
     <Compile Include="MinutiaeTypes\Segment\Segment.cs" />
     <Compile Include="MinutiaeTypes\Segment\UserSegment.cs" />
@@ -135,7 +138,6 @@
     <Compile Include="Resources\ExtensionMethods.cs" />
     <Compile Include="Resources\Helper.cs" />
     <Compile Include="MinutiaeTypes\Empty\Empty.cs" />
-    <Compile Include="MinutiaeTypes\Peak.cs" />
     <Compile Include="MinutiaeTypes\Triangle.cs" />
     <Compile Include="Resources\OverridedCanvas.cs" />
     <Compile Include="Resources\Transformer.cs" />

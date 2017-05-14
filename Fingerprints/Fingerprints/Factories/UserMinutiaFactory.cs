@@ -9,6 +9,7 @@ using Fingerprints.MinutiaeTypes.Vector;
 using Fingerprints.MinutiaeTypes.SinglePoint;
 using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.MinutiaeTypes.Segment;
+using Fingerprints.MinutiaeTypes.Peak;
 
 namespace Fingerprints.Factories
 {
@@ -37,9 +38,9 @@ namespace Fingerprints.Factories
                 //case 4:
                 //    draw = new Triangle(state);
                 //    break;
-                //case 5:
-                //    draw = new Peak(state);
-                //    break;
+                case 5:
+                    draw = new UserPeak(state);
+                    break;
                 case 6:
                     draw = new UserSegment(state);
                     break;
