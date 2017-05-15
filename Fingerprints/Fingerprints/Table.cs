@@ -270,7 +270,7 @@ namespace Fingerprints
 
         private bool clickedMinutiae(ListBox listboxPrimary, ListBox listboxSecondary)
         {
-            if (listboxPrimary.SelectedIndex < 0)
+            if (listboxPrimary.SelectedIndex < 0 || listboxSecondary.Items.Count == 0)
             {
                 return false;
             }
