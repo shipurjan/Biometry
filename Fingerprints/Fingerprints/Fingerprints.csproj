@@ -120,6 +120,9 @@
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
     <Compile Include="Factories\UserMinutiaFactory.cs" />
+    <Compile Include="MinutiaeTypes\CurveLine\CurveLine.cs" />
+    <Compile Include="MinutiaeTypes\CurveLine\FileCurveLine.cs" />
+    <Compile Include="MinutiaeTypes\CurveLine\UserCurveLine.cs" />
     <Compile Include="MinutiaeTypes\Empty\FileEmpty.cs" />
     <Compile Include="MinutiaeTypes\Empty\UserEmpty.cs" />
     <Compile Include="MinutiaeTypes\Peak\FilePeak.cs" />
@@ -148,7 +151,6 @@
     <Compile Include="Windows\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MinutiaeTypes\CurveLine.cs" />
     <Compile Include="DataBase\Database.cs" />
     <Compile Include="DataBase\FingerContext.cs" />
     <Compile Include="Interfaces\IDraw.cs" />

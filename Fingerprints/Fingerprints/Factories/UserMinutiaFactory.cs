@@ -11,6 +11,7 @@ using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.MinutiaeTypes.Segment;
 using Fingerprints.MinutiaeTypes.Peak;
 using Fingerprints.MinutiaeTypes.Triangle;
+using Fingerprints.MinutiaeTypes.CurveLine;
 
 namespace Fingerprints.Factories
 {
@@ -33,9 +34,9 @@ namespace Fingerprints.Factories
                 case 2:
                     draw = new UserVector(state);
                     break;
-                //case 3:
-                //    draw = new CurveLine(state);
-                //    break;
+                case 3:
+                    draw = new UserCurveLine(state);
+                    break;
                 case 4:
                     draw = new UserTriangle(state);
                     break;
