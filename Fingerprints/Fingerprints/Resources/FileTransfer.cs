@@ -82,11 +82,11 @@ namespace Fingerprints
 
         public static void ConvertToXytAndSave(string path)
         {
-            //Transformer transformer = new Transformer();
-            //if (ListL.Count() != 0)
-            //    SaveFile(getPath(path, LeftImagePath), transformer.getBozorthFormat(ListL));
-            //if (ListR.Count() != 0)
-            //    SaveFile(getPath(path, RightImagePath), transformer.getBozorthFormat(ListR));
+            Transformer transformer = new Transformer();
+            if (ListL.Count() != 0)
+                SaveFile(getPath(path, LeftImagePath), transformer.getBozorthFormat(ListL));
+            if (ListR.Count() != 0)
+                SaveFile(getPath(path, RightImagePath), transformer.getBozorthFormat(ListR));
         }
 
         public static string getPath(string path, string choosedFile)
