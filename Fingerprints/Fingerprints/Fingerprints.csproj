@@ -130,6 +130,9 @@
     <Compile Include="MinutiaeTypes\Segment\UserSegment.cs" />
     <Compile Include="MinutiaeTypes\SinglePoint\FileSinglePoint.cs" />
     <Compile Include="MinutiaeTypes\SinglePoint\UserSinglePoint.cs" />
+    <Compile Include="MinutiaeTypes\Triangle\FileTriangle.cs" />
+    <Compile Include="MinutiaeTypes\Triangle\Triangle.cs" />
+    <Compile Include="MinutiaeTypes\Triangle\UserTriangle.cs" />
     <Compile Include="MinutiaeTypes\Vector\FileVector.cs" />
     <Compile Include="MinutiaeTypes\Vector\UserVector.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
@@ -138,7 +141,6 @@
     <Compile Include="Resources\ExtensionMethods.cs" />
     <Compile Include="Resources\Helper.cs" />
     <Compile Include="MinutiaeTypes\Empty\Empty.cs" />
-    <Compile Include="MinutiaeTypes\Triangle.cs" />
     <Compile Include="Resources\OverridedCanvas.cs" />
     <Compile Include="Resources\Transformer.cs" />
     <Compile Include="Resources\UnixDate.cs" />

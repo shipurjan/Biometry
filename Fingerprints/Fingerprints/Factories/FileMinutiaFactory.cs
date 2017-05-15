@@ -4,6 +4,7 @@ using Fingerprints.MinutiaeTypes.SinglePoint;
 using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.MinutiaeTypes.Segment;
 using Fingerprints.MinutiaeTypes.Peak;
+using Fingerprints.MinutiaeTypes.Triangle;
 
 namespace Fingerprints.Factories
 {
@@ -29,9 +30,9 @@ namespace Fingerprints.Factories
                 //case 3:
                 //    draw = new CurveLine(state);
                 //    break;
-                //case 4:
-                //    draw = new Triangle(state);
-                //    break;
+                case 4:
+                    draw = new FileTriangle(state);
+                    break;
                 case 5:
                     draw = new FilePeak(state);
                     break;
