@@ -83,9 +83,9 @@ namespace Fingerprints
         public static void ConvertToXytAndSave(string path)
         {
             Transformer transformer = new Transformer();
-            if (ListL.Count() != 0)
+            if (ListL.Count() != 0 && LeftImagePath != null)
                 SaveFile(getPath(path, LeftImagePath), transformer.getBozorthFormat(ListL));
-            if (ListR.Count() != 0)
+            if (ListR.Count() != 0 && RightImagePath != null)
                 SaveFile(getPath(path, RightImagePath), transformer.getBozorthFormat(ListR));
         }
 
