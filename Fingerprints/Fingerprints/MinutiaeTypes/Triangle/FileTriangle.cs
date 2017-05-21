@@ -13,7 +13,8 @@ namespace Fingerprints.MinutiaeTypes.Triangle
     class FileTriangle : Triangle, IDraw
     {
         public FileTriangle(MinutiaState state) : base(state)
-        {    
+        {
+            this.state = state;
         }
         public void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {

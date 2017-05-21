@@ -14,6 +14,7 @@ namespace Fingerprints.MinutiaeTypes.SinglePoint
     {
         public FileSinglePoint(MinutiaState state) : base(state)
         {
+            this.state = state;
         }
 
         public void Draw(OverridedCanvas canvas, Image image, int index = -1)

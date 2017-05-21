@@ -14,6 +14,7 @@ namespace Fingerprints.MinutiaeTypes.Peak
     {
         public FilePeak(MinutiaState state) : base(state)
         {
+            this.state = state;
         }
 
         public void Draw(OverridedCanvas canvas, Image image, int index = -1)

@@ -16,10 +16,8 @@ namespace Fingerprints.MinutiaeTypes.Triangle
         protected Point tmp1, tmp2;
         protected GeometryGroup group = new GeometryGroup();
 
-        public Triangle(MinutiaState state)
+        public Triangle(MinutiaState state) : base(state)
         {
-            this.state = state;
-            ConvertStateColorToBrush();
             tmp1 = new Point();
             tmp2 = new Point();
         }

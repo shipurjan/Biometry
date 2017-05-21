@@ -2,15 +2,15 @@
 using Fingerprints.Resources;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Windows;
+
 namespace Fingerprints.MinutiaeTypes.SinglePoint
 {
     abstract class SinglePoint : Minutiae
     {
-        public SinglePoint(MinutiaState state)
-        {
-            this.state = state;
-            ConvertStateColorToBrush();
-        }
+        public SinglePoint(MinutiaState state) : base(state)
+        {}
 
         public override string ToString()
         {

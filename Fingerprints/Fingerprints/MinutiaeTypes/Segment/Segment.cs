@@ -11,11 +11,8 @@ namespace Fingerprints.MinutiaeTypes.Segment
 {
     class Segment : Minutiae
     {
-        public Segment(MinutiaState state)
-        {
-            this.state = state;
-            ConvertStateColorToBrush();
-        }
+        public Segment(MinutiaState state) : base(state)
+        {}
 
         public override string ToString()
         {

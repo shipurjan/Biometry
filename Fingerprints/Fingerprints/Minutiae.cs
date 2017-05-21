@@ -19,10 +19,21 @@ namespace Fingerprints
         public MinutiaState state;
         public Brush color;
 
-
+        public Minutiae(MinutiaState state)
+        {
+            this.state = new MinutiaState()
+            {
+                Minutia = state.Minutia,
+                Points = new List<Point>()
+            };
+            ConvertStateColorToBrush();
+        }
         protected void ConvertStateColorToBrush()
         {
-            this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(state.Minutia.Color);
+            if (state.Minutia != null && state.Minutia.Color != null)
+            {
+                this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(state.Minutia.Color);
+            }
         }
         public void deleteChildWithGivenIndex(string canvasType, int index)
         {

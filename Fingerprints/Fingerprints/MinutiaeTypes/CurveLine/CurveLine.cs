@@ -15,11 +15,8 @@ namespace Fingerprints.MinutiaeTypes.CurveLine
     class CurveLine : Minutiae
     {
         protected Polyline baseLine;
-        public CurveLine(MinutiaState state)
-        {
-            this.state = state;
-            ConvertStateColorToBrush();
-        }
+        public CurveLine(MinutiaState state) : base(state)
+        {}
         public override string ToString()
         {
             string points = null;

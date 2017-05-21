@@ -14,9 +14,7 @@ namespace Fingerprints.MinutiaeTypes.SinglePoint
         MouseButtonEventHandler handler = null;
 
         public UserSinglePoint(MinutiaState state) : base(state)
-        {
-            state.Points = new List<Point>();
-        }
+        {}
         public void Draw(OverridedCanvas canvas, Image image, int index = -1)
         {
             AddHandler(canvas, image, index);

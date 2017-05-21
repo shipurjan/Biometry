@@ -14,10 +14,8 @@ namespace Fingerprints.MinutiaeTypes.Vector
         protected Point tmp1, tmp2;
         protected GeometryGroup group = new GeometryGroup();
 
-        public Vector(MinutiaState state)
+        public Vector(MinutiaState state) : base(state)
         {
-            this.state = state;
-            ConvertStateColorToBrush();
             tmp1 = new Point();
             tmp2 = new Point();
         }

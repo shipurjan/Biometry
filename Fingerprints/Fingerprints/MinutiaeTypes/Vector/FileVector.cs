@@ -15,6 +15,7 @@ namespace Fingerprints.MinutiaeTypes.Vector
     {
         public FileVector(MinutiaState state) : base(state)
         {
+            this.state = state;
         }
 
         public void Draw(OverridedCanvas canvas, Image image, int index = -1)
