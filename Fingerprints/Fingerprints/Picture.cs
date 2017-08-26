@@ -32,14 +32,14 @@ namespace Fingerprints
 
         public void InitializeL()
         {
-            Init(mw.canvasImageL, mw.imageL, mw.openLeftImage);
+            Init(mw.leftImageForDrawing, mw.imageL, mw.openLeftImage);
         }
         public void InitializeR()
         {
-            Init(mw.canvasImageR, mw.imageR, mw.openRightImage);
+            //Init(mw.canvasImageR, mw.imageR, mw.openRightImage);
         }
 
-        private void Init(OverridedCanvas canvasImage, Image image, Button button)
+        private void Init(Image imageForDrawing, Image image, Button button)
         {
             button.Click += (ss, ee) =>
             {   
@@ -58,15 +58,10 @@ namespace Fingerprints
                         FileTransfer.ListL.Clear();
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
-                        canvasImage.Children.Clear();
                         if (helper.canInsertEmpty())
                             fillEmptyListWithEmpty();
                         sortMinutiaeListLById();
                         deleteEmptyLine();
-                        loadLeftMinutiae(FileTransfer.ListL, canvasImage);
-                        mw.canvasImageR.Children.Clear();
-                        loadRightMinutiae(FileTransfer.ListR, mw.canvasImageR);
-
                     }
                     else
                     {
@@ -75,18 +70,14 @@ namespace Fingerprints
                         FileTransfer.ListR.Clear();
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();
-                        canvasImage.Children.Clear();
                         if (helper.canInsertEmpty())
                             fillEmptyListWithEmpty();
                         sortMinutiaeListRById();
                         deleteEmptyLine();
-                        loadRightMinutiae(FileTransfer.ListR, canvasImage);
-                        mw.canvasImageL.Children.Clear();
-                        loadLeftMinutiae(FileTransfer.ListL, mw.canvasImageL);
                     }
                 }
-                Canvas.SetTop(canvasImage, Canvas.GetTop(image));
-                Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
+                Canvas.SetTop(imageForDrawing, Canvas.GetTop(image));
+                Canvas.SetLeft(imageForDrawing, Canvas.GetLeft(image));
 
                 if (helper.canInsertEmpty())
                 {
@@ -96,15 +87,15 @@ namespace Fingerprints
             };
 
 
-            image.MouseLeftButtonDown += (ss, ee) =>
+            imageForDrawing.MouseLeftButtonDown += (ss, ee) =>
             {
                 firstPoint = ee.GetPosition(mw);
-                image.CaptureMouse();
+                imageForDrawing.CaptureMouse();
             };
 
-            image.MouseWheel += (ss, ee) =>
+            imageForDrawing.MouseWheel += (ss, ee) =>
             {
-                Matrix matline = canvasImage.RenderTransform.Value;
+                Matrix matline = imageForDrawing.RenderTransform.Value;
                 Matrix mat = image.RenderTransform.Value;
                 Point mouse = ee.GetPosition(image);
 
@@ -122,10 +113,10 @@ namespace Fingerprints
                 MatrixTransform mtf = new MatrixTransform(mat);
                 image.RenderTransform = mtf;
                 MatrixTransform mtfl = new MatrixTransform(matline);
-                canvasImage.RenderTransform = mtfl;
+                imageForDrawing.RenderTransform = mtfl;
             };
 
-            image.MouseMove += (ss, ee) =>
+            imageForDrawing.MouseMove += (ss, ee) =>
             {
                 if (ee.LeftButton == MouseButtonState.Pressed)
                 {
@@ -134,32 +125,32 @@ namespace Fingerprints
 
                     Canvas.SetLeft(image, Canvas.GetLeft(image) - res.X);
                     Canvas.SetTop(image, Canvas.GetTop(image) - res.Y);
-                    Canvas.SetLeft(canvasImage, Canvas.GetLeft(image) - res.X);
-                    Canvas.SetTop(canvasImage, Canvas.GetTop(image) - res.Y);
+                    Canvas.SetLeft(imageForDrawing, Canvas.GetLeft(image) - res.X);
+                    Canvas.SetTop(imageForDrawing, Canvas.GetTop(image) - res.Y);
                     firstPoint = temp;
                 }
             };
-            image.MouseUp += (ss, ee) => { image.ReleaseMouseCapture(); };
+            imageForDrawing.MouseUp += (ss, ee) => { imageForDrawing.ReleaseMouseCapture(); };
         }
 
         private void loadRightMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
         {
-            FileMinutiaFactory factory = new FileMinutiaFactory();
-            DrawService drawService = new DrawService(factory);
-            foreach (var item in list)
-            {
-                drawService.startRightDrawing(item);
-            }
+            //FileMinutiaFactory factory = new FileMinutiaFactory();
+            //DrawService drawService = new DrawService(factory);
+            //foreach (var item in list)
+            //{
+            //    drawService.startRightDrawing(item);
+            //}
         }
 
         private void loadLeftMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
         {
-            FileMinutiaFactory factory = new FileMinutiaFactory();
-            DrawService drawService = new DrawService(factory);
-            foreach (var item in list)
-            {
-                drawService.startLeftDrawing(item);
-            }
+            //FileMinutiaFactory factory = new FileMinutiaFactory();
+            //DrawService drawService = new DrawService(factory);
+            //foreach (var item in list)
+            //{
+            //    drawService.startLeftDrawing(item);
+            //}
         }
         private void fillEmpty()
         {

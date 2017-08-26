@@ -1,6 +1,7 @@
 ﻿using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.Models;
+using Fingerprints.ViewModels;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -30,32 +31,33 @@ namespace Fingerprints
         public MainWindow()
         {
             InitializeComponent();
-            Application.Current.MainWindow = this;
+            DataContext = new MainWindowViewModel();
+            //Application.Current.MainWindow = this;
             Picture picture = new Picture(this);
-            UserMinutiaFactory factory = new UserMinutiaFactory();
-            drawer = new DrawService(factory);
-            picture.InitializeR();
+            //UserMinutiaFactory factory = new UserMinutiaFactory();
+            //drawer = new DrawService(factory);
+            //picture.InitializeR();
             picture.InitializeL();
-            controller = new MinutiaeTypeController();
-            comboBox.ItemsSource = controller.getStates();
-            InitTable();
-            saveEvents();
-            comboBoxChanged();
-            addEmpty.Click += addEmpty_Click;
+            //controller = new MinutiaeTypeController();
+            //comboBox.ItemsSource = controller.getStates();
+            //InitTable();
+            //saveEvents();
+            //comboBoxChanged();
+            //addEmpty.Click += addEmpty_Click;
         }
 
-        public void comboBoxChanged()
-        {
-            comboboxHandler += (ss, ee) =>
-            {
-                if (comboBox.SelectedValue != null)
-                {
-                    drawer.startNewDrawing(comboBox.SelectedItem as MinutiaState);
-                }
-            };
+        //public void comboBoxChanged()
+        //{
+        //    comboboxHandler += (ss, ee) =>
+        //    {
+        //        if (comboBox.SelectedValue != null)
+        //        {
+        //            drawer.startNewDrawing(comboBox.SelectedItem as MinutiaState);
+        //        }
+        //    };
 
-            comboBox.SelectionChanged += comboboxHandler;
-        }
+        //    comboBox.SelectionChanged += comboboxHandler;
+        //}
 
         public void setComboboxTitle(int index = -1)
         {
@@ -64,10 +66,10 @@ namespace Fingerprints
             comboBox.SelectionChanged += comboboxHandler;
         }
 
-        public void InitTable()
-        {
-            Table table = new Table();
-        }
+        //public void InitTable()
+        //{
+        //    Table table = new Table();
+        //}
 
         private void wizardAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -77,21 +79,21 @@ namespace Fingerprints
             comboBox.ItemsSource = controller.Show();
         }
 
-        public void saveEvents()
-        {
-            this.Closing += (ss, ee) =>
-            {
-                if (MessageBox.Show("Czy zapisać zmiany?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    FileTransfer.Save();
-                }
-            };
+        //public void saveEvents()
+        //{
+        //    this.Closing += (ss, ee) =>
+        //    {
+        //        if (MessageBox.Show("Czy zapisać zmiany?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+        //        {
+        //            FileTransfer.Save();
+        //        }
+        //    };
 
-            saveButton.Click += (ss, ee) =>
-            {
-                FileTransfer.Save();
-            };
-        }
+        //    saveButton.Click += (ss, ee) =>
+        //    {
+        //        FileTransfer.Save();
+        //    };
+        //}
         private void addEmpty_Click(object sender, EventArgs e)
         {
             MinutiaState state = controller.getStates().Where(x => x.Minutia.Name == "Puste").FirstOrDefault();

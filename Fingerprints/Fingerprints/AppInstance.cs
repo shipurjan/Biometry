@@ -64,6 +64,10 @@ namespace Fingerprints
             {
                 return (System.Windows.Shapes.Path)child;
             }
+            else if(child.GetType().Name == "Line")
+            {
+                return (System.Windows.Shapes.Line)child;
+            }
             else
             {
                 return (System.Windows.Shapes.Polyline)child;

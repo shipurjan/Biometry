@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -102,7 +104,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}" Command="{Binding SaveClickCommand}"/>
                 <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Style="{StaticResource buttonStyles}"/>
             </Grid>
         </Grid>
@@ -124,8 +126,19 @@
             <Grid Grid.Column="0">
                 <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                        <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
-                        <local:OverridedCanvas x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
+                        <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
+                        </Image>
+                        <Image x:Name="leftImageForDrawing" Source="{Binding WriteableBmp}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseMove">
+                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="MouseMoveMethod"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseRightButtonDown">
+                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="MouseRightButtonDownMethod" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Image>
+                        <local:OverridedCanvas Visibility="Collapsed" x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
                     </Canvas>
                 </Border>
             </Grid>

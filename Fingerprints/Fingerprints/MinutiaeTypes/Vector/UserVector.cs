@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using Fingerprints.Resources;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Fingerprints.MinutiaeTypes.Vector
 {

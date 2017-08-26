@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Fingerprints.Resources;
+using System.Collections.ObjectModel;
+using Prism.Mvvm;
 
 namespace Fingerprints.Models
 {
@@ -18,9 +21,29 @@ namespace Fingerprints.Models
 
         public string MinutiaName { get { return Minutia.Name; } }
 
+        public MinutiaState()
+        {
+            Points = new List<Point>();
+        }
+
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this);
+        }
+
+        public List<int> intPoints
+        {
+            get
+            {
+                var intPoints = new List<int>();
+                foreach (var item in Points)
+                {
+                    var floorPoint = item.ToFloorPoint();
+                    intPoints.Add(Convert.ToInt16(floorPoint.X));
+                    intPoints.Add(Convert.ToInt16(floorPoint.Y));
+                }
+                return intPoints;
+            }
         }
 
         public MinutiaFileState ToMinutiaFileState()
