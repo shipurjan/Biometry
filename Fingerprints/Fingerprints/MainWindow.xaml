@@ -128,13 +128,13 @@
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
                         <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
                         </Image>
-                        <Image x:Name="leftImageForDrawing" Source="{Binding WriteableBmp}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                        <Image x:Name="leftImageForDrawing" Source="{Binding LeftWriteableBmp}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseMove">
-                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="MouseMoveMethod"/>
+                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="LeftMouseMoveMethod"/>
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseRightButtonDown">
-                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="MouseRightButtonDownMethod" />
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="LeftMouseDownMethod" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Image>

@@ -16,62 +16,38 @@ using System.Windows.Media;
 
 namespace Fingerprints.ViewModels
 {
-    class MainWindowViewModel : BindableBase
+    class MainWindowViewModel : BindableBase, IDisposable
     {
-        public ObservableCollection<MinutiaState> LeftDrawingData;
-        public ObservableCollection<MinutiaState> RightDrawingData;
-        private WriteableBitmap _writeableBmp;
+        public ItemsChangeObservableCollection<MinutiaState> LeftDrawingData;
+        public ItemsChangeObservableCollection<MinutiaState> RightDrawingData;
+        public ICommand SaveClickCommand { get; }
+        public WriteableBitmap LeftWriteableBmp { get; set; }
 
         private MinutiaState mState;
 
-        public WriteableBitmap WriteableBmp
-        {
-            get { return _writeableBmp; }
-            set { SetProperty(ref _writeableBmp, value); }
-        }
-
         public MainWindowViewModel()
         {
-            LeftDrawingData = new ObservableCollection<MinutiaState>();
-            RightDrawingData = new ObservableCollection<MinutiaState>();
-            LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
-            RightDrawingData.CollectionChanged += LeftDrawingDataChanged;
-            WriteableBmp = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
+            LeftWriteableBmp = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
 
+            LeftDrawingData = new ItemsChangeObservableCollection<MinutiaState>();
+            RightDrawingData = new ItemsChangeObservableCollection<MinutiaState>();
+            LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
+            RightDrawingData.CollectionChanged += RightDrawingDataChanged;
+            
             SaveClickCommand = new DelegateCommand(SaveClick);
 
             mState = mState = new MinutiaState();
+            mState.PropertyChanged += (s, e) =>
+            {
+                Draw();
+            };
             mState.Minutia = new SelfDefinedMinutiae() { TypeId = 3 };
             LeftDrawingData.Add(mState);
         }
 
-        public ICommand SaveClickCommand { get; }
-
-        public void SaveClick()
-        {
-            var pointsToTest = new List<Point>();
-            Random r = new Random();
-            pointsToTest.Clear();
-            for (int i = 0; i < 1000; i++)
-            {
-                pointsToTest.Add(new Point(r.Next(0, 620), r.Next(0, 620)));
-            }
-            var minutiaState = new MinutiaState();
-            minutiaState.Minutia = new SelfDefinedMinutiae() { TypeId = 3 };
-            minutiaState.Points = pointsToTest;
-
-            LeftDrawingData.Add(minutiaState);
-        }
-
         public void LeftDrawingDataChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            foreach (var item in LeftDrawingData)
-            {
-                if (item.Minutia.TypeId == 3 && item.Points.Count > 0)
-                {
-                    WriteableBmp.DrawPolyline(item.intPoints.ToArray(), Colors.Red);
-                }
-            }
+            Draw();
         }
 
         public void RightDrawingDataChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -79,19 +55,77 @@ namespace Fingerprints.ViewModels
 
         }
 
-        public void MouseMoveMethod(object sender, MouseEventArgs args)
+        public void LeftMouseMoveMethod(object sender, MouseEventArgs args)
         {
             if (args.MouseDevice.RightButton == MouseButtonState.Pressed)
             {
                 var point = args.GetPosition((IInputElement)sender).ToFloorPoint();
                 mState.Points.Add(point);
-                RaisePropertyChanged();
+                mState.Id = mState.Points.Count;
             }
         }
 
-        public void MouseRightButtonDownMethod(object sender, MouseButtonEventArgs args)
+        public void LeftMouseDownMethod(object sender, MouseButtonEventArgs args)
         {
-            Console.WriteLine(args.ButtonState);
+            if (args.MouseDevice.RightButton == MouseButtonState.Pressed)
+            {
+                var point = args.GetPosition((IInputElement)sender).ToFloorPoint();
+                mState.Points.Add(point);
+                mState.Id = mState.Points.Count;
+            }
         }
+
+        private void Draw()
+        {
+            foreach (var item in LeftDrawingData)
+            {
+                if (item.Minutia.TypeId == 3 && item.Points.Count > 0)
+                {
+                    LeftWriteableBmp.DrawPolyline(item.intPoints.ToArray(), Colors.Red);
+                }
+            }
+        }
+
+        public void SaveClick()
+        {
+            FileTransfer.Save();
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                    LeftDrawingData.CollectionChanged -= LeftDrawingDataChanged;
+                    RightDrawingData.CollectionChanged -= RightDrawingDataChanged;
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~MainWindowViewModel() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

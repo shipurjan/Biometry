@@ -9,15 +9,17 @@ using System.Windows;
 using Fingerprints.Resources;
 using System.Collections.ObjectModel;
 using Prism.Mvvm;
+using System.Windows.Media.Imaging;
 
 namespace Fingerprints.Models
 {
-    public class MinutiaState
+    public class MinutiaState : BindableBase
     {
         public SelfDefinedMinutiae Minutia { get; set; }
         public List<Point> Points { get; set; }
         public double Angle { get; set; }
-        public long Id { get; set; }
+        private long _id;
+        public long Id { get { return _id; } set { SetProperty(ref _id, value); } }
 
         public string MinutiaName { get { return Minutia.Name; } }
 

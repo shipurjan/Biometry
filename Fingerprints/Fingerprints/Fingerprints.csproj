@@ -165,6 +165,7 @@
     <Compile Include="Resources\ExtensionMethods.cs" />
     <Compile Include="Resources\Helper.cs" />
     <Compile Include="MinutiaeTypes\Empty\Empty.cs" />
+    <Compile Include="Resources\ItemsChangeObservableCollection.cs" />
     <Compile Include="Resources\OverridedCanvas.cs" />
     <Compile Include="Resources\Transformer.cs" />
     <Compile Include="Resources\UnixDate.cs" />
