@@ -54,7 +54,7 @@ namespace Fingerprints
                     if (image.Tag.ToString() == "Left")
                     {
                         FileTransfer.Save();
-                        mw.listBoxImageL.Items.Clear();
+                        //mw.listBoxImageL.Items.Clear();
                         FileTransfer.ListL.Clear();
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
@@ -66,7 +66,7 @@ namespace Fingerprints
                     else
                     {
                         FileTransfer.Save();
-                        mw.listBoxImageR.Items.Clear();
+                        //mw.listBoxImageR.Items.Clear();
                         FileTransfer.ListR.Clear();
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();

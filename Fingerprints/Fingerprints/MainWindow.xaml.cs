@@ -31,7 +31,9 @@ namespace Fingerprints
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            var viewModel = new MainWindowViewModel();
+            DataContext = viewModel;
+            listBoxImageL.ItemsSource = viewModel.LeftDrawingData;
             //Application.Current.MainWindow = this;
             Picture picture = new Picture(this);
             //UserMinutiaFactory factory = new UserMinutiaFactory();

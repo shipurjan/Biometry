@@ -209,6 +209,14 @@ minutiaeName, color, size, thickeness, angle, List&lt;Point&gt; points</Text>
         <Member type="Field">WriteableBitmap WriteableBmp</Member>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Class">
+        <Name>DrawService</Name>
+        <Access>Public</Access>
+        <Location left="538" top="527" />
+        <Size width="265" height="180" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
     <Relationships />
   </ProjectItem>

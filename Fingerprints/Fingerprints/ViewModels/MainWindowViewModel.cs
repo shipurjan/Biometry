@@ -1,94 +1,93 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Fingerprints.Resources;
-using System.Collections.ObjectModel;
 using Fingerprints.Models;
 using System.Collections.Specialized;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using ExceptionLogger;
+using System.Linq;
+using Fingerprints.Interfaces;
 
 namespace Fingerprints.ViewModels
 {
     class MainWindowViewModel : BindableBase, IDisposable
     {
-        public ItemsChangeObservableCollection<MinutiaState> LeftDrawingData;
-        public ItemsChangeObservableCollection<MinutiaState> RightDrawingData;
+        public ItemsChangeObservableCollection<MinutiaeStateViewModel> LeftDrawingData;
+        public ItemsChangeObservableCollection<MinutiaeStateViewModel> RightDrawingData;
         public ICommand SaveClickCommand { get; }
         public WriteableBitmap LeftWriteableBmp { get; set; }
 
-        private MinutiaState mState;
+        private MinutiaeStateViewModel CurrentLeftDrawing;
 
         public MainWindowViewModel()
         {
-            LeftWriteableBmp = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
-
-            LeftDrawingData = new ItemsChangeObservableCollection<MinutiaState>();
-            RightDrawingData = new ItemsChangeObservableCollection<MinutiaState>();
-            LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
-            RightDrawingData.CollectionChanged += RightDrawingDataChanged;
-            
-            SaveClickCommand = new DelegateCommand(SaveClick);
-
-            mState = mState = new MinutiaState();
-            mState.PropertyChanged += (s, e) =>
+            try
             {
-                Draw();
-            };
-            mState.Minutia = new SelfDefinedMinutiae() { TypeId = 3 };
-            LeftDrawingData.Add(mState);
-        }
+                LeftWriteableBmp = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
 
-        public void LeftDrawingDataChanged(object sender, NotifyCollectionChangedEventArgs args)
-        {
-            Draw();
-        }
+                LeftDrawingData = new ItemsChangeObservableCollection<MinutiaeStateViewModel>();
+                RightDrawingData = new ItemsChangeObservableCollection<MinutiaeStateViewModel>();
 
-        public void RightDrawingDataChanged(object sender, NotifyCollectionChangedEventArgs args)
-        {
 
+                SaveClickCommand = new DelegateCommand(SaveClick);
+
+                CurrentLeftDrawing = new CurveLineViewModel(LeftWriteableBmp);
+                CurrentLeftDrawing.Minutia = new SelfDefinedMinutiae() { TypeId = 3, Name = "Krzywa!" };
+                LeftDrawingData.Add(CurrentLeftDrawing);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
 
         public void LeftMouseMoveMethod(object sender, MouseEventArgs args)
         {
-            if (args.MouseDevice.RightButton == MouseButtonState.Pressed)
+            try
             {
-                var point = args.GetPosition((IInputElement)sender).ToFloorPoint();
-                mState.Points.Add(point);
-                mState.Id = mState.Points.Count;
+                if (CurrentLeftDrawing is IMouseMoveable)
+                {
+                    var drawing = (IMouseMoveable)(CurrentLeftDrawing);
+                    drawing.MouseMoveMethod(sender, args);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
         }
 
         public void LeftMouseDownMethod(object sender, MouseButtonEventArgs args)
         {
-            if (args.MouseDevice.RightButton == MouseButtonState.Pressed)
+            try
             {
-                var point = args.GetPosition((IInputElement)sender).ToFloorPoint();
-                mState.Points.Add(point);
-                mState.Id = mState.Points.Count;
-            }
-        }
-
-        private void Draw()
-        {
-            foreach (var item in LeftDrawingData)
-            {
-                if (item.Minutia.TypeId == 3 && item.Points.Count > 0)
+                if (CurrentLeftDrawing is IMouseClickable)
                 {
-                    LeftWriteableBmp.DrawPolyline(item.intPoints.ToArray(), Colors.Red);
+                    var drawing = (IMouseClickable)CurrentLeftDrawing;
+                    drawing.MouseDownMethod(sender, args);
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
         }
 
         public void SaveClick()
         {
-            FileTransfer.Save();
+            try
+            {
+                //FileTransfer.Save();
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
 
         #region IDisposable Support
@@ -96,19 +95,24 @@ namespace Fingerprints.ViewModels
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            try
             {
-                if (disposing)
+                if (!disposedValue)
                 {
-                    // TODO: dispose managed state (managed objects).
-                    LeftDrawingData.CollectionChanged -= LeftDrawingDataChanged;
-                    RightDrawingData.CollectionChanged -= RightDrawingDataChanged;
+                    if (disposing)
+                    {
+                        // TODO: dispose managed state (managed objects).
+                    }
+
+                    // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                    // TODO: set large fields to null.
+
+                    disposedValue = true;
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                disposedValue = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
         }
 

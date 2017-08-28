@@ -13,14 +13,12 @@ using System.Windows.Media.Imaging;
 
 namespace Fingerprints.Models
 {
-    public class MinutiaState : BindableBase
+    public class MinutiaState
     {
         public SelfDefinedMinutiae Minutia { get; set; }
         public List<Point> Points { get; set; }
         public double Angle { get; set; }
-        private long _id;
-        public long Id { get { return _id; } set { SetProperty(ref _id, value); } }
-
+        public long Id { get; set; }
         public string MinutiaName { get { return Minutia.Name; } }
 
         public MinutiaState()
@@ -31,21 +29,6 @@ namespace Fingerprints.Models
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this);
-        }
-
-        public List<int> intPoints
-        {
-            get
-            {
-                var intPoints = new List<int>();
-                foreach (var item in Points)
-                {
-                    var floorPoint = item.ToFloorPoint();
-                    intPoints.Add(Convert.ToInt16(floorPoint.X));
-                    intPoints.Add(Convert.ToInt16(floorPoint.Y));
-                }
-                return intPoints;
-            }
         }
 
         public MinutiaFileState ToMinutiaFileState()
