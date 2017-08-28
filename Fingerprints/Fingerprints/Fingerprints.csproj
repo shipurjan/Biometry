@@ -145,6 +145,7 @@
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
     <Compile Include="Factories\UserMinutiaFactory.cs" />
+    <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IMouseClickable.cs" />
     <Compile Include="Interfaces\IMouseMoveable.cs" />
     <Compile Include="MinutiaeTypes\CurveLine\CurveLine.cs" />

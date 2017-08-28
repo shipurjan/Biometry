@@ -13,14 +13,13 @@ using Fingerprints.Interfaces;
 
 namespace Fingerprints.ViewModels
 {
-    class CurveLineViewModel : MinutiaeStateViewModel, IMouseMoveable, IMouseClickable
+    class CurveLineViewModel : MinutiaeStateViewModel, IMouseMoveable, IMouseClickable, IDrawable
     {
-        public CurveLineViewModel(WriteableBitmap _oWriteableBmp) : base(_oWriteableBmp)
+        public CurveLineViewModel(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel) : base(_oWriteableBmp, _oMainWindowViewModel)
         {
-
         }
 
-        public override void DrawProcedure()
+        public void DrawProcedure()
         {
             try
             {
@@ -35,7 +34,7 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public void MouseMoveMethod(object sender, MouseEventArgs args)
+        public void MouseMove(object sender, MouseEventArgs args)
         {
             try
             {
@@ -63,7 +62,7 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public void MouseDownMethod(object sender, MouseButtonEventArgs args)
+        public void MouseClick(object sender, MouseButtonEventArgs args)
         {
             try
             {

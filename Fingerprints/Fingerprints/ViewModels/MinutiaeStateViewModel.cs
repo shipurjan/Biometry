@@ -27,6 +27,8 @@ namespace Fingerprints.ViewModels
 
         public WriteableBitmap oWriteableBmp { get; }
 
+        public MainWindowViewModel oMainWindowViewModel { get; }
+
         public string MinutiaName { get { return Minutia.Name; } }
 
         public int[] IntPoints
@@ -51,10 +53,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public MinutiaeStateViewModel(WriteableBitmap _oWriteableBmp)
+        public MinutiaeStateViewModel(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel)
         {
             try
             {
+                oMainWindowViewModel = _oMainWindowViewModel;
                 Points = new ObservableCollection<Point>();
                 oWriteableBmp = _oWriteableBmp;
                 PropertyChanged += PropertyChangeHandler;
@@ -66,16 +69,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public virtual void DrawProcedure()
-        {
-
-        }
-
         private void CollectionChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
         {
             try
             {
-                DrawProcedure();
+                oMainWindowViewModel.Draw();
             }
             catch (Exception ex)
             {
@@ -87,7 +85,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                DrawProcedure();
+                oMainWindowViewModel.Draw();
             }
             catch (Exception ex)
             {

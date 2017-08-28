@@ -35,7 +35,7 @@ namespace Fingerprints.ViewModels
 
                 SaveClickCommand = new DelegateCommand(SaveClick);
 
-                CurrentLeftDrawing = new CurveLineViewModel(LeftWriteableBmp);
+                CurrentLeftDrawing = new CurveLineViewModel(LeftWriteableBmp, this);
                 CurrentLeftDrawing.Minutia = new SelfDefinedMinutiae() { TypeId = 3, Name = "Krzywa!" };
                 LeftDrawingData.Add(CurrentLeftDrawing);
             }
@@ -51,8 +51,7 @@ namespace Fingerprints.ViewModels
             {
                 if (CurrentLeftDrawing is IMouseMoveable)
                 {
-                    var drawing = (IMouseMoveable)(CurrentLeftDrawing);
-                    drawing.MouseMoveMethod(sender, args);
+                    ((IMouseMoveable)CurrentLeftDrawing).MouseMove(sender, args);
                 }
             }
             catch (Exception ex)
@@ -67,8 +66,26 @@ namespace Fingerprints.ViewModels
             {
                 if (CurrentLeftDrawing is IMouseClickable)
                 {
-                    var drawing = (IMouseClickable)CurrentLeftDrawing;
-                    drawing.MouseDownMethod(sender, args);
+                    ((IMouseClickable)CurrentLeftDrawing).MouseClick(sender, args);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        public void Draw()
+        {
+            try
+            {
+                LeftWriteableBmp.Clear();
+                foreach (var item in LeftDrawingData)
+                {
+                    if (item is IDrawable)
+                    {
+                        ((IDrawable)item).DrawProcedure();
+                    }
                 }
             }
             catch (Exception ex)
@@ -81,6 +98,9 @@ namespace Fingerprints.ViewModels
         {
             try
             {
+                CurrentLeftDrawing = new LineViewModel(LeftWriteableBmp, this);
+                CurrentLeftDrawing.Minutia = new SelfDefinedMinutiae() { Name = "linia" };
+                LeftDrawingData.Add(CurrentLeftDrawing);
                 //FileTransfer.Save();
 
             }

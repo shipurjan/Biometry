@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Fingerprints.Interfaces
 {
-    interface IMouseMoveable
+    interface IDrawable
     {
-        void MouseMove(object sender, MouseEventArgs args);
+        void DrawProcedure();
     }
 }

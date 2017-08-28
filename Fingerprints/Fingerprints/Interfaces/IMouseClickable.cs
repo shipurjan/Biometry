@@ -9,6 +9,6 @@ namespace Fingerprints.Interfaces
 {
     interface IMouseClickable
     {
-        void MouseDownMethod(object sender, MouseButtonEventArgs args);
+        void MouseClick(object sender, MouseButtonEventArgs args);
     }
 }
