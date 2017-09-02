@@ -25,9 +25,9 @@ namespace Fingerprints.MinutiaeTypes
 
         public long Id { get { return _Id; } set { SetProperty(ref _Id, value); } }
 
-        public WriteableBitmap oWriteableBmp { get; }
+        public WriteableBitmap WriteableBmp { get; }
 
-        public MainWindowViewModel oMainWindowViewModel { get; }
+        public DrawingService DrawingService { get; }
 
         public string MinutiaName { get { return Minutia.Name; } }
 
@@ -53,13 +53,13 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
-        public MinutiaStateBase(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel)
+        public MinutiaStateBase(WriteableBitmap _oWriteableBmp, DrawingService _oMainWindowViewModel)
         {
             try
             {
-                oMainWindowViewModel = _oMainWindowViewModel;
+                DrawingService = _oMainWindowViewModel;
                 Points = new ObservableCollection<Point>();
-                oWriteableBmp = _oWriteableBmp;
+                WriteableBmp = _oWriteableBmp;
                 PropertyChanged += PropertyChangeHandler;
                 Points.CollectionChanged += CollectionChangedHandler;
             }
@@ -73,7 +73,7 @@ namespace Fingerprints.MinutiaeTypes
         {
             try
             {
-                oMainWindowViewModel.Draw();
+                DrawingService.Draw();
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace Fingerprints.MinutiaeTypes
         {
             try
             {
-                oMainWindowViewModel.Draw();
+                DrawingService.Draw();
             }
             catch (Exception ex)
             {

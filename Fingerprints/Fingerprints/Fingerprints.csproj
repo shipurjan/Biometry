@@ -179,8 +179,9 @@
     <Compile Include="Resources\Utils.cs" />
     <Compile Include="MinutiaeTypes\CurveLineState.cs" />
     <Compile Include="MinutiaeTypes\LineViewState.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Windows\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>

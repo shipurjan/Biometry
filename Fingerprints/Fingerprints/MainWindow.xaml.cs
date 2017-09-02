@@ -33,7 +33,8 @@ namespace Fingerprints
             InitializeComponent();
             var viewModel = new MainWindowViewModel();
             DataContext = viewModel;
-            listBoxImageL.ItemsSource = viewModel.LeftDrawingData;
+            listBoxImageL.ItemsSource = viewModel.LeftDrawingService.DrawingData;
+            listBoxImageR.ItemsSource = viewModel.RightDrawingService.DrawingData;
             //Application.Current.MainWindow = this;
             Picture picture = new Picture(this);
             //UserMinutiaFactory factory = new UserMinutiaFactory();

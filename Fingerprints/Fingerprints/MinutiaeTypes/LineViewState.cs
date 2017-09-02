@@ -12,7 +12,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class LineViewState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public LineViewState(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel) : base(_oWriteableBmp, _oMainWindowViewModel)
+        public LineViewState(WriteableBitmap _oWriteableBmp, DrawingService _oDrawingService) : base(_oWriteableBmp, _oDrawingService)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Fingerprints.MinutiaeTypes
                 {
                     var firstPoint = Points[0];
                     var secondPoint = Points[1];
-                    oWriteableBmp.DrawLine(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), Convert.ToInt16(secondPoint.X), Convert.ToInt16(secondPoint.Y), Colors.Blue);
+                    WriteableBmp.DrawLine(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), Convert.ToInt16(secondPoint.X), Convert.ToInt16(secondPoint.Y), Colors.Blue);
                 }
             }
             catch (Exception ex)
@@ -40,11 +40,11 @@ namespace Fingerprints.MinutiaeTypes
                 if (Points.Count == 0)
                 {
                     Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
-                    oMainWindowViewModel.AddToList();
+                    DrawingService.AddToList();
                 }
                 else
                 {
-                    oMainWindowViewModel.NewDrawing();
+                    DrawingService.NewDrawing();
                 }
             }
         }

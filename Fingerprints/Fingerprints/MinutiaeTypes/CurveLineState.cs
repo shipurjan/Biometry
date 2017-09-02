@@ -12,7 +12,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class CurveLineState : MinutiaStateBase, IMouseMoveable, IMouseClickable, IDrawable
     {
-        public CurveLineState(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel) : base(_oWriteableBmp, _oMainWindowViewModel)
+        public CurveLineState(WriteableBitmap _oWriteableBmp, DrawingService _oDrawingService) : base(_oWriteableBmp, _oDrawingService)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (Points.Count > 0)
                 {
-                    oWriteableBmp.DrawPolyline(IntPoints, Colors.Red);
+                    WriteableBmp.DrawPolyline(IntPoints, Colors.Red);
                 }
             }
             catch (Exception ex)

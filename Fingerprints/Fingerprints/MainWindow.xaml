@@ -128,13 +128,13 @@
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
                         <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
                         </Image>
-                        <Image x:Name="leftImageForDrawing" Source="{Binding LeftWriteableBmp}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                        <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseMove">
-                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="LeftMouseMoveMethod"/>
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseMoveMethod"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="PreviewMouseDown">
-                                    <ei:CallMethodAction TargetObject="{Binding}" MethodName="LeftMouseDownMethod" />
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseDownMethod" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Image>
@@ -148,6 +148,16 @@
                 <Border x:Name="borderRight" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaRight" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
                         <Image x:Name="imageR" Tag="Right" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
+                        <Image x:Name="rightImageForDrawing" Source="{Binding RightDrawingService.WriteableBitmap}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseMove">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseMoveMethod"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseDownMethod" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Image>
                         <local:OverridedCanvas x:Name="canvasImageR" SnapsToDevicePixels="True" Tag="Right" Canvas.Left="0" Canvas.Top="0"/>
                     </Canvas>
                 </Border>
@@ -210,7 +220,13 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}"/>
+                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MinutiaName}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     <ListBox x:Name="listBoxDelete" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                 </Grid>
             </Grid>
