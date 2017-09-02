@@ -53,11 +53,11 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
-        public MinutiaStateBase(WriteableBitmap _oWriteableBmp, DrawingService _oMainWindowViewModel)
+        public MinutiaStateBase(WriteableBitmap _oWriteableBmp, DrawingService _oDrawingService)
         {
             try
             {
-                DrawingService = _oMainWindowViewModel;
+                DrawingService = _oDrawingService;
                 Points = new ObservableCollection<Point>();
                 WriteableBmp = _oWriteableBmp;
                 PropertyChanged += PropertyChangeHandler;

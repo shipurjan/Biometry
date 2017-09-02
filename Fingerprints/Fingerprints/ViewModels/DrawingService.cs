@@ -38,6 +38,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method launched when MouseMove event is triggered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void MouseMoveMethod(object sender, MouseEventArgs args)
         {
             try
@@ -53,6 +58,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method launched when MouseDown event is triggered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void MouseDownMethod(object sender, MouseButtonEventArgs args)
         {
             try
@@ -68,6 +78,9 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// its clear WriteableBitmap and draws all items from DrawingData by lauching their DrawProcedure method
+        /// </summary>
         public void Draw()
         {
             try
@@ -87,13 +100,20 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public void NewDrawing()
+        /// <summary>
+        /// Inititates new drawing for CurrenDrawing object
+        /// </summary>
+        public void InitiateNewDrawing()
         {
             CurrentDrawing = new LineViewState(WriteableBitmap, this);
             CurrentDrawing.Minutia = new SelfDefinedMinutiae() { Name = "Prosta" };
         }
 
-        public void AddToList()
+        /// <summary>
+        /// Adds CurrentDrawing to DrawingData list, 
+        /// When this method is launched, CurrentDrawing will appear on WriteableBitmap and listbox
+        /// </summary>
+        public void AddCurrentDrawingToDrawingData()
         {
             DrawingData.Add(CurrentDrawing);
         }

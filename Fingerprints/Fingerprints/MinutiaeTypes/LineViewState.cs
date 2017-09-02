@@ -40,11 +40,11 @@ namespace Fingerprints.MinutiaeTypes
                 if (Points.Count == 0)
                 {
                     Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
-                    DrawingService.AddToList();
+                    DrawingService.AddCurrentDrawingToDrawingData();
                 }
                 else
                 {
-                    DrawingService.NewDrawing();
+                    DrawingService.InitiateNewDrawing();
                 }
             }
         }
