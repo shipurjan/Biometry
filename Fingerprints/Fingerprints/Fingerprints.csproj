@@ -177,10 +177,10 @@
     <Compile Include="Resources\Transformer.cs" />
     <Compile Include="Resources\UnixDate.cs" />
     <Compile Include="Resources\Utils.cs" />
-    <Compile Include="ViewModels\CurveLineViewModel.cs" />
-    <Compile Include="ViewModels\LineViewModel.cs" />
+    <Compile Include="MinutiaeTypes\CurveLineState.cs" />
+    <Compile Include="MinutiaeTypes\LineViewState.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\MinutiaeStateViewModel.cs" />
+    <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
     <Compile Include="Windows\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>

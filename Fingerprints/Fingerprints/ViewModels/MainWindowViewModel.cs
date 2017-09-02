@@ -1,27 +1,24 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Windows;
 using System.Windows.Input;
 using Fingerprints.Resources;
-using Fingerprints.Models;
-using System.Collections.Specialized;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using ExceptionLogger;
-using System.Linq;
 using Fingerprints.Interfaces;
+using Fingerprints.MinutiaeTypes;
 
 namespace Fingerprints.ViewModels
 {
     class MainWindowViewModel : BindableBase, IDisposable
     {
-        public ItemsChangeObservableCollection<MinutiaeStateViewModel> LeftDrawingData;
-        public ItemsChangeObservableCollection<MinutiaeStateViewModel> RightDrawingData;
+        public ItemsChangeObservableCollection<MinutiaStateBase> LeftDrawingData;
+        public ItemsChangeObservableCollection<MinutiaStateBase> RightDrawingData;
         public ICommand SaveClickCommand { get; }
         public WriteableBitmap LeftWriteableBmp { get; set; }
 
-        private MinutiaeStateViewModel CurrentLeftDrawing;
+        private MinutiaStateBase CurrentLeftDrawing;
 
         public MainWindowViewModel()
         {
@@ -29,13 +26,12 @@ namespace Fingerprints.ViewModels
             {
                 LeftWriteableBmp = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
 
-                LeftDrawingData = new ItemsChangeObservableCollection<MinutiaeStateViewModel>();
-                RightDrawingData = new ItemsChangeObservableCollection<MinutiaeStateViewModel>();
-
+                LeftDrawingData = new ItemsChangeObservableCollection<MinutiaStateBase>();
+                RightDrawingData = new ItemsChangeObservableCollection<MinutiaStateBase>();
 
                 SaveClickCommand = new DelegateCommand(SaveClick);
 
-                CurrentLeftDrawing = new CurveLineViewModel(LeftWriteableBmp, this);
+                CurrentLeftDrawing = new CurveLineState(LeftWriteableBmp, this);
                 CurrentLeftDrawing.Minutia = new SelfDefinedMinutiae() { TypeId = 3, Name = "Krzywa!" };
                 LeftDrawingData.Add(CurrentLeftDrawing);
             }
@@ -94,12 +90,23 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        public void NewDrawing()
+        {
+            CurrentLeftDrawing = new LineViewState(LeftWriteableBmp, this);
+            CurrentLeftDrawing.Minutia = new SelfDefinedMinutiae() { Name = "Prosta" };
+        }
+
+        public void AddToList()
+        {
+            LeftDrawingData.Add(CurrentLeftDrawing);
+        }
+
         public void SaveClick()
         {
             try
             {
-                CurrentLeftDrawing = new LineViewModel(LeftWriteableBmp, this);
-                CurrentLeftDrawing.Minutia = new SelfDefinedMinutiae() { Name = "linia" };
+                CurrentLeftDrawing = new LineViewState(LeftWriteableBmp, this);
+                CurrentLeftDrawing.Minutia = new SelfDefinedMinutiae() { Name = "Prosta" };
                 LeftDrawingData.Add(CurrentLeftDrawing);
                 //FileTransfer.Save();
 

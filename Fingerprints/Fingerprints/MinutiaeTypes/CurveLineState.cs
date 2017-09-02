@@ -1,21 +1,18 @@
 ﻿using ExceptionLogger;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.Windows;
 using Fingerprints.Resources;
 using Fingerprints.Interfaces;
+using Fingerprints.ViewModels;
 
-namespace Fingerprints.ViewModels
+namespace Fingerprints.MinutiaeTypes
 {
-    class CurveLineViewModel : MinutiaeStateViewModel, IMouseMoveable, IMouseClickable, IDrawable
+    class CurveLineState : MinutiaStateBase, IMouseMoveable, IMouseClickable, IDrawable
     {
-        public CurveLineViewModel(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel) : base(_oWriteableBmp, _oMainWindowViewModel)
+        public CurveLineState(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel) : base(_oWriteableBmp, _oMainWindowViewModel)
         {
         }
 

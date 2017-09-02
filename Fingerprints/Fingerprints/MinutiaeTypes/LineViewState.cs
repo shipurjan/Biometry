@@ -1,21 +1,18 @@
 ﻿using Fingerprints.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
 using Fingerprints.Resources;
 using ExceptionLogger;
+using Fingerprints.ViewModels;
 
-namespace Fingerprints.ViewModels
+namespace Fingerprints.MinutiaeTypes
 {
-    class LineViewModel : MinutiaeStateViewModel, IMouseClickable, IDrawable
+    class LineViewState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public LineViewModel(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel) : base(_oWriteableBmp, _oMainWindowViewModel)
+        public LineViewState(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel) : base(_oWriteableBmp, _oMainWindowViewModel)
         {
         }
 
@@ -43,16 +40,32 @@ namespace Fingerprints.ViewModels
                 if (Points.Count == 0)
                 {
                     Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                    oMainWindowViewModel.AddToList();
                 }
-                else if (Points.Count == 1)
+                else
+                {
+                    oMainWindowViewModel.NewDrawing();
+                }
+            }
+        }
+
+        public void MouseMove(object sender, MouseEventArgs args)
+        {
+            try
+            {
+                if (Points.Count == 1)
                 {
                     Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
                 }
-                else
+                else if (Points.Count != 0)
                 {
                     Points.RemoveAt(1);
                     Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
         }
     }

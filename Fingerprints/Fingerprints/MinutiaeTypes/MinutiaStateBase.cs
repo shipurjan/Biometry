@@ -2,27 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
 using System.Collections.Specialized;
 using ExceptionLogger;
 using System.Windows;
-using System.Windows.Input;
+using Fingerprints.ViewModels;
 
-namespace Fingerprints.ViewModels
+namespace Fingerprints.MinutiaeTypes
 {
-    class MinutiaeStateViewModel : BindableBase, IDisposable
+    abstract class MinutiaStateBase : BindableBase, IDisposable
     {
         public SelfDefinedMinutiae Minutia { get; set; }
+
         public ObservableCollection<Point> Points { get; }
 
         private double _Angle;
+
         public double Angle { get { return _Angle; } set { SetProperty(ref _Angle, value); } }
 
         private long _Id;
+
         public long Id { get { return _Id; } set { SetProperty(ref _Id, value); } }
 
         public WriteableBitmap oWriteableBmp { get; }
@@ -53,7 +53,7 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public MinutiaeStateViewModel(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel)
+        public MinutiaStateBase(WriteableBitmap _oWriteableBmp, MainWindowViewModel _oMainWindowViewModel)
         {
             try
             {
