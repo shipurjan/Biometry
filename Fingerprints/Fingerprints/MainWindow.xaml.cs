@@ -30,11 +30,14 @@ namespace Fingerprints
         public DrawService drawer;
         public MainWindow()
         {
-            InitializeComponent();
             var viewModel = new MainWindowViewModel();
+            InitializeComponent();
             DataContext = viewModel;
-            listBoxImageL.ItemsSource = viewModel.LeftDrawingService.DrawingData;
-            listBoxImageR.ItemsSource = viewModel.RightDrawingService.DrawingData;
+
+            //listBoxImageL.ItemsSource = viewModel.LeftDrawingService.DrawingData;
+            //listBoxImageR.ItemsSource = viewModel.RightDrawingService.DrawingData;
+            //comboBox.ItemsSource = viewModel.MinutiaeStates;
+
             //Application.Current.MainWindow = this;
             Picture picture = new Picture(this);
             //UserMinutiaFactory factory = new UserMinutiaFactory();
@@ -126,6 +129,11 @@ namespace Fingerprints
                         break;
                 }
             }
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

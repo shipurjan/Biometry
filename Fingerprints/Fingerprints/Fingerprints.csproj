@@ -144,6 +144,7 @@
     <Compile Include="AppInstance.cs" />
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
+    <Compile Include="Factories\MinutiaStateFactory.cs" />
     <Compile Include="Factories\UserMinutiaFactory.cs" />
     <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IMouseClickable.cs" />
@@ -178,7 +179,7 @@
     <Compile Include="Resources\UnixDate.cs" />
     <Compile Include="Resources\Utils.cs" />
     <Compile Include="MinutiaeTypes\CurveLineState.cs" />
-    <Compile Include="MinutiaeTypes\LineViewState.cs" />
+    <Compile Include="MinutiaeTypes\SegmentState.cs" />
     <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

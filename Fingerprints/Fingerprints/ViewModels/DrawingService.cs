@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 
 namespace Fingerprints.ViewModels
 {
-    class DrawingService : IDisposable
+    public class DrawingService : IDisposable
     {
         public ObservableCollection<MinutiaStateBase> DrawingData;
         
@@ -105,7 +105,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void InitiateNewDrawing()
         {
-            CurrentDrawing = new LineViewState(WriteableBitmap, this);
+            CurrentDrawing = new SegmentState(WriteableBitmap, this);
             CurrentDrawing.Minutia = new SelfDefinedMinutiae() { Name = "Prosta" };
         }
 

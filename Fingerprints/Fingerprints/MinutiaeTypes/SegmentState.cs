@@ -10,9 +10,9 @@ using Fingerprints.ViewModels;
 
 namespace Fingerprints.MinutiaeTypes
 {
-    class LineViewState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
+    class SegmentState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public LineViewState(WriteableBitmap _oWriteableBmp, DrawingService _oDrawingService) : base(_oWriteableBmp, _oDrawingService)
+        public SegmentState(WriteableBitmap _oWriteableBmp, DrawingService _oDrawingService) : base(_oWriteableBmp, _oDrawingService)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Fingerprints.MinutiaeTypes
                 {
                     var firstPoint = Points[0];
                     var secondPoint = Points[1];
-                    WriteableBmp.DrawLine(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), Convert.ToInt16(secondPoint.X), Convert.ToInt16(secondPoint.Y), Colors.Blue);
+                    WriteableBmp.DrawLineAa(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), Convert.ToInt16(secondPoint.X), Convert.ToInt16(secondPoint.Y), Colors.Blue);
                 }
             }
             catch (Exception ex)

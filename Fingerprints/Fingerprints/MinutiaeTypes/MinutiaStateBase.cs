@@ -11,7 +11,7 @@ using Fingerprints.ViewModels;
 
 namespace Fingerprints.MinutiaeTypes
 {
-    abstract class MinutiaStateBase : BindableBase, IDisposable
+    public abstract class MinutiaStateBase : BindableBase, IDisposable
     {
         public SelfDefinedMinutiae Minutia { get; set; }
 

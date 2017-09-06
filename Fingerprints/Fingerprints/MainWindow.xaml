@@ -79,7 +79,19 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150" MaxWidth="250" Margin="30 0 30 0" />
+                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" ItemsSource="{Binding MinutiaeStates}" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150" MaxWidth="250" Margin="30 0 30 0" SelectionChanged="comboBox_SelectionChanged" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MinutiaName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding cbMinutiaeStatesSelectionChanged}" CommandParameter="{Binding ElementName=comboBox, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                        
+                </ComboBox>
             </Grid>
 
             <!--right-->
@@ -128,7 +140,7 @@
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
                         <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
                         </Image>
-                        <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                        <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseMove">
                                     <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseMoveMethod"/>

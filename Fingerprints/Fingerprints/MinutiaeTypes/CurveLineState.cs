@@ -7,6 +7,7 @@ using System.Windows;
 using Fingerprints.Resources;
 using Fingerprints.Interfaces;
 using Fingerprints.ViewModels;
+using System.Windows.Shapes;
 
 namespace Fingerprints.MinutiaeTypes
 {
