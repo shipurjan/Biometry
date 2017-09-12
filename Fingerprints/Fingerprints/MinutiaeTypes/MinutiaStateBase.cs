@@ -73,6 +73,10 @@ namespace Fingerprints.MinutiaeTypes
         {
             try
             {
+                if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
+                {
+                    DrawingService.AddCurrentDrawingToDrawingData();
+                }
                 DrawingService.Draw();
             }
             catch (Exception ex)

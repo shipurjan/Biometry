@@ -9,6 +9,7 @@ using ExceptionLogger;
 using Fingerprints.Interfaces;
 using Fingerprints.MinutiaeTypes;
 using System.Collections.ObjectModel;
+using Fingerprints.Factories;
 
 namespace Fingerprints.ViewModels
 {
@@ -18,7 +19,7 @@ namespace Fingerprints.ViewModels
         
         public WriteableBitmap WriteableBitmap { get; set; }
 
-        public MinutiaStateBase CurrentDrawing { get; set; }
+        public MinutiaStateBase CurrentDrawing { get; set; } 
 
         public DrawingService()
         {
@@ -27,10 +28,6 @@ namespace Fingerprints.ViewModels
                 WriteableBitmap = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
 
                 DrawingData = new ObservableCollection<MinutiaStateBase>();
-
-                CurrentDrawing = new CurveLineState(WriteableBitmap, this);
-                CurrentDrawing.Minutia = new SelfDefinedMinutiae() { TypeId = 3, Name = "Krzywa!" };
-                DrawingData.Add(CurrentDrawing);
             }
             catch (Exception ex)
             {
@@ -105,8 +102,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void InitiateNewDrawing()
         {
-            CurrentDrawing = new SegmentState(WriteableBitmap, this);
-            CurrentDrawing.Minutia = new SelfDefinedMinutiae() { Name = "Prosta" };
+            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap, this);
         }
 
         /// <summary>

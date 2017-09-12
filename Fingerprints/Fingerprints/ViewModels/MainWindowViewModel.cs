@@ -83,7 +83,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState, LeftDrawingService.WriteableBitmap, LeftDrawingService);
+                LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, LeftDrawingService.WriteableBitmap, LeftDrawingService);
             }
             catch (Exception ex)
             {

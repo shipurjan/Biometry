@@ -24,7 +24,10 @@ namespace Fingerprints.MinutiaeTypes
                 {
                     var firstPoint = Points[0];
                     var secondPoint = Points[1];
-                    WriteableBmp.DrawLineAa(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), Convert.ToInt16(secondPoint.X), Convert.ToInt16(secondPoint.Y), Colors.Blue);
+                    WriteableBmp.DrawLine(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 
+                        Convert.ToInt16(secondPoint.X), 
+                        Convert.ToInt16(secondPoint.Y), 
+                        Colors.Blue);
                 }
             }
             catch (Exception ex)
@@ -40,7 +43,6 @@ namespace Fingerprints.MinutiaeTypes
                 if (Points.Count == 0)
                 {
                     Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
-                    DrawingService.AddCurrentDrawingToDrawingData();
                 }
                 else
                 {
@@ -59,8 +61,7 @@ namespace Fingerprints.MinutiaeTypes
                 }
                 else if (Points.Count != 0)
                 {
-                    Points.RemoveAt(1);
-                    Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                    Points[1] = (args.GetPosition((IInputElement)sender).ToFloorPoint());
                 }
             }
             catch (Exception ex)
