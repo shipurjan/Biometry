@@ -20,7 +20,7 @@ namespace Fingerprints.ViewModels
     {
         private MinutiaeTypeController dbController;
 
-        private bool _bCanComboBoxChangeCurrectDrawing;
+        private bool _bCanComboBoxChangeCurrentDrawing;
 
         public DrawingService LeftDrawingService { get; }
 
@@ -52,7 +52,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                _bCanComboBoxChangeCurrectDrawing = true;
+                _bCanComboBoxChangeCurrentDrawing = true;
 
                 dbController = new MinutiaeTypeController();
 
@@ -66,7 +66,7 @@ namespace Fingerprints.ViewModels
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
 
                 SaveClickCommand = new DelegateCommand(SaveClick);
-                cbMinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(cbMinutiaStatesSelectionChanged, CanComboBoxChangeCurrectDrawing);
+                cbMinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(cbMinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
             }
             catch (Exception ex)
             {
@@ -74,9 +74,9 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        private bool CanComboBoxChangeCurrectDrawing(MinutiaState _oSelectedMinutiaState)
+        private bool CanComboBoxChangeCurrentDrawing(MinutiaState _oSelectedMinutiaState)
         {
-            return _bCanComboBoxChangeCurrectDrawing;
+            return _bCanComboBoxChangeCurrentDrawing;
         }
 
         private void cbMinutiaStatesSelectionChanged(MinutiaState _oSelectedMinutiaState)
@@ -107,14 +107,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                // for testing
-                LeftDrawingService.CurrentDrawing = new SegmentState(LeftDrawingService.WriteableBitmap, LeftDrawingService);
-                LeftDrawingService.CurrentDrawing.Minutia = new SelfDefinedMinutiae() { Name = "Prosta" };
-
-                RightDrawingService.CurrentDrawing = new SegmentState(RightDrawingService.WriteableBitmap, RightDrawingService);
-                RightDrawingService.CurrentDrawing.Minutia = new SelfDefinedMinutiae() { Name = "Prosta" };
                 //FileTransfer.Save();
-
             }
             catch (Exception ex)
             {

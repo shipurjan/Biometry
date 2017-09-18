@@ -1,8 +1,5 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
+﻿using System;
 using System.Windows.Input;
-using Fingerprints.Resources;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using ExceptionLogger;
@@ -25,6 +22,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
+                //TODO create bitmap by size of loaded image
                 WriteableBitmap = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
 
                 DrawingData = new ObservableCollection<MinutiaStateBase>();
