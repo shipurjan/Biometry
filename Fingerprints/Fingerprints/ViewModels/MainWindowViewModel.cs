@@ -2,6 +2,9 @@
 using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
+using Fingerprints.Tools;
+using Fingerprints.Tools.Exporters;
+using Microsoft.Win32;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -45,8 +48,8 @@ namespace Fingerprints.ViewModels
         }
 
         public ICommand SaveClickCommand { get; }
-
         public ICommand cbMinutiaeStatesSelectionChanged { get; }
+        public ICommand SaveAsClickCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -67,6 +70,49 @@ namespace Fingerprints.ViewModels
 
                 SaveClickCommand = new DelegateCommand(SaveClick);
                 cbMinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(cbMinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
+                SaveAsClickCommand = new DelegateCommand(SaveAsClick);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void SaveAsClick()
+        {
+            SaveFileDialog saveFileDialog = null;
+            DataExporter leftDataExporter = null;
+            DataExporter rightDataExporter = null;
+            try
+            {
+                saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Bozorth (.xyt)|*.xyt|Default (.txt)|*.txt";
+                saveFileDialog.Title = "Save an Image File";
+                saveFileDialog.ShowDialog();
+
+                if (saveFileDialog.FileName != "")
+                {
+                    switch (saveFileDialog.FilterIndex)
+                    {
+                        case 1:
+                            leftDataExporter = new XytExporter(LeftDrawingData.ToList());
+                            rightDataExporter = new XytExporter(RightDrawingData.ToList());
+                            break;
+                        case 2:
+                            leftDataExporter = new TxtExporter(LeftDrawingData.ToList());
+                            rightDataExporter = new TxtExporter(RightDrawingData.ToList());
+                            break;
+                    }
+
+                    if (leftDataExporter != null && rightDataExporter != null)
+                    {
+                        leftDataExporter.FormatData();
+                        rightDataExporter.FormatData();
+
+                        leftDataExporter.Export(saveFileDialog.FileName);
+                        rightDataExporter.Export(saveFileDialog.FileName);
+                    }
+                }
             }
             catch (Exception ex)
             {
