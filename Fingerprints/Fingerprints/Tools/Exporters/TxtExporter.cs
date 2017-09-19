@@ -5,21 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Fingerprints.MinutiaeTypes;
 using ExceptionLogger;
+using Newtonsoft.Json.Linq;
+using Fingerprints.Resources;
+using System.IO;
+using Fingerprints.Models;
+using Newtonsoft.Json;
+using Fingerprints.Factories;
 
 namespace Fingerprints.Tools.Exporters
 {
     class TxtExporter : Exporter, DataExporter
     {
-        private List<string> preparedData;
+        private List<MinutiaFileState> preparedData;
         public TxtExporter(List<MinutiaStateBase> _data) : base(_data)
         {
+            preparedData = new List<MinutiaFileState>();
         }
 
         public void Export(string _path)
         {
             try
             {
-
+                FileTransfer.SaveFile(_path, JsonConvert.SerializeObject(preparedData, Formatting.Indented));
             }
             catch (Exception ex)
             {
@@ -33,7 +40,7 @@ namespace Fingerprints.Tools.Exporters
             {
                 foreach (var item in data)
                 {
-                    Parse(item);
+                    preparedData.Add(Parse(item));
                 }
             }
             catch (Exception ex)
@@ -42,62 +49,18 @@ namespace Fingerprints.Tools.Exporters
             }
         }
 
-        private string Parse(MinutiaStateBase _state)
+        private MinutiaFileState Parse(MinutiaStateBase _state)
         {
-            string result = string.Empty;
+            MinutiaFileState result = null;
             try
             {
-                switch (_state.Minutia.TypeId)
-                {
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        result = Parse((CurveLineState)_state);
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        result = Parse((SegmentState)_state);
-                        break;
-                }
+                result = FileMinutiaFactory.Create(_state);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
 
-            return result;
-        }
-
-        private string Parse(SegmentState _state)
-        {
-            string result = string.Empty;
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-            return result;
-        }
-
-        private string Parse(CurveLineState _state)
-        {
-            string result = string.Empty;
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
             return result;
         }
     }

@@ -109,8 +109,8 @@ namespace Fingerprints.ViewModels
                         leftDataExporter.FormatData();
                         rightDataExporter.FormatData();
 
-                        leftDataExporter.Export(saveFileDialog.FileName);
-                        rightDataExporter.Export(saveFileDialog.FileName);
+                        leftDataExporter.Export(FileTransfer.getPath(saveFileDialog.FileName, "1.jpg"));
+                        rightDataExporter.Export(FileTransfer.getPath(saveFileDialog.FileName, "2.jpg"));
                     }
                 }
             }
