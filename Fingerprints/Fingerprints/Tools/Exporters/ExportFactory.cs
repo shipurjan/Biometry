@@ -10,9 +10,9 @@ namespace Fingerprints.Tools.Exporters
 {
     public static class ExportFactory
     {
-        public static DataExporter Create(ExportTypes _type, List<MinutiaStateBase> _data)
+        public static IDataExporter Create(ExportTypes _type, List<MinutiaStateBase> _data)
         {
-            DataExporter result = null;
+            IDataExporter result = null;
             try
             {
                 switch (_type)

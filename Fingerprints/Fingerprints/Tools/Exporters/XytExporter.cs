@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Fingerprints.Tools.Exporters
 {
-    class XytExporter : Exporter, DataExporter
+    class XytExporter : Exporter, IDataExporter
     {
         List<string> preparedData;
         public XytExporter(List<MinutiaStateBase> _data) : base(_data)

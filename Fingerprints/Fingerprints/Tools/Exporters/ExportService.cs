@@ -40,7 +40,7 @@ namespace Fingerprints.Tools.Exporters
 
         public void Export(ExportTypes _type, List<MinutiaStateBase> _data, string _path)
         {
-            DataExporter dataExporter = null;
+            IDataExporter dataExporter = null;
 
             dataExporter = ExportFactory.Create(_type, _data);
 
