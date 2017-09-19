@@ -42,15 +42,7 @@ namespace Fingerprints.Tools.Exporters
         {
             DataExporter dataExporter = null;
 
-            switch (_type)
-            {
-                case ExportTypes.Xyt:
-                    dataExporter = new XytExporter(_data);
-                    break;
-                case ExportTypes.Txt:
-                    dataExporter = new TxtExporter(_data);
-                    break;
-            }
+            dataExporter = ExportFactory.Create(_type, _data);
 
             if (dataExporter != null)
             {

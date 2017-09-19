@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fingerprints.Tools
 {
-    interface DataExporter
+    public interface DataExporter
     {
         void FormatData();
         void Export(string _path);

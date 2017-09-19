@@ -183,6 +183,7 @@
     <Compile Include="Tools\DataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
     <Compile Include="Tools\Exporters\Exporter.cs" />
+    <Compile Include="Tools\Exporters\ExportFactory.cs" />
     <Compile Include="Tools\Exporters\ExportService.cs" />
     <Compile Include="Tools\Exporters\TxtExporter.cs" />
     <Compile Include="Tools\Exporters\XytExporter.cs" />

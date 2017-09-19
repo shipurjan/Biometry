@@ -9,6 +9,9 @@ namespace Fingerprints.Tools.Exporters
 {
     public abstract class Exporter
     {
+        /// <summary>
+        /// Data that need to be prepared
+        /// </summary>
         protected List<MinutiaStateBase> data;
         public Exporter(List<MinutiaStateBase> _data)
         {
