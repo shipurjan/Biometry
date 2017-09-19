@@ -12,6 +12,13 @@ namespace Fingerprints.Tools.Exporters
 {
     class ExportService
     {
+        /// <summary>
+        /// Opens SaveFileDialog and export data based on type and path from dialog
+        /// </summary>
+        /// <param name="_firstData"></param>
+        /// <param name="firstImageName"></param>
+        /// <param name="_secondData"></param>
+        /// <param name="secondImageName"></param>
         public void SaveAsFileDialog(List<MinutiaStateBase> _firstData, string firstImageName,
             List<MinutiaStateBase> _secondData, string secondImageName)
         {
@@ -38,7 +45,13 @@ namespace Fingerprints.Tools.Exporters
             }
         }
 
-        public void Export(ExportTypes _type, List<MinutiaStateBase> _data, string _path)
+        /// <summary>
+        /// Export Data by ExportType and saves
+        /// </summary>
+        /// <param name="_type"></param>
+        /// <param name="_data"></param>
+        /// <param name="_fullPath">Full path with extension</param>
+        public void Export(ExportTypes _type, List<MinutiaStateBase> _data, string _fullPath)
         {
             IDataExporter dataExporter = null;
 
@@ -47,7 +60,7 @@ namespace Fingerprints.Tools.Exporters
             if (dataExporter != null)
             {
                 dataExporter.FormatData();
-                dataExporter.Export(_path);
+                dataExporter.Export(_fullPath);
             }
         }
     }
