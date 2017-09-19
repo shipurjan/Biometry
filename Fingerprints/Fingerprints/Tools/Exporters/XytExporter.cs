@@ -12,12 +12,12 @@ namespace Fingerprints.Tools.Exporters
 {
     class XytExporter : Exporter, IDataExporter
     {
-        List<string> preparedData;
+        private List<string> preparedData;
         public XytExporter(List<MinutiaStateBase> _data) : base(_data)
         {
             try
             {
-
+                preparedData = new List<string>();
             }
             catch (Exception ex)
             {
