@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Fingerprints.MinutiaeTypes;
 using ExceptionLogger;
-using Newtonsoft.Json.Linq;
-using Fingerprints.Resources;
-using System.IO;
 using Fingerprints.Models;
 using Newtonsoft.Json;
 using Fingerprints.Factories;

@@ -23,6 +23,8 @@ namespace Fingerprints.ViewModels
     {
         private MinutiaeTypeController dbController;
 
+        private ExportService exportService;
+
         private bool _bCanComboBoxChangeCurrentDrawing;
 
         public DrawingService LeftDrawingService { get; }
@@ -58,6 +60,7 @@ namespace Fingerprints.ViewModels
                 _bCanComboBoxChangeCurrentDrawing = true;
 
                 dbController = new MinutiaeTypeController();
+                exportService = new ExportService();
 
                 //DrawingService must be initialize after picture load
                 LeftDrawingService = new DrawingService();
@@ -80,39 +83,9 @@ namespace Fingerprints.ViewModels
 
         private void SaveAsClick()
         {
-            SaveFileDialog saveFileDialog = null;
-            DataExporter leftDataExporter = null;
-            DataExporter rightDataExporter = null;
             try
             {
-                saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Bozorth (.xyt)|*.xyt|Default (.txt)|*.txt";
-                saveFileDialog.Title = "Save an Image File";
-                saveFileDialog.ShowDialog();
-
-                if (saveFileDialog.FileName != "")
-                {
-                    switch (saveFileDialog.FilterIndex)
-                    {
-                        case 1:
-                            leftDataExporter = new XytExporter(LeftDrawingData.ToList());
-                            rightDataExporter = new XytExporter(RightDrawingData.ToList());
-                            break;
-                        case 2:
-                            leftDataExporter = new TxtExporter(LeftDrawingData.ToList());
-                            rightDataExporter = new TxtExporter(RightDrawingData.ToList());
-                            break;
-                    }
-
-                    if (leftDataExporter != null && rightDataExporter != null)
-                    {
-                        leftDataExporter.FormatData();
-                        rightDataExporter.FormatData();
-
-                        leftDataExporter.Export(FileTransfer.getPath(saveFileDialog.FileName, "1.jpg"));
-                        rightDataExporter.Export(FileTransfer.getPath(saveFileDialog.FileName, "2.jpg"));
-                    }
-                }
+                exportService.SaveAsFileDialog(LeftDrawingData.ToList(), "1.jpg", RightDrawingData.ToList(), "2.jpg");
             }
             catch (Exception ex)
             {
