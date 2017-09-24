@@ -9,14 +9,16 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using Fingerprints.Models;
+using Fingerprints.Tools;
+using Fingerprints.Tools.LinestoPointsConverter;
 
 namespace Fingerprints.Tests
 {
     [TestClass()]
     public class CurveLineTests
     {
-        CurveLine curve;
         PointCollection points;
+        LinesToPointsConverter linesConverter;
 
         [ClassInitialize()]
         public static void ClassInit(TestContext context)
@@ -27,7 +29,8 @@ namespace Fingerprints.Tests
         [TestInitialize()]
         public void Initialize()
         {
-            curve = new CurveLine("krzywa", "#333", 1.0);
+            linesConverter = new LinesToPointsConverter();
+
             Point p1 = new Point() { X = 26, Y = 32 };
             Point p2 = new Point() { X = 101, Y = 163 };
             points = new PointCollection();
@@ -44,6 +47,7 @@ namespace Fingerprints.Tests
             PointCollection points = new PointCollection();
             points.Add(p1);
             points.Add(p2);
+            points.Add(p3);
 
             PointCollection expected = new PointCollection();
             expected.Add(p1);
@@ -53,13 +57,9 @@ namespace Fingerprints.Tests
             expected.Add(new Point() { X = 24, Y = 24 });
             expected.Add(p3);
 
-            PointCollection actual = curve.convertLinesToPoints(points);
+            PointCollection actual = linesConverter.convertLinesToPoints(points);
 
-            //Assert.AreEqual<PointCollection>(expected, actual);
-            for (int i = 0; i < actual.Count - 1; i++)
-            {
-                Assert.AreEqual(actual[i], expected[i]);
-            }
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -79,14 +79,9 @@ namespace Fingerprints.Tests
             expected.Add(new Point() { X = 24, Y = 21 });
             expected.Add(p2);
 
+            PointCollection actual = linesConverter.convertLinesToPoints(points);
 
-            PointCollection actual = curve.convertLinesToPoints(points);
-
-            //Assert.AreEqual<PointCollection>(expected, actual);
-            for (int i = 0; i < actual.Count - 1; i++)
-            {
-                Assert.AreEqual(actual[i], expected[i]);
-            }
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -107,13 +102,9 @@ namespace Fingerprints.Tests
             expected.Add(p2);
 
 
-            PointCollection actual = curve.convertLinesToPoints(points);
+            PointCollection actual = linesConverter.convertLinesToPoints(points);
 
-            //Assert.AreEqual<PointCollection>(expected, actual);
-            for (int i = 0; i < actual.Count - 1; i++)
-            {
-                Assert.AreEqual(actual[i], expected[i]);
-            }
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -136,14 +127,9 @@ namespace Fingerprints.Tests
             expected.Add(new Point() { X = 7, Y = 5 });
             expected.Add(p2);
 
+            PointCollection actual = linesConverter.convertLinesToPoints(points);
 
-            PointCollection actual = curve.convertLinesToPoints(points);
-
-            //Assert.AreEqual<PointCollection>(expected, actual);
-            for (int i = 0; i < actual.Count - 1; i++)
-            {
-                Assert.AreEqual(actual[i], expected[i]);
-            }
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -151,7 +137,7 @@ namespace Fingerprints.Tests
         {
             double expected = -131;
 
-            double actual = curve.calculateA(points[0], points[1]);
+            double actual = linesConverter.calculateA(points[0], points[1]);
 
             Assert.AreEqual(expected, actual);
         }
@@ -161,7 +147,7 @@ namespace Fingerprints.Tests
         {
             double expected = 75;
 
-            double actual = curve.calculateB(points[0], points[1]);
+            double actual = linesConverter.calculateB(points[0], points[1]);
 
             Assert.AreEqual(expected, actual);
         }
@@ -171,7 +157,7 @@ namespace Fingerprints.Tests
         {
             double expected = 1006;
 
-            double actual = curve.calculateC(points[0], points[1]);
+            double actual = linesConverter.calculateC(points[0], points[1]);
 
             Assert.AreEqual(expected, actual);
         }
@@ -184,7 +170,7 @@ namespace Fingerprints.Tests
 
             double expected = 3.16;
 
-            double actual = Math.Round(curve.lengthOfLine(p1, p2), 2);
+            double actual = Math.Round(linesConverter.lengthOfLine(p1, p2), 2);
 
             Assert.AreEqual(expected, actual);
         }
@@ -198,7 +184,15 @@ namespace Fingerprints.Tests
             PointCollection points = new PointCollection();
             points.Add(p1);
 
-            PointCollection pointsReturned = curve.fillSpaceBetweenPointsAndAddPoint(points, p2);
+            PointCollection expected = new PointCollection();
+            expected.Add(p1);
+            expected.Add(new Point { X = 5, Y = 11 });
+            expected.Add(new Point { X = 5, Y = 10 });
+            expected.Add(p2);
+
+            PointCollection actual = linesConverter.fillSpaceBetweenPointsAndAddPoint(points, p2);
+
+            CollectionAssert.AreEqual(expected, actual);
         }
     }
 }

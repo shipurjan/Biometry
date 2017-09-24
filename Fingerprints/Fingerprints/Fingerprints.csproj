@@ -187,6 +187,7 @@
     <Compile Include="Tools\Exporters\ExportService.cs" />
     <Compile Include="Tools\Exporters\TxtExporter.cs" />
     <Compile Include="Tools\Exporters\XytExporter.cs" />
+    <Compile Include="Tools\LinestoPointsConverter\LinesToPointsConverter.cs" />
     <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -281,6 +282,7 @@
   <ItemGroup>
     <Content Include="SharedPackages\ExceptionLogger.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
