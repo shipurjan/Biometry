@@ -2,19 +2,12 @@
 using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
-using Fingerprints.Tools;
 using Fingerprints.Tools.Exporters;
-using Microsoft.Win32;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -102,7 +95,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, LeftDrawingService.WriteableBitmap, LeftDrawingService);
+                LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, LeftDrawingService);
             }
             catch (Exception ex)
             {

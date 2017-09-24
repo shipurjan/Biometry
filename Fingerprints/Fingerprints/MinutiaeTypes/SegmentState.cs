@@ -12,7 +12,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class SegmentState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public SegmentState(WriteableBitmap _oWriteableBmp, DrawingService _oDrawingService) : base(_oWriteableBmp, _oDrawingService)
+        public SegmentState(DrawingService _oDrawingService) : base(_oDrawingService)
         {
         }
 

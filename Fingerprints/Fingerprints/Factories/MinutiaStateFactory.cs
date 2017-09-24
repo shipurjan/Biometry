@@ -13,7 +13,7 @@ namespace Fingerprints.Factories
 {
     public static class MinutiaStateFactory
     {
-        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, WriteableBitmap _oWriteableBmp, DrawingService _oDrawingService)
+        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService)
         {
             MinutiaStateBase oMinutiaState = null;
 
@@ -22,11 +22,11 @@ namespace Fingerprints.Factories
                 switch (_oMinutia.TypeId)
                 {
                     case 3:
-                        oMinutiaState = new CurveLineState(_oWriteableBmp, _oDrawingService);
+                        oMinutiaState = new CurveLineState(_oDrawingService);
                         oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 6:
-                        oMinutiaState = new SegmentState(_oWriteableBmp, _oDrawingService);
+                        oMinutiaState = new SegmentState(_oDrawingService);
                         oMinutiaState.Minutia = _oMinutia;
                         break;
                 }

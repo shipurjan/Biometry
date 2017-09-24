@@ -100,7 +100,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void InitiateNewDrawing()
         {
-            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap, this);
+            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
         }
 
         /// <summary>
