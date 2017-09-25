@@ -133,6 +133,44 @@ namespace Fingerprints.Tests
         }
 
         [TestMethod()]
+        public void convertLinesToPointsTest5()
+        {
+            Point p1 = new Point() { X = 5, Y = 12 };
+            Point p2 = new Point() { X = 8, Y = 12 };
+            PointCollection points = new PointCollection();
+            points.Add(p1);
+            points.Add(p2);
+
+            PointCollection expected = new PointCollection();
+            expected.Add(p1);
+            expected.Add(new Point() { X = 6, Y = 12 });
+            expected.Add(new Point() { X = 7, Y = 12 });
+            expected.Add(p2);
+
+            PointCollection actual = linesConverter.convertLinesToPoints(points);
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void fillSpaceBetweenPointsTest()
+        {
+            Point p1 = new Point() { X = 5, Y = 12 };
+            Point p2 = new Point() { X = 8, Y = 12 };
+
+
+            PointCollection expected = new PointCollection();
+            expected.Add(p1);
+            expected.Add(new Point() { X = 6, Y = 12 });
+            expected.Add(new Point() { X = 7, Y = 12 });
+            expected.Add(p2);
+
+            PointCollection actual = linesConverter.fillSpaceBetweenPoints(p1, p2);
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
         public void calculateATest()
         {
             double expected = -131;

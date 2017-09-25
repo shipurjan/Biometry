@@ -7,7 +7,8 @@ using System.Windows;
 using Fingerprints.Resources;
 using Fingerprints.Interfaces;
 using Fingerprints.ViewModels;
-using System.Windows.Shapes;
+using Fingerprints.Tools.LinestoPointsConverter;
+using System.Linq;
 
 namespace Fingerprints.MinutiaeTypes
 {
