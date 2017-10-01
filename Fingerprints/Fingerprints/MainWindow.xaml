@@ -90,7 +90,7 @@
                             <i:InvokeCommandAction Command="{Binding cbMinutiaeStatesSelectionChanged}" CommandParameter="{Binding ElementName=comboBox, Path=SelectedItem}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                        
+
                 </ComboBox>
             </Grid>
 
@@ -138,19 +138,21 @@
             <Grid Grid.Column="0">
                 <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                        <Image x:Name="imageL" Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
-                        </Image>
-                        <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" >
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseMove">
-                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseMoveMethod"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseDown">
-                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseDownMethod" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Image>
-                        <local:OverridedCanvas Visibility="Collapsed" x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
+                        <Canvas Canvas.Left="0" Canvas.Top="0">
+                            <Image x:Name="imageL" Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
+                            </Image>
+                            <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseMove">
+                                        <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseMoveMethod"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseDownMethod" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <local:OverridedCanvas Visibility="Collapsed" x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
+                        </Canvas>
                     </Canvas>
                 </Border>
             </Grid>
