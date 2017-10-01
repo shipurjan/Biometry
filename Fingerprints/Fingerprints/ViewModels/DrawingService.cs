@@ -30,6 +30,7 @@ namespace Fingerprints.ViewModels
             get { return writeableBitmap; }
             set { SetProperty(ref writeableBitmap, value); }
         }
+
         private ImageSource backgroundImage;
         public ImageSource BackgroundImage
         {
