@@ -165,6 +165,7 @@
     <Compile Include="MinutiaeTypes\Triangle\FileTriangle.cs" />
     <Compile Include="MinutiaeTypes\Triangle\Triangle.cs" />
     <Compile Include="MinutiaeTypes\Triangle\UserTriangle.cs" />
+    <Compile Include="MinutiaeTypes\VectorState.cs" />
     <Compile Include="MinutiaeTypes\Vector\FileVector.cs" />
     <Compile Include="MinutiaeTypes\Vector\UserVector.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
