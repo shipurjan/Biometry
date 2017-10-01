@@ -54,6 +54,8 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        #region IMouseMoveable, IMouseClickable, IDrawable methods
+
         /// <summary>
         /// Method launched when MouseMove event is triggered
         /// </summary>
@@ -94,6 +96,37 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// its clear WriteableBitmap and draws all items from DrawingData by lauching their DrawProcedure method
+        /// </summary>
+        public void Draw()
+        {
+            try
+            {
+                WriteableBitmap.Clear();
+                foreach (var item in DrawingData)
+                {
+                    if (item is IDrawable)
+                    {
+                        ((IDrawable)item).DrawProcedure();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        #endregion
+
+        #region zoom and move
+
+        /// <summary>
+        /// Performs zoom of container which contains BackgroundImage and WriteableBitmap
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void MouseWheelGroupMethod(object sender, MouseWheelEventArgs args)
         {
             UIElement uiElement = null;
@@ -122,6 +155,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// saves position of mouse cursor and starts capturing mouse on senfer object ( in this case UIElement )
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void MouseLeftButtonDownGroupMethod(object sender, MouseButtonEventArgs args)
         {
             try
@@ -135,6 +173,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Realeases Mouse capture from sender object
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void MouseLeftButtonUpGroupMethod(object sender, MouseButtonEventArgs args)
         {
             try
@@ -147,17 +190,25 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Moves container with WriteableBitmap and BackgroundImage
+        /// Calculates difference between last remembered mouse position and new and moves container by this value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void PreviewMouseMoveGroupMethod(object sender, MouseEventArgs args)
         {
             UIElement uiElement = null;
+            Point temp;
+            Point res;
             try
             {
                 if (args.LeftButton == MouseButtonState.Pressed)
                 {
                     uiElement = (UIElement)sender;
 
-                    Point temp = args.GetPosition(Application.Current.MainWindow);
-                    Point res = new Point(mousePosition.X - temp.X, mousePosition.Y - temp.Y);
+                    temp = args.GetPosition(Application.Current.MainWindow);
+                    res = new Point(mousePosition.X - temp.X, mousePosition.Y - temp.Y);
 
                     Canvas.SetLeft(uiElement, Canvas.GetLeft(uiElement) - res.X);
                     Canvas.SetTop(uiElement, Canvas.GetTop(uiElement) - res.Y);
@@ -172,28 +223,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        /// <summary>
-        /// its clear WriteableBitmap and draws all items from DrawingData by lauching their DrawProcedure method
-        /// </summary>
-        public void Draw()
-        {
-            try
-            {
-                WriteableBitmap.Clear();
-                foreach (var item in DrawingData)
-                {
-                    if (item is IDrawable)
-                    {
-                        ((IDrawable)item).DrawProcedure();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
+        #endregion
 
+        /// <summary>
+        /// Opens OpenFileDialog for load image, creates new instance of WriteableBitmap and assigns BackroundImage
+        /// </summary>
         private void LoadImage()
         {
             try
@@ -206,6 +240,13 @@ namespace Fingerprints.ViewModels
                     BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
 
                     WriteableBitmap = new WriteableBitmap(((BitmapImage)BackgroundImage).PixelWidth, (((BitmapImage)BackgroundImage).PixelHeight), 96, 96, PixelFormats.Bgra32, null);
+
+                    //Reset drawing
+                    DrawingData.Clear();
+                    if (CurrentDrawing != null)
+                    {
+                        CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
+                    }
                 }
             }
             catch (Exception ex)
