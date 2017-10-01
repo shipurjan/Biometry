@@ -24,7 +24,7 @@ namespace Fingerprints.MinutiaeTypes
         {
             try
             {
-                if (Points.Count > 1)
+                if (Points.Count == 1)
                 {
                     // Get beging and end of drawing
                     var firstPoint = Points[0];
@@ -68,10 +68,6 @@ namespace Fingerprints.MinutiaeTypes
             try
             {
                 if (Points.Count == 1)
-                {
-                    Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
-                }
-                else if (Points.Count != 0)
                 {
                     // Get current pointer position
                     Point tmp = (args.GetPosition((IInputElement)sender).ToFloorPoint());
