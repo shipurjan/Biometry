@@ -10,6 +10,7 @@ using Fingerprints.Factories;
 using Prism.Mvvm;
 using Microsoft.Win32;
 using Prism.Commands;
+using System.Windows;
 
 namespace Fingerprints.ViewModels
 {
@@ -17,29 +18,29 @@ namespace Fingerprints.ViewModels
     {
         public ObservableCollection<MinutiaStateBase> DrawingData;
 
-        public WriteableBitmap WriteableBitmap { get; set; }
-
+        #region Props
         public MinutiaStateBase CurrentDrawing { get; set; }
 
+        private WriteableBitmap writeableBitmap;
+        public WriteableBitmap WriteableBitmap
+        {
+            get { return writeableBitmap; }
+            set { SetProperty(ref writeableBitmap, value); }
+        }
         private ImageSource backgroundImage;
         public ImageSource BackgroundImage
         {
             get { return backgroundImage; }
-            set
-            {
-                SetProperty(ref backgroundImage, value);
-            }
+            set { SetProperty(ref backgroundImage, value); }
         }
 
         public ICommand LoadImageCommand { get; }
+        #endregion
 
         public DrawingService()
         {
             try
             {
-                //TODO create bitmap by size of loaded image
-                WriteableBitmap = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
-
                 DrawingData = new ObservableCollection<MinutiaStateBase>();
 
                 LoadImageCommand = new DelegateCommand(LoadImage);
@@ -90,6 +91,34 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        public void MouseWheelGroupMethod(object sender, MouseWheelEventArgs args)
+        {
+            UIElement uiElement = null;
+            try
+            {
+                uiElement = (UIElement)sender;
+
+                Matrix matline = uiElement.RenderTransform.Value;
+                Point mouse = args.GetPosition(uiElement);
+
+                if (args.Delta > 0)
+                {
+                    matline.ScaleAtPrepend(1.15, 1.15, mouse.X, mouse.Y);
+                }
+                else
+                {
+                    matline.ScaleAtPrepend(1 / 1.15, 1 / 1.15, mouse.X, mouse.Y);
+                }
+
+                MatrixTransform mtfl = new MatrixTransform(matline);
+                uiElement.RenderTransform = mtfl;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
         /// <summary>
         /// its clear WriteableBitmap and draws all items from DrawingData by lauching their DrawProcedure method
         /// </summary>
@@ -122,6 +151,8 @@ namespace Fingerprints.ViewModels
                 if (openFile.ShowDialog() == true)
                 {
                     BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
+                     
+                    WriteableBitmap = new WriteableBitmap(((BitmapImage)BackgroundImage).PixelWidth, (((BitmapImage)BackgroundImage).PixelHeight), 96, 96, PixelFormats.Bgra32, null);
                 }
             }
             catch (Exception ex)

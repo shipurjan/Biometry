@@ -139,7 +139,7 @@
                 <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
                         <Canvas Canvas.Left="0" Canvas.Top="0">
-                            <Image x:Name="imageL" Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
+                            <Image x:Name="imageL" Height="{Binding LeftDrawingService.BackgroundImage.PixelHeight}" Width="{Binding LeftDrawingService.BackgroundImage.PixelWidth}" Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" RenderOptions.BitmapScalingMode="NearestNeighbor">
                             </Image>
                             <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" >
                                 <i:Interaction.Triggers>
@@ -152,6 +152,11 @@
                                 </i:Interaction.Triggers>
                             </Image>
                             <local:OverridedCanvas Visibility="Collapsed" x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseWheel">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseWheelGroupMethod" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Canvas>
                     </Canvas>
                 </Border>
