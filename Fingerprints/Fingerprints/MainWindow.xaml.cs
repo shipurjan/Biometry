@@ -30,6 +30,7 @@ namespace Fingerprints
         public DrawService drawer;
         public MainWindow()
         {
+            Application.Current.MainWindow = this;
             var viewModel = new MainWindowViewModel();
             InitializeComponent();
             DataContext = viewModel;
@@ -39,11 +40,11 @@ namespace Fingerprints
             //comboBox.ItemsSource = viewModel.MinutiaeStates;
 
             //Application.Current.MainWindow = this;
-            Picture picture = new Picture(this);
+            //Picture picture = new Picture(this);
             //UserMinutiaFactory factory = new UserMinutiaFactory();
             //drawer = new DrawService(factory);
             //picture.InitializeR();
-            picture.InitializeL();
+            //picture.InitializeL();
             //controller = new MinutiaeTypeController();
             //comboBox.ItemsSource = controller.getStates();
             //InitTable();

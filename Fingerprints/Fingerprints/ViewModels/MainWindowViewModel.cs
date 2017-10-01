@@ -96,6 +96,7 @@ namespace Fingerprints.ViewModels
             try
             {
                 LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, LeftDrawingService);
+                RightDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, RightDrawingService);
             }
             catch (Exception ex)
             {

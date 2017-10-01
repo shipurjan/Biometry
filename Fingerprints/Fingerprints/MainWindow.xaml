@@ -66,7 +66,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="openLeftImage" Command="{Binding LeftDrawingService.LoadImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
@@ -90,7 +90,7 @@
                             <i:InvokeCommandAction Command="{Binding cbMinutiaeStatesSelectionChanged}" CommandParameter="{Binding ElementName=comboBox, Path=SelectedItem}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                        
+
                 </ComboBox>
             </Grid>
 
@@ -103,7 +103,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="openRightImage" Command="{Binding RightDrawingService.LoadImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
@@ -138,19 +138,38 @@
             <Grid Grid.Column="0">
                 <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                        <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
-                        </Image>
-                        <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                        <Canvas Canvas.Left="0" Canvas.Top="0">
+                            <Image x:Name="imageL" Height="{Binding LeftDrawingService.BackgroundImage.PixelHeight}" Width="{Binding LeftDrawingService.BackgroundImage.PixelWidth}"
+                                   Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Canvas.Top="0" Canvas.Left="0">
+                            </Image>
+                            
+                            <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" Canvas.Top="0" Canvas.Left="0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseMove">
+                                        <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseMoveMethod"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseDownMethod" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <local:OverridedCanvas Visibility="Collapsed" x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseMove">
-                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseMoveMethod"/>
+                                <i:EventTrigger EventName="PreviewMouseWheel">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseWheelGroupMethod" />
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseDown">
-                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseDownMethod" />
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseLeftButtonDownGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseLeftButtonUpGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseMove">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="PreviewMouseMoveGroupMethod" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </Image>
-                        <local:OverridedCanvas Visibility="Collapsed" x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
+                        </Canvas>
                     </Canvas>
                 </Border>
             </Grid>
@@ -159,18 +178,39 @@
             <Grid Grid.Column="1">
                 <Border x:Name="borderRight" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaRight" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
-                        <Image x:Name="imageR" Tag="Right" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
-                        <Image x:Name="rightImageForDrawing" Source="{Binding RightDrawingService.WriteableBitmap}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" >
+                        <Canvas Canvas.Left="0" Canvas.Top="0">
+                            <Image x:Name="imageR" Tag="Right" Canvas.Left="0" Canvas.Top="0" Height="{Binding RightDrawingService.BackgroundImage.PixelHeight}" 
+                                   Width="{Binding RightDrawingService.BackgroundImage.PixelWidth}" Source="{Binding RightDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" >
+                            </Image>
+                            
+                            <Image x:Name="rightImageForDrawing" Source="{Binding RightDrawingService.WriteableBitmap}" SnapsToDevicePixels="True"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" Canvas.Left="0" Canvas.Top="0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseMove">
+                                        <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseMoveMethod"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseDownMethod" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <local:OverridedCanvas x:Name="canvasImageR" SnapsToDevicePixels="True" Tag="Right" Canvas.Left="0" Canvas.Top="0"/>
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseMove">
-                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseMoveMethod"/>
+                                <i:EventTrigger EventName="PreviewMouseWheel">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseWheelGroupMethod" />
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseDown">
-                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseDownMethod" />
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseLeftButtonDownGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseLeftButtonUpGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseMove">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="PreviewMouseMoveGroupMethod" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </Image>
-                        <local:OverridedCanvas x:Name="canvasImageR" SnapsToDevicePixels="True" Tag="Right" Canvas.Left="0" Canvas.Top="0"/>
+                        </Canvas>
                     </Canvas>
                 </Border>
             </Grid>

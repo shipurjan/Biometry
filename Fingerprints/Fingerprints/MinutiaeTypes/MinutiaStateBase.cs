@@ -18,19 +18,22 @@ namespace Fingerprints.MinutiaeTypes
         public ObservableCollection<Point> Points { get; }
 
         private double _Angle;
-
-        public double Angle { get { return _Angle; } set { SetProperty(ref _Angle, value); } }
+        public double Angle
+        {
+            get { return _Angle; }
+            set { SetProperty(ref _Angle, value); }
+        }
 
         private long _Id;
-
-        public long Id { get { return _Id; } set { SetProperty(ref _Id, value); } }
+        public long Id
+        {
+            get { return _Id; }
+            set { SetProperty(ref _Id, value); }
+        }
 
         public WriteableBitmap WriteableBmp
         {
-            get
-            {
-                return DrawingService.WriteableBitmap;
-            }
+            get { return DrawingService.WriteableBitmap; }
         }
 
         public DrawingService DrawingService { get; }

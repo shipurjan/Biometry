@@ -7,31 +7,55 @@ using Fingerprints.Interfaces;
 using Fingerprints.MinutiaeTypes;
 using System.Collections.ObjectModel;
 using Fingerprints.Factories;
+using Prism.Mvvm;
+using Microsoft.Win32;
+using Prism.Commands;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Fingerprints.ViewModels
 {
-    public class DrawingService : IDisposable
+    public class DrawingService : BindableBase, IDisposable
     {
         public ObservableCollection<MinutiaStateBase> DrawingData;
-        
-        public WriteableBitmap WriteableBitmap { get; set; }
 
-        public MinutiaStateBase CurrentDrawing { get; set; } 
+        private Point mousePosition;
+
+        #region Props
+        public MinutiaStateBase CurrentDrawing { get; set; }
+
+        private WriteableBitmap writeableBitmap;
+        public WriteableBitmap WriteableBitmap
+        {
+            get { return writeableBitmap; }
+            set { SetProperty(ref writeableBitmap, value); }
+        }
+
+        private ImageSource backgroundImage;
+        public ImageSource BackgroundImage
+        {
+            get { return backgroundImage; }
+            set { SetProperty(ref backgroundImage, value); }
+        }
+
+        public ICommand LoadImageCommand { get; }
+        #endregion
 
         public DrawingService()
         {
             try
             {
-                //TODO create bitmap by size of loaded image
-                WriteableBitmap = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
-
                 DrawingData = new ObservableCollection<MinutiaStateBase>();
+
+                LoadImageCommand = new DelegateCommand(LoadImage);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+        #region IMouseMoveable, IMouseClickable, IDrawable methods
 
         /// <summary>
         /// Method launched when MouseMove event is triggered
@@ -86,6 +110,143 @@ namespace Fingerprints.ViewModels
                     if (item is IDrawable)
                     {
                         ((IDrawable)item).DrawProcedure();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        #endregion
+
+        #region zoom and move
+
+        /// <summary>
+        /// Performs zoom of container which contains BackgroundImage and WriteableBitmap
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        public void MouseWheelGroupMethod(object sender, MouseWheelEventArgs args)
+        {
+            UIElement uiElement = null;
+            try
+            {
+                uiElement = (UIElement)sender;
+
+                Matrix matline = uiElement.RenderTransform.Value;
+                Point mouse = args.GetPosition(uiElement);
+
+                if (args.Delta > 0)
+                {
+                    matline.ScaleAtPrepend(1.15, 1.15, mouse.X, mouse.Y);
+                }
+                else
+                {
+                    matline.ScaleAtPrepend(1 / 1.15, 1 / 1.15, mouse.X, mouse.Y);
+                }
+
+                MatrixTransform mtfl = new MatrixTransform(matline);
+                uiElement.RenderTransform = mtfl;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// saves position of mouse cursor and starts capturing mouse on senfer object ( in this case UIElement )
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        public void MouseLeftButtonDownGroupMethod(object sender, MouseButtonEventArgs args)
+        {
+            try
+            {
+                mousePosition = args.GetPosition(Application.Current.MainWindow);
+                ((UIElement)sender).CaptureMouse();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Realeases Mouse capture from sender object
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        public void MouseLeftButtonUpGroupMethod(object sender, MouseButtonEventArgs args)
+        {
+            try
+            {
+                ((UIElement)sender).ReleaseMouseCapture();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Moves container with WriteableBitmap and BackgroundImage
+        /// Calculates difference between last remembered mouse position and new and moves container by this value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        public void PreviewMouseMoveGroupMethod(object sender, MouseEventArgs args)
+        {
+            UIElement uiElement = null;
+            Point temp;
+            Point res;
+            try
+            {
+                if (args.LeftButton == MouseButtonState.Pressed)
+                {
+                    uiElement = (UIElement)sender;
+
+                    temp = args.GetPosition(Application.Current.MainWindow);
+                    res = new Point(mousePosition.X - temp.X, mousePosition.Y - temp.Y);
+
+                    Canvas.SetLeft(uiElement, Canvas.GetLeft(uiElement) - res.X);
+                    Canvas.SetTop(uiElement, Canvas.GetTop(uiElement) - res.Y);
+
+                    mousePosition = temp;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Opens OpenFileDialog for load image, creates new instance of WriteableBitmap and assigns BackroundImage
+        /// </summary>
+        private void LoadImage()
+        {
+            try
+            {
+                OpenFileDialog openFile = new OpenFileDialog();
+                openFile.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.bmp) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.bmp";
+
+                if (openFile.ShowDialog() == true)
+                {
+                    BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
+
+                    WriteableBitmap = new WriteableBitmap(((BitmapImage)BackgroundImage).PixelWidth, (((BitmapImage)BackgroundImage).PixelHeight), 96, 96, PixelFormats.Bgra32, null);
+
+                    //Reset drawing
+                    DrawingData.Clear();
+                    if (CurrentDrawing != null)
+                    {
+                        CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
                     }
                 }
             }
