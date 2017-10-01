@@ -30,6 +30,7 @@ namespace Fingerprints
         public DrawService drawer;
         public MainWindow()
         {
+            Application.Current.MainWindow = this;
             var viewModel = new MainWindowViewModel();
             InitializeComponent();
             DataContext = viewModel;

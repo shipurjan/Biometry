@@ -11,12 +11,15 @@ using Prism.Mvvm;
 using Microsoft.Win32;
 using Prism.Commands;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
         public ObservableCollection<MinutiaStateBase> DrawingData;
+
+        private Point mousePosition;
 
         #region Props
         public MinutiaStateBase CurrentDrawing { get; set; }
@@ -119,6 +122,56 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        public void MouseLeftButtonDownGroupMethod(object sender, MouseButtonEventArgs args)
+        {
+            try
+            {
+                mousePosition = args.GetPosition(Application.Current.MainWindow);
+                ((UIElement)sender).CaptureMouse();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        public void MouseLeftButtonUpGroupMethod(object sender, MouseButtonEventArgs args)
+        {
+            try
+            {
+                ((UIElement)sender).ReleaseMouseCapture();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        public void PreviewMouseMoveGroupMethod(object sender, MouseEventArgs args)
+        {
+            UIElement uiElement = null;
+            try
+            {
+                if (args.LeftButton == MouseButtonState.Pressed)
+                {
+                    uiElement = (UIElement)sender;
+
+                    Point temp = args.GetPosition(Application.Current.MainWindow);
+                    Point res = new Point(mousePosition.X - temp.X, mousePosition.Y - temp.Y);
+
+                    Canvas.SetLeft(uiElement, Canvas.GetLeft(uiElement) - res.X);
+                    Canvas.SetTop(uiElement, Canvas.GetTop(uiElement) - res.Y);
+
+                    mousePosition = temp;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
         /// <summary>
         /// its clear WriteableBitmap and draws all items from DrawingData by lauching their DrawProcedure method
         /// </summary>
@@ -151,7 +204,7 @@ namespace Fingerprints.ViewModels
                 if (openFile.ShowDialog() == true)
                 {
                     BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
-                     
+
                     WriteableBitmap = new WriteableBitmap(((BitmapImage)BackgroundImage).PixelWidth, (((BitmapImage)BackgroundImage).PixelHeight), 96, 96, PixelFormats.Bgra32, null);
                 }
             }
