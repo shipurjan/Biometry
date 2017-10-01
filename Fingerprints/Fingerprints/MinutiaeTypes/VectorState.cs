@@ -28,14 +28,8 @@ namespace Fingerprints.MinutiaeTypes
                 {
                     // Get beging and end of drawing
                     var firstPoint = Points[0];
-                    var secondPoint = Points[1];
-                    
-                    // Get delta X and Y
-                    double deltaX = secondPoint.X - firstPoint.X;
-                    double deltaY = secondPoint.Y - firstPoint.Y;
-
-                    // Compute Angle using deltas
-                    Angle = (Math.Atan2(deltaY, deltaX));
+                    var secondPoint = new Point(Points[0].X + Math.Cos(Angle) * 20,
+                                                Points[0].Y + Math.Sin(Angle) * 20);
 
                     // Draw elipse starting in firstPoint location and fixed radius size
                     WriteableBmp.DrawEllipseCentered(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 5, 5, Colors.Red);
@@ -79,7 +73,15 @@ namespace Fingerprints.MinutiaeTypes
                 }
                 else if (Points.Count != 0)
                 {
-                    Points[1] = (args.GetPosition((IInputElement)sender).ToFloorPoint());
+                    // Get current pointer position
+                    Point tmp = (args.GetPosition((IInputElement)sender).ToFloorPoint());
+
+                    // Get delta X and Y
+                    double deltaX = tmp.X - Points[0].X;
+                    double deltaY = tmp.Y - Points[0].Y;
+
+                    // Compute Angle using deltas
+                    Angle = (Math.Atan2(deltaY, deltaX));
                 }
             }
             catch (Exception ex)
