@@ -2,6 +2,9 @@
 using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
+using Fingerprints.Tools;
+using Fingerprints.Tools.Exporters;
+using Microsoft.Win32;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -19,6 +22,8 @@ namespace Fingerprints.ViewModels
     class MainWindowViewModel
     {
         private MinutiaeTypeController dbController;
+
+        private ExportService exportService;
 
         private bool _bCanComboBoxChangeCurrentDrawing;
 
@@ -45,8 +50,8 @@ namespace Fingerprints.ViewModels
         }
 
         public ICommand SaveClickCommand { get; }
-
         public ICommand cbMinutiaeStatesSelectionChanged { get; }
+        public ICommand SaveAsClickCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -55,6 +60,7 @@ namespace Fingerprints.ViewModels
                 _bCanComboBoxChangeCurrentDrawing = true;
 
                 dbController = new MinutiaeTypeController();
+                exportService = new ExportService();
 
                 //DrawingService must be initialize after picture load
                 LeftDrawingService = new DrawingService();
@@ -67,6 +73,19 @@ namespace Fingerprints.ViewModels
 
                 SaveClickCommand = new DelegateCommand(SaveClick);
                 cbMinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(cbMinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
+                SaveAsClickCommand = new DelegateCommand(SaveAsClick);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void SaveAsClick()
+        {
+            try
+            {
+                exportService.SaveAsFileDialog(LeftDrawingData.ToList(), "1.jpg", RightDrawingData.ToList(), "2.jpg");
             }
             catch (Exception ex)
             {

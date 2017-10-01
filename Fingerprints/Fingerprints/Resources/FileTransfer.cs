@@ -1,4 +1,5 @@
-﻿using Fingerprints.Models;
+﻿using ExceptionLogger;
+using Fingerprints.Models;
 using Fingerprints.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -40,12 +41,34 @@ namespace Fingerprints
 
         public static void SaveFile(string path, List<string> list)
         {
-            using (StreamWriter writer = new StreamWriter(path))
+            try
             {
-                foreach (var item in list)
+                using (StreamWriter writer = new StreamWriter(path))
                 {
-                    writer.WriteLine(item);
+                    foreach (var item in list)
+                    {
+                        writer.WriteLine(item);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        public static void SaveFile(string _path, string _text)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(_path))
+                {
+                    writer.WriteLine(_text);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
         }
         public static void LoadLeftFile()
