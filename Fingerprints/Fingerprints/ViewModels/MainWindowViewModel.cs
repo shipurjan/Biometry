@@ -55,7 +55,7 @@ namespace Fingerprints.ViewModels
                 dbController = new MinutiaeTypeController();
                 exportService = new ExportService();
 
-                //DrawingService must be initialize after picture load
+                //TODO DrawingService must be initialize after picture load
                 LeftDrawingService = new DrawingService();
                 RightDrawingService = new DrawingService();
 
@@ -79,7 +79,7 @@ namespace Fingerprints.ViewModels
             try
             {
                 exportService.SaveAsFileDialog(LeftDrawingData.ToList(), "1.jpg", RightDrawingData.ToList(), "2.jpg");
-            }
+            }   
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
