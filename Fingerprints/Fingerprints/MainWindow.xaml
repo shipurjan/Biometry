@@ -66,7 +66,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="openLeftImage" Command="{Binding LeftDrawingService.LoadImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
@@ -138,7 +138,7 @@
             <Grid Grid.Column="0">
                 <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                        <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
+                        <Image x:Name="imageL" Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill">
                         </Image>
                         <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" >
                             <i:Interaction.Triggers>

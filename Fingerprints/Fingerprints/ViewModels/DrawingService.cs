@@ -7,16 +7,31 @@ using Fingerprints.Interfaces;
 using Fingerprints.MinutiaeTypes;
 using System.Collections.ObjectModel;
 using Fingerprints.Factories;
+using Prism.Mvvm;
+using Microsoft.Win32;
+using Prism.Commands;
 
 namespace Fingerprints.ViewModels
 {
-    public class DrawingService : IDisposable
+    public class DrawingService : BindableBase, IDisposable
     {
         public ObservableCollection<MinutiaStateBase> DrawingData;
-        
+
         public WriteableBitmap WriteableBitmap { get; set; }
 
-        public MinutiaStateBase CurrentDrawing { get; set; } 
+        public MinutiaStateBase CurrentDrawing { get; set; }
+
+        private ImageSource backgroundImage;
+        public ImageSource BackgroundImage
+        {
+            get { return backgroundImage; }
+            set
+            {
+                SetProperty(ref backgroundImage, value);
+            }
+        }
+
+        public ICommand LoadImageCommand { get; }
 
         public DrawingService()
         {
@@ -26,6 +41,8 @@ namespace Fingerprints.ViewModels
                 WriteableBitmap = new WriteableBitmap(620, 620, 96, 96, PixelFormats.Bgra32, null);
 
                 DrawingData = new ObservableCollection<MinutiaStateBase>();
+
+                LoadImageCommand = new DelegateCommand(LoadImage);
             }
             catch (Exception ex)
             {
@@ -87,6 +104,24 @@ namespace Fingerprints.ViewModels
                     {
                         ((IDrawable)item).DrawProcedure();
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void LoadImage()
+        {
+            try
+            {
+                OpenFileDialog openFile = new OpenFileDialog();
+                openFile.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.bmp) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.bmp";
+
+                if (openFile.ShowDialog() == true)
+                {
+                    BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
                 }
             }
             catch (Exception ex)
