@@ -33,6 +33,10 @@ namespace Fingerprints.Factories
                         oMinutiaState = new CurveLineState(_oDrawingService);
                         oMinutiaState.Minutia = _oMinutia;
                         break;
+                    case 4:
+                        oMinutiaState = new TriangleState(_oDrawingService);
+                        oMinutiaState.Minutia = _oMinutia;
+                        break;
                     case 5:
                         oMinutiaState = new PeakState(_oDrawingService);
                         oMinutiaState.Minutia = _oMinutia;

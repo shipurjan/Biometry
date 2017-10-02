@@ -163,6 +163,7 @@
     <Compile Include="MinutiaeTypes\Segment\UserSegment.cs" />
     <Compile Include="MinutiaeTypes\SinglePoint\FileSinglePoint.cs" />
     <Compile Include="MinutiaeTypes\SinglePoint\UserSinglePoint.cs" />
+    <Compile Include="MinutiaeTypes\TriangleState.cs" />
     <Compile Include="MinutiaeTypes\Triangle\FileTriangle.cs" />
     <Compile Include="MinutiaeTypes\Triangle\Triangle.cs" />
     <Compile Include="MinutiaeTypes\Triangle\UserTriangle.cs" />
