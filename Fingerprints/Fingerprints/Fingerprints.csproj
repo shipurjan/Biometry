@@ -167,6 +167,7 @@
     <Compile Include="MinutiaeTypes\Triangle\UserTriangle.cs" />
     <Compile Include="MinutiaeTypes\VectorState.cs" />
     <Compile Include="MinutiaeTypes\Vector\FileVector.cs" />
+    <Compile Include="MinutiaeTypes\PointState.cs" />
     <Compile Include="MinutiaeTypes\Vector\UserVector.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />
