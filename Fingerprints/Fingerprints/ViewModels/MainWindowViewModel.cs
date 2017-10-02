@@ -2,21 +2,22 @@
 using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
+using Fingerprints.Resources;
 using Fingerprints.Tools.Exporters;
 using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Fingerprints.ViewModels
 {
     class MainWindowViewModel
     {
         private MinutiaeTypeController dbController;
-
-        private ExportService exportService;
 
         private bool _bCanComboBoxChangeCurrentDrawing;
 
@@ -53,17 +54,19 @@ namespace Fingerprints.ViewModels
                 _bCanComboBoxChangeCurrentDrawing = true;
 
                 dbController = new MinutiaeTypeController();
-                exportService = new ExportService();
 
-                //TODO DrawingService must be initialize after picture load
+                //Initialize Drawing Services
                 LeftDrawingService = new DrawingService();
                 RightDrawingService = new DrawingService();
 
+                //Add method for CollectinoChanged
                 LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
                 RightDrawingData.CollectionChanged += RightDrawingDataChanged;
 
+                //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
 
+                //button clicks delegates
                 SaveClickCommand = new DelegateCommand(SaveClick);
                 cbMinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(cbMinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
                 SaveAsClickCommand = new DelegateCommand(SaveAsClick);
@@ -78,7 +81,9 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                exportService.SaveAsFileDialog(LeftDrawingData.ToList(), "1.jpg", RightDrawingData.ToList(), "2.jpg");
+                string leftFileName = LeftDrawingService.BackgroundImage.GetFileName();
+                string rightFileName = RightDrawingService.BackgroundImage.GetFileName();
+                ExportService.SaveAsFileDialog(LeftDrawingData.ToList(), leftFileName, RightDrawingData.ToList(), rightFileName);
             }   
             catch (Exception ex)
             {
@@ -120,7 +125,10 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                //FileTransfer.Save();
+                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+
+                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
             catch (Exception ex)
             {

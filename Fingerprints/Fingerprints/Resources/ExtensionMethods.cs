@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ExceptionLogger;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Fingerprints.Resources
 {
@@ -17,6 +20,20 @@ namespace Fingerprints.Resources
             {
                 method();
             };
+        }
+
+        public static string GetFileName(this BitmapImage bitmapImage)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = Path.GetFileName(bitmapImage.UriSource.ToString());
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         public static JObject ToJObject(this Point point)

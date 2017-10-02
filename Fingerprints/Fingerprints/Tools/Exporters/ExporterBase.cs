@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Fingerprints.Tools.Exporters
 {
-    public abstract class Exporter
+    public abstract class ExporterBase
     {
         /// <summary>
         /// Data that need to be prepared
         /// </summary>
         protected List<MinutiaStateBase> data;
-        public Exporter(List<MinutiaStateBase> _data)
+
+        public ExporterBase(List<MinutiaStateBase> _data)
         {
             data = _data;
         }

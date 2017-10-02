@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using Prism.Commands;
 using System.Windows;
 using System.Windows.Controls;
+using System.IO;
 
 namespace Fingerprints.ViewModels
 {
@@ -31,8 +32,8 @@ namespace Fingerprints.ViewModels
             set { SetProperty(ref writeableBitmap, value); }
         }
 
-        private ImageSource backgroundImage;
-        public ImageSource BackgroundImage
+        private BitmapImage backgroundImage;
+        public BitmapImage BackgroundImage
         {
             get { return backgroundImage; }
             set { SetProperty(ref backgroundImage, value); }
@@ -240,7 +241,7 @@ namespace Fingerprints.ViewModels
                 {
                     BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
 
-                    WriteableBitmap = new WriteableBitmap(((BitmapImage)BackgroundImage).PixelWidth, (((BitmapImage)BackgroundImage).PixelHeight), 96, 96, PixelFormats.Bgra32, null);
+                    WriteableBitmap = new WriteableBitmap(BackgroundImage.PixelWidth, (BackgroundImage.PixelHeight), 96, 96, PixelFormats.Bgra32, null);
 
                     //Reset drawing
                     DrawingData.Clear();
