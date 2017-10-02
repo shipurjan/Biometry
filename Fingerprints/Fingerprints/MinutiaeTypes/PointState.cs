@@ -43,11 +43,19 @@ namespace Fingerprints.MinutiaeTypes
         {
             if (args.RightButton == MouseButtonState.Pressed)
             {
-                if (Points.Count == 0)
-                {                   
-                    Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
-                    DrawingService.InitiateNewDrawing();
+                try
+                {
+                    if (Points.Count == 0)
+                    {
+                        Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                        DrawingService.InitiateNewDrawing();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    Logger.WriteExceptionLog(ex);
+                }
+                
             }
         }
     }
