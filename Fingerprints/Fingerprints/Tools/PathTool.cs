@@ -10,6 +10,13 @@ namespace Fingerprints.Tools
 {
     class PathTool
     {
+        /// <summary>
+        /// Combine Full Path with file name to create name,
+        /// for example: 'system32\notepad.exe' and 'image1.jpeg' will produce 'system32\notepad_image1.exe'
+        /// </summary>
+        /// <param name="path">Full Path to file</param>
+        /// <param name="choosedFile">name of file for example image.jpg</param>
+        /// <returns></returns>
         public static string CombainePathWithName(string path, string choosedFile)
         {
             string result = string.Empty;
