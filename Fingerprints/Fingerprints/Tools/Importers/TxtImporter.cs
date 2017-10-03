@@ -25,6 +25,8 @@ namespace Fingerprints.Tools.Importers
             List<SelfDefinedMinutiae> definedMinutiaes = null;
             try
             {
+                result = new List<MinutiaStateBase>();
+
                 using (var db = new FingerContext())
                 {
                     definedMinutiaes = db.SelfDefinedMinutiaes.ToList();

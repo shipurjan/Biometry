@@ -13,6 +13,7 @@ using Prism.Commands;
 using System.Windows;
 using System.Windows.Controls;
 using System.IO;
+using Fingerprints.Tools.Importers;
 
 namespace Fingerprints.ViewModels
 {
@@ -232,6 +233,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadImage()
         {
+            ImportResult importResult = null;
             try
             {
                 OpenFileDialog openFile = new OpenFileDialog();
@@ -249,6 +251,14 @@ namespace Fingerprints.ViewModels
                     {
                         CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
                     }
+
+                    importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
+                    if (importResult.Success)
+                    {
+                        DrawingData.AddRange(importResult.ResultData);
+                    }
+
+                    Draw();
                 }
             }
             catch (Exception ex)

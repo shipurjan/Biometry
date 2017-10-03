@@ -37,5 +37,28 @@ namespace Fingerprints.Tools
             }
             return result;
         }
+
+        public static ImportTypes? GetImportTypeFromPath(string _path)
+        {
+            ImportTypes? result = null;
+            ImportTypes type;
+            string extension = string.Empty;
+            try
+            {
+                extension = Path.GetExtension(_path).Trim('.');
+                Enum.TryParse<ImportTypes>(extension, out type);
+
+                if (type != 0)
+                {
+                    result = type;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
     }
 }
