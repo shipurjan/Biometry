@@ -29,22 +29,16 @@ namespace Fingerprints.ViewModels
 
         public ObservableCollection<MinutiaStateBase> LeftDrawingData
         {
-            get
-            {
-                return LeftDrawingService.DrawingData;
-            }
+            get { return LeftDrawingService.DrawingData; }
         }
 
         public ObservableCollection<MinutiaStateBase> RightDrawingData
         {
-            get
-            {
-                return RightDrawingService.DrawingData;
-            }
+            get { return RightDrawingService.DrawingData; }
         }
 
         public ICommand SaveClickCommand { get; }
-        public ICommand cbMinutiaeStatesSelectionChanged { get; }
+        public ICommand MinutiaeStatesSelectionChanged { get; }
         public ICommand SaveAsClickCommand { get; }
 
         public MainWindowViewModel()
@@ -68,7 +62,7 @@ namespace Fingerprints.ViewModels
 
                 //button clicks delegates
                 SaveClickCommand = new DelegateCommand(SaveClick);
-                cbMinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(cbMinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
+                MinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(MinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
                 SaveAsClickCommand = new DelegateCommand(SaveAsClick);
             }
             catch (Exception ex)
@@ -77,26 +71,39 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Peform SaveAs dialog window to save data
+        /// </summary>
         private void SaveAsClick()
         {
             try
             {
                 string leftFileName = LeftDrawingService.BackgroundImage.GetFileName();
                 string rightFileName = RightDrawingService.BackgroundImage.GetFileName();
+
                 ExportService.SaveAsFileDialog(LeftDrawingData.ToList(), leftFileName, RightDrawingData.ToList(), rightFileName);
-            }   
+            }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
         }
 
+        /// <summary>
+        /// Methods indicates if MinutiaStatesSelectionChanged method can run
+        /// </summary>
+        /// <param name="_oSelectedMinutiaState"></param>
+        /// <returns></returns>
         private bool CanComboBoxChangeCurrentDrawing(MinutiaState _oSelectedMinutiaState)
         {
             return _bCanComboBoxChangeCurrentDrawing;
         }
 
-        private void cbMinutiaStatesSelectionChanged(MinutiaState _oSelectedMinutiaState)
+        /// <summary>
+        /// Initiate new drawing for left and right drawing serivce
+        /// </summary>
+        /// <param name="_oSelectedMinutiaState"></param>
+        private void MinutiaStatesSelectionChanged(MinutiaState _oSelectedMinutiaState)
         {
             try
             {
@@ -121,10 +128,14 @@ namespace Fingerprints.ViewModels
             //code for asign minutiaID
         }
 
+        /// <summary>
+        /// Save Data to files named as BackgroundImage file
+        /// </summary>
         public void SaveClick()
         {
             try
             {
+                // get path to save data as BackgroundImage file name with txt extension
                 string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
                 string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 

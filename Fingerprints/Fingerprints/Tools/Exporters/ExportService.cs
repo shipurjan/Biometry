@@ -45,6 +45,13 @@ namespace Fingerprints.Tools.Exporters
             }
         }
 
+        /// <summary>
+        /// Exports data to specific paths
+        /// </summary>
+        /// <param name="_firstData"></param>
+        /// <param name="_leftFullPath"></param>
+        /// <param name="_secondData"></param>
+        /// <param name="_rightFullPath"></param>
         public static void SaveTxt(List<MinutiaStateBase> _firstData, string _leftFullPath,
             List<MinutiaStateBase> _secondData, string _rightFullPath)
         {
@@ -71,6 +78,7 @@ namespace Fingerprints.Tools.Exporters
             {
                 IDataExporter dataExporter = null;
 
+                // get DataExporter object by type
                 dataExporter = ExportFactory.Create(_type, _data);
 
                 if (dataExporter != null)
