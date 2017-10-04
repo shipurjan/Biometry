@@ -8,7 +8,7 @@ using Fingerprints.Factories;
 
 namespace Fingerprints.Tools.Exporters
 {
-    class TxtExporter : Exporter, IDataExporter
+    class TxtExporter : ExporterBase, IDataExporter
     {
         private List<MinutiaFileState> preparedData;
         public TxtExporter(List<MinutiaStateBase> _data) : base(_data)

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fingerprints.Tools.Exporters
 {
-    class ExportService
+    public class ExportService
     {
         /// <summary>
         /// Opens SaveFileDialog and export data based on type and path from dialog
@@ -19,7 +19,7 @@ namespace Fingerprints.Tools.Exporters
         /// <param name="firstImageName"></param>
         /// <param name="_secondData"></param>
         /// <param name="secondImageName"></param>
-        public void SaveAsFileDialog(List<MinutiaStateBase> _firstData, string firstImageName,
+        public static void SaveAsFileDialog(List<MinutiaStateBase> _firstData, string firstImageName,
             List<MinutiaStateBase> _secondData, string secondImageName)
         {
             SaveFileDialog saveFileDialog = null;
@@ -33,11 +33,32 @@ namespace Fingerprints.Tools.Exporters
                 if (saveFileDialog.FileName != "")
                 {
                     Export((ExportTypes)saveFileDialog.FilterIndex, _firstData,
-                        FileTransfer.getPath(saveFileDialog.FileName, firstImageName));
+                        PathTool.CombainePathWithName(saveFileDialog.FileName, firstImageName));
 
                     Export((ExportTypes)saveFileDialog.FilterIndex, _secondData,
-                        FileTransfer.getPath(saveFileDialog.FileName, secondImageName));
+                        PathTool.CombainePathWithName(saveFileDialog.FileName, secondImageName));
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Exports data to specific paths
+        /// </summary>
+        /// <param name="_firstData"></param>
+        /// <param name="_leftFullPath"></param>
+        /// <param name="_secondData"></param>
+        /// <param name="_rightFullPath"></param>
+        public static void SaveTxt(List<MinutiaStateBase> _firstData, string _leftFullPath,
+            List<MinutiaStateBase> _secondData, string _rightFullPath)
+        {
+            try
+            {
+                Export(ExportTypes.Txt, _firstData, _leftFullPath);
+                Export(ExportTypes.Txt, _secondData, _rightFullPath);
             }
             catch (Exception ex)
             {
@@ -51,16 +72,24 @@ namespace Fingerprints.Tools.Exporters
         /// <param name="_type"></param>
         /// <param name="_data"></param>
         /// <param name="_fullPath">Full path with extension</param>
-        public void Export(ExportTypes _type, List<MinutiaStateBase> _data, string _fullPath)
+        public static void Export(ExportTypes _type, List<MinutiaStateBase> _data, string _fullPath)
         {
-            IDataExporter dataExporter = null;
-
-            dataExporter = ExportFactory.Create(_type, _data);
-
-            if (dataExporter != null)
+            try
             {
-                dataExporter.FormatData();
-                dataExporter.Export(_fullPath);
+                IDataExporter dataExporter = null;
+
+                // get DataExporter object by type
+                dataExporter = ExportFactory.Create(_type, _data);
+
+                if (dataExporter != null)
+                {
+                    dataExporter.FormatData();
+                    dataExporter.Export(_fullPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
         }
     }

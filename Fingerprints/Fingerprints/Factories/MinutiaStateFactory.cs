@@ -4,6 +4,7 @@ using Fingerprints.Models;
 using Fingerprints.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,5 +51,24 @@ namespace Fingerprints.Factories
 
             return oMinutiaState;
         }
+
+        public static MinutiaStateBase Create(MinutiaFileState _minutiaFileState, SelfDefinedMinutiae _minutia, DrawingService _drawingService)
+        {
+            MinutiaStateBase result = null;
+            try
+            {
+                result = Create(_minutia, _drawingService);
+                result.Id = _minutiaFileState.Id;
+                result.Points.AddRange(_minutiaFileState.Points);
+                result.Angle = _minutiaFileState.Angle;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
+
+
     }
 }

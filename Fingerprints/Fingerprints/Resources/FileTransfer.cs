@@ -71,6 +71,25 @@ namespace Fingerprints
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+        public static List<MinutiaFileState> LoadFile(string _path)
+        {
+            List<MinutiaFileState> minutiaeList = null;
+            try
+            {
+                using (StreamReader readerL = new StreamReader(_path))
+                {
+                    string file = readerL.ReadToEnd();
+                    minutiaeList = JsonConvert.DeserializeObject<List<MinutiaFileState>>(file);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+
+            return minutiaeList;
+        }
         public static void LoadLeftFile()
         {
             if (File.Exists(LeftImagePath))
@@ -114,19 +133,24 @@ namespace Fingerprints
 
         public static string getPath(string path, string choosedFile)
         {
-            string[] pathSegments = path.Split('.');
-            string[] choosedFileSegments = choosedFile.Split('.');
-            string[] tmpSegments = choosedFileSegments[choosedFileSegments.Count() - 2].Split('\\');
-            pathSegments[pathSegments.Count() - 2] += "_" + tmpSegments.LastOrDefault() + ".";
-
-            string tmp = "";
-
-            foreach (string segment in pathSegments)
+            string result = String.Empty;
+            try
             {
-                tmp += segment;
-            }
+                string[] pathSegments = path.Split('.');
+                string[] choosedFileSegments = choosedFile.Split('.');
+                string[] tmpSegments = choosedFileSegments[choosedFileSegments.Count() - 2].Split('\\');
+                pathSegments[pathSegments.Count() - 2] += "_" + tmpSegments.LastOrDefault() + ".";
 
-            return tmp;
+                foreach (string segment in pathSegments)
+                {
+                    result += segment;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         private static List<MinutiaState> getListWithoutEmptyObjects(List<MinutiaState> list)
