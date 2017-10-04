@@ -80,6 +80,8 @@ namespace Fingerprints
                 using (StreamReader readerL = new StreamReader(_path))
                 {
                     string file = readerL.ReadToEnd();
+
+                    //Read file and serialize it to minutiaList
                     minutiaeList = JsonConvert.DeserializeObject<List<MinutiaFileState>>(file);
                 }
             }

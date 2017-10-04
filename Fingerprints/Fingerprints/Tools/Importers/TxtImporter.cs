@@ -29,9 +29,11 @@ namespace Fingerprints.Tools.Importers
 
                 using (var db = new FingerContext())
                 {
+                    //get SelfDefinedMinutiaes from db
                     definedMinutiaes = db.SelfDefinedMinutiaes.ToList();
                 }
-
+                
+                //creates MinutiaeStateBase and adds to list
                 foreach (var item in dataToPrepare)
                 {
                     var tempMinutia = definedMinutiaes.Where(x => x.Name == item.Name).FirstOrDefault();

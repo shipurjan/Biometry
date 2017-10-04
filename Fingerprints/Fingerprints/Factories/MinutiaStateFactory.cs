@@ -44,6 +44,13 @@ namespace Fingerprints.Factories
             return oMinutiaState;
         }
 
+        /// <summary>
+        /// Creates MinutiaStateBase
+        /// </summary>
+        /// <param name="_minutiaFileState"></param>
+        /// <param name="_minutia"></param>
+        /// <param name="_drawingService"></param>
+        /// <returns></returns>
         public static MinutiaStateBase Create(MinutiaFileState _minutiaFileState, SelfDefinedMinutiae _minutia, DrawingService _drawingService)
         {
             MinutiaStateBase result = null;
