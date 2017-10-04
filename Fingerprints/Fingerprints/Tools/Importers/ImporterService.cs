@@ -13,6 +13,12 @@ namespace Fingerprints.Tools.Importers
 {
     public static class ImporterService
     {
+        /// <summary>
+        /// Import data from path and returns ImportResult object
+        /// </summary>
+        /// <param name="_path"></param>
+        /// <param name="_drawingService"></param>
+        /// <returns></returns>
         public static ImportResult Import(string _path, DrawingService _drawingService)
         {
             ImportResult result = null;
@@ -20,13 +26,16 @@ namespace Fingerprints.Tools.Importers
             ImportTypes? importType;
             try
             {
+                //parse extension to ImportType enum
                 importType = PathTool.GetImportTypeFromPath(_path);
+                // if parse fails, show error
                 if (!importType.HasValue)
                 {
                     string error = String.Format("Extension '{0}' not supported", Path.GetExtension(_path));
                     return new ImportResult(false, null, error);
                 }
 
+                //if file not exists, show error
                 if (!File.Exists(_path))
                 {
                     string error = String.Format("File {0} not found", Path.GetFileName(_path));
@@ -44,12 +53,20 @@ namespace Fingerprints.Tools.Importers
             return result;
         }
 
+        /// <summary>
+        /// Load file and parse it to MinutiaStateBase list
+        /// </summary>
+        /// <param name="_path"></param>
+        /// <param name="_importType"></param>
+        /// <param name="_drawingService"></param>
+        /// <returns></returns>
         private static List<MinutiaStateBase> ParseFileResult(string _path, ImportTypes _importType, DrawingService _drawingService)
         {
             List<MinutiaStateBase> result = null;
             IDataImporter importer = null;
             try
             {
+                //create Import object based on type
                 importer = ImporterFactory.Create(_importType, _drawingService);
 
                 if (importer != null)

@@ -253,10 +253,6 @@ namespace Fingerprints.ViewModels
                     }
 
                     importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
-                    if (importResult.Success)
-                    {
-                        DrawingData.AddRange(importResult.ResultData);
-                    }
 
                     Draw();
                 }
@@ -279,9 +275,9 @@ namespace Fingerprints.ViewModels
         /// Adds CurrentDrawing to DrawingData list, 
         /// When this method is launched, CurrentDrawing will appear on WriteableBitmap and listbox
         /// </summary>
-        public void AddCurrentDrawingToDrawingData()
+        public void AddCurrentDrawingToDrawingData(MinutiaStateBase _minutiaStateBase)
         {
-            DrawingData.Add(CurrentDrawing);
+            DrawingData.Add(_minutiaStateBase);
         }
 
         #region IDisposable Support
