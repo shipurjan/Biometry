@@ -15,6 +15,11 @@ namespace Fingerprints.Tools.Importers
         /// </summary>
         protected DrawingService DrawingService;
 
+        /// <summary>
+        /// File content in string
+        /// </summary>
+        protected string fileContent;
+
         public ImporterBase(DrawingService _drawingService)
         {
             DrawingService = _drawingService;

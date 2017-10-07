@@ -249,12 +249,15 @@ namespace Fingerprints.ViewModels
                     DrawingData.Clear();
                     if (CurrentDrawing != null)
                     {
+                        //create new empty CuurentDrawing
                         CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
                     }
 
+                    //import data from file
                     importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
 
-                    Draw();
+                    //create MitutiaStateBase objects in drawing service
+                    MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
                 }
             }
             catch (Exception ex)

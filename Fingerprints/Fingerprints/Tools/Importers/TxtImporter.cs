@@ -14,37 +14,16 @@ namespace Fingerprints.Tools.Importers
 {
     public class TxtImporter : ImporterBase, IDataImporter
     {
-        private List<MinutiaFileState> dataToPrepare;
-
-        private string fileContent;
-
         public TxtImporter(DrawingService _drawingService) : base(_drawingService)
         {
         }
 
-        public List<MinutiaStateBase> GetformattedData()
+        public List<MinutiaFileState> GetformattedData()
         {
-            List<MinutiaStateBase> result = null;
-            List<SelfDefinedMinutiae> definedMinutiaes = null;
+            List<MinutiaFileState> result = null;
             try
             {
-                dataToPrepare = JsonConvert.DeserializeObject<List<MinutiaFileState>>(fileContent);
-
-                result = new List<MinutiaStateBase>();
-
-                using (var db = new FingerContext())
-                {
-                    //get SelfDefinedMinutiaes from db
-                    definedMinutiaes = db.SelfDefinedMinutiaes.ToList();
-                }
-                
-                //creates MinutiaeStateBase and adds to list
-                foreach (var item in dataToPrepare)
-                {
-                    var tempMinutia = definedMinutiaes.Where(x => x.Name == item.Name).FirstOrDefault();
-
-                    result.Add(MinutiaStateFactory.Create(item, tempMinutia, DrawingService));
-                }
+                result = JsonConvert.DeserializeObject<List<MinutiaFileState>>(fileContent);
             }
             catch (Exception ex)
             {

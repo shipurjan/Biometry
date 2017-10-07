@@ -22,23 +22,24 @@ namespace Fingerprints.Tools.Importers
         public static ImportResult Import(string _path, DrawingService _drawingService)
         {
             ImportResult result = null;
-            List<MinutiaStateBase> parsedData = null;
+            List<MinutiaFileState> parsedData = null;
             ImportTypes? importType;
             try
             {
                 //parse extension to ImportType enum
                 importType = PathTool.GetImportTypeFromPath(_path);
+
                 // if parse fails, show error
                 if (!importType.HasValue)
                 {
-                    string error = String.Format("Extension '{0}' not supported", Path.GetExtension(_path));
+                    string error = string.Format("Extension '{0}' not supported", Path.GetExtension(_path));
                     return new ImportResult(false, null, error);
                 }
 
                 //if file not exists, show error
                 if (!File.Exists(_path))
                 {
-                    string error = String.Format("File {0} not found", Path.GetFileName(_path));
+                    string error = string.Format("File {0} not found", Path.GetFileName(_path));
                     return new ImportResult(false, null, error);
                 }
 
@@ -60,9 +61,9 @@ namespace Fingerprints.Tools.Importers
         /// <param name="_importType"></param>
         /// <param name="_drawingService"></param>
         /// <returns></returns>
-        private static List<MinutiaStateBase> ParseFileResult(string _path, ImportTypes _importType, DrawingService _drawingService)
+        private static List<MinutiaFileState> ParseFileResult(string _path, ImportTypes _importType, DrawingService _drawingService)
         {
-            List<MinutiaStateBase> result = null;
+            List<MinutiaFileState> result = null;
             IDataImporter importer = null;
             try
             {

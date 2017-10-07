@@ -14,6 +14,12 @@ namespace Fingerprints.Factories
 {
     public static class MinutiaStateFactory
     {
+        /// <summary>
+        /// Creates MinutiaStateBase object assigned to drwing service
+        /// </summary>
+        /// <param name="_oMinutia"></param>
+        /// <param name="_oDrawingService"></param>
+        /// <returns></returns>
         public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService)
         {
             MinutiaStateBase oMinutiaState = null;
@@ -24,17 +30,16 @@ namespace Fingerprints.Factories
                 {
                     case 2:
                         oMinutiaState = new VectorState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 3:
                         oMinutiaState = new CurveLineState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 6:
                         oMinutiaState = new SegmentState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                 }
+
+                oMinutiaState.Minutia = _oMinutia;
             }
             catch (Exception ex)
             {
@@ -68,7 +73,39 @@ namespace Fingerprints.Factories
             return result;
         }
 
+        /// <summary>
+        /// Creates MinutieStatebase object based to file state which is assign to drawing service
+        /// </summary>
+        /// <param name="_fileStates"></param>
+        /// <param name="_drawingService"></param>
+        public static void AddMinutiaeFileToDrawingService(List<MinutiaFileState> _fileStates, DrawingService _drawingService)
+        {
+            List<SelfDefinedMinutiae> definedMinutiaes = null;
 
+            try
+            {
+                using (var db = new FingerContext())
+                {
+                    //get SelfDefinedMinutiaes from db
+                    definedMinutiaes = db.SelfDefinedMinutiaes.ToList();
+
+                    //creates MinutiaeStateBase and adds to list
+                    foreach (var item in _fileStates)
+                    {
+                        //get SelfDefinedMinutia by name
+                        var tempMinutia = definedMinutiaes.Where(x => x.Name == item.Name).FirstOrDefault();
+
+                        //Creates object of Minutia which is automatic assign to drawing service
+                        MinutiaStateFactory.Create(item, tempMinutia, _drawingService);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
 
     }
 }

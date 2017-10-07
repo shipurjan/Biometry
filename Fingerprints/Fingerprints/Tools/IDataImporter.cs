@@ -1,4 +1,5 @@
 ﻿using Fingerprints.MinutiaeTypes;
+using Fingerprints.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Fingerprints.Tools
         /// <summary>
         /// Method should prepare data to proper format
         /// </summary>
-        List<MinutiaStateBase> GetformattedData();
+        List<MinutiaFileState> GetformattedData();
 
         /// <summary>
         /// Imports data
