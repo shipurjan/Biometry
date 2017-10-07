@@ -95,7 +95,7 @@ namespace Fingerprints.Factories
                         //get SelfDefinedMinutia by name
                         var tempMinutia = definedMinutiaes.Where(x => x.Name == item.Name).FirstOrDefault();
 
-                        //Creates object of Minutia which is automatic assign to drawing service
+                        //Creates object of Minutia which is automatic assigned to drawing service
                         MinutiaStateFactory.Create(item, tempMinutia, _drawingService);
                     }
                 }

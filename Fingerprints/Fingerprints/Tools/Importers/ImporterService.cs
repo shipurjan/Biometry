@@ -43,7 +43,7 @@ namespace Fingerprints.Tools.Importers
                     return new ImportResult(false, null, error);
                 }
 
-                parsedData = ParseFileResult(_path, importType.Value, _drawingService);
+                parsedData = GetImportedData(_path, importType.Value, _drawingService);
 
                 result = new ImportResult(true, parsedData, string.Empty);
             }
@@ -55,13 +55,13 @@ namespace Fingerprints.Tools.Importers
         }
 
         /// <summary>
-        /// Load file and parse it to MinutiaStateBase list
+        /// Load file and parse it to MinutiaFileState list
         /// </summary>
         /// <param name="_path"></param>
         /// <param name="_importType"></param>
         /// <param name="_drawingService"></param>
         /// <returns></returns>
-        private static List<MinutiaFileState> ParseFileResult(string _path, ImportTypes _importType, DrawingService _drawingService)
+        private static List<MinutiaFileState> GetImportedData(string _path, ImportTypes _importType, DrawingService _drawingService)
         {
             List<MinutiaFileState> result = null;
             IDataImporter importer = null;

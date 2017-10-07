@@ -278,7 +278,7 @@ namespace Fingerprints.ViewModels
         /// Adds CurrentDrawing to DrawingData list, 
         /// When this method is launched, CurrentDrawing will appear on WriteableBitmap and listbox
         /// </summary>
-        public void AddCurrentDrawingToDrawingData(MinutiaStateBase _minutiaStateBase)
+        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase)
         {
             DrawingData.Add(_minutiaStateBase);
         }
