@@ -11,7 +11,7 @@ namespace Fingerprints.Tools.Importers
     public abstract class ImporterBase
     {
         /// <summary>
-        /// Data that need to be prepared
+        /// DrawingService in which Minutia will be located
         /// </summary>
         protected DrawingService DrawingService;
 
