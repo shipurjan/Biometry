@@ -42,6 +42,10 @@ namespace Fingerprints.Factories
                         oMinutiaState = new SegmentState(_oDrawingService);
                         oMinutiaState.Minutia = _oMinutia;
                         break;
+                    case 7:
+                        oMinutiaState = new EmptyState(_oDrawingService);
+                        oMinutiaState.Minutia = _oMinutia;
+                        break;
                 }
             }
             catch (Exception ex)

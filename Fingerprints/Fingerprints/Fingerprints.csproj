@@ -152,6 +152,7 @@
     <Compile Include="MinutiaeTypes\CurveLine\CurveLine.cs" />
     <Compile Include="MinutiaeTypes\CurveLine\FileCurveLine.cs" />
     <Compile Include="MinutiaeTypes\CurveLine\UserCurveLine.cs" />
+    <Compile Include="MinutiaeTypes\EmptyState.cs" />
     <Compile Include="MinutiaeTypes\Empty\FileEmpty.cs" />
     <Compile Include="MinutiaeTypes\Empty\UserEmpty.cs" />
     <Compile Include="MinutiaeTypes\PeakState.cs" />
