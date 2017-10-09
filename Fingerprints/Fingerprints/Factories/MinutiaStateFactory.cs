@@ -28,14 +28,26 @@ namespace Fingerprints.Factories
             {
                 switch (_oMinutia.TypeId)
                 {
+                    case 1:
+                        oMinutiaState = new PointState(_oDrawingService);
+                        oMinutiaState.Minutia = _oMinutia;
+                        break;
                     case 2:
                         oMinutiaState = new VectorState(_oDrawingService);
                         break;
                     case 3:
                         oMinutiaState = new CurveLineState(_oDrawingService);
                         break;
+                    case 5:
+                        oMinutiaState = new PeakState(_oDrawingService);
+                        oMinutiaState.Minutia = _oMinutia;
+                        break;
                     case 6:
                         oMinutiaState = new SegmentState(_oDrawingService);
+                        break;
+                    case 7:
+                        oMinutiaState = new EmptyState(_oDrawingService);
+                        oMinutiaState.Minutia = _oMinutia;
                         break;
                 }
 

@@ -10,9 +10,9 @@ using Fingerprints.ViewModels;
 
 namespace Fingerprints.MinutiaeTypes
 {
-    class SegmentState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
+    class PeakState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public SegmentState(DrawingService _oDrawingService) : base(_oDrawingService)
+        public PeakState(DrawingService _oDrawingService) : base(_oDrawingService)
         {
         }
 
@@ -20,15 +20,8 @@ namespace Fingerprints.MinutiaeTypes
         {
             try
             {
-                if (Points.Count > 1)
-                {
-                    var firstPoint = Points[0];
-                    var secondPoint = Points[1];
-                    WriteableBmp.DrawLine(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 
-                        Convert.ToInt16(secondPoint.X), 
-                        Convert.ToInt16(secondPoint.Y), 
-                        Colors.Blue);
-                }
+                // Draw polyline based on current point array
+                WriteableBmp.DrawPolyline(IntPoints, Colors.Green);
             }
             catch (Exception ex)
             {
@@ -46,7 +39,11 @@ namespace Fingerprints.MinutiaeTypes
                     {
                         Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
                     }
-                    else
+                    else if (Points.Count == 2)
+                    {
+                        Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                    }
+                    else if (Points.Count == 3)
                     {
                         DrawingService.InitiateNewDrawing();
                     }
@@ -55,7 +52,7 @@ namespace Fingerprints.MinutiaeTypes
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
-            }            
+            }
         }
 
         public void MouseMove(object sender, MouseEventArgs args)
@@ -64,11 +61,15 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (Points.Count == 1)
                 {
-                    Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                    Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());                    
                 }
-                else if (Points.Count != 0)
+                else if (Points.Count == 2)
                 {
                     Points[1] = (args.GetPosition((IInputElement)sender).ToFloorPoint());
+                }
+                else if (Points.Count == 3)
+                {
+                    Points[2] = (args.GetPosition((IInputElement)sender).ToFloorPoint());
                 }
             }
             catch (Exception ex)

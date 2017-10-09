@@ -152,8 +152,10 @@
     <Compile Include="MinutiaeTypes\CurveLine\CurveLine.cs" />
     <Compile Include="MinutiaeTypes\CurveLine\FileCurveLine.cs" />
     <Compile Include="MinutiaeTypes\CurveLine\UserCurveLine.cs" />
+    <Compile Include="MinutiaeTypes\EmptyState.cs" />
     <Compile Include="MinutiaeTypes\Empty\FileEmpty.cs" />
     <Compile Include="MinutiaeTypes\Empty\UserEmpty.cs" />
+    <Compile Include="MinutiaeTypes\PeakState.cs" />
     <Compile Include="MinutiaeTypes\Peak\FilePeak.cs" />
     <Compile Include="MinutiaeTypes\Peak\Peak.cs" />
     <Compile Include="MinutiaeTypes\Peak\UserPeak.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="MinutiaeTypes\Triangle\UserTriangle.cs" />
     <Compile Include="MinutiaeTypes\VectorState.cs" />
     <Compile Include="MinutiaeTypes\Vector\FileVector.cs" />
+    <Compile Include="MinutiaeTypes\PointState.cs" />
     <Compile Include="MinutiaeTypes\Vector\UserVector.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />

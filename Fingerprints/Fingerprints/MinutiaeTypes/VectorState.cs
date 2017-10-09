@@ -50,17 +50,24 @@ namespace Fingerprints.MinutiaeTypes
 
         public void MouseClick(object sender, MouseButtonEventArgs args)
         {
-            if (args.RightButton == MouseButtonState.Pressed)
+            try
             {
-                if (Points.Count == 0)
-                {                   
-                    Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
-                }
-                else
+                if (args.RightButton == MouseButtonState.Pressed)
                 {
-                    DrawingService.InitiateNewDrawing();
+                    if (Points.Count == 0)
+                    {
+                        Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                    }
+                    else
+                    {
+                        DrawingService.InitiateNewDrawing();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
         public void MouseMove(object sender, MouseEventArgs args)
