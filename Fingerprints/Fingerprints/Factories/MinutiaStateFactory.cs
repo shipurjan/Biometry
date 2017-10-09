@@ -30,7 +30,6 @@ namespace Fingerprints.Factories
                 {
                     case 1:
                         oMinutiaState = new PointState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 2:
                         oMinutiaState = new VectorState(_oDrawingService);
@@ -38,9 +37,11 @@ namespace Fingerprints.Factories
                     case 3:
                         oMinutiaState = new CurveLineState(_oDrawingService);
                         break;
+                    case 4:
+                        oMinutiaState = new TriangleState(_oDrawingService);
+                        break;
                     case 5:
                         oMinutiaState = new PeakState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 6:
                         oMinutiaState = new SegmentState(_oDrawingService);
