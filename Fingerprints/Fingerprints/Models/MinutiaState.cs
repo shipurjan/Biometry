@@ -35,7 +35,7 @@ namespace Fingerprints.Models
         {
             return new MinutiaFileState()
             {
-                Id = this.Id,
+                Id = Convert.ToString(this.Id),
                 Name = this.Minutia.Name,
                 Angle = this.Angle,
                 Points = this.Points

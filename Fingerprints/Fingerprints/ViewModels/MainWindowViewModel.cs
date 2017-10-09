@@ -6,6 +6,7 @@ using Fingerprints.Resources;
 using Fingerprints.Tools.Exporters;
 using Prism.Commands;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -116,16 +117,55 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        private void RightDrawingDataChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void RightDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
             //code for inserting empty minutiae
             //code for asign minutiaID
+            ObservableCollection<MinutiaStateBase> senderObject = null;
+            try
+            {
+                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
+                {
+                    NewItemAddedAction(_eventArgs);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
 
-        public void LeftDrawingDataChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public void LeftDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
             //code for inserting empty minutiae
             //code for asign minutiaID
+            ObservableCollection<MinutiaStateBase> senderObject = null;
+            try
+            {
+                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
+                {
+                    NewItemAddedAction(_eventArgs);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void NewItemAddedAction(NotifyCollectionChangedEventArgs _eventArgs)
+        {
+            foreach (MinutiaStateBase item in _eventArgs.NewItems)
+            {
+                if (string.IsNullOrEmpty(item.Id))
+                {
+                    item.Id = Guid.NewGuid().ToString();
+                }
+            }
         }
 
         /// <summary>

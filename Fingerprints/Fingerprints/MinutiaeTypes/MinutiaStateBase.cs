@@ -24,8 +24,8 @@ namespace Fingerprints.MinutiaeTypes
             set { SetProperty(ref _Angle, value); }
         }
 
-        private long _Id;
-        public long Id
+        private string _Id;
+        public string Id
         {
             get { return _Id; }
             set { SetProperty(ref _Id, value); }

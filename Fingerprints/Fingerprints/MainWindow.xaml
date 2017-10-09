@@ -144,7 +144,7 @@
                                    Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" RenderOptions.BitmapScalingMode="NearestNeighbor"
                                    Canvas.Top="0" Canvas.Left="0">
                             </Image>
-                            
+
                             <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" Canvas.Top="0" Canvas.Left="0">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseMove">
@@ -184,7 +184,7 @@
                                    Width="{Binding RightDrawingService.BackgroundImage.PixelWidth}" Source="{Binding RightDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" >
                             </Image>
-                            
+
                             <Image x:Name="rightImageForDrawing" Source="{Binding RightDrawingService.WriteableBitmap}" SnapsToDevicePixels="True"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" Canvas.Left="0" Canvas.Top="0">
                                 <i:Interaction.Triggers>
@@ -269,14 +269,20 @@
                     <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding MinutiaName}" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding MinutiaName}" />
+                                    <TextBlock Text="{Binding Id}" />
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding MinutiaName}" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding MinutiaName}" />
+                                    <TextBlock Text="{Binding Id}" />
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
