@@ -23,29 +23,24 @@ namespace Fingerprints.Factories
                 {
                     case 1:
                         oMinutiaState = new PointState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 2:
                         oMinutiaState = new VectorState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 3:
                         oMinutiaState = new CurveLineState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 4:
                         oMinutiaState = new TriangleState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 5:
                         oMinutiaState = new PeakState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
                         break;
                     case 6:
                         oMinutiaState = new SegmentState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
-                        break;
+                        break;                    
                 }
+                oMinutiaState.Minutia = _oMinutia;
             }
             catch (Exception ex)
             {

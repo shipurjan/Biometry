@@ -7,6 +7,7 @@ using System.Windows;
 using Fingerprints.Resources;
 using ExceptionLogger;
 using Fingerprints.ViewModels;
+using System.Linq;
 
 namespace Fingerprints.MinutiaeTypes
 {
@@ -100,10 +101,7 @@ namespace Fingerprints.MinutiaeTypes
                 intTmp = new int[_intPoints.Length + 2];
 
                 // Copy items from one array to another
-                for (int i = 0; i < _intPoints.Length; i++)
-                {
-                    intTmp[i] = _intPoints[i];
-                }
+                _intPoints.CopyTo(intTmp, 0);
 
                 // Add point from beggining, to end of array
                 intTmp[6] = intTmp[0];
