@@ -1,5 +1,5 @@
 ﻿public enum ImportTypes
 {
-    Xyt = 1,
-    Txt = 2
+    xyt = 1,
+    txt = 2
 }

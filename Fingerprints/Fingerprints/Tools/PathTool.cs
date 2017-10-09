@@ -26,9 +26,41 @@ namespace Fingerprints.Tools
                 string fileExtensionFromPath = Path.GetExtension(path);
                 string choosedFileName = Path.GetFileNameWithoutExtension(choosedFile);
 
+                //Combine file names from path and choosedFile
                 string fullName = String.Format("{0}_{1}{2}", fileNameFromPath, choosedFileName, fileExtensionFromPath);
 
                 result = Path.Combine(Path.GetDirectoryName(path), fullName);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns ImportType from path
+        /// If file is not supporter, returns null
+        /// </summary>
+        /// <param name="_path"></param>
+        /// <returns></returns>
+        public static ImportTypes? GetImportTypeFromPath(string _path)
+        {
+            ImportTypes? result = null;
+            ImportTypes tempType;
+            string extension = string.Empty;
+            try
+            {
+                extension = Path.GetExtension(_path).Trim('.');
+
+                //try parse extension from path to ImportType
+                Enum.TryParse<ImportTypes>(extension, out tempType);
+
+                if (tempType != 0)
+                {
+                    result = tempType;
+                }
 
             }
             catch (Exception ex)

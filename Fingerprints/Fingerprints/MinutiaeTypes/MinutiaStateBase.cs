@@ -83,7 +83,7 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
                 {
-                    DrawingService.AddCurrentDrawingToDrawingData();
+                    DrawingService.AddMinutiaToDrawingData(this);
                 }
                 DrawingService.Draw();
             }

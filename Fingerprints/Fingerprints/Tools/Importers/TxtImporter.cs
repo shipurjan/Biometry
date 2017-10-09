@@ -8,34 +8,22 @@ using ExceptionLogger;
 using Fingerprints.Models;
 using Fingerprints.Factories;
 using Fingerprints.ViewModels;
+using Newtonsoft.Json;
 
 namespace Fingerprints.Tools.Importers
 {
     public class TxtImporter : ImporterBase, IDataImporter
     {
-        private List<MinutiaFileState> dataToPrepare;
-
         public TxtImporter(DrawingService _drawingService) : base(_drawingService)
         {
         }
 
-        public List<MinutiaStateBase> GetformattedData()
+        public List<MinutiaFileState> GetformattedData()
         {
-            List<MinutiaStateBase> result = null;
-            List<SelfDefinedMinutiae> definedMinutiaes = null;
+            List<MinutiaFileState> result = null;
             try
             {
-                using (var db = new FingerContext())
-                {
-                    definedMinutiaes = db.SelfDefinedMinutiaes.ToList();
-                }
-
-                foreach (var item in dataToPrepare)
-                {
-                    var tempMinutia = definedMinutiaes.Where(x => x.Name == item.Name).FirstOrDefault();
-
-                    result.Add(MinutiaStateFactory.Create(item, tempMinutia, DrawingService));
-                }
+                result = JsonConvert.DeserializeObject<List<MinutiaFileState>>(fileContent);
             }
             catch (Exception ex)
             {
@@ -48,7 +36,7 @@ namespace Fingerprints.Tools.Importers
         {
             try
             {
-                dataToPrepare = FileTransfer.LoadFile(_path);
+                fileContent = FileTransfer.LoadFile(_path);
             }
             catch (Exception ex)
             {

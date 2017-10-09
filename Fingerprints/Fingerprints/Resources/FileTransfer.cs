@@ -72,15 +72,19 @@ namespace Fingerprints
             }
         }
 
-        public static List<MinutiaFileState> LoadFile(string _path)
+        /// <summary>
+        /// Read file from path
+        /// </summary>
+        /// <param name="_path">File full path</param>
+        /// <returns>string read from file</returns>
+        public static string LoadFile(string _path)
         {
-            List<MinutiaFileState> minutiaeList = null;
+            string result = null;
             try
             {
                 using (StreamReader readerL = new StreamReader(_path))
                 {
-                    string file = readerL.ReadToEnd();
-                    minutiaeList = JsonConvert.DeserializeObject<List<MinutiaFileState>>(file);
+                    result = readerL.ReadToEnd();
                 }
             }
             catch (Exception ex)
@@ -88,7 +92,7 @@ namespace Fingerprints
                 Logger.WriteExceptionLog(ex);
             }
 
-            return minutiaeList;
+            return result;
         }
         public static void LoadLeftFile()
         {

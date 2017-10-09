@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fingerprints.Tools.Exporters
 {
-    public class ExportService
+    public static class ExportService
     {
         /// <summary>
         /// Opens SaveFileDialog and export data based on type and path from dialog
