@@ -71,6 +71,29 @@ namespace Fingerprints
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+        /// <summary>
+        /// Read file from path
+        /// </summary>
+        /// <param name="_path">File full path</param>
+        /// <returns>string read from file</returns>
+        public static string LoadFile(string _path)
+        {
+            string result = null;
+            try
+            {
+                using (StreamReader readerL = new StreamReader(_path))
+                {
+                    result = readerL.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+
+            return result;
+        }
         public static void LoadLeftFile()
         {
             if (File.Exists(LeftImagePath))
@@ -114,19 +137,24 @@ namespace Fingerprints
 
         public static string getPath(string path, string choosedFile)
         {
-            string[] pathSegments = path.Split('.');
-            string[] choosedFileSegments = choosedFile.Split('.');
-            string[] tmpSegments = choosedFileSegments[choosedFileSegments.Count() - 2].Split('\\');
-            pathSegments[pathSegments.Count() - 2] += "_" + tmpSegments.LastOrDefault() + ".";
-
-            string tmp = "";
-
-            foreach (string segment in pathSegments)
+            string result = String.Empty;
+            try
             {
-                tmp += segment;
-            }
+                string[] pathSegments = path.Split('.');
+                string[] choosedFileSegments = choosedFile.Split('.');
+                string[] tmpSegments = choosedFileSegments[choosedFileSegments.Count() - 2].Split('\\');
+                pathSegments[pathSegments.Count() - 2] += "_" + tmpSegments.LastOrDefault() + ".";
 
-            return tmp;
+                foreach (string segment in pathSegments)
+                {
+                    result += segment;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         private static List<MinutiaState> getListWithoutEmptyObjects(List<MinutiaState> list)

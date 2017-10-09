@@ -12,6 +12,8 @@ using Microsoft.Win32;
 using Prism.Commands;
 using System.Windows;
 using System.Windows.Controls;
+using System.IO;
+using Fingerprints.Tools.Importers;
 
 namespace Fingerprints.ViewModels
 {
@@ -31,8 +33,8 @@ namespace Fingerprints.ViewModels
             set { SetProperty(ref writeableBitmap, value); }
         }
 
-        private ImageSource backgroundImage;
-        public ImageSource BackgroundImage
+        private BitmapImage backgroundImage;
+        public BitmapImage BackgroundImage
         {
             get { return backgroundImage; }
             set { SetProperty(ref backgroundImage, value); }
@@ -231,6 +233,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadImage()
         {
+            ImportResult importResult = null;
             try
             {
                 OpenFileDialog openFile = new OpenFileDialog();
@@ -240,14 +243,21 @@ namespace Fingerprints.ViewModels
                 {
                     BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
 
-                    WriteableBitmap = new WriteableBitmap(((BitmapImage)BackgroundImage).PixelWidth, (((BitmapImage)BackgroundImage).PixelHeight), 96, 96, PixelFormats.Bgra32, null);
+                    WriteableBitmap = new WriteableBitmap(BackgroundImage.PixelWidth, (BackgroundImage.PixelHeight), 96, 96, PixelFormats.Bgra32, null);
 
                     //Reset drawing
                     DrawingData.Clear();
                     if (CurrentDrawing != null)
                     {
+                        //create new empty CuurentDrawing
                         CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
                     }
+
+                    //import data from file
+                    importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
+
+                    //create MitutiaStateBase objects in drawing service
+                    MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
                 }
             }
             catch (Exception ex)
@@ -268,9 +278,9 @@ namespace Fingerprints.ViewModels
         /// Adds CurrentDrawing to DrawingData list, 
         /// When this method is launched, CurrentDrawing will appear on WriteableBitmap and listbox
         /// </summary>
-        public void AddCurrentDrawingToDrawingData()
+        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase)
         {
-            DrawingData.Add(CurrentDrawing);
+            DrawingData.Add(_minutiaStateBase);
         }
 
         #region IDisposable Support

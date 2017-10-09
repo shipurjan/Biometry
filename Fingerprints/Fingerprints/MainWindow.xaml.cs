@@ -82,7 +82,7 @@ namespace Fingerprints
         {
             Window1 win = new Window1();
             win.ShowDialog();
-            drawer.stopDrawing();
+            //drawer.stopDrawing();
             comboBox.ItemsSource = controller.Show();
         }
 
