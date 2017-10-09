@@ -12,6 +12,8 @@ namespace Fingerprints.MinutiaeTypes
 {
     class TriangleState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
+        private bool closePolyline = false; 
+
         public TriangleState(DrawingService _oDrawingService) : base(_oDrawingService)
         {
         }
@@ -20,17 +22,12 @@ namespace Fingerprints.MinutiaeTypes
         {
             try
             {
-                if (Points.Count < 4)
-                {
+                if (!closePolyline)
                     // Draw polyline based on current point array
-                    WriteableBmp.DrawPolyline(IntPoints, Colors.OrangeRed);
-                }
-                else
-                {
-                     
-                    WriteableBmp.DrawPolyline(IntPoints, Colors.OrangeRed);
-                    //Points.RemoveAt(3);
-                }
+                    WriteableBmp.DrawPolyline(IntPoints, Colors.OrangeRed);                
+                else            
+                    // Draw closed polyline    
+                    WriteableBmp.DrawPolyline(GetClosedPolygonArray(IntPoints), Colors.OrangeRed);                  
                 
             }
             catch (Exception ex)
@@ -52,10 +49,10 @@ namespace Fingerprints.MinutiaeTypes
                     else if (Points.Count == 2)
                     {
                         Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                        closePolyline = true;
                     }
                     else if (Points.Count == 3)
-                    {
-                        Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
+                    {                                            
                         DrawingService.InitiateNewDrawing();
                     }
                 }
@@ -87,6 +84,36 @@ namespace Fingerprints.MinutiaeTypes
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        /// <summary>
+        /// Creates tmp array for closing Polyline
+        /// </summary>
+        /// <param name="_intPoints"></param>
+        /// <returns></returns>
+        private int[] GetClosedPolygonArray(int[] _intPoints)
+        {
+            int[] intTmp = null;
+            try
+            {
+                // Init new array 2 elements bigger then given array
+                intTmp = new int[_intPoints.Length + 2];
+
+                // Copy items from one array to another
+                for (int i = 0; i < _intPoints.Length; i++)
+                {
+                    intTmp[i] = _intPoints[i];
+                }
+
+                // Add point from beggining, to end of array
+                intTmp[6] = intTmp[0];
+                intTmp[7] = intTmp[1];
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return intTmp;
         }
     }
 }
