@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -130,6 +131,11 @@ namespace Fingerprints.ViewModels
                 {
                     NewItemAddedAction(_eventArgs);
                 }
+
+                if (senderObject.Count > LeftDrawingData.Count && LeftDrawingService.WriteableBitmap != null)
+                {
+                    LeftDrawingData.Add(new EmptyState(LeftDrawingService));
+                }
             }
             catch (Exception ex)
             {
@@ -149,6 +155,11 @@ namespace Fingerprints.ViewModels
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
                     NewItemAddedAction(_eventArgs);
+
+                    if (senderObject.Count > RightDrawingData.Count && RightDrawingService.WriteableBitmap != null)
+                    {
+                        RightDrawingData.Add(new EmptyState(RightDrawingService));
+                    }
                 }
             }
             catch (Exception ex)

@@ -38,7 +38,22 @@ namespace Fingerprints.MinutiaeTypes
 
         public DrawingService DrawingService { get; }
 
-        public string MinutiaName { get { return Minutia.Name; } }
+        public string MinutiaName
+        {
+            get
+            {
+                string minutiaName = string.Empty;
+                try
+                {
+                    minutiaName = Minutia.Name;
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteExceptionLog(ex);
+                }
+                return minutiaName;
+            }
+        }
 
         public int[] IntPoints
         {

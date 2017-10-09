@@ -280,7 +280,11 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase)
         {
-            DrawingData.Add(_minutiaStateBase);
+            DrawingData.Insert(0, _minutiaStateBase);
+            if (DrawingData.Count > 2)
+            {
+                DrawingData.RemoveAt(1);
+            }
         }
 
         #region IDisposable Support

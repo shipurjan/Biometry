@@ -10,8 +10,8 @@ namespace Fingerprints.MinutiaeTypes
     class EmptyState : MinutiaStateBase
     {
         public EmptyState(DrawingService _oDrawingService) : base(_oDrawingService)
-        { 
-
+        {
+            Minutia = new SelfDefinedMinutiae() { Name = "Puste" };
         }
     }
 }
