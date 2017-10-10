@@ -130,11 +130,8 @@ namespace Fingerprints.ViewModels
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
                     NewItemAddedAction(_eventArgs);
-                }
 
-                if (senderObject.Count > LeftDrawingData.Count && LeftDrawingService.WriteableBitmap != null)
-                {
-                    LeftDrawingData.Add(new EmptyState(LeftDrawingService));
+                    AddEmpty(senderObject, LeftDrawingService);
                 }
             }
             catch (Exception ex)
@@ -156,15 +153,20 @@ namespace Fingerprints.ViewModels
                 {
                     NewItemAddedAction(_eventArgs);
 
-                    if (senderObject.Count > RightDrawingData.Count && RightDrawingService.WriteableBitmap != null)
-                    {
-                        RightDrawingData.Add(new EmptyState(RightDrawingService));
-                    }
+                    AddEmpty(senderObject, RightDrawingService);
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void AddEmpty(ObservableCollection<MinutiaStateBase> _senderObject, DrawingService oppositeDrawingService)
+        {
+            if (_senderObject.Count > oppositeDrawingService.DrawingData.Count && oppositeDrawingService.WriteableBitmap != null)
+            {
+                oppositeDrawingService.DrawingData.Add(new EmptyState(oppositeDrawingService));
             }
         }
 
