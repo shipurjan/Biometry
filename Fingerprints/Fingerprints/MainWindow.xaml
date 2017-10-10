@@ -67,7 +67,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openLeftImage" Command="{Binding LeftDrawingService.LoadImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="openLeftImage" Command="{Binding LoadLeftImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
@@ -104,7 +104,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openRightImage" Command="{Binding RightDrawingService.LoadImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="openRightImage" Command="{Binding LoadRightImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 

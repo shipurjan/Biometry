@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -42,6 +44,8 @@ namespace Fingerprints.ViewModels
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
         public ICommand SaveAsClickCommand { get; }
+        public ICommand LoadLeftImageCommand { get; }
+        public ICommand LoadRightImageCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -66,6 +70,34 @@ namespace Fingerprints.ViewModels
                 SaveClickCommand = new DelegateCommand(SaveClick);
                 MinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(MinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
                 SaveAsClickCommand = new DelegateCommand(SaveAsClick);
+                LoadLeftImageCommand = new DelegateCommand(LoadLeftImage);
+                LoadRightImageCommand = new DelegateCommand(LoadRightImage);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void LoadRightImage()
+        {
+            try
+            {
+                RightDrawingService.LoadImage();
+                FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void LoadLeftImage()
+        {
+            try
+            {
+                LeftDrawingService.LoadImage();
+                FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
             }
             catch (Exception ex)
             {
@@ -129,9 +161,21 @@ namespace Fingerprints.ViewModels
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
-                    NewItemAddedAction(_eventArgs);
+                    AssignGuidIfCan(_eventArgs);
 
-                    AddEmpty(senderObject, LeftDrawingService);
+                    AddEmptyToOppositeIfCan(senderObject, LeftDrawingService);
+                }
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
+                {
+                    AssignGuidIfCan(_eventArgs);
+
+                    AddEmptyToOppositeIfCan(senderObject, RightDrawingService);
+
+                    if (senderObject.Count == LeftDrawingService.DrawingData.Count)
+                    {
+                        senderObject[_eventArgs.NewStartingIndex].Id = LeftDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
+                    }
                 }
             }
             catch (Exception ex)
@@ -151,9 +195,21 @@ namespace Fingerprints.ViewModels
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
-                    NewItemAddedAction(_eventArgs);
+                    AssignGuidIfCan(_eventArgs);
 
-                    AddEmpty(senderObject, RightDrawingService);
+                    AddEmptyToOppositeIfCan(senderObject, RightDrawingService);
+                }
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
+                {
+                    AssignGuidIfCan(_eventArgs);
+
+                    AddEmptyToOppositeIfCan(senderObject, RightDrawingService);
+
+                    if (senderObject.Count == RightDrawingService.DrawingData.Count)
+                    {
+                        senderObject[_eventArgs.NewStartingIndex].Id = RightDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
+                    }
                 }
             }
             catch (Exception ex)
@@ -162,15 +218,44 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        private void AddEmpty(ObservableCollection<MinutiaStateBase> _senderObject, DrawingService oppositeDrawingService)
+        private void AddEmptyToOppositeIfCan(ObservableCollection<MinutiaStateBase> _senderObject, DrawingService _oppositeDrawingService)
         {
-            if (_senderObject.Count > oppositeDrawingService.DrawingData.Count && oppositeDrawingService.WriteableBitmap != null)
+            if (_oppositeDrawingService.WriteableBitmap == null)
             {
-                oppositeDrawingService.DrawingData.Add(new EmptyState(oppositeDrawingService));
+                return;
+            }
+
+            if (_senderObject.Count > _oppositeDrawingService.DrawingData.Count)
+            {
+                _oppositeDrawingService.DrawingData.Add(new EmptyState(_oppositeDrawingService) { Id = _senderObject.LastOrDefault().Id });
             }
         }
 
-        private void NewItemAddedAction(NotifyCollectionChangedEventArgs _eventArgs)
+        private void FillEmpty(DrawingService _drawingService, int _count)
+        {
+            try
+            {
+                if (_count <= 0)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < _count; i++)
+                {
+                    _drawingService.DrawingData.Add(new EmptyState(RightDrawingService));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Assigns Guid to Minutia if not has
+        /// </summary>
+        /// <param name="_eventArgs"></param>
+        private void AssignGuidIfCan(NotifyCollectionChangedEventArgs _eventArgs)
         {
             foreach (MinutiaStateBase item in _eventArgs.NewItems)
             {

@@ -19,7 +19,12 @@ namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
-        public ObservableCollection<MinutiaStateBase> DrawingData;
+        private ObservableCollection<MinutiaStateBase> drawingData;
+        public ObservableCollection<MinutiaStateBase> DrawingData
+        {
+            get { return drawingData; }
+            set { SetProperty(ref drawingData, value); }
+        }
 
         private Point mousePosition;
 
@@ -40,7 +45,7 @@ namespace Fingerprints.ViewModels
             set { SetProperty(ref backgroundImage, value); }
         }
 
-        public ICommand LoadImageCommand { get; }
+
         #endregion
 
         public DrawingService()
@@ -48,8 +53,6 @@ namespace Fingerprints.ViewModels
             try
             {
                 DrawingData = new ObservableCollection<MinutiaStateBase>();
-
-                LoadImageCommand = new DelegateCommand(LoadImage);
             }
             catch (Exception ex)
             {
@@ -231,7 +234,7 @@ namespace Fingerprints.ViewModels
         /// <summary>
         /// Opens OpenFileDialog for load image, creates new instance of WriteableBitmap and assigns BackroundImage
         /// </summary>
-        private void LoadImage()
+        public void LoadImage()
         {
             ImportResult importResult = null;
             try
@@ -278,9 +281,18 @@ namespace Fingerprints.ViewModels
         /// Adds CurrentDrawing to DrawingData list, 
         /// When this method is launched, CurrentDrawing will appear on WriteableBitmap and listbox
         /// </summary>
-        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase)
+        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex)
         {
-            DrawingData.Add(_minutiaStateBase);
+            if (_insertIndex.HasValue)
+            {
+                //DrawingData.Insert(_insertIndex.Value, _minutiaStateBase);
+                //DrawingData.RemoveAt(_insertIndex.Value + 1);
+                DrawingData[_insertIndex.Value] = _minutiaStateBase;
+            }
+            else
+            {
+                DrawingData.Add(_minutiaStateBase);
+            }
         }
 
         #region IDisposable Support

@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using ExceptionLogger;
 using System.Windows;
 using Fingerprints.ViewModels;
+using System.Linq;
 
 namespace Fingerprints.MinutiaeTypes
 {
@@ -37,6 +38,8 @@ namespace Fingerprints.MinutiaeTypes
         }
 
         public DrawingService DrawingService { get; }
+
+        private int? insertIndex;
 
         public string MinutiaName
         {
@@ -98,7 +101,14 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
                 {
-                    DrawingService.AddMinutiaToDrawingData(this);
+                    if (DrawingService.DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState))
+                    {
+                        DrawingService.AddMinutiaToDrawingData(this, DrawingService.DrawingData.Count - 1);
+                    }
+                    else
+                    {
+                        DrawingService.AddMinutiaToDrawingData(this, insertIndex);
+                    }
                 }
                 DrawingService.Draw();
             }
