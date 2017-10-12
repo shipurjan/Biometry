@@ -285,8 +285,6 @@ namespace Fingerprints.ViewModels
         {
             if (_insertIndex.HasValue)
             {
-                //DrawingData.Insert(_insertIndex.Value, _minutiaStateBase);
-                //DrawingData.RemoveAt(_insertIndex.Value + 1);
                 DrawingData[_insertIndex.Value] = _minutiaStateBase;
             }
             else

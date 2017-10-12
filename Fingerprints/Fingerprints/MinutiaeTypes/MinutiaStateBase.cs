@@ -101,7 +101,7 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
                 {
-                    if (DrawingService.DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState))
+                    if (DrawingService.DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState) && !insertIndex.HasValue)
                     {
                         DrawingService.AddMinutiaToDrawingData(this, DrawingService.DrawingData.Count - 1);
                     }

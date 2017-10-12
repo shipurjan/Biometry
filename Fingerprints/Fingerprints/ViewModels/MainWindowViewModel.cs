@@ -161,21 +161,14 @@ namespace Fingerprints.ViewModels
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
-                    AssignGuidIfCan(_eventArgs);
+                    AssignNewIDIfCan(_eventArgs);
 
                     AddEmptyToOppositeIfCan(senderObject, LeftDrawingService);
                 }
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
                 {
-                    AssignGuidIfCan(_eventArgs);
-
-                    AddEmptyToOppositeIfCan(senderObject, RightDrawingService);
-
-                    if (senderObject.Count == LeftDrawingService.DrawingData.Count)
-                    {
-                        senderObject[_eventArgs.NewStartingIndex].Id = LeftDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
-                    }
+                    senderObject[_eventArgs.NewStartingIndex].Id = LeftDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
                 }
             }
             catch (Exception ex)
@@ -195,21 +188,14 @@ namespace Fingerprints.ViewModels
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
-                    AssignGuidIfCan(_eventArgs);
+                    AssignNewIDIfCan(_eventArgs);
 
                     AddEmptyToOppositeIfCan(senderObject, RightDrawingService);
                 }
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
                 {
-                    AssignGuidIfCan(_eventArgs);
-
-                    AddEmptyToOppositeIfCan(senderObject, RightDrawingService);
-
-                    if (senderObject.Count == RightDrawingService.DrawingData.Count)
-                    {
-                        senderObject[_eventArgs.NewStartingIndex].Id = RightDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
-                    }
+                    senderObject[_eventArgs.NewStartingIndex].Id = RightDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
                 }
             }
             catch (Exception ex)
@@ -218,6 +204,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// insert Empty object to opposite Drawing data if count is diferrent
+        /// </summary>
+        /// <param name="_senderObject"></param>
+        /// <param name="_oppositeDrawingService"></param>
         private void AddEmptyToOppositeIfCan(ObservableCollection<MinutiaStateBase> _senderObject, DrawingService _oppositeDrawingService)
         {
             if (_oppositeDrawingService.WriteableBitmap == null)
@@ -252,10 +243,10 @@ namespace Fingerprints.ViewModels
         }
 
         /// <summary>
-        /// Assigns Guid to Minutia if not has
+        /// Assigns Guid to Minutia ID is null or empty
         /// </summary>
         /// <param name="_eventArgs"></param>
-        private void AssignGuidIfCan(NotifyCollectionChangedEventArgs _eventArgs)
+        private void AssignNewIDIfCan(NotifyCollectionChangedEventArgs _eventArgs)
         {
             foreach (MinutiaStateBase item in _eventArgs.NewItems)
             {
