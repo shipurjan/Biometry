@@ -266,7 +266,7 @@
 
                     <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                     </Border>
-                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" >
+                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" ContextMenu="{Binding listBoxContextMenu}" SelectedItem="{Binding ListBoxSelectedIndex, Mode=TwoWay}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>

@@ -4,7 +4,9 @@ using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
 using Fingerprints.Resources;
 using Fingerprints.Tools.Exporters;
+using Fingerprints.Windows.Controls;
 using Prism.Commands;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +21,7 @@ using System.Windows.Media.Imaging;
 
 namespace Fingerprints.ViewModels
 {
-    class MainWindowViewModel
+    class MainWindowViewModel : BindableBase
     {
         private MinutiaeTypeController dbController;
 
@@ -40,6 +42,10 @@ namespace Fingerprints.ViewModels
         {
             get { return RightDrawingService.DrawingData; }
         }
+
+        public ListBoxContextMenu listBoxContextMenu { get; }
+
+        public MinutiaStateBase ListBoxSelectedIndex { get; set; }
 
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
@@ -65,6 +71,8 @@ namespace Fingerprints.ViewModels
 
                 //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
+
+                listBoxContextMenu = new ListBoxContextMenu(this);
 
                 //button clicks delegates
                 SaveClickCommand = new DelegateCommand(SaveClick);
@@ -264,6 +272,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
+                MessageBox.Show(ListBoxSelectedIndex.ToString());
                 // get path to save data as BackgroundImage file name with txt extension
                 string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
                 string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
