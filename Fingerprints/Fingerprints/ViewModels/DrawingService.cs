@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Fingerprints.Tools.Importers;
+using Fingerprints.Resources;
 
 namespace Fingerprints.ViewModels
 {
@@ -45,6 +46,14 @@ namespace Fingerprints.ViewModels
             set { SetProperty(ref backgroundImage, value); }
         }
 
+        private int? selectedIndex;
+        public int? ListBoxSelectedIndex
+        {
+            get
+            { return selectedIndex; }
+            set
+            { SetProperty(ref selectedIndex, value != -1 ? value : null); }
+        }
 
         #endregion
 
@@ -259,8 +268,11 @@ namespace Fingerprints.ViewModels
                     //import data from file
                     importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
 
-                    //create MitutiaStateBase objects in drawing service
-                    MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
+                    if (importResult.ResultData.AnyOrNotNull())
+                    {
+                        //create MitutiaStateBase objects in drawing service
+                        MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
+                    }
                 }
             }
             catch (Exception ex)

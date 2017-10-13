@@ -33,9 +33,7 @@ namespace Fingerprints.MinutiaeTypes
         }
 
         public WriteableBitmap WriteableBmp
-        {
-            get { return DrawingService.WriteableBitmap; }
-        }
+        { get { return DrawingService.WriteableBitmap; } }
 
         public DrawingService DrawingService { get; }
 
@@ -80,7 +78,12 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
-        public MinutiaStateBase(DrawingService _oDrawingService)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_oDrawingService"></param>
+        /// <param name="_atIndex">index where Minutia must be added</param>
+        public MinutiaStateBase(DrawingService _oDrawingService, int? _atIndex = null)
         {
             try
             {
@@ -88,6 +91,7 @@ namespace Fingerprints.MinutiaeTypes
                 Points = new ObservableCollection<Point>();
                 PropertyChanged += PropertyChangeHandler;
                 Points.CollectionChanged += CollectionChangedHandler;
+                insertIndex = _atIndex;
             }
             catch (Exception ex)
             {
