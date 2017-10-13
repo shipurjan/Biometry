@@ -278,7 +278,8 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" ContextMenu="{Binding RightListBoxContextMenu}" SelectedIndex="{Binding RightDrawingService.ListBoxSelectedIndex, Mode=TwoWay}">
+                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" ContextMenu="{Binding RightListBoxContextMenu}"
+                             SelectedIndex="{Binding RightDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>

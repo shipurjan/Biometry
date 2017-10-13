@@ -33,16 +33,11 @@ namespace Fingerprints.ViewModels
 
         public DrawingService RightDrawingService { get; }
 
-
         public ObservableCollection<MinutiaStateBase> LeftDrawingData
-        {
-            get { return LeftDrawingService.DrawingData; }
-        }
+        { get { return LeftDrawingService.DrawingData; } }
 
         public ObservableCollection<MinutiaStateBase> RightDrawingData
-        {
-            get { return RightDrawingService.DrawingData; }
-        }
+        { get { return RightDrawingService.DrawingData; } }
 
         public ListBoxContextMenu LeftListBoxContextMenu { get; }
 
