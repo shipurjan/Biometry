@@ -23,6 +23,8 @@ namespace Fingerprints.Windows.Controls
         public ListBoxContextMenu(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
             dbController = new MinutiaeTypeController();
+            Style = Application.Current.FindResource("contextMenuStyles") as Style;
+
             Items.Add(BuildInsertMenuItem());
             drawingService = _drawingService;
             oppositeDrawingService = _oppositeDrawingService;
@@ -36,6 +38,7 @@ namespace Fingerprints.Windows.Controls
             try
             {
                 result = new MenuItem() { Header = "Wstaw" };
+                result.Style = Application.Current.FindResource("menuItemStyles") as Style;
 
                 foreach (var minutia in minutiaes)
                 {

@@ -46,8 +46,14 @@ namespace Fingerprints.ViewModels
             set { SetProperty(ref backgroundImage, value); }
         }
 
-        private int selectedIndex;
-        public int ListBoxSelectedIndex { get { return selectedIndex; } set { SetProperty(ref selectedIndex, value); } }
+        private int? selectedIndex;
+        public int? ListBoxSelectedIndex
+        {
+            get
+            { return selectedIndex; }
+            set
+            { SetProperty(ref selectedIndex, value != -1 ? value : null); }
+        }
 
         #endregion
 
@@ -289,7 +295,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex)
         {
-            if (_insertIndex.HasValue && _insertIndex != -1)
+            if (_insertIndex.HasValue)
             {
                 DrawingData[_insertIndex.Value] = _minutiaStateBase;
             }

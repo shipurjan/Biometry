@@ -184,6 +184,7 @@
     <Compile Include="Resources\Utils.cs" />
     <Compile Include="MinutiaeTypes\CurveLineState.cs" />
     <Compile Include="MinutiaeTypes\SegmentState.cs" />
+    <Compile Include="Tools\DependencyObjectExtensions.cs" />
     <Compile Include="Tools\IDataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
     <Compile Include="Tools\Exporters\ExporterBase.cs" />

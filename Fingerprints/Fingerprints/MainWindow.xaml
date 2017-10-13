@@ -106,6 +106,7 @@
                 </Grid.RowDefinitions>
                 <Button x:Name="openRightImage" Command="{Binding LoadRightImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="9,4,0,0" Grid.Row="3" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="219"/>
             </Grid>
 
             <!--aboveTable-->
@@ -266,7 +267,8 @@
 
                     <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                     </Border>
-                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" ContextMenu="{Binding LeftListBoxContextMenu}" SelectedIndex="{Binding LeftDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" ContextMenu="{Binding LeftListBoxContextMenu}" 
+                             SelectedIndex="{Binding LeftDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>

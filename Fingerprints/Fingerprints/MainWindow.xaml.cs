@@ -51,6 +51,18 @@ namespace Fingerprints
             //saveEvents();
             //comboBoxChanged();
             //addEmpty.Click += addEmpty_Click;
+            listBoxImageL.MouseDown += UnselectOnBlank;
+            listBoxImageR.MouseDown += UnselectOnBlank;
+        }
+
+        private void UnselectOnBlank(object _sender, MouseButtonEventArgs _args)
+        {
+            HitTestResult hitTestResult = VisualTreeHelper.HitTest((ListBox)_sender, _args.GetPosition((ListBox)_sender));
+            Control controlUnderMouse = hitTestResult.VisualHit.GetParentOfType<Control>();
+            if (controlUnderMouse is ListBox)
+            {
+                ((ListBox)_sender).UnselectAll();
+            }
         }
 
         //public void comboBoxChanged()
