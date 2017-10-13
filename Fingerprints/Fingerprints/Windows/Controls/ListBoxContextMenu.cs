@@ -30,6 +30,10 @@ namespace Fingerprints.Windows.Controls
             oppositeDrawingService = _oppositeDrawingService;
         }
 
+        /// <summary>
+        /// Creates context menu for listbox
+        /// </summary>
+        /// <returns></returns>
         private MenuItem BuildInsertMenuItem()
         {
             MenuItem result = null;
@@ -40,6 +44,7 @@ namespace Fingerprints.Windows.Controls
                 result = new MenuItem() { Header = "Wstaw" };
                 result.Style = Application.Current.FindResource("menuItemStyles") as Style;
 
+                //create menuitem foreach minutia state with click event to start new drawing
                 foreach (var minutia in minutiaes)
                 {
                     MenuItem menuItem = new MenuItem() { Header = minutia.MinutiaName };
