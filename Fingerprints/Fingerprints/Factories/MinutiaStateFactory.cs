@@ -15,10 +15,11 @@ namespace Fingerprints.Factories
     public static class MinutiaStateFactory
     {
         /// <summary>
-        /// Creates MinutiaStateBase object assigned to drwing service
+        /// Creates MinutiaStateBase object assigned to drawing service
         /// </summary>
-        /// <param name="_oMinutia"></param>
-        /// <param name="_oDrawingService"></param>
+        /// <param name="_oMinutia">SelfDefinedMinutiae</param>
+        /// <param name="_oDrawingService">DrawingService</param>
+        /// <param name="_atIndex">Optional index where Minutia must be added</param>
         /// <returns></returns>
         public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService, int? _atIndex = null)
         {
