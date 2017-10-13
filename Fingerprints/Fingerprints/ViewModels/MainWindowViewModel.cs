@@ -21,7 +21,7 @@ using System.Windows.Media.Imaging;
 
 namespace Fingerprints.ViewModels
 {
-    class MainWindowViewModel : BindableBase
+    class MainWindowViewModel
     {
         private MinutiaeTypeController dbController;
 

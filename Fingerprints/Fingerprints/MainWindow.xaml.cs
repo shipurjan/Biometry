@@ -55,6 +55,11 @@ namespace Fingerprints
             listBoxImageR.MouseDown += UnselectOnBlank;
         }
 
+        /// <summary>
+        /// Unselect items in Listbox if mouse click on blank space of listbox
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_args"></param>
         private void UnselectOnBlank(object _sender, MouseButtonEventArgs _args)
         {
             HitTestResult hitTestResult = VisualTreeHelper.HitTest((ListBox)_sender, _args.GetPosition((ListBox)_sender));
