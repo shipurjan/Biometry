@@ -20,7 +20,7 @@ namespace Fingerprints.Factories
         /// <param name="_oMinutia"></param>
         /// <param name="_oDrawingService"></param>
         /// <returns></returns>
-        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService)
+        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService, int? _atIndex = null)
         {
             MinutiaStateBase oMinutiaState = null;
 
@@ -29,25 +29,22 @@ namespace Fingerprints.Factories
                 switch (_oMinutia.TypeId)
                 {
                     case 1:
-                        oMinutiaState = new PointState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
+                        oMinutiaState = new PointState(_oDrawingService, _atIndex);
                         break;
                     case 2:
-                        oMinutiaState = new VectorState(_oDrawingService);
+                        oMinutiaState = new VectorState(_oDrawingService, _atIndex);
                         break;
                     case 3:
-                        oMinutiaState = new CurveLineState(_oDrawingService);
+                        oMinutiaState = new CurveLineState(_oDrawingService, _atIndex);
                         break;
                     case 5:
-                        oMinutiaState = new PeakState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
+                        oMinutiaState = new PeakState(_oDrawingService, _atIndex);
                         break;
                     case 6:
-                        oMinutiaState = new SegmentState(_oDrawingService);
+                        oMinutiaState = new SegmentState(_oDrawingService, _atIndex);
                         break;
                     case 7:
-                        oMinutiaState = new EmptyState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
+                        oMinutiaState = new EmptyState(_oDrawingService, _atIndex);
                         break;
                 }
 

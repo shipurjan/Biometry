@@ -27,11 +27,12 @@ namespace Fingerprints.ViewModels
 
         private bool _bCanComboBoxChangeCurrentDrawing;
 
+        public ObservableCollection<MinutiaState> MinutiaeStates { get; set; }
+
         public DrawingService LeftDrawingService { get; }
 
         public DrawingService RightDrawingService { get; }
 
-        public ObservableCollection<MinutiaState> MinutiaeStates { get; set; }
 
         public ObservableCollection<MinutiaStateBase> LeftDrawingData
         {
@@ -43,9 +44,9 @@ namespace Fingerprints.ViewModels
             get { return RightDrawingService.DrawingData; }
         }
 
-        public ListBoxContextMenu listBoxContextMenu { get; }
+        public ListBoxContextMenu LeftListBoxContextMenu { get; }
 
-        public MinutiaStateBase ListBoxSelectedIndex { get; set; }
+        public ListBoxContextMenu RightListBoxContextMenu { get; }
 
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
@@ -72,7 +73,9 @@ namespace Fingerprints.ViewModels
                 //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
 
-                listBoxContextMenu = new ListBoxContextMenu(this);
+                //Init context menu for listboxes
+                LeftListBoxContextMenu = new ListBoxContextMenu(LeftDrawingService, RightDrawingService);
+                RightListBoxContextMenu = new ListBoxContextMenu(RightDrawingService, LeftDrawingService);
 
                 //button clicks delegates
                 SaveClickCommand = new DelegateCommand(SaveClick);
@@ -272,12 +275,12 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                MessageBox.Show(ListBoxSelectedIndex.ToString());
-                // get path to save data as BackgroundImage file name with txt extension
-                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
-                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                LeftDrawingService.ListBoxSelectedIndex = -1;
+                //get path to save data as BackgroundImage file name with txt extension
+                //string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                //string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
-                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
+                //ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
             catch (Exception ex)
             {

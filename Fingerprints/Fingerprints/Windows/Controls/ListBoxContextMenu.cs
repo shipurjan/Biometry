@@ -1,5 +1,6 @@
 ﻿using ExceptionLogger;
 using Fingerprints.Factories;
+using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
 using Fingerprints.ViewModels;
 using System;
@@ -16,12 +17,15 @@ namespace Fingerprints.Windows.Controls
     {
         MinutiaeTypeController dbController;
 
-        MainWindowViewModel viewModel;
-        public ListBoxContextMenu(MainWindowViewModel _viewModel)
+        DrawingService drawingService;
+
+        DrawingService oppositeDrawingService;
+        public ListBoxContextMenu(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
             dbController = new MinutiaeTypeController();
             Items.Add(BuildInsertMenuItem());
-            viewModel = _viewModel;
+            drawingService = _drawingService;
+            oppositeDrawingService = _oppositeDrawingService;
         }
 
         private MenuItem BuildInsertMenuItem()
@@ -38,8 +42,10 @@ namespace Fingerprints.Windows.Controls
                     MenuItem menuItem = new MenuItem() { Header = minutia.MinutiaName };
                     menuItem.Click += (s, e) =>
                     {
-                        viewModel.LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, viewModel.LeftDrawingService);
+                        drawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, drawingService, drawingService.ListBoxSelectedIndex);
+                        oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, oppositeDrawingService);
                     };
+
                     result.Items.Add(menuItem);
                 }
             }

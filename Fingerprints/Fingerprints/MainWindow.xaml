@@ -266,7 +266,7 @@
 
                     <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                     </Border>
-                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" ContextMenu="{Binding listBoxContextMenu}" SelectedItem="{Binding ListBoxSelectedIndex, Mode=TwoWay}">
+                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" ContextMenu="{Binding LeftListBoxContextMenu}" SelectedIndex="{Binding LeftDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -276,7 +276,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" >
+                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" ContextMenu="{Binding RightListBoxContextMenu}" SelectedIndex="{Binding RightDrawingService.ListBoxSelectedIndex, Mode=TwoWay}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>

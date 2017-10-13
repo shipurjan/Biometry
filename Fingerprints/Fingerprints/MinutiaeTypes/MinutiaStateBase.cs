@@ -80,7 +80,7 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
-        public MinutiaStateBase(DrawingService _oDrawingService)
+        public MinutiaStateBase(DrawingService _oDrawingService, int? _atIndex = null)
         {
             try
             {
@@ -88,6 +88,7 @@ namespace Fingerprints.MinutiaeTypes
                 Points = new ObservableCollection<Point>();
                 PropertyChanged += PropertyChangeHandler;
                 Points.CollectionChanged += CollectionChangedHandler;
+                insertIndex = _atIndex;
             }
             catch (Exception ex)
             {

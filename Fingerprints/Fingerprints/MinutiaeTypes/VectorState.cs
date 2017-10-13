@@ -16,7 +16,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class VectorState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public VectorState(DrawingService _oDrawingService) : base(_oDrawingService)
+        public VectorState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
         {
         }
 
