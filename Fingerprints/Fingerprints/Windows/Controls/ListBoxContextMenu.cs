@@ -20,6 +20,12 @@ namespace Fingerprints.Windows.Controls
         DrawingService drawingService;
 
         DrawingService oppositeDrawingService;
+
+        /// <summary>
+        /// Constructor, initializes Context menu by creating MenuItems and sets style
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="_oppositeDrawingService"></param>
         public ListBoxContextMenu(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
             dbController = new MinutiaeTypeController();
