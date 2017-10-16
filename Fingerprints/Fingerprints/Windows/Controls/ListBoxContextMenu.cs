@@ -38,6 +38,10 @@ namespace Fingerprints.Windows.Controls
             oppositeDrawingService = _oppositeDrawingService;
         }
 
+        /// <summary>
+        /// Creates menuItem for context menu which inserts empty at index
+        /// </summary>
+        /// <returns></returns>
         private MenuItem BuildDeleteMenuItem()
         {
             MenuItem result = null;
@@ -62,7 +66,7 @@ namespace Fingerprints.Windows.Controls
         }
 
         /// <summary>
-        /// Creates context menu for listbox
+        /// Creates MenuItem for context menu which itialize new CurrentDrawing
         /// </summary>
         /// <returns></returns>
         private MenuItem BuildInsertMenuItem()
