@@ -32,12 +32,41 @@ namespace Fingerprints.Windows.Controls
             Style = Application.Current.FindResource("contextMenuStyles") as Style;
 
             Items.Add(BuildInsertMenuItem());
+            Items.Add(BuildDeleteMenuItem());
+
             drawingService = _drawingService;
             oppositeDrawingService = _oppositeDrawingService;
         }
 
         /// <summary>
-        /// Creates context menu for listbox
+        /// Creates menuItem for context menu which inserts empty at index
+        /// </summary>
+        /// <returns></returns>
+        private MenuItem BuildDeleteMenuItem()
+        {
+            MenuItem result = null;
+            try
+            {
+                result = new MenuItem() { Header = "Usuń" };
+
+                result.Click += (s, e) =>
+                {
+                    if (drawingService.ListBoxSelectedIndex.HasValue)
+                    {
+                        drawingService.DrawingData[drawingService.ListBoxSelectedIndex.Value] = new EmptyState(drawingService);
+                        drawingService.Draw();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Creates MenuItem for context menu which itialize new CurrentDrawing
         /// </summary>
         /// <returns></returns>
         private MenuItem BuildInsertMenuItem()
