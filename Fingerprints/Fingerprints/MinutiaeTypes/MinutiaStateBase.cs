@@ -56,6 +56,9 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
+        /// <summary>
+        /// array of Points ( gets Points List and copy to array of int (x, y, x, y...))
+        /// </summary>
         public int[] IntPoints
         {
             get
