@@ -26,8 +26,33 @@ namespace Fingerprints.Windows.Controls
             Style = Application.Current.FindResource("contextMenuStyles") as Style;
 
             Items.Add(BuildInsertMenuItem());
+            Items.Add(BuildDeleteMenuItem());
+
             drawingService = _drawingService;
             oppositeDrawingService = _oppositeDrawingService;
+        }
+
+        private MenuItem BuildDeleteMenuItem()
+        {
+            MenuItem result = null;
+            try
+            {
+                result = new MenuItem() { Header = "Usuń" };
+
+                result.Click += (s, e) =>
+                {
+                    if (drawingService.ListBoxSelectedIndex.HasValue)
+                    {
+                        drawingService.DrawingData.RemoveAt(drawingService.ListBoxSelectedIndex.Value);
+                        drawingService.Draw();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         /// <summary>
