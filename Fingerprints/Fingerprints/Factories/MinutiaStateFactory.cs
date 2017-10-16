@@ -27,7 +27,7 @@ namespace Fingerprints.Factories
 
             try
             {
-                switch (_oMinutia.TypeId)
+                switch (_oMinutia?.TypeId)
                 {
                     case 1:
                         oMinutiaState = new PointState(_oDrawingService, _atIndex);
@@ -48,6 +48,7 @@ namespace Fingerprints.Factories
                         oMinutiaState = new SegmentState(_oDrawingService, _atIndex);
                         break;
                     case 7:
+                    default:
                         oMinutiaState = new EmptyState(_oDrawingService, _atIndex);
                         break;
                 }

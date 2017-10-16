@@ -85,6 +85,10 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Load Right image
+        /// Fill DrawingData with Empty if amount of objects in DrawingData is different
+        /// </summary>
         private void LoadRightImage()
         {
             try
@@ -98,6 +102,10 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Load Left image
+        /// Fill DrawingData with Empty if amount of objects in DrawingData is different
+        /// </summary>
         private void LoadLeftImage()
         {
             try
@@ -165,17 +173,7 @@ namespace Fingerprints.ViewModels
             {
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
 
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
-                {
-                    AssignNewIDIfCan(_eventArgs);
-
-                    AddEmptyToOppositeIfCan(senderObject, LeftDrawingService);
-                }
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
-                {
-                    senderObject[_eventArgs.NewStartingIndex].Id = LeftDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
-                }
+                CollectionChangedActions(senderObject, _eventArgs, LeftDrawingService);
             }
             catch (Exception ex)
             {
@@ -192,16 +190,54 @@ namespace Fingerprints.ViewModels
             {
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
 
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
-                {
-                    AssignNewIDIfCan(_eventArgs);
+                CollectionChangedActions(senderObject, _eventArgs, RightDrawingService);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
 
-                    AddEmptyToOppositeIfCan(senderObject, RightDrawingService);
+        /// <summary>
+        /// Method executes when DrawingData collection changed
+        /// </summary>
+        /// <param name="_senderObject"></param>
+        /// <param name="_eventArgs"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        private void CollectionChangedActions(ObservableCollection<MinutiaStateBase> _senderObject, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
+        {
+            if (_eventArgs.Action == NotifyCollectionChangedAction.Add && _senderObject.Count > 0)
+            {
+                AssignNewIDIfCan(_eventArgs);
+
+                AddEmptyToOppositeIfCan(_senderObject, _oppositeDrawingService);
+            }
+
+            if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
+            {
+                AssignIDOnReplace(_senderObject, _eventArgs, _oppositeDrawingService);
+            }
+        }
+
+        /// <summary>
+        /// Assigns id from opposite object or from old object
+        /// </summary>
+        /// <param name="_senderObject"></param>
+        /// <param name="_eventArgs"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        private void AssignIDOnReplace(ObservableCollection<MinutiaStateBase> _senderObject, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
+        {
+            try
+            {
+                if (_oppositeDrawingService.DrawingData?.Count > _eventArgs.NewStartingIndex)
+                {
+                    //get id from opposite drawing object
+                    _senderObject[_eventArgs.NewStartingIndex].Id = _oppositeDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
                 }
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
+                else
                 {
-                    senderObject[_eventArgs.NewStartingIndex].Id = RightDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
+                    //get id from old drawing object
+                    _senderObject[_eventArgs.NewStartingIndex].Id = ((MinutiaStateBase)_eventArgs.OldItems[0]).Id;
                 }
             }
             catch (Exception ex)
@@ -224,7 +260,7 @@ namespace Fingerprints.ViewModels
 
             if (_senderObject.Count > _oppositeDrawingService.DrawingData.Count)
             {
-                _oppositeDrawingService.DrawingData.Add(new EmptyState(_oppositeDrawingService) { Id = _senderObject.LastOrDefault().Id });
+                _oppositeDrawingService.AddMinutiaToDrawingData(new EmptyState(_oppositeDrawingService) { Id = _senderObject.LastOrDefault().Id });
             }
         }
 
@@ -239,7 +275,7 @@ namespace Fingerprints.ViewModels
 
                 for (int i = 0; i < _count; i++)
                 {
-                    _drawingService.DrawingData.Add(new EmptyState(RightDrawingService));
+                    _drawingService.AddMinutiaToDrawingData(new EmptyState(_drawingService));
                 }
             }
             catch (Exception ex)

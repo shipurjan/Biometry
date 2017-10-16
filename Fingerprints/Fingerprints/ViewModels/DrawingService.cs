@@ -20,12 +20,8 @@ namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
-        private ObservableCollection<MinutiaStateBase> drawingData;
         public ObservableCollection<MinutiaStateBase> DrawingData
-        {
-            get { return drawingData; }
-            set { SetProperty(ref drawingData, value); }
-        }
+        { get; }
 
         private Point mousePosition;
 
@@ -293,7 +289,7 @@ namespace Fingerprints.ViewModels
         /// Adds CurrentDrawing to DrawingData list, 
         /// When this method is launched, CurrentDrawing will appear on WriteableBitmap and listbox
         /// </summary>
-        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex)
+        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex = null)
         {
             if (_insertIndex.HasValue)
             {
