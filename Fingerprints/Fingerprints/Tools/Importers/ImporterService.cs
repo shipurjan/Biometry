@@ -32,7 +32,7 @@ namespace Fingerprints.Tools.Importers
                 // if parse fails, show error
                 if (!importType.HasValue)
                 {
-                    string error = string.Format("Extension '{0}' not supported", Path.GetExtension(_path));
+                    string error = string.Format("File format '{0}' not supported", Path.GetExtension(_path));
                     return new ImportResult(false, null, error);
                 }
 

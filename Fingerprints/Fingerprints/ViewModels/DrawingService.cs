@@ -14,12 +14,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Fingerprints.Tools.Importers;
+using Fingerprints.Resources;
 
 namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
-        public ObservableCollection<MinutiaStateBase> DrawingData;
+        public ObservableCollection<MinutiaStateBase> DrawingData
+        { get; }
 
         private Point mousePosition;
 
@@ -40,7 +42,15 @@ namespace Fingerprints.ViewModels
             set { SetProperty(ref backgroundImage, value); }
         }
 
-        public ICommand LoadImageCommand { get; }
+        private int? selectedIndex;
+        public int? ListBoxSelectedIndex
+        {
+            get
+            { return selectedIndex; }
+            set
+            { SetProperty(ref selectedIndex, value != -1 ? value : null); }
+        }
+
         #endregion
 
         public DrawingService()
@@ -48,8 +58,6 @@ namespace Fingerprints.ViewModels
             try
             {
                 DrawingData = new ObservableCollection<MinutiaStateBase>();
-
-                LoadImageCommand = new DelegateCommand(LoadImage);
             }
             catch (Exception ex)
             {
@@ -231,7 +239,7 @@ namespace Fingerprints.ViewModels
         /// <summary>
         /// Opens OpenFileDialog for load image, creates new instance of WriteableBitmap and assigns BackroundImage
         /// </summary>
-        private void LoadImage()
+        public void LoadImage()
         {
             ImportResult importResult = null;
             try
@@ -256,8 +264,11 @@ namespace Fingerprints.ViewModels
                     //import data from file
                     importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
 
-                    //create MitutiaStateBase objects in drawing service
-                    MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
+                    if (importResult.ResultData.AnyOrNotNull())
+                    {
+                        //create MitutiaStateBase objects in drawing service
+                        MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
+                    }
                 }
             }
             catch (Exception ex)
@@ -278,9 +289,16 @@ namespace Fingerprints.ViewModels
         /// Adds CurrentDrawing to DrawingData list, 
         /// When this method is launched, CurrentDrawing will appear on WriteableBitmap and listbox
         /// </summary>
-        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase)
+        public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex = null)
         {
-            DrawingData.Add(_minutiaStateBase);
+            if (_insertIndex.HasValue)
+            {
+                DrawingData[_insertIndex.Value] = _minutiaStateBase;
+            }
+            else
+            {
+                DrawingData.Add(_minutiaStateBase);
+            }
         }
 
         #region IDisposable Support

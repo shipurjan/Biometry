@@ -15,40 +15,41 @@ namespace Fingerprints.Factories
     public static class MinutiaStateFactory
     {
         /// <summary>
-        /// Creates MinutiaStateBase object assigned to drwing service
+        /// Creates MinutiaStateBase object assigned to drawing service
         /// </summary>
-        /// <param name="_oMinutia"></param>
-        /// <param name="_oDrawingService"></param>
+        /// <param name="_oMinutia">SelfDefinedMinutiae</param>
+        /// <param name="_oDrawingService">DrawingService</param>
+        /// <param name="_atIndex">Optional index where Minutia must be added</param>
         /// <returns></returns>
-        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService)
+        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService, int? _atIndex = null)
         {
             MinutiaStateBase oMinutiaState = null;
 
             try
             {
-                switch (_oMinutia.TypeId)
+                switch (_oMinutia?.TypeId)
                 {
                     case 1:
-                        oMinutiaState = new PointState(_oDrawingService);
+                        oMinutiaState = new PointState(_oDrawingService, _atIndex);
                         break;
                     case 2:
-                        oMinutiaState = new VectorState(_oDrawingService);
+                        oMinutiaState = new VectorState(_oDrawingService, _atIndex);
                         break;
                     case 3:
-                        oMinutiaState = new CurveLineState(_oDrawingService);
+                        oMinutiaState = new CurveLineState(_oDrawingService, _atIndex);
                         break;
                     case 4:
-                        oMinutiaState = new TriangleState(_oDrawingService);
+                        oMinutiaState = new TriangleState(_oDrawingService, _atIndex);
                         break;
                     case 5:
-                        oMinutiaState = new PeakState(_oDrawingService);
+                        oMinutiaState = new PeakState(_oDrawingService, _atIndex);
                         break;
                     case 6:
-                        oMinutiaState = new SegmentState(_oDrawingService);
+                        oMinutiaState = new SegmentState(_oDrawingService, _atIndex);
                         break;
                     case 7:
-                        oMinutiaState = new EmptyState(_oDrawingService);
-                        oMinutiaState.Minutia = _oMinutia;
+                    default:
+                        oMinutiaState = new EmptyState(_oDrawingService, _atIndex);
                         break;
                 }
 

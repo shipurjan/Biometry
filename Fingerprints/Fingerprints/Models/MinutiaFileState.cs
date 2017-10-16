@@ -10,7 +10,7 @@ namespace Fingerprints.Models
 {
     public class MinutiaFileState
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public double Angle { get; set; }
         public List<Point> Points { get; set; }
@@ -23,7 +23,7 @@ namespace Fingerprints.Models
 
             return new MinutiaState()
             {
-                Id = this.Id,
+                Id = Convert.ToInt64(this.Id),
                 Minutia = Minutia,
                 Angle = this.Angle,
                 Points = this.Points
