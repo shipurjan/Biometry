@@ -49,7 +49,7 @@ namespace Fingerprints.Windows.Controls
                 {
                     if (drawingService.ListBoxSelectedIndex.HasValue)
                     {
-                        drawingService.DrawingData.RemoveAt(drawingService.ListBoxSelectedIndex.Value);
+                        drawingService.DrawingData[drawingService.ListBoxSelectedIndex.Value] = new EmptyState(drawingService);
                         drawingService.Draw();
                     }
                 };

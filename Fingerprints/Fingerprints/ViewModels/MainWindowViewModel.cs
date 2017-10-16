@@ -217,11 +217,6 @@ namespace Fingerprints.ViewModels
             {
                 AssignIDOnReplace(_senderObject, _eventArgs, _oppositeDrawingService);
             }
-
-            if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
-            {
-
-            }
         }
 
         /// <summary>
