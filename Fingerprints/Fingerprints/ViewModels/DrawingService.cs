@@ -26,7 +26,26 @@ namespace Fingerprints.ViewModels
         private Point mousePosition;
 
         #region Props
-        public MinutiaStateBase CurrentDrawing { get; set; }
+        /// <summary>
+        /// Current Drawing, on set raise event CurrentDrawingChanged
+        /// </summary>
+        private MinutiaStateBase currentDrawing;
+        public MinutiaStateBase CurrentDrawing
+        {
+            get { return currentDrawing; }
+            set
+            {
+                try
+                {
+                    currentDrawing = value;
+                    CurrentDrawingChanged(this, null);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteExceptionLog(ex);
+                }
+            }
+        }
 
         private WriteableBitmap writeableBitmap;
         public WriteableBitmap WriteableBitmap
@@ -42,6 +61,9 @@ namespace Fingerprints.ViewModels
             set { SetProperty(ref backgroundImage, value); }
         }
 
+        /// <summary>
+        /// Property indicates what index in listbox is selected
+        /// </summary>
         private int? selectedIndex;
         public int? ListBoxSelectedIndex
         {
@@ -52,6 +74,11 @@ namespace Fingerprints.ViewModels
         }
 
         #endregion
+
+        /// <summary>
+        /// Event raised when current drawing change
+        /// </summary>
+        public event EventHandler CurrentDrawingChanged;
 
         public DrawingService()
         {

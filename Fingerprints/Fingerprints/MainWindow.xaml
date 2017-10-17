@@ -80,7 +80,8 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" ItemsSource="{Binding MinutiaeStates}" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150" MaxWidth="250" Margin="30 0 30 0" SelectionChanged="comboBox_SelectionChanged" >
+                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" ItemsSource="{Binding MinutiaeStates}" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                          MinWidth="150" MaxWidth="250" Margin="30 0 30 0" SelectedItem="{Binding SelectedComboboxItem}" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding MinutiaName}" />
