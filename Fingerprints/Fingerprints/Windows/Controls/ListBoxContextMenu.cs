@@ -53,7 +53,17 @@ namespace Fingerprints.Windows.Controls
                 {
                     if (drawingService.ListBoxSelectedIndex.HasValue)
                     {
-                        drawingService.DrawingData[drawingService.ListBoxSelectedIndex.Value] = new EmptyState(drawingService);
+                        var position = drawingService.ListBoxSelectedIndex.Value;
+
+                        if (oppositeDrawingService.DrawingData[position].GetType() == typeof(EmptyState))
+                        {
+                            drawingService.DrawingData.RemoveAt(position);
+                            oppositeDrawingService.DrawingData.RemoveAt(position);
+                        }
+                        else
+                        {
+                            drawingService.DrawingData[drawingService.ListBoxSelectedIndex.Value] = new EmptyState(drawingService);
+                        }
                         drawingService.Draw();
                     }
                 };
