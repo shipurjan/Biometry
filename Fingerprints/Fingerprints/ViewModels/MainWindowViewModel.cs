@@ -136,6 +136,10 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// sets SelectedItem in combobox
+        /// </summary>
+        /// <param name="_sender"></param>
         private void SetComboboxTitle(object _sender)
         {
             DrawingService senderObject = null;
