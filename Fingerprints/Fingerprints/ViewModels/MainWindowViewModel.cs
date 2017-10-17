@@ -21,13 +21,16 @@ using System.Windows.Media.Imaging;
 
 namespace Fingerprints.ViewModels
 {
-    class MainWindowViewModel
+    class MainWindowViewModel : BindableBase
     {
         private MinutiaeTypeController dbController;
 
         private bool _bCanComboBoxChangeCurrentDrawing;
 
         public ObservableCollection<MinutiaState> MinutiaeStates { get; set; }
+
+        private MinutiaState selectedComboboxItem;
+        public MinutiaState SelectedComboboxItem { get { return selectedComboboxItem; } set { SetProperty(ref selectedComboboxItem, value); } }
 
         public DrawingService LeftDrawingService { get; }
 
@@ -78,6 +81,68 @@ namespace Fingerprints.ViewModels
                 SaveAsClickCommand = new DelegateCommand(SaveAsClick);
                 LoadLeftImageCommand = new DelegateCommand(LoadLeftImage);
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
+                LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
+                RightDrawingService.CurrentDrawingChanged += RightDrawingService_CurrentDrawingChanged;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Event occurs when CurrentDrawing changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RightDrawingService_CurrentDrawingChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _bCanComboBoxChangeCurrentDrawing = false;
+
+                SetComboboxTitle(sender);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            finally
+            {
+                _bCanComboBoxChangeCurrentDrawing = true;
+            }
+        }
+
+        /// <summary>
+        /// Event occurs when CurrentDrawing changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LeftDrawingService_CurrentDrawingChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _bCanComboBoxChangeCurrentDrawing = false;
+
+                SetComboboxTitle(sender);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            finally
+            {
+                _bCanComboBoxChangeCurrentDrawing = true;
+            }
+        }
+
+        private void SetComboboxTitle(object _sender)
+        {
+            DrawingService senderObject = null;
+            try
+            {
+                senderObject = ((DrawingService)_sender);
+                SelectedComboboxItem = MinutiaeStates.FirstOrDefault(x => x.MinutiaName == senderObject.CurrentDrawing.MinutiaName);
             }
             catch (Exception ex)
             {
