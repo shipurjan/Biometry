@@ -18,7 +18,7 @@ namespace Fingerprints.Factories
                 result = new Type()
                 {
                     Name = _drawingType.ToString(),
-                    TypeId = (int)_drawingType
+                    DrawingType = _drawingType
                 };
             }
             catch (Exception ex)

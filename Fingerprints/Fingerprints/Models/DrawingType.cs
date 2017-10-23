@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fingerprints.Models
 {
-    enum DrawingType
+    public enum DrawingType
     {
         SinglePoint = 1,
         Vector = 2,

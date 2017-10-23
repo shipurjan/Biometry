@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using Fingerprints.Models;
 
 namespace Fingerprints
 {
@@ -13,31 +14,19 @@ namespace Fingerprints
         /// Na razie dodaje rzeczy na sztywno do jednej tabeli, potem to trzeba bedzie zmienic jakos ;o
         /// </summary>
         public static int currentProject = 0;
-        static public void InitialData()
-        {
-            AddNewMinutiae("Por", 1, "Czerwony", 1, 1);
-            AddNewMinutiae("Rozwidlenie", 2 , "Zielony", 1.2, 1);
-            AddNewMinutiae("Dowolna", 3, "Niebieski", 1, 1);
-        }
 
-        static public void AddNewMinutiae(string name, int drawType, string color, double size, double thickness)
+        static public void AddNewMinutiae(string name, DrawingType drawType, string color, double size, double thickness)
         {
             try
             {
                 using (var db = new FingerContext())
                 {
-                    var q2 = db.Types.ToList();
-                    if (q2.Count == 0)
-                    {
-                        db.Types.Add(new Type() { Name = "SinglePoint", DrawingType = 1 });
-                        db.SaveChanges();
-                    }
-                    var q = db.Types.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
+                    var q = db.Types.Where(x => x.DrawingType == drawType).Select(x => x.DrawingType).Single();
                     var SelfDefinedMinutiae = new SelfDefinedMinutiae()
                     {
                         Name = name,
                         ProjectId = currentProject,
-                        TypeId = q,
+                        DrawingType = q,
                         Color = color,
 
                     };

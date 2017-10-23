@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity.Core;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Fingerprints.Models;
 
 namespace Fingerprints
 {
@@ -15,7 +15,7 @@ namespace Fingerprints
         public int SelfDefinedMinutiaeId { get; set; }
         public string Name { get; set; }
         public int ProjectId { get; set; }
-        public int TypeId { get; set; }
+        public DrawingType DrawingType { get; set; }
         public string  Color { get; set; }
         public override string ToString()
         {

@@ -26,27 +26,27 @@ namespace Fingerprints.Factories
 
             try
             {
-                switch (_oMinutia.TypeId)
+                switch (_oMinutia.DrawingType)
                 {
-                    case 1:
+                    case DrawingType.SinglePoint:
                         oMinutiaState = new PointState(_oDrawingService);
                         break;
-                    case 2:
+                    case DrawingType.Vector:
                         oMinutiaState = new VectorState(_oDrawingService);
                         break;
-                    case 3:
+                    case DrawingType.CurveLine:
                         oMinutiaState = new CurveLineState(_oDrawingService);
                         break;
-                    case 4:
+                    case DrawingType.Triangle:
                         oMinutiaState = new TriangleState(_oDrawingService);
                         break;
-                    case 5:
+                    case DrawingType.Peak:
                         oMinutiaState = new PeakState(_oDrawingService);
                         break;
-                    case 6:
+                    case DrawingType.Segment:
                         oMinutiaState = new SegmentState(_oDrawingService);
                         break;
-                    case 7:
+                    case DrawingType.Empty:
                         oMinutiaState = new EmptyState(_oDrawingService);
                         oMinutiaState.Minutia = _oMinutia;
                         break;
