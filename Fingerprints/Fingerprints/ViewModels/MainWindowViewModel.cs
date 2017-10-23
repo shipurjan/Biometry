@@ -40,6 +40,7 @@ namespace Fingerprints.ViewModels
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
         public ICommand SaveAsClickCommand { get; }
+        public ICommand NewMinutiaCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -64,11 +65,27 @@ namespace Fingerprints.ViewModels
                 SaveClickCommand = new DelegateCommand(SaveClick);
                 MinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(MinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
                 SaveAsClickCommand = new DelegateCommand(SaveAsClick);
+                NewMinutiaCommand = new DelegateCommand(NewMinutia);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        private void NewMinutia()
+        {
+            try
+            {
+                Window1 win = new Window1();
+                win.ShowDialog();
+                //drawer.stopDrawing();
+                MinutiaeStates.Add(dbController.getStates().LastOrDefault());
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
         /// <summary>

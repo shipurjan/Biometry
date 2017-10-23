@@ -45,7 +45,7 @@ namespace Fingerprints
             //drawer = new DrawService(factory);
             //picture.InitializeR();
             //picture.InitializeL();
-            //controller = new MinutiaeTypeController();
+            controller = new MinutiaeTypeController();
             //comboBox.ItemsSource = controller.getStates();
             //InitTable();
             //saveEvents();
@@ -77,14 +77,6 @@ namespace Fingerprints
         //{
         //    Table table = new Table();
         //}
-
-        private void wizardAdd_Click(object sender, RoutedEventArgs e)
-        {
-            Window1 win = new Window1();
-            win.ShowDialog();
-            //drawer.stopDrawing();
-            comboBox.ItemsSource = controller.Show();
-        }
 
         //public void saveEvents()
         //{

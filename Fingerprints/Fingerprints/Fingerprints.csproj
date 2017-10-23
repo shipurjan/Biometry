@@ -142,6 +142,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
+    <Compile Include="DataBase\UniDBInitializer.cs" />
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaStateFactory.cs" />

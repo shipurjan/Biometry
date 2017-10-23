@@ -22,21 +22,34 @@ namespace Fingerprints
 
         static public void AddNewMinutiae(string name, int drawType, string color, double size, double thickness)
         {
-            using (var db = new FingerContext())
+            try
             {
-                var q = db.Types.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
-                var SelfDefinedMinutiae = new SelfDefinedMinutiae()
+                using (var db = new FingerContext())
                 {
-                    Name = name,
-                    ProjectId = currentProject,
-                    TypeId = q,
-                    Color = color,
-                    Size = size,
-                    Thickness = thickness
-                                    
-                };
-                db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
-                db.SaveChanges();          
+                    var q2 = db.Types.ToList();
+                    if (q2.Count == 0)
+                    {
+                        db.Types.Add(new Type() { Name = "SinglePoint", DrawingType = 1 });
+                        db.SaveChanges();
+                    }
+                    var q = db.Types.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
+                    var SelfDefinedMinutiae = new SelfDefinedMinutiae()
+                    {
+                        Name = name,
+                        ProjectId = currentProject,
+                        TypeId = q,
+                        Color = color,
+                        Size = size,
+                        Thickness = thickness
+
+                    };
+                    db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLogger.Logger.WriteExceptionLog(ex);
             }
         }
         static public void DeleteMinutiae(SelfDefinedMinutiae minutiae)
@@ -85,6 +98,14 @@ namespace Fingerprints
             {
                 var q = db.Projects.AsEnumerable().ToList();
                 return q;
+            }
+        }
+
+        static public void InitDbIfNoExit()
+        {
+            using (var db = new FingerContext())
+            {
+                db.Database.CreateIfNotExists();
             }
         }
 

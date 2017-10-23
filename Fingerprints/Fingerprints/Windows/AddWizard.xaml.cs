@@ -67,7 +67,7 @@ namespace Fingerprints
                 Database.AddNewMinutiae(textBox.Text, comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem), Convert.ToDouble(thicknessCombobox.SelectedItem));
                 this.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 MessageBox.Show("Uzupełnij dane");

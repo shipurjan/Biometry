@@ -9,9 +9,9 @@ namespace Fingerprints
 {
     class FingerContext : DbContext
     {
-        public FingerContext() : base("fingerprint")
+        public FingerContext()
         {
-                
+            System.Data.Entity.Database.SetInitializer<FingerContext>(new CreateDatabaseIfNotExists<FingerContext>());            
         }
         public DbSet<Type> Types { get; set; }
         public DbSet<SelfDefinedMinutiae> SelfDefinedMinutiaes { get; set; }
