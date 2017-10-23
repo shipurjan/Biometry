@@ -28,7 +28,7 @@ namespace Fingerprints
                 return;
             }
 
-            mainWindow.listBoxImageL.Items.RemoveAt(index);
+            //mainWindow.listBoxImageL.Items.RemoveAt(index);
             mainWindow.canvasImageL.Children.RemoveAt(index);
 
             if (FileTransfer.ListL.Count > index)
@@ -46,7 +46,7 @@ namespace Fingerprints
                 return;
             }
 
-            mainWindow.listBoxImageR.Items.RemoveAt(index);
+            //mainWindow.listBoxImageR.Items.RemoveAt(index);
             mainWindow.canvasImageR.Children.RemoveAt(index);
 
             if (FileTransfer.ListR.Count > index)

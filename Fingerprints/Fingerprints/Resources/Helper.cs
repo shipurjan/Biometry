@@ -25,10 +25,10 @@ namespace Fingerprints
         {
             return (checkIfImageLEmpty() && checkIfImageREmpty() == true) ? true:false;
         }
-        public bool checkCanvasChildrenCount()
-        {
-            return mw.listBoxImageL.Items.Count != mw.listBoxImageR.Items.Count;
-        }
+        //public bool checkCanvasChildrenCount()
+        //{
+        //    return mw.listBoxImageL.Items.Count != mw.listBoxImageR.Items.Count;
+        //}
         public void insertEmpty()
         {
             UserEmpty empty = new UserEmpty(new MinutiaState());
@@ -49,24 +49,24 @@ namespace Fingerprints
             return mw.imageR.Source != null ? true : false;
         }
 
-        public void deleteUnnecessaryEmpty()
-        {
-            while ((mw.listBoxImageL.Items.Count - 1 >= 0 && ((MinutiaState)mw.listBoxImageL.Items[mw.listBoxImageL.Items.Count - 1]).MinutiaName == "Puste" && ((MinutiaState)mw.listBoxImageR.Items[mw.listBoxImageR.Items.Count - 1]).MinutiaName == "Puste"))
-            {
-                int index = mw.listBoxImageL.Items.Count - 1;
-                mw.listBoxImageL.Items.RemoveAt(index);
-                mw.canvasImageL.Children.RemoveAt(index);
+        //public void deleteUnnecessaryEmpty()
+        //{
+        //    while ((mw.listBoxImageL.Items.Count - 1 >= 0 && ((MinutiaState)mw.listBoxImageL.Items[mw.listBoxImageL.Items.Count - 1]).MinutiaName == "Puste" && ((MinutiaState)mw.listBoxImageR.Items[mw.listBoxImageR.Items.Count - 1]).MinutiaName == "Puste"))
+        //    {
+        //        int index = mw.listBoxImageL.Items.Count - 1;
+        //        mw.listBoxImageL.Items.RemoveAt(index);
+        //        mw.canvasImageL.Children.RemoveAt(index);
 
-                if (FileTransfer.ListL.Count > mw.listBoxImageL.Items.Count)
-                    FileTransfer.ListL.RemoveAt(mw.listBoxImageL.Items.Count);
+        //        if (FileTransfer.ListL.Count > mw.listBoxImageL.Items.Count)
+        //            FileTransfer.ListL.RemoveAt(mw.listBoxImageL.Items.Count);
 
-                mw.listBoxImageR.Items.RemoveAt(index);
-                mw.canvasImageR.Children.RemoveAt(index);
+        //        mw.listBoxImageR.Items.RemoveAt(index);
+        //        mw.canvasImageR.Children.RemoveAt(index);
 
-                if (FileTransfer.ListR.Count > mw.listBoxImageR.Items.Count)
-                    FileTransfer.ListR.RemoveAt(mw.listBoxImageR.Items.Count);
-            }
-        }
+        //        if (FileTransfer.ListR.Count > mw.listBoxImageR.Items.Count)
+        //            FileTransfer.ListR.RemoveAt(mw.listBoxImageR.Items.Count);
+        //    }
+        //}
 
         public void addEmptyOnLastLine()
         {

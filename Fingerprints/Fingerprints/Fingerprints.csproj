@@ -174,7 +174,6 @@
     <Compile Include="MinutiaeTypes\Vector\UserVector.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />
-    <Compile Include="Resources\DrawService.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />
     <Compile Include="Resources\Helper.cs" />
     <Compile Include="MinutiaeTypes\Empty\Empty.cs" />
@@ -202,6 +201,7 @@
     <Compile Include="Tools\Importers\TxtImporter.cs" />
     <Compile Include="Tools\LinestoPointsConverter\LinesToPointsConverter.cs" />
     <Compile Include="Tools\PathTool.cs" />
+    <Compile Include="ViewModels\DataGridObject.cs" />
     <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -217,7 +217,6 @@
     <Compile Include="MinutiaeTypes\SinglePoint\SinglePoint.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\SelfDefinedMinutiae.cs" />
-    <Compile Include="Table.cs" />
     <Compile Include="MinutiaeTypes\Vector\Vector.cs" />
     <Compile Include="Resources\FileTransfer.cs" />
     <Compile Include="Windows\AddWizard.xaml.cs">

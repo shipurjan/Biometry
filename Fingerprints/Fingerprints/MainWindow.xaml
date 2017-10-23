@@ -258,38 +258,35 @@
 
                 <!--listboxes-->
                 <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
+                    <DataGrid ItemsSource="{Binding MinutiaGridData}" SelectionUnit="Cell" SelectionMode="Single" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Nr">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Index}" >
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Typ 1">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Typ 2">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Usuń">
 
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                    </Border>
-                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" ContextMenu="{Binding LeftListBoxContextMenu}" 
-                             SelectedIndex="{Binding LeftDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding MinutiaName}" />
-                                    <TextBlock Text="{Binding Id}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" ContextMenu="{Binding RightListBoxContextMenu}"
-                             SelectedIndex="{Binding RightDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="4,0,49,0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding MinutiaName}" />
-                                    <TextBlock Text="{Binding Id}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <ListBox x:Name="listBoxDelete" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </Grid>
         </Grid>

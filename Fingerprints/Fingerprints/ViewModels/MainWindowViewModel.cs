@@ -11,11 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -42,6 +44,8 @@ namespace Fingerprints.ViewModels
         public ObservableCollection<MinutiaStateBase> RightDrawingData
         { get { return RightDrawingService.DrawingData; } }
 
+        public ObservableCollection<DataGridObject> MinutiaGridData { get; }
+
         public ListBoxContextMenu LeftListBoxContextMenu { get; }
 
         public ListBoxContextMenu RightListBoxContextMenu { get; }
@@ -67,6 +71,7 @@ namespace Fingerprints.ViewModels
                 //Add method for CollectinoChanged
                 LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
                 RightDrawingData.CollectionChanged += RightDrawingDataChanged;
+                MinutiaGridData = new ObservableCollection<DataGridObject>();
 
                 //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
@@ -243,6 +248,23 @@ namespace Fingerprints.ViewModels
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
 
                 CollectionChangedActions(senderObject, _eventArgs, LeftDrawingService);
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
+                {
+                    if (MinutiaGridData.Count >= senderObject.Count)
+                    {
+                        MinutiaGridData[_eventArgs.NewStartingIndex].RightDrawingObject = senderObject[_eventArgs.NewStartingIndex];
+                    }
+                    else
+                    {
+                        MinutiaGridData.Add(new DataGridObject() { RightDrawingObject = senderObject[_eventArgs.NewStartingIndex], Index = RightDrawingData.Count });
+                    }
+                }
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace && senderObject.Count > 0)
+                {
+                    MinutiaGridData[_eventArgs.NewStartingIndex].RightDrawingObject = senderObject[_eventArgs.NewStartingIndex];
+                }
             }
             catch (Exception ex)
             {
@@ -260,6 +282,23 @@ namespace Fingerprints.ViewModels
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
 
                 CollectionChangedActions(senderObject, _eventArgs, RightDrawingService);
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
+                {
+                    if (MinutiaGridData.Count >= senderObject.Count)
+                    {
+                        MinutiaGridData[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
+                    }
+                    else
+                    {
+                        MinutiaGridData.Add(new DataGridObject() { LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex], Index = LeftDrawingData.Count });
+                    }
+                }
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace && senderObject.Count > 0)
+                {
+                    MinutiaGridData[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
+                }
             }
             catch (Exception ex)
             {

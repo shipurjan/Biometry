@@ -81,7 +81,7 @@ namespace Fingerprints
 
                 if (helper.canInsertEmpty())
                 {
-                    helper.deleteUnnecessaryEmpty();
+                    //helper.deleteUnnecessaryEmpty();
                     helper.addEmptyOnLastLine();
                 }
             };
