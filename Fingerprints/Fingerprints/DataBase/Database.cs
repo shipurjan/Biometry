@@ -39,8 +39,6 @@ namespace Fingerprints
                         ProjectId = currentProject,
                         TypeId = q,
                         Color = color,
-                        Size = size,
-                        Thickness = thickness
 
                     };
                     db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);

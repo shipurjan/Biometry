@@ -1,5 +1,4 @@
 ﻿using Fingerprints.Factories;
-using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.Models;
 using Fingerprints.ViewModels;
 using Microsoft.Win32;
@@ -93,18 +92,6 @@ namespace Fingerprints
         //        FileTransfer.Save();
         //    };
         //}
-        private void addEmpty_Click(object sender, EventArgs e)
-        {
-            MinutiaState state = controller.getStates().Where(x => x.Minutia.Name == "Puste").FirstOrDefault();
-            UserEmpty empty = new UserEmpty(state);
-
-            if (canvasImageL.Children.Count > canvasImageR.Children.Count)
-                empty.Draw(canvasImageR, imageR);
-            else if (canvasImageL.Children.Count < canvasImageR.Children.Count)
-                empty.Draw(this.canvasImageL, imageR, 0);
-            else
-                MessageBox.Show("Nie można dodać pustego, jeżeli mamy tyle samo elementów");
-        }
 
         private void saveAs_Click(object sender, RoutedEventArgs e)
         {

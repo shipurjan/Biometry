@@ -1,5 +1,4 @@
 ﻿using Fingerprints.MinutiaeTypes;
-using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.Models;
 using System;
 using System.Collections.Generic;
@@ -29,15 +28,6 @@ namespace Fingerprints
         {
             return mw.listBoxImageL.Items.Count != mw.listBoxImageR.Items.Count;
         }
-        public void insertEmpty()
-        {
-            UserEmpty empty = new UserEmpty(new MinutiaState());
-            if (mw.canvasImageL.Children.Count > mw.canvasImageR.Children.Count)
-                empty.Draw(mw.canvasImageR, mw.imageR);
-            else if (mw.canvasImageL.Children.Count < mw.canvasImageR.Children.Count)
-                empty.Draw(mw.canvasImageL, mw.imageL);
-            else return;
-        }
 
         private bool checkIfImageLEmpty()
         {
@@ -66,14 +56,6 @@ namespace Fingerprints
                 if (FileTransfer.ListR.Count > mw.listBoxImageR.Items.Count)
                     FileTransfer.ListR.RemoveAt(mw.listBoxImageR.Items.Count);
             }
-        }
-
-        public void addEmptyOnLastLine()
-        {
-            UserEmpty emptyL = new UserEmpty(new MinutiaState());
-            UserEmpty emptyR = new UserEmpty(new MinutiaState());
-            emptyR.Draw(mw.canvasImageR, mw.imageR);
-            emptyL.Draw(mw.canvasImageL, mw.imageL);
         }
     }
 }

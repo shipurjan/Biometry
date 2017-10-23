@@ -61,23 +61,6 @@ namespace Fingerprints
             }
         }
 
-        public double GetThicknessOfSelectedMinutiae(string selectedValue)
-        {
-            using (var db = new FingerContext())
-            {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Thickness).First();
-                return q;
-            }
-        }
-        public double GetSizeOfSelectedMinutiae(string selectedValue)
-        {
-            using (var db = new FingerContext())
-            {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
-                return q;
-            }
-        }
-
         public SelfDefinedMinutiae GetMinutia(string name)
         {
             using (var db = new FingerContext())

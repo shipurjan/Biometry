@@ -1,5 +1,4 @@
-﻿using Fingerprints.MinutiaeTypes.Empty;
-using Fingerprints.Models;
+﻿using Fingerprints.Models;
 using Fingerprints.Resources;
 using Newtonsoft.Json.Linq;
 using System;
@@ -165,35 +164,7 @@ namespace Fingerprints
             {
                 deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
             }
-        }
-        private void addEmptyOnLastLine()
-        {
-            UserEmpty emptyL = new UserEmpty(new MinutiaState());
-            UserEmpty emptyR = new UserEmpty(new MinutiaState());
-            emptyR.Draw(mainWindow.canvasImageR, mainWindow.imageR);
-            emptyL.Draw(mainWindow.canvasImageL, mainWindow.imageL);
-        }
-
-        protected void addEmptyLastLineIfIndexOnLastElement(int index)
-        {
-            if (index == -1)
-                addEmptyOnLastLine();
-        }
-
-        public void AddEmptyToOpositeSite(OverridedCanvas canvas, int index)
-        {
-            if (index >= 0)
-            {
-                return;
-            }
-
-            UserEmpty empty = new UserEmpty(new MinutiaState());
-
-            if (canvas == mainWindow.canvasImageL && CanvasCountEqual())
-                empty.Draw(mainWindow.canvasImageR, mainWindow.imageR);
-            else if (canvas == mainWindow.canvasImageR && CanvasCountEqual())
-                empty.Draw(mainWindow.canvasImageL, mainWindow.imageL);
-        }
+        }  
         public bool CanvasCountEqual()
         {
             return (mainWindow.canvasImageL.Children.Count == mainWindow.canvasImageR.Children.Count);

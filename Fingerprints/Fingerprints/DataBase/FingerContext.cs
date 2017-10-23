@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using Fingerprints.DataBase;
 
 namespace Fingerprints
 {
@@ -11,7 +12,7 @@ namespace Fingerprints
     {
         public FingerContext()
         {
-            System.Data.Entity.Database.SetInitializer<FingerContext>(new CreateDatabaseIfNotExists<FingerContext>());            
+            System.Data.Entity.Database.SetInitializer<FingerContext>(new UniDBInitializer<FingerContext>());
         }
         public DbSet<Type> Types { get; set; }
         public DbSet<SelfDefinedMinutiae> SelfDefinedMinutiaes { get; set; }
