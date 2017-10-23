@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using ExceptionLogger;
 using System.Windows;
 using Fingerprints.ViewModels;
+using System.Linq;
 
 namespace Fingerprints.MinutiaeTypes
 {
@@ -24,22 +25,40 @@ namespace Fingerprints.MinutiaeTypes
             set { SetProperty(ref _Angle, value); }
         }
 
-        private long _Id;
-        public long Id
+        private string _Id;
+        public string Id
         {
             get { return _Id; }
             set { SetProperty(ref _Id, value); }
         }
 
         public WriteableBitmap WriteableBmp
-        {
-            get { return DrawingService.WriteableBitmap; }
-        }
+        { get { return DrawingService.WriteableBitmap; } }
 
         public DrawingService DrawingService { get; }
 
-        public string MinutiaName { get { return Minutia.Name; } }
+        private int? insertIndex;
 
+        public string MinutiaName
+        {
+            get
+            {
+                string minutiaName = string.Empty;
+                try
+                {
+                    minutiaName = Minutia.Name;
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteExceptionLog(ex);
+                }
+                return minutiaName;
+            }
+        }
+
+        /// <summary>
+        /// array of Points ( gets Points List and copy to array of int (x, y, x, y...))
+        /// </summary>
         public int[] IntPoints
         {
             get
@@ -62,7 +81,12 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
-        public MinutiaStateBase(DrawingService _oDrawingService)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_oDrawingService"></param>
+        /// <param name="_atIndex">index where Minutia must be added</param>
+        public MinutiaStateBase(DrawingService _oDrawingService, int? _atIndex = null)
         {
             try
             {
@@ -70,6 +94,7 @@ namespace Fingerprints.MinutiaeTypes
                 Points = new ObservableCollection<Point>();
                 PropertyChanged += PropertyChangeHandler;
                 Points.CollectionChanged += CollectionChangedHandler;
+                insertIndex = _atIndex;
             }
             catch (Exception ex)
             {
@@ -83,7 +108,14 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
                 {
-                    DrawingService.AddMinutiaToDrawingData(this);
+                    if (DrawingService.DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState) && !insertIndex.HasValue)
+                    {
+                        DrawingService.AddMinutiaToDrawingData(this, DrawingService.DrawingData.Count - 1);
+                    }
+                    else
+                    {
+                        DrawingService.AddMinutiaToDrawingData(this, insertIndex);
+                    }
                 }
                 DrawingService.Draw();
             }

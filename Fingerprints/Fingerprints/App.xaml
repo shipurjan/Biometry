@@ -16,6 +16,8 @@
                 <Setter Property="Width" Value="150" />
                 <Setter Property="Background" Value="#FFEEEEEE" />
             </Style>
+            <Style TargetType="ContextMenu" x:Key="contextMenuStyles" BasedOn="{StaticResource MaterialDesignContextMenu}" />
+            <Style TargetType="MenuItem" x:Key="menuItemStyles" BasedOn="{StaticResource MaterialDesignMenuItem}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

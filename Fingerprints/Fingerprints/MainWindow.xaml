@@ -67,7 +67,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openLeftImage" Command="{Binding LeftDrawingService.LoadImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="openLeftImage" Command="{Binding LoadLeftImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
@@ -80,7 +80,8 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" ItemsSource="{Binding MinutiaeStates}" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150" MaxWidth="250" Margin="30 0 30 0" SelectionChanged="comboBox_SelectionChanged" >
+                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" ItemsSource="{Binding MinutiaeStates}" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                          MinWidth="150" MaxWidth="250" Margin="30 0 30 0" SelectedItem="{Binding SelectedComboboxItem}" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding MinutiaName}" />
@@ -104,7 +105,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openRightImage" Command="{Binding RightDrawingService.LoadImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="openRightImage" Command="{Binding LoadRightImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
                 <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
             </Grid>
 
@@ -144,7 +145,7 @@
                                    Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" RenderOptions.BitmapScalingMode="NearestNeighbor"
                                    Canvas.Top="0" Canvas.Left="0">
                             </Image>
-                            
+
                             <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" Canvas.Top="0" Canvas.Left="0">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseMove">
@@ -184,7 +185,7 @@
                                    Width="{Binding RightDrawingService.BackgroundImage.PixelWidth}" Source="{Binding RightDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" >
                             </Image>
-                            
+
                             <Image x:Name="rightImageForDrawing" Source="{Binding RightDrawingService.WriteableBitmap}" SnapsToDevicePixels="True"
                                    RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" Canvas.Left="0" Canvas.Top="0">
                                 <i:Interaction.Triggers>
@@ -266,17 +267,25 @@
 
                     <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                     </Border>
-                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" >
+                    <ListBox x:Name="listBoxImageL" Grid.Column="1" ItemsSource="{Binding LeftDrawingData}" ContextMenu="{Binding LeftListBoxContextMenu}" 
+                             SelectedIndex="{Binding LeftDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding MinutiaName}" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding MinutiaName}" />
+                                    <TextBlock Text="{Binding Id}" />
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" >
+                    <ListBox x:Name="listBoxImageR" Grid.Column="2" ItemsSource="{Binding RightDrawingData}" ContextMenu="{Binding RightListBoxContextMenu}"
+                             SelectedIndex="{Binding RightDrawingService.ListBoxSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="4,0,49,0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding MinutiaName}" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding MinutiaName}" />
+                                    <TextBlock Text="{Binding Id}" />
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

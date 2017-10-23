@@ -15,7 +15,7 @@ namespace Fingerprints.MinutiaeTypes
     {
         private bool closePolyline = false; 
 
-        public TriangleState(DrawingService _oDrawingService) : base(_oDrawingService)
+        public TriangleState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
         {
         }
 
