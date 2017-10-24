@@ -27,7 +27,7 @@ namespace Fingerprints.Factories
 
             try
             {
-                switch (_oMinutia.DrawingType)
+                switch (_oMinutia?.DrawingType)
                 {
                     case DrawingType.SinglePoint:
                         oMinutiaState = new PointState(_oDrawingService, _atIndex);

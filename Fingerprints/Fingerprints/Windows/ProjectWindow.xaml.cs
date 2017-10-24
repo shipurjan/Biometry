@@ -18,10 +18,11 @@ namespace Fingerprints.Windows
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class ProjectWindow : Window
     {
-        public Window1()
+        public ProjectWindow()
         {
+            //Get path of exe and set it as DataDirectory for EF
             string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string path = (System.IO.Path.GetDirectoryName(executable));
             AppDomain.CurrentDomain.SetData("DataDirectory", path);
