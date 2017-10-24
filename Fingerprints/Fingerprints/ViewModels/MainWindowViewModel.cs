@@ -4,6 +4,7 @@ using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
 using Fingerprints.Resources;
 using Fingerprints.Tools.Exporters;
+using Fingerprints.Windows.Controls;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -29,6 +30,8 @@ namespace Fingerprints.ViewModels
         public DrawingService LeftDrawingService { get; }
 
         public DrawingService RightDrawingService { get; }
+
+        public ListBoxContextMenu ContextMenuObject { get; }
 
         public ObservableCollection<MinutiaStateBase> LeftDrawingData
         { get { return LeftDrawingService.DrawingData; } }
@@ -59,6 +62,8 @@ namespace Fingerprints.ViewModels
                 //Add method for CollectinoChanged
                 LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
                 RightDrawingData.CollectionChanged += RightDrawingDataChanged;
+
+                ContextMenuObject = new ListBoxContextMenu(LeftDrawingService, RightDrawingService);
 
                 //init grid with data from drawing services
                 DataGridActivities = new DataGridActivities(LeftDrawingService, RightDrawingService);
