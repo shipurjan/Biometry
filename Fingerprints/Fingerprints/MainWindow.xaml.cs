@@ -1,5 +1,4 @@
 ﻿using Fingerprints.Factories;
-using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.Models;
 using Fingerprints.ViewModels;
 using Microsoft.Win32;
@@ -45,7 +44,7 @@ namespace Fingerprints
             //drawer = new DrawService(factory);
             //picture.InitializeR();
             //picture.InitializeL();
-            //controller = new MinutiaeTypeController();
+            controller = new MinutiaeTypeController();
             //comboBox.ItemsSource = controller.getStates();
             //InitTable();
             //saveEvents();
@@ -95,14 +94,6 @@ namespace Fingerprints
         //    Table table = new Table();
         //}
 
-        private void wizardAdd_Click(object sender, RoutedEventArgs e)
-        {
-            Window1 win = new Window1();
-            win.ShowDialog();
-            //drawer.stopDrawing();
-            comboBox.ItemsSource = controller.Show();
-        }
-
         //public void saveEvents()
         //{
         //    this.Closing += (ss, ee) =>
@@ -118,18 +109,6 @@ namespace Fingerprints
         //        FileTransfer.Save();
         //    };
         //}
-        private void addEmpty_Click(object sender, EventArgs e)
-        {
-            MinutiaState state = controller.getStates().Where(x => x.Minutia.Name == "Puste").FirstOrDefault();
-            UserEmpty empty = new UserEmpty(state);
-
-            if (canvasImageL.Children.Count > canvasImageR.Children.Count)
-                empty.Draw(canvasImageR, imageR);
-            else if (canvasImageL.Children.Count < canvasImageR.Children.Count)
-                empty.Draw(this.canvasImageL, imageR, 0);
-            else
-                MessageBox.Show("Nie można dodać pustego, jeżeli mamy tyle samo elementów");
-        }
 
         private void saveAs_Click(object sender, RoutedEventArgs e)
         {

@@ -142,42 +142,25 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
+    <Compile Include="DataBase\UniDBInitializer.cs" />
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaStateFactory.cs" />
-    <Compile Include="Factories\UserMinutiaFactory.cs" />
+    <Compile Include="Factories\TypeModelFactory.cs" />
     <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IMouseClickable.cs" />
     <Compile Include="Interfaces\IMouseMoveable.cs" />
-    <Compile Include="MinutiaeTypes\CurveLine\CurveLine.cs" />
-    <Compile Include="MinutiaeTypes\CurveLine\FileCurveLine.cs" />
-    <Compile Include="MinutiaeTypes\CurveLine\UserCurveLine.cs" />
     <Compile Include="MinutiaeTypes\EmptyState.cs" />
-    <Compile Include="MinutiaeTypes\Empty\FileEmpty.cs" />
-    <Compile Include="MinutiaeTypes\Empty\UserEmpty.cs" />
     <Compile Include="MinutiaeTypes\PeakState.cs" />
-    <Compile Include="MinutiaeTypes\Peak\FilePeak.cs" />
-    <Compile Include="MinutiaeTypes\Peak\Peak.cs" />
-    <Compile Include="MinutiaeTypes\Peak\UserPeak.cs" />
-    <Compile Include="MinutiaeTypes\Segment\FileSegment.cs" />
-    <Compile Include="MinutiaeTypes\Segment\Segment.cs" />
-    <Compile Include="MinutiaeTypes\Segment\UserSegment.cs" />
-    <Compile Include="MinutiaeTypes\SinglePoint\FileSinglePoint.cs" />
-    <Compile Include="MinutiaeTypes\SinglePoint\UserSinglePoint.cs" />
     <Compile Include="MinutiaeTypes\TriangleState.cs" />
-    <Compile Include="MinutiaeTypes\Triangle\FileTriangle.cs" />
-    <Compile Include="MinutiaeTypes\Triangle\Triangle.cs" />
-    <Compile Include="MinutiaeTypes\Triangle\UserTriangle.cs" />
     <Compile Include="MinutiaeTypes\VectorState.cs" />
-    <Compile Include="MinutiaeTypes\Vector\FileVector.cs" />
     <Compile Include="MinutiaeTypes\PointState.cs" />
-    <Compile Include="MinutiaeTypes\Vector\UserVector.cs" />
+    <Compile Include="Models\DrawingType.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />
     <Compile Include="Resources\DrawService.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />
     <Compile Include="Resources\Helper.cs" />
-    <Compile Include="MinutiaeTypes\Empty\Empty.cs" />
     <Compile Include="Resources\ItemsChangeObservableCollection.cs" />
     <Compile Include="Resources\OverridedCanvas.cs" />
     <Compile Include="Resources\Transformer.cs" />
@@ -214,11 +197,9 @@
     <Compile Include="Models\Type.cs" />
     <Compile Include="DataBase\MinutiaeTypeController.cs" />
     <Compile Include="Picture.cs" />
-    <Compile Include="MinutiaeTypes\SinglePoint\SinglePoint.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\SelfDefinedMinutiae.cs" />
     <Compile Include="Table.cs" />
-    <Compile Include="MinutiaeTypes\Vector\Vector.cs" />
     <Compile Include="Resources\FileTransfer.cs" />
     <Compile Include="Windows\AddWizard.xaml.cs">
       <DependentUpon>AddWizard.xaml</DependentUpon>

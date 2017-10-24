@@ -22,12 +22,12 @@ namespace Fingerprints.Resources
 
             foreach (var item in minutiaeList)
             {
-                switch (item.Minutia.TypeId)
+                switch (item.Minutia.DrawingType)
                 {
-                    case 2:
+                    case DrawingType.Vector:
                         bozorthList.Add(transformVectorToXYT(item));
                         break;
-                    case 5:
+                    case DrawingType.Peak:
                         bozorthList.Add(transformPeakToXYT(item));
                         break;
                     default:
@@ -88,7 +88,7 @@ namespace Fingerprints.Resources
             return temp;
         }
 
-        public int getMinutiaeDrawingType(string item)
+        public DrawingType getMinutiaeDrawingType(string item)
         {
             var type = minutiaeList.Where(x => x.Name == getNameFromListElement(item)).FirstOrDefault();
             if (type == null)
@@ -97,7 +97,7 @@ namespace Fingerprints.Resources
             }
             else
             {
-                return type.TypeId;
+                return type.DrawingType;
             }
         }
 

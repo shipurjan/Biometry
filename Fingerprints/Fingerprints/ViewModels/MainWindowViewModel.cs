@@ -49,6 +49,7 @@ namespace Fingerprints.ViewModels
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
         public ICommand SaveAsClickCommand { get; }
+        public ICommand NewMinutiaCommand { get; }
         public ICommand LoadLeftImageCommand { get; }
         public ICommand LoadRightImageCommand { get; }
 
@@ -83,11 +84,27 @@ namespace Fingerprints.ViewModels
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
                 LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
                 RightDrawingService.CurrentDrawingChanged += RightDrawingService_CurrentDrawingChanged;
+                NewMinutiaCommand = new DelegateCommand(NewMinutia);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        private void NewMinutia()
+        {
+            try
+            {
+                Window1 win = new Window1();
+                win.ShowDialog();
+                //drawer.stopDrawing();
+                MinutiaeStates.Add(dbController.getStates().LastOrDefault());
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
         /// <summary>

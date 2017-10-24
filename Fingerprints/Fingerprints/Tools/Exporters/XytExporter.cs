@@ -1,5 +1,6 @@
 ﻿using ExceptionLogger;
 using Fingerprints.MinutiaeTypes;
+using Fingerprints.Models;
 using Fingerprints.Resources;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Fingerprints.Tools.Exporters
             List<MinutiaStateBase> vectors = null;
             try
             {
-                vectors = data.Where(x => x.Minutia.TypeId == 2).ToList();
+                vectors = data.Where(x => x.Minutia.DrawingType == DrawingType.Vector).ToList();
                 foreach (var item in vectors)
                 {
                     preparedData.Add(Parse(item));

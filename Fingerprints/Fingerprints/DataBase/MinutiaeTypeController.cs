@@ -43,11 +43,11 @@ namespace Fingerprints
             }
         }
 
-        public int GetTypeIdOfSelectedMinutiae(string selectedValue)
+        public DrawingType GetTypeIdOfSelectedMinutiae(string selectedValue)
         {
             using (var db = new FingerContext())
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First();
+                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.DrawingType).First();
                 return q;
             }
         }
@@ -57,23 +57,6 @@ namespace Fingerprints
             using (var db = new FingerContext())
             {
                 var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Color).First();
-                return q;
-            }
-        }
-
-        public double GetThicknessOfSelectedMinutiae(string selectedValue)
-        {
-            using (var db = new FingerContext())
-            {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Thickness).First();
-                return q;
-            }
-        }
-        public double GetSizeOfSelectedMinutiae(string selectedValue)
-        {
-            using (var db = new FingerContext())
-            {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
                 return q;
             }
         }
