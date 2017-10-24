@@ -14,8 +14,6 @@ namespace Fingerprints.ViewModels
 {
     class GridViewModel : BindableBase
     {
-        public int Index { get; set; } // +1
-
         private MinutiaStateBase leftDrawingObject;
         public MinutiaStateBase LeftDrawingObject { get { return leftDrawingObject; } set { SetProperty(ref leftDrawingObject, value); } }
 

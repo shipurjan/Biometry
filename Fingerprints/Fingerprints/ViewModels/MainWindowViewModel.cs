@@ -4,22 +4,14 @@ using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
 using Fingerprints.Resources;
 using Fingerprints.Tools.Exporters;
-using Fingerprints.Windows.Controls;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace Fingerprints.ViewModels
 {

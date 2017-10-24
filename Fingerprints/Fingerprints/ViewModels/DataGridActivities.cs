@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -34,11 +35,16 @@ namespace Fingerprints.ViewModels
             DeleteButtonCommand = new DelegateCommand<object>(DeleteButtonClick);
         }
 
-        private void DeleteButtonClick(object o)
+        private void DeleteButtonClick(object _gridViewModel)
         {
+            GridViewModel gridViewModel;
             try
             {
+                gridViewModel = (GridViewModel)_gridViewModel;
 
+                leftDrawingService.DrawingData.Remove(gridViewModel.LeftDrawingObject);
+                rightDrawingService.DrawingData.Remove(gridViewModel.RightDrawingObject);
+                GridViewModelList.Remove(gridViewModel);
             }
             catch (Exception ex)
             {
@@ -61,7 +67,7 @@ namespace Fingerprints.ViewModels
                     }
                     else
                     {
-                        GridViewModelList.Add(new GridViewModel() { RightDrawingObject = senderObject[_eventArgs.NewStartingIndex], Index = rightDrawingService.DrawingData.Count });
+                        GridViewModelList.Add(new GridViewModel() { RightDrawingObject = senderObject[_eventArgs.NewStartingIndex] });
                     }
                 }
 
@@ -90,7 +96,7 @@ namespace Fingerprints.ViewModels
                     }
                     else
                     {
-                        GridViewModelList.Add(new GridViewModel() { LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex], Index = leftDrawingService.DrawingData.Count });
+                        GridViewModelList.Add(new GridViewModel() { LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex] });
                     }
                 }
 

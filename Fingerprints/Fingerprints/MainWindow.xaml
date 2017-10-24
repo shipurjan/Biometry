@@ -257,10 +257,31 @@
                             <DataGridTemplateColumn Header="Usuń">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataGridActivities.DeleteButtonCommand}"
-                                                CommandParameter="{Binding ElementName=MinutiaDataGrid, Path=CurrentCell}"/>
+                                        <!--<Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataGridActivities.DeleteButtonCommand}"
+                                                CommandParameter="{Binding ElementName=MinutiaDataGrid, Path=CurrentCell}" >
+                                            <Button.Content>
+                                                <materialDesign:PackIcon Kind="Delete" />
+                                            </Button.Content>
+                                        </Button>-->
+                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataGridActivities.DeleteButtonCommand}"
+                                                CommandParameter="{Binding}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                            </materialDesign:PackIcon>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
