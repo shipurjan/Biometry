@@ -142,6 +142,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
+    <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaStateFactory.cs" />
@@ -201,7 +202,8 @@
     <Compile Include="Tools\Importers\TxtImporter.cs" />
     <Compile Include="Tools\LinestoPointsConverter\LinesToPointsConverter.cs" />
     <Compile Include="Tools\PathTool.cs" />
-    <Compile Include="ViewModels\DataGridObject.cs" />
+    <Compile Include="ViewModels\DataGridActivities.cs" />
+    <Compile Include="ViewModels\GridViewModel.cs" />
     <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

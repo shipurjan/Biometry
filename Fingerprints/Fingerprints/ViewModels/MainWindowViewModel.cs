@@ -44,11 +44,7 @@ namespace Fingerprints.ViewModels
         public ObservableCollection<MinutiaStateBase> RightDrawingData
         { get { return RightDrawingService.DrawingData; } }
 
-        public ObservableCollection<DataGridObject> MinutiaGridData { get; }
-
-        public ListBoxContextMenu LeftListBoxContextMenu { get; }
-
-        public ListBoxContextMenu RightListBoxContextMenu { get; }
+        public DataGridActivities DataGridActivities { get; }
 
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
@@ -71,14 +67,12 @@ namespace Fingerprints.ViewModels
                 //Add method for CollectinoChanged
                 LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
                 RightDrawingData.CollectionChanged += RightDrawingDataChanged;
-                MinutiaGridData = new ObservableCollection<DataGridObject>();
+
+                //init grid with data from drawing services
+                DataGridActivities = new DataGridActivities(LeftDrawingService, RightDrawingService);
 
                 //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
-
-                //Init context menu for listboxes
-                LeftListBoxContextMenu = new ListBoxContextMenu(LeftDrawingService, RightDrawingService);
-                RightListBoxContextMenu = new ListBoxContextMenu(RightDrawingService, LeftDrawingService);
 
                 //button clicks delegates
                 SaveClickCommand = new DelegateCommand(SaveClick);
@@ -248,23 +242,6 @@ namespace Fingerprints.ViewModels
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
 
                 CollectionChangedActions(senderObject, _eventArgs, LeftDrawingService);
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
-                {
-                    if (MinutiaGridData.Count >= senderObject.Count)
-                    {
-                        MinutiaGridData[_eventArgs.NewStartingIndex].RightDrawingObject = senderObject[_eventArgs.NewStartingIndex];
-                    }
-                    else
-                    {
-                        MinutiaGridData.Add(new DataGridObject() { RightDrawingObject = senderObject[_eventArgs.NewStartingIndex], Index = RightDrawingData.Count });
-                    }
-                }
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace && senderObject.Count > 0)
-                {
-                    MinutiaGridData[_eventArgs.NewStartingIndex].RightDrawingObject = senderObject[_eventArgs.NewStartingIndex];
-                }
             }
             catch (Exception ex)
             {
@@ -282,23 +259,6 @@ namespace Fingerprints.ViewModels
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
 
                 CollectionChangedActions(senderObject, _eventArgs, RightDrawingService);
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
-                {
-                    if (MinutiaGridData.Count >= senderObject.Count)
-                    {
-                        MinutiaGridData[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
-                    }
-                    else
-                    {
-                        MinutiaGridData.Add(new DataGridObject() { LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex], Index = LeftDrawingData.Count });
-                    }
-                }
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Replace && senderObject.Count > 0)
-                {
-                    MinutiaGridData[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
-                }
             }
             catch (Exception ex)
             {

@@ -16,11 +16,19 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
+        xmlns:Converters="clr-namespace:Fingerprints.Converters"
         Title="Fingerprints" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Converters:CollectionCountIncrementConverter x:Key="CountConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <!--topMenuBar-->
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="30" />
 
             <!--topButtons-->
             <RowDefinition Height="16*" MaxHeight="80" MinHeight="50"/>
@@ -219,52 +227,16 @@
 
             <!--table-->
             <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition MinHeight="25" MaxHeight="30"/>
-                    <RowDefinition MinHeight="25" MaxHeight="30"/>
-                    <RowDefinition Height="100*"/>
-                </Grid.RowDefinitions>
-
-                <!--first header-->
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <TextBlock x:Name="textBlock1" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center" />
-                    <TextBlock x:Name="textBlock2" Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center" />
-                </Grid>
-
-                <!--second header-->
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border BorderBrush="#FFEEEEEE" Margin="0, -1, -1, 0" BorderThickness="0,1,1,1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="0,0,0,1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <Border BorderBrush="#FFEEEEEE" Margin=" -1, -1, 0, 0" BorderThickness="1,1,1,1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <materialDesign:PackIcon Kind="Delete" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="25" />
-                    <TextBlock  Text="Typ 1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1"/>
-                    <TextBlock  Text="Typ 2" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="2"/>
-
-                </Grid>
 
                 <!--listboxes-->
                 <Grid Grid.Row="2">
-                    <DataGrid ItemsSource="{Binding MinutiaGridData}" SelectionUnit="Cell" SelectionMode="Single" AutoGenerateColumns="False">
+                    <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
+                              SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Nr">
+                            <DataGridTemplateColumn Header="Nr" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Index}" >
-                                        </TextBlock>
+                                        <TextBlock Text="{Binding AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={StaticResource ResourceKey=CountConverter}}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -283,7 +255,12 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Usuń">
-
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataGridActivities.DeleteButtonCommand}"
+                                                CommandParameter="{Binding ElementName=MinutiaDataGrid, Path=CurrentCell}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>

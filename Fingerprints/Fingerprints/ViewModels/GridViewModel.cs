@@ -1,14 +1,18 @@
-﻿using Fingerprints.MinutiaeTypes;
+﻿using ExceptionLogger;
+using Fingerprints.MinutiaeTypes;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
 {
-    class DataGridObject : BindableBase
+    class GridViewModel : BindableBase
     {
         public int Index { get; set; } // +1
 
