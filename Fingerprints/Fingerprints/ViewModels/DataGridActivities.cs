@@ -1,6 +1,7 @@
 ﻿using ExceptionLogger;
 using Fingerprints.MinutiaeTypes;
 using Prism.Commands;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,12 +14,44 @@ using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
 {
-    class DataGridActivities
+    class DataGridActivities : BindableBase
     {
-        private DrawingService leftDrawingService { get; }
-        private DrawingService rightDrawingService { get; }
+        private DrawingService LeftDrawingService { get; }
+        private DrawingService RightDrawingService { get; }
 
         public ObservableCollection<GridViewModel> GridViewModelList { get; }
+
+        private DataGridCellInfo selectedCurrentCell;
+        public DataGridCellInfo SelectedCurrentCell
+        {
+            get { return selectedCurrentCell; }
+            set
+            {
+                SetProperty(ref selectedCurrentCell, value);
+            }
+        }
+
+        /// <summary>
+        /// Property indicates what index in listbox is selected
+        /// </summary>
+        private int? selectedRow;
+        public int? SelectedRow
+        {
+            get { return selectedRow; }
+            set
+            {
+                SetProperty(ref selectedRow, value != -1 ? value : null);
+
+                if (SelectedCurrentCell.Column?.DisplayIndex == 1)
+                {
+                    LeftDrawingService.SelectedIndex = SelectedRow;
+                }
+                else if (SelectedCurrentCell.Column?.DisplayIndex == 2)
+                {
+                    RightDrawingService.SelectedIndex = SelectedRow;
+                }
+            }
+        }
 
         public ICommand DeleteButtonCommand { get; }
 
@@ -26,11 +59,11 @@ namespace Fingerprints.ViewModels
         {
             GridViewModelList = new ObservableCollection<GridViewModel>();
 
-            leftDrawingService = _leftDrawingService;
-            rightDrawingService = _rightDrawingService;
+            LeftDrawingService = _leftDrawingService;
+            RightDrawingService = _rightDrawingService;
 
-            leftDrawingService.DrawingData.CollectionChanged += LeftDrawingDataChanged;
-            rightDrawingService.DrawingData.CollectionChanged += RightDrawingDataChanged;
+            LeftDrawingService.DrawingData.CollectionChanged += LeftDrawingDataChanged;
+            RightDrawingService.DrawingData.CollectionChanged += RightDrawingDataChanged;
 
             DeleteButtonCommand = new DelegateCommand<object>(DeleteButtonClick);
         }
@@ -42,8 +75,8 @@ namespace Fingerprints.ViewModels
             {
                 gridViewModel = (GridViewModel)_gridViewModel;
 
-                leftDrawingService.DrawingData.Remove(gridViewModel.LeftDrawingObject);
-                rightDrawingService.DrawingData.Remove(gridViewModel.RightDrawingObject);
+                LeftDrawingService.DrawingData.Remove(gridViewModel.LeftDrawingObject);
+                RightDrawingService.DrawingData.Remove(gridViewModel.RightDrawingObject);
                 GridViewModelList.Remove(gridViewModel);
             }
             catch (Exception ex)

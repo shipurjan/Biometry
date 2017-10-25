@@ -230,8 +230,9 @@
 
                 <!--listboxes-->
                 <Grid Grid.Row="2">
-                    <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
-                              SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
+                    <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="FullRow" 
+                              SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" CurrentCell="{Binding DataGridActivities.SelectedCurrentCell, Mode=OneWayToSource}"
+                              AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}" SelectedIndex="{Binding DataGridActivities.SelectedRow, Mode=OneWayToSource}">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Nr" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -248,7 +249,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
-                                        <Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                        <Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
@@ -258,6 +259,11 @@
                                         <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
+                                        <Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn Header="Usuń">

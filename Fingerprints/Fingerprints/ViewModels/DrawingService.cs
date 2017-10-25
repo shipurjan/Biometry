@@ -65,7 +65,7 @@ namespace Fingerprints.ViewModels
         /// Property indicates what index in listbox is selected
         /// </summary>
         private int? selectedIndex;
-        public int? ListBoxSelectedIndex
+        public int? SelectedIndex
         {
             get
             { return selectedIndex; }

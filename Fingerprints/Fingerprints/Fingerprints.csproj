@@ -224,7 +224,7 @@
     <Compile Include="Windows\AddWizard.xaml.cs">
       <DependentUpon>AddWizard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Controls\ListBoxContextMenu.cs" />
+    <Compile Include="Windows\Controls\GridContextMenu.cs" />
     <Compile Include="Windows\ProjectWindow.xaml.cs">
       <DependentUpon>ProjectWindow.xaml</DependentUpon>
     </Compile>

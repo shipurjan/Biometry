@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -31,7 +32,8 @@ namespace Fingerprints.ViewModels
 
         public DrawingService RightDrawingService { get; }
 
-        public ListBoxContextMenu ContextMenuObject { get; }
+        public GridContextMenu ContextMenuLeftObject { get; }
+        public GridContextMenu ContextMenuRightObject { get; }
 
         public ObservableCollection<MinutiaStateBase> LeftDrawingData
         { get { return LeftDrawingService.DrawingData; } }
@@ -63,7 +65,8 @@ namespace Fingerprints.ViewModels
                 LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
                 RightDrawingData.CollectionChanged += RightDrawingDataChanged;
 
-                ContextMenuObject = new ListBoxContextMenu(LeftDrawingService, RightDrawingService);
+                ContextMenuLeftObject = new GridContextMenu(LeftDrawingService, RightDrawingService);
+                ContextMenuRightObject = new GridContextMenu(RightDrawingService, LeftDrawingService);
 
                 //init grid with data from drawing services
                 DataGridActivities = new DataGridActivities(LeftDrawingService, RightDrawingService);
@@ -372,10 +375,10 @@ namespace Fingerprints.ViewModels
             try
             {
                 //get path to save data as BackgroundImage file name with txt extension
-                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
-                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                //string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                //string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
-                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
+                //ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
             catch (Exception ex)
             {
