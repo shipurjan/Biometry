@@ -15,13 +15,22 @@ using System.Windows.Controls;
 using System.IO;
 using Fingerprints.Tools.Importers;
 using Fingerprints.Resources;
+using Fingerprints.Tools;
 
 namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
-        public ObservableCollection<MinutiaStateBase> DrawingData
-        { get; }
+        /// <summary>
+        /// Event raised when current drawing change
+        /// </summary>
+        public event EventHandler CurrentDrawingChanged;
+
+        public event EventHandler NewDrawingInitialized;
+
+        public event EventHandler DrawingObjectAdded;
+
+        public MyObservableCollection<MinutiaStateBase> DrawingData { get; }
 
         private Point mousePosition;
 
@@ -75,16 +84,11 @@ namespace Fingerprints.ViewModels
 
         #endregion
 
-        /// <summary>
-        /// Event raised when current drawing change
-        /// </summary>
-        public event EventHandler CurrentDrawingChanged;
-
         public DrawingService()
         {
             try
             {
-                DrawingData = new ObservableCollection<MinutiaStateBase>();
+                DrawingData = new MyObservableCollection<MinutiaStateBase>();
             }
             catch (Exception ex)
             {
@@ -288,6 +292,7 @@ namespace Fingerprints.ViewModels
                         CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
                     }
 
+
                     //import data from file
                     importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
 
@@ -310,6 +315,8 @@ namespace Fingerprints.ViewModels
         public void InitiateNewDrawing()
         {
             CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
+
+            NewDrawingInitialized(this, null);
         }
 
         /// <summary>
@@ -321,10 +328,14 @@ namespace Fingerprints.ViewModels
             if (_insertIndex.HasValue)
             {
                 DrawingData[_insertIndex.Value] = _minutiaStateBase;
+
+                DrawingObjectAdded(this, EventArgsFactory.CreateDrawingObjectAdded(_insertIndex.Value));
             }
             else
             {
                 DrawingData.Add(_minutiaStateBase);
+
+                DrawingObjectAdded(this, EventArgsFactory.CreateDrawingObjectAdded(DrawingData.Count - 1));
             }
         }
 

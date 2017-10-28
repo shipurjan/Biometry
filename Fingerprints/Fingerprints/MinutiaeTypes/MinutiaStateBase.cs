@@ -37,7 +37,7 @@ namespace Fingerprints.MinutiaeTypes
 
         public DrawingService DrawingService { get; }
 
-        private int? insertIndex;
+        public int? InsertIndex { get; set; }
 
         public string MinutiaName
         {
@@ -94,7 +94,7 @@ namespace Fingerprints.MinutiaeTypes
                 Points = new ObservableCollection<Point>();
                 PropertyChanged += PropertyChangeHandler;
                 Points.CollectionChanged += CollectionChangedHandler;
-                insertIndex = _atIndex;
+                InsertIndex = _atIndex;
             }
             catch (Exception ex)
             {
@@ -108,13 +108,13 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
                 {
-                    if (DrawingService.DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState) && !insertIndex.HasValue)
+                    if (DrawingService.DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState) && !InsertIndex.HasValue)
                     {
                         DrawingService.AddMinutiaToDrawingData(this, DrawingService.DrawingData.Count - 1);
                     }
                     else
                     {
-                        DrawingService.AddMinutiaToDrawingData(this, insertIndex);
+                        DrawingService.AddMinutiaToDrawingData(this, InsertIndex);
                     }
                 }
                 DrawingService.Draw();

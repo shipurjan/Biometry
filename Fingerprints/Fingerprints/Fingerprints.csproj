@@ -143,6 +143,8 @@
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
     <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
+    <Compile Include="EventArgsObjects\DrawingObjectAddedEventArgs.cs" />
+    <Compile Include="Factories\EventArgsFactory.cs" />
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaStateFactory.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Tools\Importers\ImportTypes.cs" />
     <Compile Include="Tools\Importers\TxtImporter.cs" />
     <Compile Include="Tools\LinestoPointsConverter\LinesToPointsConverter.cs" />
+    <Compile Include="Tools\MyObservableCollection.cs" />
     <Compile Include="Tools\PathTool.cs" />
     <Compile Include="ViewModels\DataGridActivities.cs" />
     <Compile Include="ViewModels\GridViewModel.cs" />

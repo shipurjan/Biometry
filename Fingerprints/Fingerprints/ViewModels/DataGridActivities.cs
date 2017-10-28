@@ -138,10 +138,10 @@ namespace Fingerprints.ViewModels
                     GridViewModelList[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Logger.WriteExceptionLog(ex);
             }
         }
     }

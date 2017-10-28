@@ -3,6 +3,7 @@ using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
 using Fingerprints.Resources;
+using Fingerprints.Tools;
 using Fingerprints.Tools.Exporters;
 using Fingerprints.Windows.Controls;
 using Prism.Commands;
@@ -35,10 +36,10 @@ namespace Fingerprints.ViewModels
         public GridContextMenu ContextMenuLeftObject { get; }
         public GridContextMenu ContextMenuRightObject { get; }
 
-        public ObservableCollection<MinutiaStateBase> LeftDrawingData
+        public MyObservableCollection<MinutiaStateBase> LeftDrawingData
         { get { return LeftDrawingService.DrawingData; } }
 
-        public ObservableCollection<MinutiaStateBase> RightDrawingData
+        public MyObservableCollection<MinutiaStateBase> RightDrawingData
         { get { return RightDrawingService.DrawingData; } }
 
         public DataGridActivities DataGridActivities { get; }
@@ -82,6 +83,93 @@ namespace Fingerprints.ViewModels
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
                 LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
                 RightDrawingService.CurrentDrawingChanged += RightDrawingService_CurrentDrawingChanged;
+
+                LeftDrawingService.DrawingObjectAdded += LeftDrawingService_DrawingObjectAdded;
+                RightDrawingService.DrawingObjectAdded += RightDrawingService_DrawingObjectAdded;
+
+                LeftDrawingService.NewDrawingInitialized += LeftDrawingService_NewDrawingInitialized;
+                RightDrawingService.NewDrawingInitialized += RightDrawingService_NewDrawingInitialized;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void RightDrawingService_NewDrawingInitialized(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!LeftDrawingService.CurrentDrawing.Equals(null))
+                {
+                    LeftDrawingService.CurrentDrawing.InsertIndex = RightDrawingData.Count - 2;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void LeftDrawingService_NewDrawingInitialized(object sender, EventArgs e)
+        {
+            try
+            {
+                if (RightDrawingService.CurrentDrawing != null)
+                {
+                    RightDrawingService.CurrentDrawing.InsertIndex = LeftDrawingData.Count - 2;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void RightDrawingService_DrawingObjectAdded(object sender, EventArgs e)
+        {
+            try
+            {
+                AddEmptyObject(RightDrawingService, LeftDrawingService);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void LeftDrawingService_DrawingObjectAdded(object sender, EventArgs e)
+        {
+            try
+            {
+                AddEmptyObject(LeftDrawingService, RightDrawingService);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void AddEmptyObject(DrawingService _drawingService, DrawingService _oppositeDrawingService)
+        {
+            try
+            {
+                if (_drawingService.DrawingData.Count > 0 &&
+                    (!(_drawingService.DrawingData[_drawingService.DrawingData.Count - 1] is EmptyState) ||
+                    _oppositeDrawingService.DrawingData.Count > _drawingService.DrawingData.Count))
+                {
+                    _drawingService.DrawingData.Add(new EmptyState(_drawingService));
+
+                }
+
+                if (_oppositeDrawingService.DrawingData.Count > 0 &&
+                    (!(_oppositeDrawingService.DrawingData[_oppositeDrawingService.DrawingData.Count - 1] is EmptyState) ||
+                    _drawingService.DrawingData.Count > _oppositeDrawingService.DrawingData.Count))
+                {
+                    _oppositeDrawingService.DrawingData.Add(new EmptyState(_oppositeDrawingService));
+
+                }
+
             }
             catch (Exception ex)
             {
@@ -278,7 +366,7 @@ namespace Fingerprints.ViewModels
             {
                 AssignNewIDIfCan(_eventArgs);
 
-                AddEmptyToOppositeIfCan(_senderObject, _oppositeDrawingService);
+                //AddEmptyToOppositeIfCan(_senderObject, _oppositeDrawingService);
             }
 
             if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
@@ -379,6 +467,7 @@ namespace Fingerprints.ViewModels
                 //string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
                 //ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
+                LeftDrawingData.Add(new EmptyState(LeftDrawingService));
             }
             catch (Exception ex)
             {

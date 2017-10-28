@@ -11,7 +11,7 @@ namespace Fingerprints.MinutiaeTypes
     {
         public EmptyState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
         {
-            Minutia = new SelfDefinedMinutiae() { Name = "Puste" };
+            Minutia = new SelfDefinedMinutiae() { Name = "Puste", TypeId = 7 };
         }
     }
 }
