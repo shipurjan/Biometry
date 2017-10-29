@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Minutiae" Height="285" Width="525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Biometry" Height="285" Width="525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid Height="265" VerticalAlignment="Top" Margin="0,0,0,-1">
         <Label x:Name="title" Content="Wybierz projekt" HorizontalAlignment="Left" Height="30" Margin="68,10,0,0" VerticalAlignment="Top" Width="123"/>
         <ListBox x:Name="project_list" HorizontalAlignment="Left" Height="124" Margin="10,42,0,0" VerticalAlignment="Top" Width="250"/>
