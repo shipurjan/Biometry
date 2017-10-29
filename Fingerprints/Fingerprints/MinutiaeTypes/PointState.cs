@@ -28,9 +28,8 @@ namespace Fingerprints.MinutiaeTypes
                 {
                     // Get beging and end of drawing
                     var firstPoint = Points[0];
-
                     // Draw elipse starting in firstPoint location and fixed radius size
-                    WriteableBmp.DrawEllipseCentered(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 5, 5, Colors.Green);                    
+                    WriteableBmp.DrawEllipseCentered(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 5, 5, Color);                    
                 }
             }
             catch (Exception ex)

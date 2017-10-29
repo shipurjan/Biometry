@@ -21,7 +21,7 @@ namespace Fingerprints.MinutiaeTypes
             try
             {
                 // Draw polyline based on current point array
-                WriteableBmp.DrawPolyline(IntPoints, Colors.Green);
+                WriteableBmp.DrawPolyline(IntPoints, Color);
             }
             catch (Exception ex)
             {
