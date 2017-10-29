@@ -52,9 +52,6 @@ namespace Fingerprints.Windows.Controls
                     {
                         drawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, drawingService, drawingService.SelectedIndex);
                         oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, oppositeDrawingService);
-
-                        drawingService.SetReplaceFlag(drawingService.SelectedIndex.Value);
-                        oppositeDrawingService.SetReplaceFlag(oppositeDrawingService.DrawingData.Count - 1);
                     };
 
                     result.Items.Add(menuItem);

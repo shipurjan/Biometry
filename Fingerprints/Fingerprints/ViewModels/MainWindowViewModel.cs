@@ -97,17 +97,15 @@ namespace Fingerprints.ViewModels
         }
 
         private void RightDrawingService_NewDrawingInitialized(object sender, EventArgs e)
-         {
+        {
             try
             {
                 if (LeftDrawingService.CurrentDrawing != null && LeftDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == 7 &&
                     RightDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == LeftDrawingService.CurrentDrawing.Minutia.TypeId)
                 {
                     LeftDrawingService.CurrentDrawing.InsertIndex = RightDrawingData.Count - 2;
-                    LeftDrawingService.SetReplaceFlag(LeftDrawingService.CurrentDrawing.InsertIndex.Value);
+                    LeftDrawingService.RefreshDrawingIndexTarget(LeftDrawingService.CurrentDrawing.InsertIndex.Value);
                 }
-
-                RightDrawingService.SetReplaceFlag(RightDrawingService.DrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -123,10 +121,8 @@ namespace Fingerprints.ViewModels
                     && LeftDrawingService.DrawingData[RightDrawingData.Count - 2].Minutia.TypeId == RightDrawingService.CurrentDrawing.Minutia.TypeId)
                 {
                     RightDrawingService.CurrentDrawing.InsertIndex = LeftDrawingData.Count - 2;
-                    RightDrawingService.SetReplaceFlag(RightDrawingService.CurrentDrawing.InsertIndex.Value);
+                    RightDrawingService.RefreshDrawingIndexTarget(RightDrawingService.CurrentDrawing.InsertIndex.Value);
                 }
-
-                LeftDrawingService.SetReplaceFlag(LeftDrawingService.DrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -197,6 +193,8 @@ namespace Fingerprints.ViewModels
                 _bCanComboBoxChangeCurrentDrawing = false;
 
                 SetComboboxTitle(sender);
+
+                SetActiveColor(sender);
             }
             catch (Exception ex)
             {
@@ -205,6 +203,27 @@ namespace Fingerprints.ViewModels
             finally
             {
                 _bCanComboBoxChangeCurrentDrawing = true;
+            }
+        }
+
+        private void SetActiveColor(object _sender)
+        {
+            DrawingService senderObject = null;
+            try
+            {
+                senderObject = ((DrawingService)_sender);
+                if (senderObject.CurrentDrawing.InsertIndex.HasValue)
+                {
+                    senderObject.RefreshDrawingIndexTarget(senderObject.CurrentDrawing.InsertIndex.Value);
+                }
+                else
+                {
+                    senderObject.RefreshDrawingIndexTarget(senderObject.DrawingData.Count - 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
         }
 
@@ -220,6 +239,8 @@ namespace Fingerprints.ViewModels
                 _bCanComboBoxChangeCurrentDrawing = false;
 
                 SetComboboxTitle(sender);
+
+                SetActiveColor(sender);
             }
             catch (Exception ex)
             {
@@ -261,7 +282,7 @@ namespace Fingerprints.ViewModels
 
                 FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
 
-                RightDrawingService.SetReplaceFlag(RightDrawingService.DrawingData.Count - 1);
+                RightDrawingService.RefreshDrawingIndexTarget(null);
             }
             catch (Exception ex)
             {
@@ -281,7 +302,7 @@ namespace Fingerprints.ViewModels
 
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
 
-                LeftDrawingService.SetReplaceFlag(LeftDrawingService.DrawingData.Count - 1);
+                LeftDrawingService.RefreshDrawingIndexTarget(null);
             }
             catch (Exception ex)
             {
@@ -327,6 +348,7 @@ namespace Fingerprints.ViewModels
             {
                 LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, LeftDrawingService);
                 RightDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, RightDrawingService);
+
             }
             catch (Exception ex)
             {

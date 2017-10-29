@@ -145,6 +145,7 @@
     <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
     <Compile Include="Converters\GridClickedItemPosition.cs" />
     <Compile Include="Converters\RowAndCellConverter.cs" />
+    <Compile Include="EventArgsObjects\CurrentDrawingChangedEventArgs.cs" />
     <Compile Include="EventArgsObjects\DrawingObjectAddedEventArgs.cs" />
     <Compile Include="Factories\EventArgsFactory.cs" />
     <Compile Include="Factories\FileMinutiaFactory.cs" />

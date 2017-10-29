@@ -231,7 +231,7 @@
 
                 <!--listboxes-->
                 <Grid Grid.Row="2">
-                    <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="FullRow" 
+                    <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
                               SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False"
                               AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
                         <DataGrid.Columns>
@@ -264,7 +264,6 @@
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
-                                        <!--<Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />-->
                                         <Setter Property="Padding" Value="0" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
@@ -299,7 +298,6 @@
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
-                                        <!--<Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />-->
                                         <Setter Property="Padding" Value="0" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">

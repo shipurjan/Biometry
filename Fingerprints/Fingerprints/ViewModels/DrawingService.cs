@@ -5,17 +5,16 @@ using System.Windows.Media;
 using ExceptionLogger;
 using Fingerprints.Interfaces;
 using Fingerprints.MinutiaeTypes;
-using System.Collections.ObjectModel;
 using Fingerprints.Factories;
 using Prism.Mvvm;
 using Microsoft.Win32;
-using Prism.Commands;
 using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Fingerprints.Tools.Importers;
 using Fingerprints.Resources;
 using Fingerprints.Tools;
+using Fingerprints.EventArgsObjects;
 
 namespace Fingerprints.ViewModels
 {
@@ -47,7 +46,7 @@ namespace Fingerprints.ViewModels
                 try
                 {
                     currentDrawing = value;
-                    CurrentDrawingChanged(this, null);
+                    CurrentDrawingChanged(this, new CurrentDrawingChangedEventArgs() { CurrentDrawing = value });
                 }
                 catch (Exception ex)
                 {
@@ -309,7 +308,7 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public void SetReplaceFlag(int _itemIndex)
+        public void RefreshDrawingIndexTarget(int? _itemIndex)
         {
             try
             {
@@ -318,7 +317,11 @@ namespace Fingerprints.ViewModels
                     item.WillBeReplaced = false;
                 }
 
-                DrawingData[_itemIndex].WillBeReplaced = true;
+                if (_itemIndex.HasValue)
+                {
+                    DrawingData[_itemIndex.Value].WillBeReplaced = true;
+                }
+
             }
             catch (Exception ex)
             {
@@ -342,7 +345,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex = null)
         {
-            if (_insertIndex.HasValue)
+            if (_insertIndex.HasValue && DrawingData.Count > _insertIndex.Value)
             {
                 DrawingData[_insertIndex.Value] = _minutiaStateBase;
             }
