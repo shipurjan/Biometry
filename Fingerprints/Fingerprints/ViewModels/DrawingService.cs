@@ -309,6 +309,23 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        public void SetReplaceFlag(int _itemIndex)
+        {
+            try
+            {
+                foreach (var item in DrawingData)
+                {
+                    item.WillBeReplaced = false;
+                }
+
+                DrawingData[_itemIndex].WillBeReplaced = true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
         /// <summary>
         /// Inititates new drawing for CurrenDrawing object
         /// </summary>
@@ -328,15 +345,12 @@ namespace Fingerprints.ViewModels
             if (_insertIndex.HasValue)
             {
                 DrawingData[_insertIndex.Value] = _minutiaStateBase;
-
-                DrawingObjectAdded(this, EventArgsFactory.CreateDrawingObjectAdded(_insertIndex.Value));
             }
             else
             {
                 DrawingData.Add(_minutiaStateBase);
-
-                DrawingObjectAdded(this, EventArgsFactory.CreateDrawingObjectAdded(DrawingData.Count - 1));
             }
+            DrawingObjectAdded(this, null);
         }
 
         #region IDisposable Support

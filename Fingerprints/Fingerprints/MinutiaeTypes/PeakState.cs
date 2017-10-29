@@ -12,7 +12,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class PeakState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public PeakState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
+        public PeakState(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null) : base(_oDrawingService, _minutia, _atIndex)
         {
         }
 

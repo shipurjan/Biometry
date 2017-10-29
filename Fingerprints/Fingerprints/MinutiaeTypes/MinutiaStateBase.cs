@@ -37,7 +37,24 @@ namespace Fingerprints.MinutiaeTypes
 
         public DrawingService DrawingService { get; }
 
-        public int? InsertIndex { get; set; }
+        private int? insertIndex;
+        public int? InsertIndex
+        {
+            get { return insertIndex; }
+            set
+            {
+                insertIndex = value;
+            }
+        }
+
+        private bool willBeReplaced;
+
+        public bool WillBeReplaced
+        {
+            get { return willBeReplaced; }
+            set { SetProperty(ref willBeReplaced, value); }
+        }
+
 
         public string MinutiaName
         {
@@ -86,7 +103,7 @@ namespace Fingerprints.MinutiaeTypes
         /// </summary>
         /// <param name="_oDrawingService"></param>
         /// <param name="_atIndex">index where Minutia must be added</param>
-        public MinutiaStateBase(DrawingService _oDrawingService, int? _atIndex = null)
+        public MinutiaStateBase(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null)
         {
             try
             {
@@ -95,6 +112,12 @@ namespace Fingerprints.MinutiaeTypes
                 PropertyChanged += PropertyChangeHandler;
                 Points.CollectionChanged += CollectionChangedHandler;
                 InsertIndex = _atIndex;
+                Minutia = _minutia;
+
+                if (Minutia != null && Minutia.TypeId != 7)
+                {
+                    WillBeReplaced = true;
+                }
             }
             catch (Exception ex)
             {

@@ -14,7 +14,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class CurveLineState : MinutiaStateBase, IMouseMoveable, IMouseClickable, IDrawable
     {
-        public CurveLineState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService,_atIndex)
+        public CurveLineState(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null) : base(_oDrawingService, _minutia, _atIndex)
         {
         }
 

@@ -97,13 +97,17 @@ namespace Fingerprints.ViewModels
         }
 
         private void RightDrawingService_NewDrawingInitialized(object sender, EventArgs e)
-        {
+         {
             try
             {
-                if (!LeftDrawingService.CurrentDrawing.Equals(null))
+                if (LeftDrawingService.CurrentDrawing != null && LeftDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == 7 &&
+                    RightDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == LeftDrawingService.CurrentDrawing.Minutia.TypeId)
                 {
                     LeftDrawingService.CurrentDrawing.InsertIndex = RightDrawingData.Count - 2;
+                    LeftDrawingService.SetReplaceFlag(LeftDrawingService.CurrentDrawing.InsertIndex.Value);
                 }
+
+                RightDrawingService.SetReplaceFlag(RightDrawingService.DrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -115,10 +119,14 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                if (RightDrawingService.CurrentDrawing != null)
+                if (RightDrawingService.CurrentDrawing != null && RightDrawingData[LeftDrawingData.Count - 2].Minutia.TypeId == 7
+                    && LeftDrawingService.DrawingData[RightDrawingData.Count - 2].Minutia.TypeId == RightDrawingService.CurrentDrawing.Minutia.TypeId)
                 {
                     RightDrawingService.CurrentDrawing.InsertIndex = LeftDrawingData.Count - 2;
+                    RightDrawingService.SetReplaceFlag(RightDrawingService.CurrentDrawing.InsertIndex.Value);
                 }
+
+                LeftDrawingService.SetReplaceFlag(LeftDrawingService.DrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -250,7 +258,10 @@ namespace Fingerprints.ViewModels
             try
             {
                 RightDrawingService.LoadImage();
+
                 FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
+
+                RightDrawingService.SetReplaceFlag(RightDrawingService.DrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -267,7 +278,10 @@ namespace Fingerprints.ViewModels
             try
             {
                 LeftDrawingService.LoadImage();
+
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
+
+                LeftDrawingService.SetReplaceFlag(LeftDrawingService.DrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -467,7 +481,7 @@ namespace Fingerprints.ViewModels
                 //string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
                 //ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
-                LeftDrawingData.Add(new EmptyState(LeftDrawingService));
+                LeftDrawingData[0].WillBeReplaced = true;
             }
             catch (Exception ex)
             {

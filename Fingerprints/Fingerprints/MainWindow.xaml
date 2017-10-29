@@ -24,6 +24,7 @@
     </Window.DataContext>
     <Window.Resources>
         <Converters:CollectionCountIncrementConverter x:Key="CountConverter" />
+        <Converters:RowAndCellConverter x:Key="RowAndCellConverter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -231,8 +232,8 @@
                 <!--listboxes-->
                 <Grid Grid.Row="2">
                     <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="FullRow" 
-                              SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" CurrentCell="{Binding DataGridActivities.SelectedCurrentCell, Mode=OneWayToSource}"
-                              AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}" SelectedIndex="{Binding DataGridActivities.SelectedRow, Mode=OneWayToSource}">
+                              SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False"
+                              AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Nr" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -244,24 +245,70 @@
                             <DataGridTemplateColumn Header="Typ 1">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" />
+                                        <StackPanel ContextMenu="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                            <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewMouseDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.DataGridActivities.DrawingObjectClickChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                                        <i:InvokeCommandAction.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource ResourceKey=RowAndCellConverter}">
+                                                                <Binding Path="AlternationIndex" RelativeSource="{RelativeSource AncestorType=DataGridRow}" />
+                                                                <Binding Path="Column.DisplayIndex" RelativeSource="{RelativeSource AncestorType=DataGridCell}" />
+                                                            </MultiBinding>
+                                                        </i:InvokeCommandAction.CommandParameter>
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
-                                        <Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                        <!--<Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />-->
+                                        <Setter Property="Padding" Value="0" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
+                                                <Setter Property="Background" Value="#4e5156"></Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
+                                                <Setter Property="Background" Value="#FFEEEEEE"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Typ 2">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" />
+                                        <StackPanel ContextMenu="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                            <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewMouseDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.DataGridActivities.DrawingObjectClickChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                                        <i:InvokeCommandAction.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource ResourceKey=RowAndCellConverter}">
+                                                                <Binding Path="AlternationIndex" RelativeSource="{RelativeSource AncestorType=DataGridRow}" />
+                                                                <Binding Path="Column.DisplayIndex" RelativeSource="{RelativeSource AncestorType=DataGridCell}" />
+                                                            </MultiBinding>
+                                                        </i:InvokeCommandAction.CommandParameter>
+                                                    </i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
-                                        <Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                        <!--<Setter Property="ContextMenu" Value="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />-->
+                                        <Setter Property="Padding" Value="0" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">
+                                                <Setter Property="Background" Value="#4e5156"></Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
+                                                <Setter Property="Background" Value="#FFEEEEEE"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>

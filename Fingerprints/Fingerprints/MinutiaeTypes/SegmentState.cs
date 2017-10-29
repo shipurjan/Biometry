@@ -12,7 +12,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class SegmentState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public SegmentState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
+        public SegmentState(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null) : base(_oDrawingService, _minutia, _atIndex)
         {
         }
 

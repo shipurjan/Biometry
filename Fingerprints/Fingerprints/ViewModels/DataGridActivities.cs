@@ -1,4 +1,5 @@
 ﻿using ExceptionLogger;
+using Fingerprints.Converters;
 using Fingerprints.MinutiaeTypes;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -21,37 +22,28 @@ namespace Fingerprints.ViewModels
 
         public ObservableCollection<GridViewModel> GridViewModelList { get; }
 
-        private DataGridCellInfo selectedCurrentCell;
-        public DataGridCellInfo SelectedCurrentCell
+        private GridClickedItemPosition clickedPosition;
+        public GridClickedItemPosition ClickedPosition
         {
-            get { return selectedCurrentCell; }
+            get { return clickedPosition; }
             set
             {
-                SetProperty(ref selectedCurrentCell, value);
+                clickedPosition = value;
+
+                if (clickedPosition.CellIndex == 1)
+                {
+                    LeftDrawingService.SelectedIndex = clickedPosition.RowIndex;
+                }
+                else if (clickedPosition.CellIndex == 2)
+                {
+                    RightDrawingService.SelectedIndex = ClickedPosition.RowIndex;
+                }
+
             }
         }
 
-        /// <summary>
-        /// Property indicates what index in listbox is selected
-        /// </summary>
-        private int? selectedRow;
-        public int? SelectedRow
-        {
-            get { return selectedRow; }
-            set
-            {
-                SetProperty(ref selectedRow, value != -1 ? value : null);
 
-                if (SelectedCurrentCell.Column?.DisplayIndex == 1)
-                {
-                    LeftDrawingService.SelectedIndex = SelectedRow;
-                }
-                else if (SelectedCurrentCell.Column?.DisplayIndex == 2)
-                {
-                    RightDrawingService.SelectedIndex = SelectedRow;
-                }
-            }
-        }
+        public ICommand DrawingObjectClickChangedCommand { get; }
 
         public ICommand DeleteButtonCommand { get; }
 
@@ -66,6 +58,19 @@ namespace Fingerprints.ViewModels
             RightDrawingService.DrawingData.CollectionChanged += RightDrawingDataChanged;
 
             DeleteButtonCommand = new DelegateCommand<object>(DeleteButtonClick);
+            DrawingObjectClickChangedCommand = new DelegateCommand<GridClickedItemPosition>(DrawingObjectClickChanged);
+        }
+
+        private void DrawingObjectClickChanged(GridClickedItemPosition _args)
+        {
+            try
+            {
+                ClickedPosition = _args;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
 
         private void DeleteButtonClick(object _gridViewModel)

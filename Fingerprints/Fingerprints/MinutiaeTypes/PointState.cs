@@ -16,7 +16,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class PointState : MinutiaStateBase, IMouseClickable, IDrawable
     {
-        public PointState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
+        public PointState(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null) : base(_oDrawingService, _minutia, _atIndex)
         {
         }
 
