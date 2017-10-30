@@ -202,12 +202,73 @@ namespace Fingerprints.ViewModels
             try
             {
                 LeftDrawingService.LoadImage();
+                SortDrawingData();
+
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        private void SortDrawingData()
+        {
+            List<MinutiaStateBase> tmpLeftData = null;
+            List<MinutiaStateBase> tmpRightData = null;
+            try
+            {
+                //Sort only if both collections have at least one element
+                if (LeftDrawingData.Count == 0 || RightDrawingData.Count == 0)
+                    return;
+
+                //Init tmp tmp data
+                tmpLeftData = LeftDrawingData.ToList();
+                tmpRightData = RightDrawingData.ToList();
+
+                //Fill empty in one List to match count
+                if (tmpLeftData.Count > tmpRightData.Count)
+                    FillEmptyTmpList(RightDrawingService, tmpRightData, tmpLeftData.Count - tmpRightData.Count);
+                else
+                    FillEmptyTmpList(LeftDrawingService, tmpLeftData, tmpRightData.Count - tmpLeftData.Count);
+
+                //Sort lists
+                SortTmpLists(ref tmpLeftData, ref tmpRightData);
+
+
+                //Clear
+
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
+        }
+
+        private void SortTmpLists(ref List<MinutiaStateBase> _tmpLeftData, ref List<MinutiaStateBase> _tmpRightData)
+        {
+            var orderedZip = _tmpLeftData.Zip(_tmpRightData, (x, y) => new { x, y })
+                      .OrderBy(pair => pair.x.Id == pair.y.Id)
+                      .ToList();
+            _tmpLeftData = orderedZip.Select(pair => pair.x).ToList();
+            _tmpRightData = orderedZip.Select(pair => pair.y).ToList();
+        }
+
+        private void FillEmptyTmpList(DrawingService _DrawingService, List<MinutiaStateBase> _tmpDataList, int _count)
+        {
+            try
+            {
+                for (int i = 0; i < _count; i++)
+                {
+                    _tmpDataList.Add(new EmptyState(_DrawingService));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
 
         /// <summary>
@@ -398,8 +459,7 @@ namespace Fingerprints.ViewModels
             string leftPath = String.Empty;
             string rightPath = String.Empty;
             try
-            {
-                
+            {              
 
                 //get path to save data as BackgroundImage file name with txt extension
                 if (LeftDrawingService.BackgroundImage != null)
@@ -414,5 +474,7 @@ namespace Fingerprints.ViewModels
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+
     }
 }
