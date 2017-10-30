@@ -24,7 +24,7 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (Points.Count > 0)
                 {
-                    WriteableBmp.DrawPolyline(IntPoints, Colors.Red);
+                    WriteableBmp.DrawPolyline(IntPoints, Color);
                 }
             }
             catch (Exception ex)

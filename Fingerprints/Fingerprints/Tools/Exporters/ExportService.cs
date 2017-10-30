@@ -57,8 +57,10 @@ namespace Fingerprints.Tools.Exporters
         {
             try
             {
-                Export(ExportTypes.Txt, _firstData, _leftFullPath);
-                Export(ExportTypes.Txt, _secondData, _rightFullPath);
+                if (!String.IsNullOrEmpty(_leftFullPath))
+                    Export(ExportTypes.Txt, _firstData, _leftFullPath);
+                if (!String.IsNullOrEmpty(_rightFullPath))
+                    Export(ExportTypes.Txt, _secondData, _rightFullPath);
             }
             catch (Exception ex)
             {

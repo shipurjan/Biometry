@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using Fingerprints.Models;
+using ExceptionLogger;
 
 namespace Fingerprints
 {
@@ -83,17 +84,41 @@ namespace Fingerprints
         {
             using (var db = new FingerContext())
             {
-                var q = db.Projects.AsEnumerable().ToList();
+                var q = db.Projects.ToList();
                 return q;
             }
         }
 
+        static public string GetProjectName()
+        {
+            string result = String.Empty;
+            try
+            {
+                using (var db = new FingerContext())
+                {
+                    result = db.Projects.FirstOrDefault(project => project.ProjectID == currentProject).ToString();                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
+
         static public void InitDbIfNoExit()
         {
-            using (var db = new FingerContext())
+            try
             {
-                db.Database.CreateIfNotExists();
+                using (var db = new FingerContext())
+                {
+                    db.Database.CreateIfNotExists();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
     }

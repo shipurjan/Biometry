@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Fingerprints.Factories
@@ -79,6 +80,7 @@ namespace Fingerprints.Factories
                 result.Id = _minutiaFileState.Id;
                 result.Points.AddRange(_minutiaFileState.Points);
                 result.Angle = _minutiaFileState.Angle;
+                result.Color = (Color)ColorConverter.ConvertFromString(_minutia.Color);
             }
             catch (Exception ex)
             {

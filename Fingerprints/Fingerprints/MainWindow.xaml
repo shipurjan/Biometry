@@ -16,7 +16,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Fingerprints" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
+        Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
     <Grid>
         <Grid.RowDefinitions>
             <!--topMenuBar-->
