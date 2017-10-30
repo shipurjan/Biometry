@@ -259,20 +259,24 @@
                                                     </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
+                                            <StackPanel.Style>
+                                                <Style TargetType="{x:Type StackPanel}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
+                                                            <Setter Property="Background" Value="#FF71747A"></Setter>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
+                                                            <Setter Property="Background" Value="#FFEEEEEE"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
                                         <Setter Property="Padding" Value="0" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
-                                                <Setter Property="Background" Value="#FF71747A"></Setter>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
-                                                <Setter Property="Background" Value="#FFEEEEEE"></Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
@@ -293,20 +297,24 @@
                                                     </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
+                                            <StackPanel.Style>
+                                                <Style TargetType="{x:Type StackPanel}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">
+                                                            <Setter Property="Background" Value="#FF71747A"></Setter>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
+                                                            <Setter Property="Background" Value="#FFEEEEEE"></Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
                                         <Setter Property="Padding" Value="0" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">
-                                                <Setter Property="Background" Value="#FF71747A"></Setter>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
-                                                <Setter Property="Background" Value="#FFEEEEEE"></Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
