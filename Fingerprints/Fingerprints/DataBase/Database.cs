@@ -84,7 +84,7 @@ namespace Fingerprints
         {
             using (var db = new FingerContext())
             {
-                var q = db.Projects.AsEnumerable().ToList();
+                var q = db.Projects.ToList();
                 return q;
             }
         }
@@ -96,7 +96,7 @@ namespace Fingerprints
             {
                 using (var db = new FingerContext())
                 {
-                    result = db.Projects.Where(project => project.ProjectID == currentProject).FirstOrDefault().ToString();                    
+                    result = db.Projects.FirstOrDefault(project => project.ProjectID == currentProject).ToString();                    
                 }
             }
             catch (Exception ex)

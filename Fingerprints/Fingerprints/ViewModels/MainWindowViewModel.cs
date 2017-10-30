@@ -395,11 +395,17 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void SaveClick()
         {
+            string leftPath = String.Empty;
+            string rightPath = String.Empty;
             try
             {
+                
+
                 //get path to save data as BackgroundImage file name with txt extension
-                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
-                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                if (LeftDrawingService.BackgroundImage != null)
+                    leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                if (RightDrawingService.BackgroundImage != null)
+                    rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
                 ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
