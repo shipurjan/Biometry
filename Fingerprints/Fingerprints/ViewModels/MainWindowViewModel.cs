@@ -282,7 +282,7 @@ namespace Fingerprints.ViewModels
 
                 FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
 
-                RightDrawingService.RefreshDrawingIndexTarget(null);
+                RightDrawingService.RefreshDrawingIndexTarget(RightDrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -302,7 +302,7 @@ namespace Fingerprints.ViewModels
 
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
 
-                LeftDrawingService.RefreshDrawingIndexTarget(null);
+                LeftDrawingService.RefreshDrawingIndexTarget(LeftDrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -499,11 +499,10 @@ namespace Fingerprints.ViewModels
             try
             {
                 //get path to save data as BackgroundImage file name with txt extension
-                //string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
-                //string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
-                //ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
-                LeftDrawingData[0].WillBeReplaced = true;
+                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
             catch (Exception ex)
             {

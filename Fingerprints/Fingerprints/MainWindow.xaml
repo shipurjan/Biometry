@@ -242,7 +242,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Typ 1">
+                            <DataGridTemplateColumn Header="Typ 1" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel ContextMenu="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
@@ -267,7 +267,7 @@
                                         <Setter Property="Padding" Value="0" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
-                                                <Setter Property="Background" Value="#4e5156"></Setter>
+                                                <Setter Property="Background" Value="#FF71747A"></Setter>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
                                                 <Setter Property="Background" Value="#FFEEEEEE"></Setter>
@@ -301,7 +301,7 @@
                                         <Setter Property="Padding" Value="0" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">
-                                                <Setter Property="Background" Value="#4e5156"></Setter>
+                                                <Setter Property="Background" Value="#FF71747A"></Setter>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
                                                 <Setter Property="Background" Value="#FFEEEEEE"></Setter>
