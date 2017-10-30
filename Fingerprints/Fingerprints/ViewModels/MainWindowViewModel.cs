@@ -3,6 +3,7 @@ using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
 using Fingerprints.Resources;
+using Fingerprints.Tools;
 using Fingerprints.Tools.Exporters;
 using Fingerprints.Windows.Controls;
 using Prism.Commands;
@@ -182,9 +183,14 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadRightImage()
         {
+            IdSorter sorter = null;
             try
             {
                 RightDrawingService.LoadImage();
+
+                sorter = new IdSorter(RightDrawingService, LeftDrawingService);
+                sorter.SortById();
+
                 FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
             }
             catch (Exception ex)
@@ -199,10 +205,13 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadLeftImage()
         {
+            IdSorter sorter = null;
             try
             {
                 LeftDrawingService.LoadImage();
-                SortDrawingData();
+
+                sorter = new IdSorter(LeftDrawingService, RightDrawingService);
+                sorter.SortById();
 
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
             }
@@ -210,65 +219,6 @@ namespace Fingerprints.ViewModels
             {
                 Logger.WriteExceptionLog(ex);
             }
-        }
-
-        private void SortDrawingData()
-        {
-            List<MinutiaStateBase> tmpLeftData = null;
-            List<MinutiaStateBase> tmpRightData = null;
-            try
-            {
-                //Sort only if both collections have at least one element
-                if (LeftDrawingData.Count == 0 || RightDrawingData.Count == 0)
-                    return;
-
-                //Init tmp tmp data
-                tmpLeftData = LeftDrawingData.ToList();
-                tmpRightData = RightDrawingData.ToList();
-
-                //Fill empty in one List to match count
-                if (tmpLeftData.Count > tmpRightData.Count)
-                    FillEmptyTmpList(RightDrawingService, tmpRightData, tmpLeftData.Count - tmpRightData.Count);
-                else
-                    FillEmptyTmpList(LeftDrawingService, tmpLeftData, tmpRightData.Count - tmpLeftData.Count);
-
-                //Sort lists
-                SortTmpLists(ref tmpLeftData, ref tmpRightData);
-
-
-                //Clear
-
-
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }            
-        }
-
-        private void SortTmpLists(ref List<MinutiaStateBase> _tmpLeftData, ref List<MinutiaStateBase> _tmpRightData)
-        {
-            var orderedZip = _tmpLeftData.Zip(_tmpRightData, (x, y) => new { x, y })
-                      .OrderBy(pair => pair.x.Id == pair.y.Id)
-                      .ToList();
-            _tmpLeftData = orderedZip.Select(pair => pair.x).ToList();
-            _tmpRightData = orderedZip.Select(pair => pair.y).ToList();
-        }
-
-        private void FillEmptyTmpList(DrawingService _DrawingService, List<MinutiaStateBase> _tmpDataList, int _count)
-        {
-            try
-            {
-                for (int i = 0; i < _count; i++)
-                {
-                    _tmpDataList.Add(new EmptyState(_DrawingService));
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-            
         }
 
         /// <summary>
