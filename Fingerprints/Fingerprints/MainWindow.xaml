@@ -263,7 +263,14 @@
                                                 <Style TargetType="{x:Type StackPanel}">
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
-                                                            <Setter Property="Background" Value="#FF71747A"></Setter>
+                                                            <Setter Property="Background">
+                                                                <Setter.Value>
+                                                                    <RadialGradientBrush>
+                                                                        <GradientStop Color="#FFEEEEEE" Offset="0"/>
+                                                                        <GradientStop Color="#FFBDBDBD" Offset="1"/>
+                                                                    </RadialGradientBrush>
+                                                                </Setter.Value>
+                                                            </Setter>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
                                                             <Setter Property="Background" Value="#FFEEEEEE"></Setter>
@@ -301,7 +308,14 @@
                                                 <Style TargetType="{x:Type StackPanel}">
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">
-                                                            <Setter Property="Background" Value="#FF71747A"></Setter>
+                                                            <Setter Property="Background">
+                                                                <Setter.Value>
+                                                                    <RadialGradientBrush>
+                                                                        <GradientStop Color="#FFEEEEEE" Offset="0"/>
+                                                                        <GradientStop Color="#FFBDBDBD" Offset="1"/>
+                                                                    </RadialGradientBrush>
+                                                                </Setter.Value>
+                                                            </Setter>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
                                                             <Setter Property="Background" Value="#FFEEEEEE"></Setter>
@@ -322,19 +336,20 @@
                             <DataGridTemplateColumn Header="Usuń">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#fafafa">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                                     <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataGridActivities.DeleteButtonCommand}"
                                                 CommandParameter="{Binding}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
-                                            <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                                            <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0 10 0 10"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                        <Setter Property="Padding" Value="0" />
                                         <Setter Property="Cursor" Value="Hand" />
                                         <Setter Property="BorderThickness" Value="0" />
                                         <Setter Property="FocusVisualStyle" Value="{x:Null}" />

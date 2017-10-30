@@ -149,5 +149,30 @@ namespace Fingerprints.ViewModels
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+        /// <summary>
+        /// Sets color for cell where CurrentDrawing will be placed
+        /// </summary>
+        /// <param name="_sender"></param>
+        public void SetActiveColor(object _sender)
+        {
+            DrawingService senderObject = null;
+            try
+            {
+                senderObject = ((DrawingService)_sender);
+                if (senderObject.CurrentDrawing.InsertIndex.HasValue)
+                {
+                    senderObject.RefreshDrawingIndexTarget(senderObject.CurrentDrawing.InsertIndex.Value);
+                }
+                else
+                {
+                    senderObject.RefreshDrawingIndexTarget(senderObject.DrawingData.Count - 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
     }
 }

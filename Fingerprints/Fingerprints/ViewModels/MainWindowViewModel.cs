@@ -20,6 +20,8 @@ namespace Fingerprints.ViewModels
 {
     class MainWindowViewModel : BindableBase
     {
+        #region Properties and variables
+
         private MinutiaeTypeController dbController;
 
         private bool _bCanComboBoxChangeCurrentDrawing;
@@ -44,11 +46,17 @@ namespace Fingerprints.ViewModels
 
         public DataGridActivities DataGridActivities { get; }
 
+        #endregion
+
+        #region Commands
+
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
         public ICommand SaveAsClickCommand { get; }
         public ICommand LoadLeftImageCommand { get; }
         public ICommand LoadRightImageCommand { get; }
+
+        #endregion
 
         public MainWindowViewModel()
         {
@@ -81,6 +89,8 @@ namespace Fingerprints.ViewModels
                 SaveAsClickCommand = new DelegateCommand(SaveAsClick);
                 LoadLeftImageCommand = new DelegateCommand(LoadLeftImage);
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
+
+                //DrawingService events
                 LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
                 RightDrawingService.CurrentDrawingChanged += RightDrawingService_CurrentDrawingChanged;
 
@@ -96,11 +106,13 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        #region DrawingService Events
+
         private void RightDrawingService_NewDrawingInitialized(object sender, EventArgs e)
         {
             try
             {
-                if (LeftDrawingService.CurrentDrawing != null && LeftDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == 7 &&
+                if (LeftDrawingService.CurrentDrawing != null && LeftDrawingData.Count > RightDrawingData.Count - 2 && LeftDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == 7 &&
                     RightDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == LeftDrawingService.CurrentDrawing.Minutia.TypeId)
                 {
                     LeftDrawingService.CurrentDrawing.InsertIndex = RightDrawingData.Count - 2;
@@ -117,7 +129,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                if (RightDrawingService.CurrentDrawing != null && RightDrawingData[LeftDrawingData.Count - 2].Minutia.TypeId == 7
+                if (RightDrawingService.CurrentDrawing != null && RightDrawingData.Count > LeftDrawingData.Count - 2 && RightDrawingData[LeftDrawingData.Count - 2].Minutia.TypeId == 7
                     && LeftDrawingService.DrawingData[RightDrawingData.Count - 2].Minutia.TypeId == RightDrawingService.CurrentDrawing.Minutia.TypeId)
                 {
                     RightDrawingService.CurrentDrawing.InsertIndex = LeftDrawingData.Count - 2;
@@ -186,15 +198,16 @@ namespace Fingerprints.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RightDrawingService_CurrentDrawingChanged(object sender, EventArgs e)
+        private void RightDrawingService_CurrentDrawingChanged(object _sender, EventArgs e)
         {
             try
             {
                 _bCanComboBoxChangeCurrentDrawing = false;
 
-                SetComboboxTitle(sender);
+                SetComboboxTitle(_sender);
 
-                SetActiveColor(sender);
+                //set color for cell which will be replaced
+                DataGridActivities.SetActiveColor(_sender);
             }
             catch (Exception ex)
             {
@@ -203,27 +216,6 @@ namespace Fingerprints.ViewModels
             finally
             {
                 _bCanComboBoxChangeCurrentDrawing = true;
-            }
-        }
-
-        private void SetActiveColor(object _sender)
-        {
-            DrawingService senderObject = null;
-            try
-            {
-                senderObject = ((DrawingService)_sender);
-                if (senderObject.CurrentDrawing.InsertIndex.HasValue)
-                {
-                    senderObject.RefreshDrawingIndexTarget(senderObject.CurrentDrawing.InsertIndex.Value);
-                }
-                else
-                {
-                    senderObject.RefreshDrawingIndexTarget(senderObject.DrawingData.Count - 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
             }
         }
 
@@ -240,7 +232,8 @@ namespace Fingerprints.ViewModels
 
                 SetComboboxTitle(sender);
 
-                SetActiveColor(sender);
+                //set color for cell which will be replaced
+                DataGridActivities.SetActiveColor(sender);
             }
             catch (Exception ex)
             {
@@ -252,23 +245,120 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        /// <summary>
-        /// sets SelectedItem in combobox
-        /// </summary>
-        /// <param name="_sender"></param>
-        private void SetComboboxTitle(object _sender)
+        #endregion
+
+        #region DrawingData Changed events and methods 
+
+        private void RightDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
-            DrawingService senderObject = null;
+            ObservableCollection<MinutiaStateBase> senderObject = null;
             try
             {
-                senderObject = ((DrawingService)_sender);
-                SelectedComboboxItem = MinutiaeStates.FirstOrDefault(x => x.MinutiaName == senderObject.CurrentDrawing.MinutiaName);
+                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
+
+                CollectionChangedActions(senderObject, _eventArgs, LeftDrawingService);
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
+                {
+                    if (RightDrawingService.CurrentDrawing.InsertIndex.HasValue && RightDrawingService.CurrentDrawing.InsertIndex.Value >= RightDrawingService.DrawingData.Count)
+                    {
+                        RightDrawingService.CurrentDrawing.InsertIndex = null;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+        public void LeftDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
+        {
+            ObservableCollection<MinutiaStateBase> senderObject = null;
+            try
+            {
+                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
+
+                CollectionChangedActions(senderObject, _eventArgs, RightDrawingService);
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
+                {
+                    if (LeftDrawingService.CurrentDrawing.InsertIndex.HasValue && LeftDrawingService.CurrentDrawing.InsertIndex.Value >= LeftDrawingService.DrawingData.Count)
+                    {
+                        LeftDrawingService.CurrentDrawing.InsertIndex = null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Method executes when DrawingData collection changed
+        /// </summary>
+        /// <param name="_senderObject"></param>
+        /// <param name="_eventArgs"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        private void CollectionChangedActions(ObservableCollection<MinutiaStateBase> _senderObject, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
+        {
+            if (_eventArgs.Action == NotifyCollectionChangedAction.Add && _senderObject.Count > 0)
+            {
+                AssignNewIDIfCan(_eventArgs);
+            }
+
+            if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
+            {
+                AssignIDOnReplace(_senderObject, _eventArgs, _oppositeDrawingService);
+            }
+        }
+
+        /// <summary>
+        /// Assigns id from opposite object or from old object
+        /// </summary>
+        /// <param name="_senderObject"></param>
+        /// <param name="_eventArgs"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        private void AssignIDOnReplace(ObservableCollection<MinutiaStateBase> _senderObject, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
+        {
+            try
+            {
+                if (_oppositeDrawingService.DrawingData?.Count > _eventArgs.NewStartingIndex)
+                {
+                    //get id from opposite drawing object
+                    _senderObject[_eventArgs.NewStartingIndex].Id = _oppositeDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
+                }
+                else
+                {
+                    //get id from old drawing object
+                    _senderObject[_eventArgs.NewStartingIndex].Id = ((MinutiaStateBase)_eventArgs.OldItems[0]).Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Assigns Guid to Minutia ID is null or empty
+        /// </summary>
+        /// <param name="_eventArgs"></param>
+        private void AssignNewIDIfCan(NotifyCollectionChangedEventArgs _eventArgs)
+        {
+            foreach (MinutiaStateBase item in _eventArgs.NewItems)
+            {
+                if (string.IsNullOrEmpty(item.Id))
+                {
+                    item.Id = Guid.NewGuid().ToString();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Command delegates
 
         /// <summary>
         /// Load Right image
@@ -310,6 +400,7 @@ namespace Fingerprints.ViewModels
             }
         }
 
+
         /// <summary>
         /// Peform SaveAs dialog window to save data
         /// </summary>
@@ -321,6 +412,25 @@ namespace Fingerprints.ViewModels
                 string rightFileName = RightDrawingService.BackgroundImage.GetFileName();
 
                 ExportService.SaveAsFileDialog(LeftDrawingData.ToList(), leftFileName, RightDrawingData.ToList(), rightFileName);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Save Data to files named as BackgroundImage file
+        /// </summary>
+        public void SaveClick()
+        {
+            try
+            {
+                //get path to save data as BackgroundImage file name with txt extension
+                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+
+                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
             catch (Exception ex)
             {
@@ -356,103 +466,25 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        private void RightDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
+        #endregion
+
+        #region Methods 
+
+        /// <summary>
+        /// sets SelectedItem in combobox
+        /// </summary>
+        /// <param name="_sender"></param>
+        private void SetComboboxTitle(object _sender)
         {
-            //code for inserting empty minutiae
-            //code for asign minutiaID
-            ObservableCollection<MinutiaStateBase> senderObject = null;
+            DrawingService senderObject = null;
             try
             {
-                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
-
-                CollectionChangedActions(senderObject, _eventArgs, LeftDrawingService);
+                senderObject = ((DrawingService)_sender);
+                SelectedComboboxItem = MinutiaeStates.FirstOrDefault(x => x.MinutiaName == senderObject.CurrentDrawing.MinutiaName);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        public void LeftDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
-        {
-            //code for inserting empty minutiae
-            //code for asign minutiaID
-            ObservableCollection<MinutiaStateBase> senderObject = null;
-            try
-            {
-                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
-
-                CollectionChangedActions(senderObject, _eventArgs, RightDrawingService);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method executes when DrawingData collection changed
-        /// </summary>
-        /// <param name="_senderObject"></param>
-        /// <param name="_eventArgs"></param>
-        /// <param name="_oppositeDrawingService"></param>
-        private void CollectionChangedActions(ObservableCollection<MinutiaStateBase> _senderObject, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
-        {
-            if (_eventArgs.Action == NotifyCollectionChangedAction.Add && _senderObject.Count > 0)
-            {
-                AssignNewIDIfCan(_eventArgs);
-
-                //AddEmptyToOppositeIfCan(_senderObject, _oppositeDrawingService);
-            }
-
-            if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
-            {
-                AssignIDOnReplace(_senderObject, _eventArgs, _oppositeDrawingService);
-            }
-        }
-
-        /// <summary>
-        /// Assigns id from opposite object or from old object
-        /// </summary>
-        /// <param name="_senderObject"></param>
-        /// <param name="_eventArgs"></param>
-        /// <param name="_oppositeDrawingService"></param>
-        private void AssignIDOnReplace(ObservableCollection<MinutiaStateBase> _senderObject, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
-        {
-            try
-            {
-                if (_oppositeDrawingService.DrawingData?.Count > _eventArgs.NewStartingIndex)
-                {
-                    //get id from opposite drawing object
-                    _senderObject[_eventArgs.NewStartingIndex].Id = _oppositeDrawingService.DrawingData[_eventArgs.NewStartingIndex].Id;
-                }
-                else
-                {
-                    //get id from old drawing object
-                    _senderObject[_eventArgs.NewStartingIndex].Id = ((MinutiaStateBase)_eventArgs.OldItems[0]).Id;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        /// <summary>
-        /// insert Empty object to opposite Drawing data if count is diferrent
-        /// </summary>
-        /// <param name="_senderObject"></param>
-        /// <param name="_oppositeDrawingService"></param>
-        private void AddEmptyToOppositeIfCan(ObservableCollection<MinutiaStateBase> _senderObject, DrawingService _oppositeDrawingService)
-        {
-            if (_oppositeDrawingService.WriteableBitmap == null)
-            {
-                return;
-            }
-
-            if (_senderObject.Count > _oppositeDrawingService.DrawingData.Count)
-            {
-                _oppositeDrawingService.AddMinutiaToDrawingData(new EmptyState(_oppositeDrawingService) { Id = _senderObject.LastOrDefault().Id });
             }
         }
 
@@ -476,38 +508,7 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        /// <summary>
-        /// Assigns Guid to Minutia ID is null or empty
-        /// </summary>
-        /// <param name="_eventArgs"></param>
-        private void AssignNewIDIfCan(NotifyCollectionChangedEventArgs _eventArgs)
-        {
-            foreach (MinutiaStateBase item in _eventArgs.NewItems)
-            {
-                if (string.IsNullOrEmpty(item.Id))
-                {
-                    item.Id = Guid.NewGuid().ToString();
-                }
-            }
-        }
+        #endregion
 
-        /// <summary>
-        /// Save Data to files named as BackgroundImage file
-        /// </summary>
-        public void SaveClick()
-        {
-            try
-            {
-                //get path to save data as BackgroundImage file name with txt extension
-                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
-                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
-
-                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
     }
 }
