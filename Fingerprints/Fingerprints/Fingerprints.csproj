@@ -177,6 +177,7 @@
     <Compile Include="Tools\Exporters\TxtExporter.cs" />
     <Compile Include="Tools\Exporters\XytExporter.cs" />
     <Compile Include="Tools\IDataImporter.cs" />
+    <Compile Include="Tools\IdSorter.cs" />
     <Compile Include="Tools\Importers\ImporterBase.cs" />
     <Compile Include="Tools\Importers\ImporterFactory.cs" />
     <Compile Include="Tools\Importers\ImporterService.cs" />

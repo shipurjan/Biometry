@@ -1,4 +1,5 @@
-﻿using Fingerprints.ViewModels;
+﻿using Fingerprints.Models;
+using Fingerprints.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Fingerprints.MinutiaeTypes
     {
         public EmptyState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
         {
-            Minutia = new SelfDefinedMinutiae() { Name = "Puste" };
+            Minutia = new SelfDefinedMinutiae() { Name = "Puste", DrawingType = DrawingType.Empty};            
         }
     }
 }

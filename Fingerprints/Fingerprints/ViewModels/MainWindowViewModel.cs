@@ -3,6 +3,7 @@ using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Fingerprints.Models;
 using Fingerprints.Resources;
+using Fingerprints.Tools;
 using Fingerprints.Tools.Exporters;
 using Fingerprints.Windows.Controls;
 using Prism.Commands;
@@ -182,9 +183,14 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadRightImage()
         {
+            IdSorter sorter = null;
             try
             {
                 RightDrawingService.LoadImage();
+
+                sorter = new IdSorter(RightDrawingService, LeftDrawingService);
+                sorter.SortById();
+
                 FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
             }
             catch (Exception ex)
@@ -199,9 +205,14 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadLeftImage()
         {
+            IdSorter sorter = null;
             try
             {
                 LeftDrawingService.LoadImage();
+
+                sorter = new IdSorter(LeftDrawingService, RightDrawingService);
+                sorter.SortById();
+
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
             }
             catch (Exception ex)
@@ -398,8 +409,7 @@ namespace Fingerprints.ViewModels
             string leftPath = String.Empty;
             string rightPath = String.Empty;
             try
-            {
-                
+            {              
 
                 //get path to save data as BackgroundImage file name with txt extension
                 if (LeftDrawingService.BackgroundImage != null)
@@ -414,5 +424,7 @@ namespace Fingerprints.ViewModels
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+
     }
 }
