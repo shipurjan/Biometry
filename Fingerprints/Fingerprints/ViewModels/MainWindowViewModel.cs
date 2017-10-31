@@ -124,7 +124,7 @@ namespace Fingerprints.ViewModels
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
-            }            
+            }
         }
 
         #region DrawingService Events
@@ -213,11 +213,11 @@ namespace Fingerprints.ViewModels
                     return false;
 
                 //if DrawingObject in oppositeDrawingData at position of last drew object is empty, return false
-                if (oppositeDrawingData[drawingData.Count - 2].Minutia.TypeId != 7)
+                if (oppositeDrawingData[drawingData.Count - 2].Minutia.DrawingType != DrawingType.Empty)
                     return false;
 
                 //if DrawingObject in oppositeDrawingData at position of last drew object is different type than CurrentDrawing, return false
-                if (drawingData[oppositeDrawingData.Count - 2].Minutia.TypeId != _oppositeDrawingService.CurrentDrawing.Minutia.TypeId)
+                if (drawingData[oppositeDrawingData.Count - 2].Minutia.DrawingType != _oppositeDrawingService.CurrentDrawing.Minutia.DrawingType)
                     return false;
 
             }
@@ -252,15 +252,8 @@ namespace Fingerprints.ViewModels
         /// <param name="e"></param>
         private void LeftDrawingService_DrawingObjectAdded(object sender, EventArgs e)
         {
-            IdSorter sorter = null;
             try
             {
-                RightDrawingService.LoadImage();
-
-                sorter = new IdSorter(RightDrawingService, LeftDrawingService);
-                sorter.SortById();
-
-                FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
                 AddEmptyObject(LeftDrawingService, RightDrawingService);
             }
             catch (Exception ex)
@@ -276,16 +269,8 @@ namespace Fingerprints.ViewModels
         /// <param name="_oppositeDrawingService"></param>
         private void AddEmptyObject(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
-            IdSorter sorter = null;
             try
             {
-                LeftDrawingService.LoadImage();
-
-                sorter = new IdSorter(LeftDrawingService, RightDrawingService);
-                sorter.SortById();
-
-                FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
-            }
                 if (CanAddEmptyObjectOnLastPosition(_drawingService, _oppositeDrawingService))
                 {
                     _drawingService.DrawingData.Add(new EmptyState(_drawingService));
@@ -440,7 +425,7 @@ namespace Fingerprints.ViewModels
             //runs methods when item was replaced in DrawingData
             if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
             {
-                AssignIDOnReplace(_drawingService.DrawingData, _eventArgs, _oppositeDrawingService);
+                //AssignIDOnReplace(_drawingService.DrawingData, _eventArgs, _oppositeDrawingService);
             }
 
             //runs methods when item was removed from DrawingData
@@ -550,13 +535,19 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadRightImage()
         {
+            IdSorter sorter = null;
             try
             {
                 RightDrawingService.LoadImage();
 
+                sorter = new IdSorter(RightDrawingService, LeftDrawingService);
+                sorter.SortById();
+
                 FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
 
-                RightDrawingService.SetToReplaceColor(RightDrawingData.Count - 1);
+                AddEmptyObject(RightDrawingService, LeftDrawingService);
+
+                RightDrawingService.SetToReplaceColor(null);
             }
             catch (Exception ex)
             {
@@ -570,13 +561,19 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void LoadLeftImage()
         {
+            IdSorter sorter = null;
             try
             {
                 LeftDrawingService.LoadImage();
 
+                sorter = new IdSorter(LeftDrawingService, RightDrawingService);
+                sorter.SortById();
+
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
 
-                LeftDrawingService.SetToReplaceColor(LeftDrawingData.Count - 1);
+                AddEmptyObject(LeftDrawingService, RightDrawingService);
+
+                LeftDrawingService.SetToReplaceColor(null);
             }
             catch (Exception ex)
             {
@@ -611,7 +608,7 @@ namespace Fingerprints.ViewModels
             string leftPath = String.Empty;
             string rightPath = String.Empty;
             try
-            {              
+            {
 
                 //get path to save data as BackgroundImage file name with txt extension
                 if (LeftDrawingService.BackgroundImage != null)

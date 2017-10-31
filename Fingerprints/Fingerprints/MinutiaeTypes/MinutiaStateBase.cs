@@ -10,6 +10,7 @@ using System.Windows;
 using Fingerprints.ViewModels;
 using System.Linq;
 using System.Windows.Media;
+using Fingerprints.Models;
 
 namespace Fingerprints.MinutiaeTypes
 {
@@ -139,7 +140,7 @@ namespace Fingerprints.MinutiaeTypes
                 InsertIndex = _atIndex;
                 Minutia = _minutia;
 
-                if (Minutia != null && Minutia.TypeId != 7)
+                if (Minutia != null && Minutia.DrawingType != DrawingType.Empty)
                 {
                     WillBeReplaced = true;
                 }

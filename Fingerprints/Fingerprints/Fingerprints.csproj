@@ -145,6 +145,7 @@
     <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
     <Compile Include="Converters\GridClickedItemPosition.cs" />
     <Compile Include="Converters\RowAndCellConverter.cs" />
+    <Compile Include="DataBase\UniDBInitializer.cs" />
     <Compile Include="EventArgsObjects\CurrentDrawingChangedEventArgs.cs" />
     <Compile Include="EventArgsObjects\DrawingObjectAddedEventArgs.cs" />
     <Compile Include="Factories\EventArgsFactory.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="Picture.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\SelfDefinedMinutiae.cs" />
-    <Compile Include="MinutiaeTypes\Vector\Vector.cs" />
     <Compile Include="Resources\FileTransfer.cs" />
     <Compile Include="Windows\AddWizard.xaml.cs">
       <DependentUpon>AddWizard.xaml</DependentUpon>
