@@ -352,6 +352,11 @@ namespace Fingerprints.ViewModels
 
         #region DrawingData Changed events and methods 
 
+        /// <summary>
+        /// Occurs when DrawingData in RightDrawingService changed
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_eventArgs"></param>
         private void RightDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
             try
@@ -364,6 +369,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Occurs when DrawingData in LeftDrawingService changed
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_eventArgs"></param>
         public void LeftDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
             try
@@ -384,16 +394,19 @@ namespace Fingerprints.ViewModels
         /// <param name="_oppositeDrawingService"></param>
         private void CollectionChangedActions(DrawingService _drawingService, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
         {
+            //runs methods when item was added to DrawingData
             if (_eventArgs.Action == NotifyCollectionChangedAction.Add && _drawingService.DrawingData.Count > 0)
             {
                 AssignNewIDIfCan(_eventArgs);
             }
 
+            //runs methods when item was replaced in DrawingData
             if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
             {
                 AssignIDOnReplace(_drawingService.DrawingData, _eventArgs, _oppositeDrawingService);
             }
 
+            //runs methods when item was removed from DrawingData
             if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
             {
                 ResetInsertIndexInCurrentDrawing(LeftDrawingService);
