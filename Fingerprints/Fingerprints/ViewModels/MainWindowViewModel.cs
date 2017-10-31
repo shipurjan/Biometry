@@ -186,12 +186,15 @@ namespace Fingerprints.ViewModels
                 if (_oppositeDrawingService.CurrentDrawing == null)
                     return false;
 
+                //if oppositeDrawingData has less items than drawingData, return false
                 if (oppositeDrawingData.Count <= drawingData.Count - 2)
                     return false;
 
+                //if DrawingObject in oppositeDrawingData at position of last drew object is empty, return false
                 if (oppositeDrawingData[drawingData.Count - 2].Minutia.TypeId != 7)
                     return false;
 
+                //if DrawingObject in oppositeDrawingData at position of last drew object is different type than CurrentDrawing, return false
                 if (drawingData[oppositeDrawingData.Count - 2].Minutia.TypeId != _oppositeDrawingService.CurrentDrawing.Minutia.TypeId)
                     return false;
 
@@ -246,20 +249,14 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                if (_drawingService.DrawingData.Count > 0 &&
-                    (!(_drawingService.DrawingData.LastOrDefault() is EmptyState) ||
-                    _oppositeDrawingService.DrawingData.Count > _drawingService.DrawingData.Count))
+                if (CanAddEmptyObjectOnLastPosition(_drawingService, _oppositeDrawingService))
                 {
                     _drawingService.DrawingData.Add(new EmptyState(_drawingService));
-
                 }
 
-                if (_oppositeDrawingService.DrawingData.Count > 0 &&
-                    (!(_oppositeDrawingService.DrawingData.LastOrDefault() is EmptyState) ||
-                    _drawingService.DrawingData.Count > _oppositeDrawingService.DrawingData.Count))
+                if (CanAddEmptyObjectOnLastPosition(_oppositeDrawingService, _drawingService))
                 {
                     _oppositeDrawingService.DrawingData.Add(new EmptyState(_oppositeDrawingService));
-
                 }
 
             }
@@ -269,12 +266,23 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Checks if EmptyObject can be added to last index
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        /// <returns></returns>
         private bool CanAddEmptyObjectOnLastPosition(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
             bool result = true;
             try
             {
+                // if DrawingData is empty, return false
                 if (_drawingService.DrawingData.Count <= 0)
+                    return false;
+
+                // if EmptyObject is on last position and DrawingData has more objects that opposite, returns false
+                if (_drawingService.DrawingData.LastOrDefault() is EmptyState && _oppositeDrawingService.DrawingData.Count <= _drawingService.DrawingData.Count)
                     return false;
 
             }
@@ -295,6 +303,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
+                //disable event on Combobox change
                 _bCanComboBoxChangeCurrentDrawing = false;
 
                 SetComboboxTitle(_sender);
@@ -321,6 +330,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
+                //disable event on Combobox change
                 _bCanComboBoxChangeCurrentDrawing = false;
 
                 SetComboboxTitle(sender);
@@ -344,20 +354,9 @@ namespace Fingerprints.ViewModels
 
         private void RightDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
-            ObservableCollection<MinutiaStateBase> senderObject = null;
             try
             {
-                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
-
-                CollectionChangedActions(senderObject, _eventArgs, LeftDrawingService);
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
-                {
-                    if (RightDrawingService.CurrentDrawing != null && RightDrawingService.CurrentDrawing.InsertIndex.HasValue && RightDrawingService.CurrentDrawing.InsertIndex.Value >= RightDrawingService.DrawingData.Count)
-                    {
-                        RightDrawingService.CurrentDrawing.InsertIndex = null;
-                    }
-                }
+                CollectionChangedActions(RightDrawingService, _eventArgs, LeftDrawingService);
             }
             catch (Exception ex)
             {
@@ -367,20 +366,9 @@ namespace Fingerprints.ViewModels
 
         public void LeftDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
-            ObservableCollection<MinutiaStateBase> senderObject = null;
             try
             {
-                senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
-
-                CollectionChangedActions(senderObject, _eventArgs, RightDrawingService);
-
-                if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
-                {
-                    if (LeftDrawingService.CurrentDrawing != null && LeftDrawingService.CurrentDrawing.InsertIndex.HasValue && LeftDrawingService.CurrentDrawing.InsertIndex.Value >= LeftDrawingService.DrawingData.Count)
-                    {
-                        LeftDrawingService.CurrentDrawing.InsertIndex = null;
-                    }
-                }
+                CollectionChangedActions(LeftDrawingService, _eventArgs, RightDrawingService);
             }
             catch (Exception ex)
             {
@@ -394,17 +382,70 @@ namespace Fingerprints.ViewModels
         /// <param name="_senderObject"></param>
         /// <param name="_eventArgs"></param>
         /// <param name="_oppositeDrawingService"></param>
-        private void CollectionChangedActions(ObservableCollection<MinutiaStateBase> _senderObject, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
+        private void CollectionChangedActions(DrawingService _drawingService, NotifyCollectionChangedEventArgs _eventArgs, DrawingService _oppositeDrawingService)
         {
-            if (_eventArgs.Action == NotifyCollectionChangedAction.Add && _senderObject.Count > 0)
+            if (_eventArgs.Action == NotifyCollectionChangedAction.Add && _drawingService.DrawingData.Count > 0)
             {
                 AssignNewIDIfCan(_eventArgs);
             }
 
             if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
             {
-                AssignIDOnReplace(_senderObject, _eventArgs, _oppositeDrawingService);
+                AssignIDOnReplace(_drawingService.DrawingData, _eventArgs, _oppositeDrawingService);
             }
+
+            if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
+            {
+                ResetInsertIndexInCurrentDrawing(LeftDrawingService);
+            }
+        }
+
+        /// <summary>
+        /// Resets InsertIndex in CurrentDrawing on deleting ( if e.g. InsertIndex has value greater that DrawingData count )
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        private void ResetInsertIndexInCurrentDrawing(DrawingService _drawingService)
+        {
+            try
+            {
+                if (CanResetInsertIndexInCurrentDrawing(_drawingService))
+                {
+                    _drawingService.CurrentDrawing.InsertIndex = null;
+                    _drawingService.SetToReplaceColor(_drawingService.DrawingData.Count - 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Checks if InsertIndex can be changed in current drawing
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <returns></returns>
+        private bool CanResetInsertIndexInCurrentDrawing(DrawingService _drawingService)
+        {
+            bool result = true;
+            try
+            {
+                if (_drawingService.CurrentDrawing == null)
+                    return false;
+
+                //if InsertIndex is null, return false
+                if (!_drawingService.CurrentDrawing.InsertIndex.HasValue)
+                    return false;
+
+                //If InsertIndex has proper value ( smaller than drawingData count ), return false
+                if (_drawingService.CurrentDrawing.InsertIndex.Value < _drawingService.DrawingData.Count)
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         /// <summary>
