@@ -74,5 +74,19 @@ namespace Fingerprints.Resources
                 source.Add(item);
             }
         }
+        public static void Swap<T>(this List<T> source, int _from, int _to)
+        {
+            try
+            {
+                var tmp = source[_from];
+                source[_from] = source[_to];
+                source[_to] = tmp;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
+        }
     }
 }

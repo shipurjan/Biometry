@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Fingerprints.Factories
@@ -27,27 +28,27 @@ namespace Fingerprints.Factories
 
             try
             {
-                switch (_oMinutia?.TypeId)
+                switch (_oMinutia?.DrawingType)
                 {
-                    case 1:
-                        oMinutiaState = new PointState(_oDrawingService, _oMinutia, _atIndex);
+                    case DrawingType.SinglePoint:
+                        oMinutiaState = new PointState(_oDrawingService, _atIndex);
                         break;
-                    case 2:
-                        oMinutiaState = new VectorState(_oDrawingService, _oMinutia, _atIndex);
+                    case DrawingType.Vector:
+                        oMinutiaState = new VectorState(_oDrawingService, _atIndex);
                         break;
-                    case 3:
-                        oMinutiaState = new CurveLineState(_oDrawingService, _oMinutia, _atIndex);
+                    case DrawingType.CurveLine:
+                        oMinutiaState = new CurveLineState(_oDrawingService, _atIndex);
                         break;
-                    case 4:
-                        oMinutiaState = new TriangleState(_oDrawingService, _oMinutia, _atIndex);
+                    case DrawingType.Triangle:
+                        oMinutiaState = new TriangleState(_oDrawingService, _atIndex);
                         break;
-                    case 5:
-                        oMinutiaState = new PeakState(_oDrawingService, _oMinutia, _atIndex);
+                    case DrawingType.Peak:
+                        oMinutiaState = new PeakState(_oDrawingService, _atIndex);
                         break;
-                    case 6:
-                        oMinutiaState = new SegmentState(_oDrawingService, _oMinutia, _atIndex);
+                    case DrawingType.Segment:
+                        oMinutiaState = new SegmentState(_oDrawingService, _atIndex);
                         break;
-                    case 7:
+                    case DrawingType.Empty:
                     default:
                         oMinutiaState = new EmptyState(_oDrawingService, _atIndex);
                         break;
@@ -77,6 +78,7 @@ namespace Fingerprints.Factories
                 result.Id = _minutiaFileState.Id;
                 result.Points.AddRange(_minutiaFileState.Points);
                 result.Angle = _minutiaFileState.Angle;
+                result.Color = (Color)ColorConverter.ConvertFromString(_minutia.Color);
             }
             catch (Exception ex)
             {

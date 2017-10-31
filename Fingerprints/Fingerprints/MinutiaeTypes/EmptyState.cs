@@ -1,4 +1,5 @@
 ﻿using ExceptionLogger;
+using Fingerprints.Models;
 using Fingerprints.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Fingerprints.MinutiaeTypes
             SelfDefinedMinutiae result = null;
             try
             {
-                result = new SelfDefinedMinutiae() { Name = "Puste", TypeId = 7 };
+                result = new SelfDefinedMinutiae() { Name = "Puste", DrawingType = DrawingType.Empty };
             }
             catch (Exception ex)
             {

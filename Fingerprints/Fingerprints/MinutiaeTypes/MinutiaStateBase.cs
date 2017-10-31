@@ -9,6 +9,7 @@ using ExceptionLogger;
 using System.Windows;
 using Fingerprints.ViewModels;
 using System.Linq;
+using System.Windows.Media;
 
 namespace Fingerprints.MinutiaeTypes
 {
@@ -30,6 +31,30 @@ namespace Fingerprints.MinutiaeTypes
         {
             get { return _Id; }
             set { SetProperty(ref _Id, value); }
+        }
+
+        private Color _Color;
+        public Color Color
+        {
+            get
+            {
+                // Set default color as black
+                _Color = Colors.Black;
+                try
+                {
+                    //Check if Color is not null, to prevent null ref error
+                    //If it is, it will use default color(black)
+                    if (Minutia.Color != null)
+                        _Color = (Color)ColorConverter.ConvertFromString(Minutia.Color);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteExceptionLog(ex);
+                }
+                return _Color;
+            }
+            set { SetProperty(ref _Color, value); }
+
         }
 
         public WriteableBitmap WriteableBmp

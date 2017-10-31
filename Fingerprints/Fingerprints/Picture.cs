@@ -1,5 +1,4 @@
 ﻿using Fingerprints.Factories;
-using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.Models;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -78,12 +77,6 @@ namespace Fingerprints
                 }
                 Canvas.SetTop(imageForDrawing, Canvas.GetTop(image));
                 Canvas.SetLeft(imageForDrawing, Canvas.GetLeft(image));
-
-                if (helper.canInsertEmpty())
-                {
-                    //helper.deleteUnnecessaryEmpty();
-                    helper.addEmptyOnLastLine();
-                }
             };
 
 
@@ -141,36 +134,6 @@ namespace Fingerprints
             //{
             //    drawService.startRightDrawing(item);
             //}
-        }
-
-        private void loadLeftMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
-        {
-            //FileMinutiaFactory factory = new FileMinutiaFactory();
-            //DrawService drawService = new DrawService(factory);
-            //foreach (var item in list)
-            //{
-            //    drawService.startLeftDrawing(item);
-            //}
-        }
-        private void fillEmpty()
-        {
-            FileEmpty emptyObject = new FileEmpty(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
-            int l = mw.canvasImageL.Children.Count;
-            int r = mw.canvasImageR.Children.Count;
-            if (l > r)
-            {
-                for (int i = 0; i < l-r; i++)
-                {
-                    emptyObject.Draw(mw.canvasImageR, mw.imageR);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < r - l; i++)
-                {
-                    emptyObject.Draw(mw.canvasImageL, mw.imageL);
-                }
-            }
         }
 
         private void sortMinutiaeListRById()

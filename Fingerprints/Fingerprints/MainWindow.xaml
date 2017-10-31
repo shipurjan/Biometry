@@ -18,7 +18,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
         xmlns:Converters="clr-namespace:Fingerprints.Converters"
-        Title="Fingerprints" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
+        Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
@@ -43,7 +43,7 @@
             <materialDesign:ColorZone Mode="PrimaryMid">
                 <Menu x:Name="mainMenu" IsMainMenu="True" Height="30" VerticalAlignment="Top">
                     <MenuItem Header="_Plik" Height="30">
-                        <MenuItem Header="Nowa minucja" Click="wizardAdd_Click"/>
+                        <MenuItem Header="Nowa minucja" Command="{Binding NewMinutiaCommand}"/>
                         <MenuItem Header="Zapisz" Command="{Binding SaveClickCommand}"/>
                         <MenuItem Header="Zapisz jako" Command="{Binding SaveAsClickCommand}"/>
                     </MenuItem>

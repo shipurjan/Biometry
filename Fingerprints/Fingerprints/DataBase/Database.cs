@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using Fingerprints.Models;
+using ExceptionLogger;
 
 namespace Fingerprints
 {
@@ -13,30 +15,29 @@ namespace Fingerprints
         /// Na razie dodaje rzeczy na sztywno do jednej tabeli, potem to trzeba bedzie zmienic jakos ;o
         /// </summary>
         public static int currentProject = 0;
-        static public void InitialData()
-        {
-            AddNewMinutiae("Por", 1, "Czerwony", 1, 1);
-            AddNewMinutiae("Rozwidlenie", 2 , "Zielony", 1.2, 1);
-            AddNewMinutiae("Dowolna", 3, "Niebieski", 1, 1);
-        }
 
-        static public void AddNewMinutiae(string name, int drawType, string color, double size, double thickness)
+        static public void AddNewMinutiae(string name, DrawingType drawType, string color, double size, double thickness)
         {
-            using (var db = new FingerContext())
+            try
             {
-                var q = db.Types.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
-                var SelfDefinedMinutiae = new SelfDefinedMinutiae()
+                using (var db = new FingerContext())
                 {
-                    Name = name,
-                    ProjectId = currentProject,
-                    TypeId = q,
-                    Color = color,
-                    Size = size,
-                    Thickness = thickness
-                                    
-                };
-                db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
-                db.SaveChanges();          
+                    var q = db.Types.Where(x => x.DrawingType == drawType).Select(x => x.DrawingType).Single();
+                    var SelfDefinedMinutiae = new SelfDefinedMinutiae()
+                    {
+                        Name = name,
+                        ProjectId = currentProject,
+                        DrawingType = q,
+                        Color = color,
+
+                    };
+                    db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLogger.Logger.WriteExceptionLog(ex);
             }
         }
         static public void DeleteMinutiae(SelfDefinedMinutiae minutiae)
@@ -83,9 +84,41 @@ namespace Fingerprints
         {
             using (var db = new FingerContext())
             {
-                var q = db.Projects.AsEnumerable().ToList();
+                var q = db.Projects.ToList();
                 return q;
             }
+        }
+
+        static public string GetProjectName()
+        {
+            string result = String.Empty;
+            try
+            {
+                using (var db = new FingerContext())
+                {
+                    result = db.Projects.FirstOrDefault(project => project.ProjectID == currentProject).ToString();                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
+
+        static public void InitDbIfNoExit()
+        {
+            try
+            {
+                using (var db = new FingerContext())
+                {
+                    db.Database.CreateIfNotExists();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
     }

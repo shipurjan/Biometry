@@ -25,10 +25,10 @@ namespace Fingerprints.MinutiaeTypes
             {
                 if (!closePolyline)
                     // Draw polyline based on current point array
-                    WriteableBmp.DrawPolyline(IntPoints, Colors.OrangeRed);                
+                    WriteableBmp.DrawPolyline(IntPoints, Color);                
                 else            
                     // Draw closed polyline    
-                    WriteableBmp.DrawPolyline(GetClosedPolygonArray(IntPoints), Colors.OrangeRed);                  
+                    WriteableBmp.DrawPolyline(GetClosedPolygonArray(IntPoints), Color);                  
                 
             }
             catch (Exception ex)

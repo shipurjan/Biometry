@@ -32,14 +32,14 @@ namespace Fingerprints.MinutiaeTypes
                                                 Points[0].Y + Math.Sin(Angle) * 20);
 
                     // Draw elipse starting in firstPoint location and fixed radius size
-                    WriteableBmp.DrawEllipseCentered(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 5, 5, Colors.Red);
+                    WriteableBmp.DrawEllipseCentered(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 5, 5, Color);
 
                     // Draw line starting circle border and ending in pointer location
                     WriteableBmp.DrawLine(Convert.ToInt16(firstPoint.X + 5 * Math.Cos(Angle)),
                         Convert.ToInt16(firstPoint.Y + 5 * Math.Sin(Angle)),
                         Convert.ToInt16(secondPoint.X),
                         Convert.ToInt16(secondPoint.Y),
-                        Colors.Red);
+                        Color);
                 }
             }
             catch (Exception ex)

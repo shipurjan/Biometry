@@ -26,8 +26,8 @@ namespace Fingerprints.MinutiaeTypes
                     var secondPoint = Points[1];
                     WriteableBmp.DrawLine(Convert.ToInt16(firstPoint.X), Convert.ToInt16(firstPoint.Y), 
                         Convert.ToInt16(secondPoint.X), 
-                        Convert.ToInt16(secondPoint.Y), 
-                        Colors.Blue);
+                        Convert.ToInt16(secondPoint.Y),
+                        Color);
                 }
             }
             catch (Exception ex)

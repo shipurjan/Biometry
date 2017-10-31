@@ -1,5 +1,6 @@
 ﻿using ExceptionLogger;
 using Fingerprints.MinutiaeTypes;
+using Fingerprints.Models;
 using Fingerprints.ViewModels;
 using Microsoft.Win32;
 using System;
@@ -57,8 +58,10 @@ namespace Fingerprints.Tools.Exporters
         {
             try
             {
-                Export(ExportTypes.Txt, _firstData, _leftFullPath);
-                Export(ExportTypes.Txt, _secondData, _rightFullPath);
+                if (!String.IsNullOrEmpty(_leftFullPath))
+                    Export(ExportTypes.Txt, _firstData.Where(data => data.Minutia.DrawingType != DrawingType.Empty).ToList(), _leftFullPath);
+                if (!String.IsNullOrEmpty(_rightFullPath))
+                    Export(ExportTypes.Txt, _secondData.Where(data => data.Minutia.DrawingType != DrawingType.Empty).ToList(), _rightFullPath);
             }
             catch (Exception ex)
             {

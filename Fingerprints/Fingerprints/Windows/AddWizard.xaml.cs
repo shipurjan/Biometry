@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,10 +65,10 @@ namespace Fingerprints
         {
             try
             {                
-                Database.AddNewMinutiae(textBox.Text, comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem), Convert.ToDouble(thicknessCombobox.SelectedItem));
+                Database.AddNewMinutiae(textBox.Text, (DrawingType)comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem), Convert.ToDouble(thicknessCombobox.SelectedItem));
                 this.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 MessageBox.Show("Uzupełnij dane");

@@ -1,5 +1,4 @@
 ﻿using Fingerprints.MinutiaeTypes;
-using Fingerprints.MinutiaeTypes.Empty;
 using Fingerprints.Models;
 using System;
 using System.Collections.Generic;

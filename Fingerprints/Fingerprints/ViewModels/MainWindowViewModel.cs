@@ -47,11 +47,14 @@ namespace Fingerprints.ViewModels
 
         #endregion
 
+        public string ProjectName { get; set; }
+
         #region Commands
 
         public ICommand SaveClickCommand { get; }
         public ICommand MinutiaeStatesSelectionChanged { get; }
         public ICommand SaveAsClickCommand { get; }
+        public ICommand NewMinutiaCommand { get; }
         public ICommand LoadLeftImageCommand { get; }
         public ICommand LoadRightImageCommand { get; }
 
@@ -82,6 +85,9 @@ namespace Fingerprints.ViewModels
                 //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
 
+                //Get project Name
+                ProjectName = Database.GetProjectName();
+
                 //button clicks delegates
                 SaveClickCommand = new DelegateCommand(SaveClick);
                 MinutiaeStatesSelectionChanged = new DelegateCommand<MinutiaState>(MinutiaStatesSelectionChanged, CanComboBoxChangeCurrentDrawing);
@@ -98,11 +104,27 @@ namespace Fingerprints.ViewModels
 
                 LeftDrawingService.NewDrawingInitialized += LeftDrawingService_NewDrawingInitialized;
                 RightDrawingService.NewDrawingInitialized += RightDrawingService_NewDrawingInitialized;
+                NewMinutiaCommand = new DelegateCommand(NewMinutia);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        private void NewMinutia()
+        {
+            try
+            {
+                Window1 win = new Window1();
+                win.ShowDialog();
+                //drawer.stopDrawing();
+                MinutiaeStates.Add(dbController.getStates().LastOrDefault());
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
         #region DrawingService Events
@@ -230,8 +252,15 @@ namespace Fingerprints.ViewModels
         /// <param name="e"></param>
         private void LeftDrawingService_DrawingObjectAdded(object sender, EventArgs e)
         {
+            IdSorter sorter = null;
             try
             {
+                RightDrawingService.LoadImage();
+
+                sorter = new IdSorter(RightDrawingService, LeftDrawingService);
+                sorter.SortById();
+
+                FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
                 AddEmptyObject(LeftDrawingService, RightDrawingService);
             }
             catch (Exception ex)
@@ -247,8 +276,16 @@ namespace Fingerprints.ViewModels
         /// <param name="_oppositeDrawingService"></param>
         private void AddEmptyObject(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
+            IdSorter sorter = null;
             try
             {
+                LeftDrawingService.LoadImage();
+
+                sorter = new IdSorter(LeftDrawingService, RightDrawingService);
+                sorter.SortById();
+
+                FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
+            }
                 if (CanAddEmptyObjectOnLastPosition(_drawingService, _oppositeDrawingService))
                 {
                     _drawingService.DrawingData.Add(new EmptyState(_drawingService));
@@ -571,11 +608,16 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void SaveClick()
         {
+            string leftPath = String.Empty;
+            string rightPath = String.Empty;
             try
-            {
+            {              
+
                 //get path to save data as BackgroundImage file name with txt extension
-                string leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
-                string rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                if (LeftDrawingService.BackgroundImage != null)
+                    leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                if (RightDrawingService.BackgroundImage != null)
+                    rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
                 ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
