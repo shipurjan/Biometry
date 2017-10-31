@@ -4,13 +4,8 @@ using Fingerprints.MinutiaeTypes;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -22,6 +17,10 @@ namespace Fingerprints.ViewModels
 
         public ObservableCollection<GridViewModel> GridViewModelList { get; }
 
+        /// <summary>
+        /// Position of Clicked Cell on grid
+        /// Sets SelectedIndex to DrawingServices
+        /// </summary>
         private GridClickedItemPosition clickedPosition;
         public GridClickedItemPosition ClickedPosition
         {
@@ -61,6 +60,10 @@ namespace Fingerprints.ViewModels
             DrawingObjectClickChangedCommand = new DelegateCommand<GridClickedItemPosition>(DrawingObjectClickChanged);
         }
 
+        /// <summary>
+        /// Event occurs when selection of DrawingObject changed on grid
+        /// </summary>
+        /// <param name="_args"></param>
         private void DrawingObjectClickChanged(GridClickedItemPosition _args)
         {
             try
@@ -73,6 +76,10 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Deletes DrawingObjects from DrawingServices and GridViewModelList
+        /// </summary>
+        /// <param name="_gridViewModel"></param>
         private void DeleteButtonClick(object _gridViewModel)
         {
             GridViewModel gridViewModel;
@@ -90,6 +97,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Occurs when DrawingData in RightDrawingService changed
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_eventArgs"></param>
         private void RightDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
             ObservableCollection<MinutiaStateBase> senderObject = null;
@@ -97,6 +109,7 @@ namespace Fingerprints.ViewModels
             {
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
 
+                //Add row to grid
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
                     if (GridViewModelList.Count >= senderObject.Count)
@@ -109,6 +122,7 @@ namespace Fingerprints.ViewModels
                     }
                 }
 
+                //Replace object in grid
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Replace && senderObject.Count > 0)
                 {
                     GridViewModelList[_eventArgs.NewStartingIndex].RightDrawingObject = senderObject[_eventArgs.NewStartingIndex];
@@ -120,12 +134,19 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Occurs when DrawingData in LeftDrawingService changed
+        /// </summary>
+        /// <param name="_sender"></param>
+        /// <param name="_eventArgs"></param>
         private void LeftDrawingDataChanged(object _sender, NotifyCollectionChangedEventArgs _eventArgs)
         {
             ObservableCollection<MinutiaStateBase> senderObject = null;
             try
             {
                 senderObject = (ObservableCollection<MinutiaStateBase>)_sender;
+
+                //Add row to grid
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Add && senderObject.Count > 0)
                 {
                     if (GridViewModelList.Count >= senderObject.Count)
@@ -138,6 +159,7 @@ namespace Fingerprints.ViewModels
                     }
                 }
 
+                //Replace object in grid
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Replace && senderObject.Count > 0)
                 {
                     GridViewModelList[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
@@ -154,7 +176,7 @@ namespace Fingerprints.ViewModels
         /// Sets color for cell where CurrentDrawing will be placed
         /// </summary>
         /// <param name="_sender"></param>
-        public void SetActiveColor(object _sender)
+        public void SetToReplaceColor(object _sender)
         {
             DrawingService senderObject = null;
             try
@@ -162,11 +184,11 @@ namespace Fingerprints.ViewModels
                 senderObject = ((DrawingService)_sender);
                 if (senderObject.CurrentDrawing.InsertIndex.HasValue)
                 {
-                    senderObject.RefreshDrawingIndexTarget(senderObject.CurrentDrawing.InsertIndex.Value);
+                    senderObject.SetToReplaceColor(senderObject.CurrentDrawing.InsertIndex.Value);
                 }
                 else
                 {
-                    senderObject.RefreshDrawingIndexTarget(senderObject.DrawingData.Count - 1);
+                    senderObject.SetToReplaceColor(senderObject.DrawingData.Count - 1);
                 }
             }
             catch (Exception ex)

@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -108,15 +107,18 @@ namespace Fingerprints.ViewModels
 
         #region DrawingService Events
 
+        /// <summary>
+        /// Event occurs when New Drawing is Initialized
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RightDrawingService_NewDrawingInitialized(object sender, EventArgs e)
         {
             try
             {
-                if (LeftDrawingService.CurrentDrawing != null && LeftDrawingData.Count > RightDrawingData.Count - 2 && LeftDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == 7 &&
-                    RightDrawingData[RightDrawingData.Count - 2].Minutia.TypeId == LeftDrawingService.CurrentDrawing.Minutia.TypeId)
+                if (CanChangeInsertIndexInOppositeCurrentDrawing(RightDrawingService, LeftDrawingService))
                 {
-                    LeftDrawingService.CurrentDrawing.InsertIndex = RightDrawingData.Count - 2;
-                    LeftDrawingService.RefreshDrawingIndexTarget(LeftDrawingService.CurrentDrawing.InsertIndex.Value);
+                    ChangeInsertIndexInOppositeCurrentDrawing(RightDrawingService, LeftDrawingService);
                 }
             }
             catch (Exception ex)
@@ -125,15 +127,18 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Event occurs when New Drawing is Initialized
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeftDrawingService_NewDrawingInitialized(object sender, EventArgs e)
         {
             try
             {
-                if (RightDrawingService.CurrentDrawing != null && RightDrawingData.Count > LeftDrawingData.Count - 2 && RightDrawingData[LeftDrawingData.Count - 2].Minutia.TypeId == 7
-                    && LeftDrawingService.DrawingData[RightDrawingData.Count - 2].Minutia.TypeId == RightDrawingService.CurrentDrawing.Minutia.TypeId)
+                if (CanChangeInsertIndexInOppositeCurrentDrawing(LeftDrawingService, RightDrawingService))
                 {
-                    RightDrawingService.CurrentDrawing.InsertIndex = LeftDrawingData.Count - 2;
-                    RightDrawingService.RefreshDrawingIndexTarget(RightDrawingService.CurrentDrawing.InsertIndex.Value);
+                    ChangeInsertIndexInOppositeCurrentDrawing(LeftDrawingService, RightDrawingService);
                 }
             }
             catch (Exception ex)
@@ -142,6 +147,67 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Change InsertIndex in CurrentDrawing from opposite drawingService
+        /// Sets cell color "to replace"
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        private void ChangeInsertIndexInOppositeCurrentDrawing(DrawingService _drawingService, DrawingService _oppositeDrawingService)
+        {
+            try
+            {
+                if (CanChangeInsertIndexInOppositeCurrentDrawing(_drawingService, _oppositeDrawingService))
+                {
+                    _oppositeDrawingService.CurrentDrawing.InsertIndex = _drawingService.DrawingData.Count - 2;
+                    _oppositeDrawingService.SetToReplaceColor(_oppositeDrawingService.CurrentDrawing.InsertIndex.Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Checks if InsertIndex can be changed in opposite current drawing
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        /// <returns></returns>
+        private bool CanChangeInsertIndexInOppositeCurrentDrawing(DrawingService _drawingService, DrawingService _oppositeDrawingService)
+        {
+            bool result = true;
+            var drawingData = _drawingService.DrawingData;
+            var oppositeDrawingData = _oppositeDrawingService.DrawingData;
+
+            try
+            {
+                if (_oppositeDrawingService.CurrentDrawing == null)
+                    return false;
+
+                if (oppositeDrawingData.Count <= drawingData.Count - 2)
+                    return false;
+
+                if (oppositeDrawingData[drawingData.Count - 2].Minutia.TypeId != 7)
+                    return false;
+
+                if (drawingData[oppositeDrawingData.Count - 2].Minutia.TypeId != _oppositeDrawingService.CurrentDrawing.Minutia.TypeId)
+                    return false;
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Occurs when Drawing object is added to DrawingData 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RightDrawingService_DrawingObjectAdded(object sender, EventArgs e)
         {
             try
@@ -154,6 +220,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Occurs when Drawing object is added to DrawingData 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeftDrawingService_DrawingObjectAdded(object sender, EventArgs e)
         {
             try
@@ -166,12 +237,17 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Adds DrawingObject with type 'Empty' to DrawingData
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="_oppositeDrawingService"></param>
         private void AddEmptyObject(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
             try
             {
                 if (_drawingService.DrawingData.Count > 0 &&
-                    (!(_drawingService.DrawingData[_drawingService.DrawingData.Count - 1] is EmptyState) ||
+                    (!(_drawingService.DrawingData.LastOrDefault() is EmptyState) ||
                     _oppositeDrawingService.DrawingData.Count > _drawingService.DrawingData.Count))
                 {
                     _drawingService.DrawingData.Add(new EmptyState(_drawingService));
@@ -179,7 +255,7 @@ namespace Fingerprints.ViewModels
                 }
 
                 if (_oppositeDrawingService.DrawingData.Count > 0 &&
-                    (!(_oppositeDrawingService.DrawingData[_oppositeDrawingService.DrawingData.Count - 1] is EmptyState) ||
+                    (!(_oppositeDrawingService.DrawingData.LastOrDefault() is EmptyState) ||
                     _drawingService.DrawingData.Count > _oppositeDrawingService.DrawingData.Count))
                 {
                     _oppositeDrawingService.DrawingData.Add(new EmptyState(_oppositeDrawingService));
@@ -191,6 +267,23 @@ namespace Fingerprints.ViewModels
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        private bool CanAddEmptyObjectOnLastPosition(DrawingService _drawingService, DrawingService _oppositeDrawingService)
+        {
+            bool result = true;
+            try
+            {
+                if (_drawingService.DrawingData.Count <= 0)
+                    return false;
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -207,7 +300,7 @@ namespace Fingerprints.ViewModels
                 SetComboboxTitle(_sender);
 
                 //set color for cell which will be replaced
-                DataGridActivities.SetActiveColor(_sender);
+                DataGridActivities.SetToReplaceColor(_sender);
             }
             catch (Exception ex)
             {
@@ -233,7 +326,7 @@ namespace Fingerprints.ViewModels
                 SetComboboxTitle(sender);
 
                 //set color for cell which will be replaced
-                DataGridActivities.SetActiveColor(sender);
+                DataGridActivities.SetToReplaceColor(sender);
             }
             catch (Exception ex)
             {
@@ -260,7 +353,7 @@ namespace Fingerprints.ViewModels
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
                 {
-                    if (RightDrawingService.CurrentDrawing.InsertIndex.HasValue && RightDrawingService.CurrentDrawing.InsertIndex.Value >= RightDrawingService.DrawingData.Count)
+                    if (RightDrawingService.CurrentDrawing != null && RightDrawingService.CurrentDrawing.InsertIndex.HasValue && RightDrawingService.CurrentDrawing.InsertIndex.Value >= RightDrawingService.DrawingData.Count)
                     {
                         RightDrawingService.CurrentDrawing.InsertIndex = null;
                     }
@@ -283,7 +376,7 @@ namespace Fingerprints.ViewModels
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Remove)
                 {
-                    if (LeftDrawingService.CurrentDrawing.InsertIndex.HasValue && LeftDrawingService.CurrentDrawing.InsertIndex.Value >= LeftDrawingService.DrawingData.Count)
+                    if (LeftDrawingService.CurrentDrawing != null && LeftDrawingService.CurrentDrawing.InsertIndex.HasValue && LeftDrawingService.CurrentDrawing.InsertIndex.Value >= LeftDrawingService.DrawingData.Count)
                     {
                         LeftDrawingService.CurrentDrawing.InsertIndex = null;
                     }
@@ -372,7 +465,7 @@ namespace Fingerprints.ViewModels
 
                 FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
 
-                RightDrawingService.RefreshDrawingIndexTarget(RightDrawingData.Count - 1);
+                RightDrawingService.SetToReplaceColor(RightDrawingData.Count - 1);
             }
             catch (Exception ex)
             {
@@ -392,7 +485,7 @@ namespace Fingerprints.ViewModels
 
                 FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
 
-                LeftDrawingService.RefreshDrawingIndexTarget(LeftDrawingData.Count - 1);
+                LeftDrawingService.SetToReplaceColor(LeftDrawingData.Count - 1);
             }
             catch (Exception ex)
             {

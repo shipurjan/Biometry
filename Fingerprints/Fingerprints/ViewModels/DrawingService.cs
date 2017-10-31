@@ -83,6 +83,9 @@ namespace Fingerprints.ViewModels
 
         #endregion
 
+        /// <summary>
+        /// Initializes new instance
+        /// </summary>
         public DrawingService()
         {
             try
@@ -308,7 +311,11 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        public void RefreshDrawingIndexTarget(int? _itemIndex)
+        /// <summary>
+        /// Sets color to DrawingObject which will be replaced
+        /// </summary>
+        /// <param name="_itemIndex"></param>
+        public void SetToReplaceColor(int? _itemIndex)
         {
             try
             {
