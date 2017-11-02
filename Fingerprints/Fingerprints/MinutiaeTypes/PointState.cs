@@ -16,7 +16,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class PointState : MinutiaStateBase, IMouseClickable, IDrawable
     {
-        public PointState(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null) : base(_oDrawingService, _minutia, _atIndex)
+        public PointState(SelfDefinedMinutiae _minutia, WriteableBitmap _writeableBitmap, int? _atIndex = null) : base(_minutia, _writeableBitmap, _atIndex)
         {
         }
 
@@ -47,7 +47,7 @@ namespace Fingerprints.MinutiaeTypes
                     if (Points.Count == 0)
                     {
                         Points.Add(args.GetPosition((IInputElement)sender).ToFloorPoint());
-                        DrawingService.InitiateNewDrawing();
+                        InitNewDrawing();
                     }
                 }
                 catch (Exception ex)

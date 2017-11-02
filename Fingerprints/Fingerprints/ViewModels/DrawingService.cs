@@ -15,6 +15,9 @@ using Fingerprints.Tools.Importers;
 using Fingerprints.Resources;
 using Fingerprints.Tools;
 using Fingerprints.EventArgsObjects;
+using System.Collections.Specialized;
+using System.Linq;
+using System.ComponentModel;
 
 namespace Fingerprints.ViewModels
 {
@@ -45,8 +48,18 @@ namespace Fingerprints.ViewModels
             {
                 try
                 {
+                    if (currentDrawing != null)
+                    {
+                        currentDrawing.Points.CollectionChanged -= CurrentDrawingCollectionChanged;
+                        currentDrawing.PropertyChanged -= CurrentDrawingPropertyChanged;
+                        currentDrawing.InitiateNewDrawing -= InitiateNewDrawing;
+                    }
                     currentDrawing = value;
                     CurrentDrawingChanged(this, new CurrentDrawingChangedEventArgs() { CurrentDrawing = value });
+
+                    currentDrawing.Points.CollectionChanged += CurrentDrawingCollectionChanged;
+                    currentDrawing.PropertyChanged += CurrentDrawingPropertyChanged;
+                    currentDrawing.InitiateNewDrawing += InitiateNewDrawing;
                 }
                 catch (Exception ex)
                 {
@@ -91,6 +104,42 @@ namespace Fingerprints.ViewModels
             try
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void CurrentDrawingPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            try
+            {
+                Draw();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void CurrentDrawingCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            try
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
+                {
+                    if (DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState) && !CurrentDrawing.InsertIndex.HasValue)
+                    {
+                        AddMinutiaToDrawingData(CurrentDrawing, DrawingData.Count - 1);
+                    }
+                    else
+                    {
+                        AddMinutiaToDrawingData(CurrentDrawing, CurrentDrawing.InsertIndex);
+                    }
+                }
+
+                Draw();
             }
             catch (Exception ex)
             {
@@ -291,9 +340,8 @@ namespace Fingerprints.ViewModels
                     if (CurrentDrawing != null)
                     {
                         //create new empty CuurentDrawing
-                        CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
+                        CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap);
                     }
-
 
                     //import data from file
                     importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
@@ -324,7 +372,7 @@ namespace Fingerprints.ViewModels
                     item.WillBeReplaced = false;
                 }
 
-                if (_itemIndex.HasValue)
+                if (_itemIndex.HasValue && _itemIndex.Value > -1)
                 {
                     DrawingData[_itemIndex.Value].WillBeReplaced = true;
                 }
@@ -339,9 +387,9 @@ namespace Fingerprints.ViewModels
         /// <summary>
         /// Inititates new drawing for CurrenDrawing object
         /// </summary>
-        public void InitiateNewDrawing()
+        private void InitiateNewDrawing(object _sender, EventArgs _args)
         {
-            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
+            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap);
 
             NewDrawingInitialized(this, null);
         }

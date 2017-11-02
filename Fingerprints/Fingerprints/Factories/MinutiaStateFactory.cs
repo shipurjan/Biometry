@@ -22,7 +22,7 @@ namespace Fingerprints.Factories
         /// <param name="_oDrawingService">DrawingService</param>
         /// <param name="_atIndex">Optional index where Minutia must be added</param>
         /// <returns></returns>
-        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, DrawingService _oDrawingService, int? _atIndex = null)
+        public static MinutiaStateBase Create(SelfDefinedMinutiae _oMinutia, WriteableBitmap _writeableBitmap, int? _atIndex = null)
         {
             MinutiaStateBase oMinutiaState = null;
 
@@ -31,26 +31,26 @@ namespace Fingerprints.Factories
                 switch (_oMinutia?.DrawingType)
                 {
                     case DrawingType.SinglePoint:
-                        oMinutiaState = new PointState(_oDrawingService, _oMinutia,_atIndex);
+                        oMinutiaState = new PointState(_oMinutia, _writeableBitmap, _atIndex);
                         break;
                     case DrawingType.Vector:
-                        oMinutiaState = new VectorState(_oDrawingService, _oMinutia, _atIndex);
+                        oMinutiaState = new VectorState(_oMinutia, _writeableBitmap, _atIndex);
                         break;
                     case DrawingType.CurveLine:
-                        oMinutiaState = new CurveLineState(_oDrawingService, _oMinutia, _atIndex);
+                        oMinutiaState = new CurveLineState(_oMinutia, _writeableBitmap, _atIndex);
                         break;
                     case DrawingType.Triangle:
-                        oMinutiaState = new TriangleState(_oDrawingService, _oMinutia, _atIndex);
+                        oMinutiaState = new TriangleState(_oMinutia, _writeableBitmap, _atIndex);
                         break;
                     case DrawingType.Peak:
-                        oMinutiaState = new PeakState(_oDrawingService, _oMinutia, _atIndex);
+                        oMinutiaState = new PeakState(_oMinutia, _writeableBitmap, _atIndex);
                         break;
                     case DrawingType.Segment:
-                        oMinutiaState = new SegmentState(_oDrawingService, _oMinutia, _atIndex);
+                        oMinutiaState = new SegmentState(_oMinutia, _writeableBitmap, _atIndex);
                         break;
                     case DrawingType.Empty:
                     default:
-                        oMinutiaState = new EmptyState(_oDrawingService, _atIndex);
+                        oMinutiaState = new EmptyState(_atIndex);
                         break;
                 }
             }
@@ -69,12 +69,12 @@ namespace Fingerprints.Factories
         /// <param name="_minutia"></param>
         /// <param name="_drawingService"></param>
         /// <returns></returns>
-        public static MinutiaStateBase Create(MinutiaFileState _minutiaFileState, SelfDefinedMinutiae _minutia, DrawingService _drawingService)
+        public static MinutiaStateBase Create(MinutiaFileState _minutiaFileState, SelfDefinedMinutiae _minutia, WriteableBitmap _writeableBitmap)
         {
             MinutiaStateBase result = null;
             try
             {
-                result = Create(_minutia, _drawingService);
+                result = Create(_minutia, _writeableBitmap);
                 result.Id = _minutiaFileState.Id;
                 result.Points.AddRange(_minutiaFileState.Points);
                 result.Angle = _minutiaFileState.Angle;
@@ -110,7 +110,7 @@ namespace Fingerprints.Factories
                         var tempMinutia = definedMinutiaes.Where(x => x.Name == item.Name).FirstOrDefault();
 
                         //Creates object of Minutia which is automatic assigned to drawing service
-                        MinutiaStateFactory.Create(item, tempMinutia, _drawingService);
+                        _drawingService.DrawingData.Add(MinutiaStateFactory.Create(item, tempMinutia, _drawingService.WriteableBitmap));
                     }
                 }
 

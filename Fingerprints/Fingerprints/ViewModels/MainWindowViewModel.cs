@@ -273,12 +273,12 @@ namespace Fingerprints.ViewModels
             {
                 if (CanAddEmptyObjectOnLastPosition(_drawingService, _oppositeDrawingService))
                 {
-                    _drawingService.DrawingData.Add(new EmptyState(_drawingService));
+                    _drawingService.DrawingData.Add(new EmptyState());
                 }
 
                 if (CanAddEmptyObjectOnLastPosition(_oppositeDrawingService, _drawingService))
                 {
-                    _oppositeDrawingService.DrawingData.Add(new EmptyState(_oppositeDrawingService));
+                    _oppositeDrawingService.DrawingData.Add(new EmptyState());
                 }
 
             }
@@ -425,7 +425,7 @@ namespace Fingerprints.ViewModels
             //runs methods when item was replaced in DrawingData
             if (_eventArgs.Action == NotifyCollectionChangedAction.Replace)
             {
-                //AssignIDOnReplace(_drawingService.DrawingData, _eventArgs, _oppositeDrawingService);
+                AssignIDOnReplace(_drawingService.DrawingData, _eventArgs, _oppositeDrawingService);
             }
 
             //runs methods when item was removed from DrawingData
@@ -642,8 +642,15 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, LeftDrawingService);
-                RightDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, RightDrawingService);
+                if (LeftDrawingService.WriteableBitmap != null)
+                {
+                    LeftDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, LeftDrawingService.WriteableBitmap);
+                }
+
+                if (RightDrawingService.WriteableBitmap != null)
+                {
+                    RightDrawingService.CurrentDrawing = MinutiaStateFactory.Create(_oSelectedMinutiaState.Minutia, RightDrawingService.WriteableBitmap);
+                }
 
             }
             catch (Exception ex)
@@ -685,7 +692,7 @@ namespace Fingerprints.ViewModels
 
                 for (int i = 0; i < _count; i++)
                 {
-                    _drawingService.AddMinutiaToDrawingData(new EmptyState(_drawingService));
+                    _drawingService.AddMinutiaToDrawingData(new EmptyState());
                 }
             }
             catch (Exception ex)

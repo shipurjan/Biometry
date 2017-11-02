@@ -19,6 +19,9 @@ namespace Fingerprints.MinutiaeTypes
         public SelfDefinedMinutiae Minutia { get; set; }
 
         public ObservableCollection<Point> Points { get; }
+        public WriteableBitmap WriteableBmp { get; }
+
+        public event EventHandler InitiateNewDrawing;
 
         private double _Angle;
         public double Angle
@@ -58,11 +61,6 @@ namespace Fingerprints.MinutiaeTypes
 
         }
 
-        public WriteableBitmap WriteableBmp
-        { get { return DrawingService.WriteableBitmap; } }
-
-        public DrawingService DrawingService { get; }
-
         private int? insertIndex;
         public int? InsertIndex
         {
@@ -80,7 +78,6 @@ namespace Fingerprints.MinutiaeTypes
             get { return willBeReplaced; }
             set { SetProperty(ref willBeReplaced, value); }
         }
-
 
         public string MinutiaName
         {
@@ -129,16 +126,14 @@ namespace Fingerprints.MinutiaeTypes
         /// </summary>
         /// <param name="_oDrawingService"></param>
         /// <param name="_atIndex">index where Minutia must be added</param>
-        public MinutiaStateBase(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null)
+        public MinutiaStateBase(SelfDefinedMinutiae _minutia, WriteableBitmap _writeableBitmap, int? _atIndex = null)
         {
             try
             {
-                DrawingService = _oDrawingService;
                 Points = new ObservableCollection<Point>();
-                PropertyChanged += PropertyChangeHandler;
-                Points.CollectionChanged += CollectionChangedHandler;
                 InsertIndex = _atIndex;
                 Minutia = _minutia;
+                WriteableBmp = _writeableBitmap;
 
                 if (Minutia != null && Minutia.DrawingType != DrawingType.Empty)
                 {
@@ -151,34 +146,11 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
-        private void CollectionChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
+        protected void InitNewDrawing()
         {
             try
             {
-                if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
-                {
-                    if (DrawingService.DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState) && !InsertIndex.HasValue)
-                    {
-                        DrawingService.AddMinutiaToDrawingData(this, DrawingService.DrawingData.Count - 1);
-                    }
-                    else
-                    {
-                        DrawingService.AddMinutiaToDrawingData(this, InsertIndex);
-                    }
-                }
-                DrawingService.Draw();
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void PropertyChangeHandler(object sender, PropertyChangedEventArgs e)
-        {
-            try
-            {
-                DrawingService.Draw();
+                InitiateNewDrawing(this, null);
             }
             catch (Exception ex)
             {
@@ -198,8 +170,6 @@ namespace Fingerprints.MinutiaeTypes
                     if (disposing)
                     {
                         // TODO: dispose managed state (managed objects).
-                        PropertyChanged -= PropertyChangeHandler;
-                        Points.CollectionChanged -= CollectionChangedHandler;
                     }
 
                     // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

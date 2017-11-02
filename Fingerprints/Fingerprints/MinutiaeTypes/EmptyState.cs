@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Fingerprints.MinutiaeTypes
 {
     class EmptyState : MinutiaStateBase
     {
-        public EmptyState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, generateMinutia(), _atIndex)
+        public EmptyState(int? _atIndex = null) : base(generateMinutia(), null, _atIndex)
         {
         }
 

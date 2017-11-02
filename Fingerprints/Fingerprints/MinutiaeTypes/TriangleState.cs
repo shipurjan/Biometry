@@ -15,7 +15,7 @@ namespace Fingerprints.MinutiaeTypes
     {
         private bool closePolyline = false; 
 
-        public TriangleState(DrawingService _oDrawingService, SelfDefinedMinutiae _minutia, int? _atIndex = null) : base(_oDrawingService, _minutia, _atIndex)
+        public TriangleState(SelfDefinedMinutiae _minutia, WriteableBitmap _writeableBitmap, int? _atIndex = null) : base(_minutia, _writeableBitmap, _atIndex)
         {
         }
 
@@ -53,8 +53,8 @@ namespace Fingerprints.MinutiaeTypes
                         closePolyline = true;
                     }
                     else if (Points.Count == 3)
-                    {                                            
-                        DrawingService.InitiateNewDrawing();
+                    {
+                        InitNewDrawing();
                     }
                 }
             }

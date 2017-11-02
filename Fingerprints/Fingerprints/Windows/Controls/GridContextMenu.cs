@@ -50,8 +50,8 @@ namespace Fingerprints.Windows.Controls
                     MenuItem menuItem = new MenuItem() { Header = minutia.MinutiaName };
                     menuItem.Click += (s, e) =>
                     {
-                        drawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, drawingService, drawingService.SelectedIndex);
-                        oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, oppositeDrawingService);
+                        drawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, drawingService.WriteableBitmap, drawingService.SelectedIndex);
+                        oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia.Minutia, drawingService.WriteableBitmap);
                     };
 
                     result.Items.Add(menuItem);
@@ -80,7 +80,7 @@ namespace Fingerprints.Windows.Controls
                 {
                     if (drawingService.SelectedIndex.HasValue)
                     {
-                        drawingService.DrawingData[drawingService.SelectedIndex.Value] = new EmptyState(drawingService);
+                        drawingService.DrawingData[drawingService.SelectedIndex.Value] = new EmptyState();
                         drawingService.Draw();
                     }
                 };

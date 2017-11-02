@@ -85,8 +85,8 @@ namespace Fingerprints.Tools
                         // both list count
                         if (indexTo == tmpData.Count - 1)
                         {
-                            tmpData.Insert(indexFrom, new EmptyState(oppositeDrawingService));
-                            tmpOppositeData.Add(new EmptyState(drawingService));
+                            tmpData.Insert(indexFrom, new EmptyState());
+                            tmpOppositeData.Add(new EmptyState());
                             break;
                         }
 
@@ -160,10 +160,10 @@ namespace Fingerprints.Tools
             {
                 if (tmpData.Count > tmpOppositeData.Count)
                     for (int i = 0; i < tmpData.Count - tmpOppositeData.Count + 1; i++)
-                        tmpOppositeData.Add(new EmptyState(oppositeDrawingService));
+                        tmpOppositeData.Add(new EmptyState());
                 else
                     for (int i = 0; i < tmpOppositeData.Count - tmpData.Count + 1; i++)
-                        tmpData.Add(new EmptyState(drawingService));
+                        tmpData.Add(new EmptyState());
             }
             catch (Exception ex)
             {

@@ -33,7 +33,7 @@ namespace Fingerprints
             var viewModel = new MainWindowViewModel();
             InitializeComponent();
             DataContext = viewModel;
-
+            
             //listBoxImageL.ItemsSource = viewModel.LeftDrawingService.DrawingData;
             //listBoxImageR.ItemsSource = viewModel.RightDrawingService.DrawingData;
             //comboBox.ItemsSource = viewModel.MinutiaeStates;
