@@ -127,6 +127,14 @@ namespace Fingerprints.ViewModels
                 {
                     GridViewModelList[_eventArgs.NewStartingIndex].RightDrawingObject = senderObject[_eventArgs.NewStartingIndex];
                 }
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Reset)
+                {
+                    foreach (var item in GridViewModelList)
+                    {
+                        item.RightDrawingObject = null;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -164,6 +172,15 @@ namespace Fingerprints.ViewModels
                 {
                     GridViewModelList[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
                 }
+
+                if (_eventArgs.Action == NotifyCollectionChangedAction.Reset)
+                {
+                    foreach (var item in GridViewModelList)
+                    {
+                        item.LeftDrawingObject = null;
+                    }
+                }
+
             }
             catch (Exception ex)
             {

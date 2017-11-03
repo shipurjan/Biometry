@@ -104,6 +104,19 @@ namespace Fingerprints.ViewModels
             try
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
+                DrawingData.CollectionChanged += DrawingDataCollectionChanged;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void DrawingDataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            try
+            {
+                Draw();
             }
             catch (Exception ex)
             {

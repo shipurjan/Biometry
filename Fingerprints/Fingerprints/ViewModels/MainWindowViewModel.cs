@@ -237,7 +237,10 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                AddEmptyObject(RightDrawingService, LeftDrawingService);
+                if (!(RightDrawingData.LastOrDefault() is EmptyState))
+                {
+                    AddEmptyObject(RightDrawingService, LeftDrawingService);
+                }
             }
             catch (Exception ex)
             {
@@ -254,7 +257,10 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                AddEmptyObject(LeftDrawingService, RightDrawingService);
+                if (!(LeftDrawingData.LastOrDefault() is EmptyState))
+                {
+                    AddEmptyObject(LeftDrawingService, RightDrawingService);
+                }
             }
             catch (Exception ex)
             {
@@ -690,7 +696,8 @@ namespace Fingerprints.ViewModels
                     return;
                 }
 
-                for (int i = 0; i < _count; i++)
+                for (
+                    int i = 0; i < _count; i++)
                 {
                     _drawingService.AddMinutiaToDrawingData(new EmptyState());
                 }
