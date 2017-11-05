@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace Fingerprints.Converters
 {
+    enum Columns
+    {
+        Index = 0,
+        FirstImage = 1,
+        SecondImage = 2,
+        Delete = 3
+    }
     class GridClickedItemPosition
     {
-        public int CellIndex { get; set; }
+        public Columns CellIndex { get; set; }
 
         public int RowIndex { get; set; }
     }

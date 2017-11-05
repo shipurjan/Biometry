@@ -30,11 +30,11 @@ namespace Fingerprints.ViewModels
             {
                 clickedPosition = value;
 
-                if (clickedPosition.CellIndex == 1)
+                if (clickedPosition.CellIndex == Columns.FirstImage)
                 {
                     LeftDrawingService.SelectedIndex = clickedPosition.RowIndex;
                 }
-                else if (clickedPosition.CellIndex == 2)
+                else if (clickedPosition.CellIndex == Columns.SecondImage)
                 {
                     RightDrawingService.SelectedIndex = ClickedPosition.RowIndex;
                 }
@@ -70,6 +70,20 @@ namespace Fingerprints.ViewModels
             try
             {
                 ClickedPosition = _args;
+
+                SetCurrentDrawingBasedOnClick();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void SetCurrentDrawingBasedOnClick()
+        {
+            try
+            {
+
             }
             catch (Exception ex)
             {
