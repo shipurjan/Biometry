@@ -306,7 +306,7 @@ namespace Fingerprints.ViewModels
             try
             {
                 // if DrawingData is empty, return false
-                if (_drawingService.DrawingData.Count <= 0)
+                if (_drawingService.WriteableBitmap == null)
                     return false;
 
                 // if EmptyObject is on last position and DrawingData has more objects that opposite, returns false
