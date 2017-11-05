@@ -130,9 +130,14 @@ namespace Fingerprints.ViewModels
 
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Reset)
                 {
-                    foreach (var item in GridViewModelList)
+
+                    for (int i = 0; i < GridViewModelList.Count - 1; i++)
                     {
-                        item.RightDrawingObject = null;
+                        GridViewModelList[i].RightDrawingObject = null;
+                        if (GridViewModelList[i].LeftDrawingObject == null)
+                        {
+                            GridViewModelList.RemoveAt(i);
+                        }
                     }
                 }
             }
@@ -173,11 +178,16 @@ namespace Fingerprints.ViewModels
                     GridViewModelList[_eventArgs.NewStartingIndex].LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex];
                 }
 
+                //Set Null to Object, if left and right objects are null, remove from GridViewModelList
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Reset)
                 {
-                    foreach (var item in GridViewModelList)
+                    for (int i = 0; i < GridViewModelList.Count - 1; i++)
                     {
-                        item.LeftDrawingObject = null;
+                        GridViewModelList[i].LeftDrawingObject = null;
+                        if (GridViewModelList[i].RightDrawingObject == null)
+                        {
+                            GridViewModelList.RemoveAt(i);
+                        }
                     }
                 }
 
