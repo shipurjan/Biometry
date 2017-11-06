@@ -1,5 +1,6 @@
 ﻿using ExceptionLogger;
 using Fingerprints.Converters;
+using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -30,11 +31,11 @@ namespace Fingerprints.ViewModels
             {
                 clickedPosition = value;
 
-                if (clickedPosition.CellIndex == 1)
+                if (clickedPosition.CellIndex == Columns.FirstImage)
                 {
                     LeftDrawingService.SelectedIndex = clickedPosition.RowIndex;
                 }
-                else if (clickedPosition.CellIndex == 2)
+                else if (clickedPosition.CellIndex == Columns.SecondImage)
                 {
                     RightDrawingService.SelectedIndex = ClickedPosition.RowIndex;
                 }
@@ -70,6 +71,60 @@ namespace Fingerprints.ViewModels
             try
             {
                 ClickedPosition = _args;
+
+                SetCurrentDrawingBasedOnClick();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void SetCurrentDrawingBasedOnClick()
+        {
+            try
+            {
+                if (ClickedPosition.CellIndex == Columns.FirstImage)
+                {
+                    SetCurrentDrawing(LeftDrawingService, RightDrawingService);
+                }
+                else if (ClickedPosition.CellIndex == Columns.SecondImage)
+                {
+                    SetCurrentDrawing(RightDrawingService, LeftDrawingService);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void SetCurrentDrawing(DrawingService _drawingService, DrawingService _oppositeDrawingService)
+        {
+            try
+            {
+                if (_drawingService.SelectedIndex.HasValue && _drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+                {
+                    //get SelfDefinedMinutiae
+                    var minutia = _oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].Minutia;
+
+                    //sets CurrentDrawing by clicked empty item on specific index
+                    _drawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia, _drawingService.WriteableBitmap, _drawingService.SelectedIndex);
+
+                    //sets CurrentDrawing in DrawingService which draws without index
+                    _oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia, _oppositeDrawingService.WriteableBitmap);
+                }
+                else if (_drawingService.SelectedIndex.HasValue && _oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+                {
+                    //get SelfDefinedMinutiae
+                    var minutia = _drawingService.DrawingData[_drawingService.SelectedIndex.Value].Minutia;
+
+                    //sets CurrentDrawing by clicked empty item on specific index
+                    _oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia, _oppositeDrawingService.WriteableBitmap, _drawingService.SelectedIndex);
+
+                    //sets CurrentDrawing in DrawingService which draws without index
+                    _drawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia, _drawingService.WriteableBitmap);
+                }
             }
             catch (Exception ex)
             {

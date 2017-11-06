@@ -19,7 +19,7 @@ namespace Fingerprints.Converters
                 result = new GridClickedItemPosition()
                 {
                     RowIndex = (int)values[0],
-                    CellIndex = (int)values[1]
+                    CellIndex = (Columns)((int)values[1])
                 };
             }
 
