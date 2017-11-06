@@ -334,8 +334,10 @@ namespace Fingerprints.ViewModels
         /// <summary>
         /// Opens OpenFileDialog for load image, creates new instance of WriteableBitmap and assigns BackroundImage
         /// </summary>
-        public void LoadImage()
+        public bool LoadImage()
         {
+            bool result = false;
+
             ImportResult importResult = null;
             try
             {
@@ -364,12 +366,16 @@ namespace Fingerprints.ViewModels
                         //create MitutiaStateBase objects in drawing service
                         MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
                     }
+
+                    result = true;
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
+
+            return result;
         }
 
         /// <summary>
