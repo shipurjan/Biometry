@@ -26,14 +26,14 @@ namespace Fingerprints
     {
         MinutiaeTypeController controller;
         SelectionChangedEventHandler comboboxHandler = null;
-        public DrawService drawer;
+        //public DrawService drawer;
         public MainWindow()
         {
             Application.Current.MainWindow = this;
             var viewModel = new MainWindowViewModel();
             InitializeComponent();
             DataContext = viewModel;
-
+            
             //listBoxImageL.ItemsSource = viewModel.LeftDrawingService.DrawingData;
             //listBoxImageR.ItemsSource = viewModel.RightDrawingService.DrawingData;
             //comboBox.ItemsSource = viewModel.MinutiaeStates;
@@ -50,8 +50,8 @@ namespace Fingerprints
             //saveEvents();
             //comboBoxChanged();
             //addEmpty.Click += addEmpty_Click;
-            listBoxImageL.MouseDown += UnselectOnBlank;
-            listBoxImageR.MouseDown += UnselectOnBlank;
+            //listBoxImageL.MouseDown += UnselectOnBlank;
+            //listBoxImageR.MouseDown += UnselectOnBlank;
         }
 
         /// <summary>

@@ -5,23 +5,34 @@ using System.Windows.Media;
 using ExceptionLogger;
 using Fingerprints.Interfaces;
 using Fingerprints.MinutiaeTypes;
-using System.Collections.ObjectModel;
 using Fingerprints.Factories;
 using Prism.Mvvm;
 using Microsoft.Win32;
-using Prism.Commands;
 using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using Fingerprints.Tools.Importers;
 using Fingerprints.Resources;
+using Fingerprints.Tools;
+using Fingerprints.EventArgsObjects;
+using System.Collections.Specialized;
+using System.Linq;
+using System.ComponentModel;
 
 namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
-        public ObservableCollection<MinutiaStateBase> DrawingData
-        { get; }
+        /// <summary>
+        /// Event raised when current drawing change
+        /// </summary>
+        public event EventHandler CurrentDrawingChanged;
+
+        public event EventHandler NewDrawingInitialized;
+
+        public event EventHandler DrawingObjectAdded;
+
+        public MyObservableCollection<MinutiaStateBase> DrawingData { get; }
 
         private Point mousePosition;
 
@@ -37,8 +48,18 @@ namespace Fingerprints.ViewModels
             {
                 try
                 {
+                    if (currentDrawing != null)
+                    {
+                        currentDrawing.Points.CollectionChanged -= CurrentDrawingCollectionChanged;
+                        currentDrawing.PropertyChanged -= CurrentDrawingPropertyChanged;
+                        currentDrawing.InitiateNewDrawing -= InitiateNewDrawing;
+                    }
                     currentDrawing = value;
-                    CurrentDrawingChanged(this, null);
+                    CurrentDrawingChanged(this, new CurrentDrawingChangedEventArgs() { CurrentDrawing = value });
+
+                    currentDrawing.Points.CollectionChanged += CurrentDrawingCollectionChanged;
+                    currentDrawing.PropertyChanged += CurrentDrawingPropertyChanged;
+                    currentDrawing.InitiateNewDrawing += InitiateNewDrawing;
                 }
                 catch (Exception ex)
                 {
@@ -65,7 +86,7 @@ namespace Fingerprints.ViewModels
         /// Property indicates what index in listbox is selected
         /// </summary>
         private int? selectedIndex;
-        public int? ListBoxSelectedIndex
+        public int? SelectedIndex
         {
             get
             { return selectedIndex; }
@@ -76,15 +97,62 @@ namespace Fingerprints.ViewModels
         #endregion
 
         /// <summary>
-        /// Event raised when current drawing change
+        /// Initializes new instance
         /// </summary>
-        public event EventHandler CurrentDrawingChanged;
-
         public DrawingService()
         {
             try
             {
-                DrawingData = new ObservableCollection<MinutiaStateBase>();
+                DrawingData = new MyObservableCollection<MinutiaStateBase>();
+                DrawingData.CollectionChanged += DrawingDataCollectionChanged;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void DrawingDataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            try
+            {
+                Draw();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void CurrentDrawingPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            try
+            {
+                Draw();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void CurrentDrawingCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            try
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add && e.NewStartingIndex == 0)
+                {
+                    if (DrawingData.LastOrDefault()?.GetType() == typeof(EmptyState) && !CurrentDrawing.InsertIndex.HasValue)
+                    {
+                        AddMinutiaToDrawingData(CurrentDrawing, DrawingData.Count - 1);
+                    }
+                    else
+                    {
+                        AddMinutiaToDrawingData(CurrentDrawing, CurrentDrawing.InsertIndex);
+                    }
+                }
+
+                Draw();
             }
             catch (Exception ex)
             {
@@ -285,7 +353,7 @@ namespace Fingerprints.ViewModels
                     if (CurrentDrawing != null)
                     {
                         //create new empty CuurentDrawing
-                        CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
+                        CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap);
                     }
 
                     //import data from file
@@ -305,11 +373,38 @@ namespace Fingerprints.ViewModels
         }
 
         /// <summary>
+        /// Sets color to DrawingObject which will be replaced
+        /// </summary>
+        /// <param name="_itemIndex"></param>
+        public void SetToReplaceColor(int? _itemIndex)
+        {
+            try
+            {
+                foreach (var item in DrawingData)
+                {
+                    item.WillBeReplaced = false;
+                }
+
+                if (_itemIndex.HasValue && _itemIndex.Value > -1)
+                {
+                    DrawingData[_itemIndex.Value].WillBeReplaced = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
         /// Inititates new drawing for CurrenDrawing object
         /// </summary>
-        public void InitiateNewDrawing()
+        private void InitiateNewDrawing(object _sender, EventArgs _args)
         {
-            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, this);
+            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap);
+
+            NewDrawingInitialized(this, null);
         }
 
         /// <summary>
@@ -318,7 +413,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex = null)
         {
-            if (_insertIndex.HasValue)
+            if (_insertIndex.HasValue && DrawingData.Count > _insertIndex.Value)
             {
                 DrawingData[_insertIndex.Value] = _minutiaStateBase;
             }
@@ -326,6 +421,7 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData.Add(_minutiaStateBase);
             }
+            DrawingObjectAdded(this, null);
         }
 
         #region IDisposable Support

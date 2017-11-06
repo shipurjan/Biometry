@@ -12,7 +12,7 @@ namespace Fingerprints.MinutiaeTypes
 {
     class PeakState : MinutiaStateBase, IMouseClickable, IDrawable, IMouseMoveable
     {
-        public PeakState(DrawingService _oDrawingService, int? _atIndex = null) : base(_oDrawingService, _atIndex)
+        public PeakState(SelfDefinedMinutiae _minutia, WriteableBitmap _writeableBitmap,int? _atIndex = null) : base(_minutia, _writeableBitmap, _atIndex)
         {
         }
 
@@ -45,7 +45,7 @@ namespace Fingerprints.MinutiaeTypes
                     }
                     else if (Points.Count == 3)
                     {
-                        DrawingService.InitiateNewDrawing();
+                        InitNewDrawing();
                     }
                 }
             }

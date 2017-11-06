@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>8</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <id>UMLObject</id>
     <coordinates>
-      <x>216</x>
-      <y>16</y>
-      <w>488</w>
-      <h>824</h>
+      <x>243</x>
+      <y>18</y>
+      <w>549</w>
+      <h>927</h>
     </coordinates>
     <panel_attributes>MinutiaStateBase
 valign=top</panel_attributes>
@@ -16,10 +16,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLObject</id>
     <coordinates>
-      <x>1320</x>
-      <y>16</y>
-      <w>928</w>
-      <h>1424</h>
+      <x>1476</x>
+      <y>63</y>
+      <w>2232</w>
+      <h>1602</h>
     </coordinates>
     <panel_attributes>MainWindowViewModel
 valign=top</panel_attributes>
@@ -28,10 +28,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLObject</id>
     <coordinates>
-      <x>728</x>
-      <y>16</y>
-      <w>568</w>
-      <h>824</h>
+      <x>819</x>
+      <y>18</y>
+      <w>639</w>
+      <h>927</h>
     </coordinates>
     <panel_attributes>DrawingService
 valign=top</panel_attributes>
@@ -40,10 +40,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>448</x>
-      <y>64</y>
-      <w>16</w>
-      <h>16</h>
+      <x>504</x>
+      <y>72</y>
+      <w>18</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -51,10 +51,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>384</x>
-      <y>120</y>
-      <w>160</w>
-      <h>32</h>
+      <x>432</x>
+      <y>135</y>
+      <w>180</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>Add point to drawing object</panel_attributes>
     <additional_attributes/>
@@ -62,10 +62,10 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>72</y>
-      <w>24</w>
-      <h>64</h>
+      <x>504</x>
+      <y>81</y>
+      <w>27</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
@@ -73,10 +73,10 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>144</y>
-      <w>24</w>
-      <h>72</h>
+      <x>504</x>
+      <y>162</y>
+      <w>27</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
@@ -84,10 +84,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>376</x>
-      <y>192</y>
-      <w>176</w>
-      <h>40</h>
+      <x>423</x>
+      <y>216</y>
+      <w>198</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>Points Collection changed 
 ( CollectionChangedHandler)
@@ -97,10 +97,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>8</x>
-      <y>32</y>
-      <w>80</w>
-      <h>32</h>
+      <x>9</x>
+      <y>36</y>
+      <w>90</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>Events
 bg=orange</panel_attributes>
@@ -109,10 +109,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>440</x>
-      <y>280</y>
-      <w>32</w>
-      <h>32</h>
+      <x>495</x>
+      <y>315</y>
+      <w>36</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -120,10 +120,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>224</y>
-      <w>24</w>
-      <h>72</h>
+      <x>504</x>
+      <y>252</y>
+      <w>27</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
@@ -131,10 +131,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>304</y>
-      <w>88</w>
-      <h>72</h>
+      <x>504</x>
+      <y>342</y>
+      <w>99</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 [Action = Add]
@@ -144,10 +144,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>440</x>
-      <y>360</y>
-      <w>32</w>
-      <h>32</h>
+      <x>495</x>
+      <y>405</y>
+      <w>36</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -155,10 +155,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>464</x>
-      <y>360</y>
-      <w>616</w>
-      <h>40</h>
+      <x>522</x>
+      <y>405</y>
+      <w>693</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 [InsertIndex is defined]
@@ -170,8 +170,8 @@ bg=orange</panel_attributes>
     <coordinates>
       <x>0</x>
       <y>0</y>
-      <w>176</w>
-      <h>440</h>
+      <w>198</w>
+      <h>495</h>
     </coordinates>
     <panel_attributes>Legend
 valign=top</panel_attributes>
@@ -180,10 +180,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>440</x>
-      <y>448</y>
-      <w>32</w>
-      <h>32</h>
+      <x>495</x>
+      <y>504</y>
+      <w>36</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -191,10 +191,10 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>464</x>
-      <y>448</y>
-      <w>456</w>
-      <h>40</h>
+      <x>522</x>
+      <y>504</y>
+      <w>513</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 [Empty object on last position in DrawingData]
@@ -204,10 +204,10 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>472</y>
-      <w>320</w>
-      <h>88</h>
+      <x>504</x>
+      <y>531</y>
+      <w>360</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>380.0;90.0;10.0;90.0;10.0;10.0</additional_attributes>
@@ -215,10 +215,10 @@ valign=top</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>384</y>
-      <w>144</w>
-      <h>80</h>
+      <x>504</x>
+      <y>432</y>
+      <w>162</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 [InsertIndex is undefined</panel_attributes>
@@ -227,10 +227,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>752</x>
-      <y>528</y>
-      <w>200</w>
-      <h>32</h>
+      <x>846</x>
+      <y>594</y>
+      <w>225</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>Add DrawingObject at the end</panel_attributes>
     <additional_attributes/>
@@ -238,10 +238,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1064</x>
-      <y>360</y>
-      <w>224</w>
-      <h>32</h>
+      <x>1197</x>
+      <y>405</y>
+      <w>252</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>Add DrawingObject at index 
 ( replace )</panel_attributes>
@@ -250,10 +250,10 @@ valign=top</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>904</x>
-      <y>448</y>
-      <w>216</w>
-      <h>40</h>
+      <x>1017</x>
+      <y>504</y>
+      <w>243</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>Add DrawingObject at the end 
 replacing EmptyObject</panel_attributes>
@@ -262,10 +262,10 @@ replacing EmptyObject</panel_attributes>
   <element>
     <id>UMLSyncBarHorizontal</id>
     <coordinates>
-      <x>744</x>
-      <y>616</y>
-      <w>520</w>
-      <h>16</h>
+      <x>837</x>
+      <y>693</y>
+      <w>585</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>lw=5
 </panel_attributes>
@@ -274,10 +274,10 @@ replacing EmptyObject</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>992</x>
-      <y>480</y>
-      <w>24</w>
-      <h>160</h>
+      <x>1116</x>
+      <y>540</y>
+      <w>27</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;180.0;10.0;10.0</additional_attributes>
@@ -285,10 +285,10 @@ replacing EmptyObject</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1168</x>
-      <y>384</y>
-      <w>24</w>
-      <h>256</h>
+      <x>1314</x>
+      <y>432</y>
+      <w>27</w>
+      <h>288</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;300.0;10.0;10.0</additional_attributes>
@@ -296,10 +296,10 @@ replacing EmptyObject</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>848</x>
-      <y>552</y>
-      <w>24</w>
-      <h>88</h>
+      <x>954</x>
+      <y>621</y>
+      <w>27</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
@@ -307,10 +307,10 @@ replacing EmptyObject</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1680</x>
-      <y>648</y>
-      <w>192</w>
-      <h>48</h>
+      <x>1890</x>
+      <y>828</y>
+      <w>216</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>DrawingData Collection changed 
 ([Left/Right]DrawingDataChanged)
@@ -320,21 +320,21 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>992</x>
-      <y>616</y>
-      <w>704</w>
-      <h>64</h>
+      <x>1071</x>
+      <y>693</y>
+      <w>972</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>860.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>1060.0;100.0;1060.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>1760</x>
-      <y>744</y>
-      <w>32</w>
-      <h>32</h>
+      <x>1980</x>
+      <y>936</y>
+      <w>36</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -342,10 +342,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1768</x>
-      <y>688</y>
-      <w>24</w>
-      <h>72</h>
+      <x>1989</x>
+      <y>873</y>
+      <w>27</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
@@ -353,10 +353,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1400</x>
-      <y>752</y>
-      <w>376</w>
-      <h>72</h>
+      <x>1575</x>
+      <y>945</y>
+      <w>423</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 [Action = Add]</panel_attributes>
@@ -365,10 +365,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1784</x>
-      <y>752</y>
-      <w>440</w>
-      <h>80</h>
+      <x>2007</x>
+      <y>945</y>
+      <w>495</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 [Action = Replace]</panel_attributes>
@@ -377,10 +377,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>1392</x>
-      <y>808</y>
-      <w>32</w>
-      <h>32</h>
+      <x>1566</x>
+      <y>1008</y>
+      <w>36</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -388,10 +388,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1400</x>
-      <y>832</y>
-      <w>168</w>
-      <h>88</h>
+      <x>1575</x>
+      <y>1035</y>
+      <w>189</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 [DrawingObject has empty ID]</panel_attributes>
@@ -400,10 +400,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1368</x>
-      <y>904</y>
-      <w>80</w>
-      <h>32</h>
+      <x>1539</x>
+      <y>1116</y>
+      <w>90</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>Assign ID</panel_attributes>
     <additional_attributes/>
@@ -411,10 +411,10 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>1392</x>
-      <y>992</y>
-      <w>32</w>
-      <h>32</h>
+      <x>1566</x>
+      <y>1215</y>
+      <w>36</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
@@ -422,10 +422,10 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1400</x>
-      <y>928</y>
-      <w>24</w>
-      <h>80</h>
+      <x>1575</x>
+      <y>1143</y>
+      <w>27</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -433,52 +433,82 @@ bg=orange</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1336</x>
-      <y>816</y>
-      <w>88</w>
-      <h>192</h>
+      <x>1503</x>
+      <y>1017</y>
+      <w>99</w>
+      <h>216</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>90.0;220.0;10.0;220.0;10.0;10.0;70.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1400</x>
-      <y>1016</y>
-      <w>208</w>
-      <h>128</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-[Sender DrawingData has more items 
-than opposite DrawingData]</panel_attributes>
-    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1344</x>
-      <y>1128</y>
-      <w>208</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>Add EmptyObject to 
-opposite DrawingData
-with the same ID as last object 
-in sender DrawingData</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>1984</x>
-      <y>816</y>
-      <w>248</w>
-      <h>72</h>
+      <x>2232</x>
+      <y>1017</y>
+      <w>279</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>Assign ID to Object in Sender DrawingData  
 from Object in opposite DrawingData
 at the same index</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSyncBarHorizontal</id>
+    <coordinates>
+      <x>1494</x>
+      <y>774</y>
+      <w>2106</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lw=5
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1989</x>
+      <y>774</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>3042</x>
+      <y>837</y>
+      <w>252</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>DrawingObjectAdded
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3159</x>
+      <y>873</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>3150</x>
+      <y>927</y>
+      <w>36</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>type=decision</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
