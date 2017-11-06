@@ -390,6 +390,12 @@ namespace Fingerprints.ViewModels
                     DrawingData[_itemIndex.Value].WillBeReplaced = true;
                 }
 
+
+                if (!_itemIndex.HasValue)
+                {
+                    DrawingData.LastOrDefault().WillBeReplaced = true;
+                }
+
             }
             catch (Exception ex)
             {

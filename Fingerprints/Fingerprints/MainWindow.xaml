@@ -25,6 +25,7 @@
     <Window.Resources>
         <Converters:CollectionCountIncrementConverter x:Key="CountConverter" />
         <Converters:RowAndCellConverter x:Key="RowAndCellConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -346,6 +347,11 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                             <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0 10 0 10"/>
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="{Binding Path=DeleteButtonVisible, Converter={StaticResource BoolToVis}}" />
+                                                </Style>
+                                            </StackPanel.Style>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -120,6 +121,8 @@ namespace Fingerprints.ViewModels
                     {
                         GridViewModelList.Add(new GridViewModel() { RightDrawingObject = senderObject[_eventArgs.NewStartingIndex] });
                     }
+
+                    DisableDeleteButtonOnLastPosition();
                 }
 
                 //Replace object in grid
@@ -170,6 +173,8 @@ namespace Fingerprints.ViewModels
                     {
                         GridViewModelList.Add(new GridViewModel() { LeftDrawingObject = senderObject[_eventArgs.NewStartingIndex] });
                     }
+
+                    DisableDeleteButtonOnLastPosition();
                 }
 
                 //Replace object in grid
@@ -195,6 +200,23 @@ namespace Fingerprints.ViewModels
             catch (Exception ex)
             {
 
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Disable delete button on last line
+        /// </summary>
+        public void DisableDeleteButtonOnLastPosition()
+        {
+            try
+            {
+                GridViewModelList.All(x => x.DeleteButtonVisible = true);
+
+                GridViewModelList.LastOrDefault().DeleteButtonVisible = false;
+            }
+            catch (Exception ex)
+            {
                 Logger.WriteExceptionLog(ex);
             }
         }
