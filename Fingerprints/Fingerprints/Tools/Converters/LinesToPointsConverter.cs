@@ -61,9 +61,9 @@ namespace Fingerprints.Tools.Converters
                     result.Add(new Point(Math.Floor(x), Math.Floor(y)));
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                Logger.WriteExceptionLog(ex);
             }
             return result;
         }

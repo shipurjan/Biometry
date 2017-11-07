@@ -94,6 +94,15 @@ namespace Fingerprints.ViewModels
             { SetProperty(ref selectedIndex, value != -1 ? value : null); }
         }
 
+        private bool acceptButtonVisibility;
+
+        public bool AcceptButtonVisibility
+        {
+            get { return acceptButtonVisibility; }
+            set { acceptButtonVisibility = value; }
+        }
+
+
         #endregion
 
         /// <summary>
@@ -105,6 +114,7 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
+                AcceptButtonVisibility = false;
             }
             catch (Exception ex)
             {
