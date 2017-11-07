@@ -1,14 +1,10 @@
 ﻿using ExceptionLogger;
 using System;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.Windows;
 using Fingerprints.Resources;
 using Fingerprints.Interfaces;
-using Fingerprints.ViewModels;
-using Fingerprints.Tools.LinestoPointsConverter;
-using System.Linq;
 
 namespace Fingerprints.MinutiaeTypes
 {

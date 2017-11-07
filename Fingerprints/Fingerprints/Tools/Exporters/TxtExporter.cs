@@ -6,6 +6,7 @@ using Fingerprints.Models;
 using Newtonsoft.Json;
 using Fingerprints.Factories;
 using System.Windows;
+using Fingerprints.Tools.Converters;
 
 namespace Fingerprints.Tools.Exporters
 {
@@ -57,68 +58,11 @@ namespace Fingerprints.Tools.Exporters
             try
             {
                 result = FileMinutiaFactory.Create(_state);
-                result.Points = PrepareCurveLinePoints(result.Points);
+                result.Points = LinesToPointsConverter.ConvertPoints(result.Points);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
-            }
-            return result;
-        }
-
-        private List<Point> PrepareCurveLinePoints(List<Point> points)
-        {
-            List<Point> result = null;
-            try
-            {
-                result = new List<Point>();
-
-                for (int i = 0; i < points.Count - 1; i++)
-                {
-                    result.AddRange(LinePoints(points[i], points[i + 1]));
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-            return result;
-        }
-
-        private List<Point> LinePoints(Point point1, Point point2)
-        {
-            List<Point> result = null;
-            try
-            {
-                result = new List<Point>();
-                double steps = 0;
-                var dx = point2.X - point1.X;
-                var dy = point2.Y - point1.Y;
-
-                if (Math.Abs(dx) > Math.Abs(dy))
-                    steps = Math.Abs(dx);
-
-                if (Math.Abs(dy) > Math.Abs(dx))
-                    steps = Math.Abs(dy);
-
-                var Xincrement = dx / steps;
-                var Yincrement = dy / steps;
-
-                var x = point1.X;
-                var y = point1.Y;
-                result.Add(new Point(Math.Floor(x), Math.Floor(y)));
-
-                for (int i = 0; i < steps; i++)
-                {
-                    x = x + Xincrement;
-                    y = y + Yincrement;
-
-                    result.Add(new Point(Math.Floor(x), Math.Floor(y)));
-                }
-            }
-            catch
-            {
-
             }
             return result;
         }
