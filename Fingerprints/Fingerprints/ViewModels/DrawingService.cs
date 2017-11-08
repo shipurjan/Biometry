@@ -50,16 +50,12 @@ namespace Fingerprints.ViewModels
                 {
                     if (currentDrawing != null)
                     {
-                        currentDrawing.Points.CollectionChanged -= CurrentDrawingCollectionChanged;
-                        currentDrawing.PropertyChanged -= CurrentDrawingPropertyChanged;
-                        currentDrawing.InitiateNewDrawing -= InitiateNewDrawing;
+                        DeleteCurrentDrawingEvents();
                     }
-                    currentDrawing = value;
+                    SetProperty(ref currentDrawing, value);
                     CurrentDrawingChanged(this, new CurrentDrawingChangedEventArgs() { CurrentDrawing = value });
 
-                    currentDrawing.Points.CollectionChanged += CurrentDrawingCollectionChanged;
-                    currentDrawing.PropertyChanged += CurrentDrawingPropertyChanged;
-                    currentDrawing.InitiateNewDrawing += InitiateNewDrawing;
+                    AddCurrentDrawingEvents();
                 }
                 catch (Exception ex)
                 {
@@ -94,15 +90,6 @@ namespace Fingerprints.ViewModels
             { SetProperty(ref selectedIndex, value != -1 ? value : null); }
         }
 
-        private bool acceptButtonVisibility;
-
-        public bool AcceptButtonVisibility
-        {
-            get { return acceptButtonVisibility; }
-            set { acceptButtonVisibility = value; }
-        }
-
-
         #endregion
 
         /// <summary>
@@ -114,7 +101,7 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
-                AcceptButtonVisibility = false;
+                //AcceptButtonVisibility = false;
             }
             catch (Exception ex)
             {
@@ -418,9 +405,32 @@ namespace Fingerprints.ViewModels
         /// </summary>
         private void InitiateNewDrawing(object _sender, EventArgs _args)
         {
-            CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap);
+            try
+            {
+                CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap);
 
-            NewDrawingInitialized(this, null);
+                NewDrawingInitialized(this, null);
+
+                if (CurrentDrawing.Minutia.DrawingType == Models.DrawingType.CurveLine)
+                {
+                    InitializeActionButtonForCurveLine();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void InitializeActionButtonForCurveLine()
+        {
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
 
         /// <summary>
@@ -429,15 +439,57 @@ namespace Fingerprints.ViewModels
         /// </summary>
         public void AddMinutiaToDrawingData(MinutiaStateBase _minutiaStateBase, int? _insertIndex = null)
         {
-            if (_insertIndex.HasValue && DrawingData.Count > _insertIndex.Value)
+            try
             {
-                DrawingData[_insertIndex.Value] = _minutiaStateBase;
+                if (_insertIndex.HasValue && DrawingData.Count > _insertIndex.Value)
+                {
+                    DrawingData[_insertIndex.Value] = _minutiaStateBase;
+                }
+                else
+                {
+                    DrawingData.Add(_minutiaStateBase);
+                }
+
+                DrawingObjectAdded(this, null);
             }
-            else
+            catch (Exception ex)
             {
-                DrawingData.Add(_minutiaStateBase);
+                Logger.WriteExceptionLog(ex);
             }
-            DrawingObjectAdded(this, null);
+        }
+
+        /// <summary>
+        /// Deltes all events from CurrentDrawing object
+        /// </summary>
+        private void DeleteCurrentDrawingEvents()
+        {
+            try
+            {
+                currentDrawing.Points.CollectionChanged -= CurrentDrawingCollectionChanged;
+                currentDrawing.PropertyChanged -= CurrentDrawingPropertyChanged;
+                currentDrawing.InitiateNewDrawing -= InitiateNewDrawing;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Adds events to CurrentDrawing object
+        /// </summary>
+        private void AddCurrentDrawingEvents()
+        {
+            try
+            {
+                currentDrawing.Points.CollectionChanged += CurrentDrawingCollectionChanged;
+                currentDrawing.PropertyChanged += CurrentDrawingPropertyChanged;
+                currentDrawing.InitiateNewDrawing += InitiateNewDrawing;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
 
         #region IDisposable Support

@@ -30,7 +30,7 @@ namespace Fingerprints.Tools.Converters
             return result;
         }
 
-        private static List<Point> LinePoints(Point point1, Point point2)
+        public static List<Point> LinePoints(Point point1, Point point2)
         {
             List<Point> result = null;
             try

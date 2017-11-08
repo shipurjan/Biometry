@@ -11,6 +11,7 @@ using Fingerprints.ViewModels;
 using System.Linq;
 using System.Windows.Media;
 using Fingerprints.Models;
+using System.Windows.Input;
 
 namespace Fingerprints.MinutiaeTypes
 {
@@ -72,11 +73,17 @@ namespace Fingerprints.MinutiaeTypes
         }
 
         private bool willBeReplaced;
-
         public bool WillBeReplaced
         {
             get { return willBeReplaced; }
             set { SetProperty(ref willBeReplaced, value); }
+        }
+
+        private bool acceptButtonVisibility;
+        public bool AcceptButtonVisibility
+        {
+            get { return acceptButtonVisibility; }
+            set { SetProperty(ref acceptButtonVisibility, value); }
         }
 
         public string MinutiaName
@@ -121,6 +128,8 @@ namespace Fingerprints.MinutiaeTypes
             }
         }
 
+        public ICommand AcceptButtonCommand { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -134,6 +143,7 @@ namespace Fingerprints.MinutiaeTypes
                 InsertIndex = _atIndex;
                 Minutia = _minutia;
                 WriteableBmp = _writeableBitmap;
+                AcceptButtonVisibility = false;
 
                 if (Minutia != null && Minutia.DrawingType != DrawingType.Empty)
                 {
