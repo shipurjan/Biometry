@@ -11,6 +11,11 @@ namespace Fingerprints.Tools.Converters
 {
     public static class LinesToPointsConverter
     {
+        /// <summary>
+        /// Converts Lines between points to single points
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
         public static List<Point> ConvertPoints(List<Point> points)
         {
             List<Point> result = null;
@@ -30,6 +35,13 @@ namespace Fingerprints.Tools.Converters
             return result;
         }
 
+        /// <summary>
+        /// DDA Algorith of drawing lines
+        /// Calculates dots between two points and returnes it
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <returns></returns>
         public static List<Point> LinePoints(Point point1, Point point2)
         {
             List<Point> result = null;
@@ -37,6 +49,7 @@ namespace Fingerprints.Tools.Converters
             {
                 result = new List<Point>();
                 double steps = 0;
+
                 var deltaX = point2.X - point1.X;
                 var deltaY = point2.Y - point1.Y;
 
