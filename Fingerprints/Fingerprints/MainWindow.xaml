@@ -18,6 +18,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
         xmlns:Converters="clr-namespace:Fingerprints.Converters"
+        xmlns:UserControls="clr-namespace:Fingerprints.Windows.UserControls"
         Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
@@ -185,19 +186,7 @@
                         </Canvas>
                     </Canvas>
                 </Border>
-                <Grid Height="25" VerticalAlignment="Bottom" Background="#DDDDDD">
-                    <TextBlock Text="{Binding LeftDrawingService.BackgroundImage.UriSource, FallbackValue=Brak, Converter={StaticResource UriToFileName}}" HorizontalAlignment="Left"/>
-                    <materialDesign:PopupBox HorizontalAlignment="Right" ToggleContent="Opcje" >
-                        <StackPanel Width="200" Height="150">
-                            <TextBlock Text="Filtry" />
-                        </StackPanel>
-                    </materialDesign:PopupBox>
-                    <materialDesign:PopupBox HorizontalAlignment="Right" Margin="0 0 40 0" ToggleContent="Filtry">
-                        <StackPanel>
-                            <TextBlock Text="Filtry" />
-                        </StackPanel>
-                    </materialDesign:PopupBox>
-                </Grid>
+                <UserControls:DrawingBottomPanel DataContext="{Binding LeftDrawingService}" />
             </Grid>
 
             <!--rightCanvas-->

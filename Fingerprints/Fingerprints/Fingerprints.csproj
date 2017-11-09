@@ -220,6 +220,9 @@
     <Compile Include="Windows\SelectImage.xaml.cs">
       <DependentUpon>SelectImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
+      <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
+    </Compile>
     <Page Include="Windows\ColorPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SelectImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\DrawingBottomPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Fingerprints.Windows.UserControls.DrawingBottomPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Fingerprints.Windows.UserControls"
+             mc:Ignorable="d" 
+             xmlns:Converters="clr-namespace:Fingerprints.Converters"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Converters:UriSourceToFileName x:Key="UriToFileName" />
+    </UserControl.Resources>
+    <Grid Height="25" VerticalAlignment="Bottom" Background="#DDDDDD">
+        <TextBlock Text="{Binding BackgroundImage.UriSource, FallbackValue=Brak, Converter={StaticResource UriToFileName}}" HorizontalAlignment="Left"/>
+        <materialDesign:PopupBox HorizontalAlignment="Right" ToggleContent="Opcje" >
+            <StackPanel Width="200" Height="150">
+                <TextBlock Text="Filtry" />
+            </StackPanel>
+        </materialDesign:PopupBox>
+        <materialDesign:PopupBox HorizontalAlignment="Right" Margin="0 0 40 0" ToggleContent="Filtry">
+            <StackPanel>
+                <TextBlock Text="Filtry" />
+            </StackPanel>
+        </materialDesign:PopupBox>
+    </Grid>
+</UserControl>
