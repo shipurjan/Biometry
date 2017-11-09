@@ -80,7 +80,8 @@
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="openLeftImage" Command="{Binding LoadLeftImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
-                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
+                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="{Binding LeftDrawingService.CurrentDrawing.AcceptButtonVisibility, FallbackValue=Hidden,
+                    Converter={StaticResource BoolToVis}}" Style="{StaticResource buttonStyles}" Command="{Binding LeftDrawingService.CurrentDrawing.AcceptButtonCommand}" />
             </Grid>
 
             <!--comboBox-->
@@ -118,7 +119,8 @@
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="openRightImage" Command="{Binding LoadRightImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
-                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
+                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="{Binding RightDrawingService.CurrentDrawing.AcceptButtonVisibility, 
+                    FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" Style="{StaticResource buttonStyles}" Command="{Binding RightDrawingService.CurrentDrawing.AcceptButtonCommand}" />
             </Grid>
 
             <!--aboveTable-->

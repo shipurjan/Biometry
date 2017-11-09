@@ -94,6 +94,7 @@ namespace Fingerprints.ViewModels
                 SaveAsClickCommand = new DelegateCommand(SaveAsClick);
                 LoadLeftImageCommand = new DelegateCommand(LoadLeftImage);
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
+                NewMinutiaCommand = new DelegateCommand(NewMinutia);
 
                 //DrawingService events
                 LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
@@ -104,22 +105,6 @@ namespace Fingerprints.ViewModels
 
                 LeftDrawingService.NewDrawingInitialized += LeftDrawingService_NewDrawingInitialized;
                 RightDrawingService.NewDrawingInitialized += RightDrawingService_NewDrawingInitialized;
-                NewMinutiaCommand = new DelegateCommand(NewMinutia);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void NewMinutia()
-        {
-            try
-            {
-                Window1 win = new Window1();
-                win.ShowDialog();
-                //drawer.stopDrawing();
-                MinutiaeStates.Add(dbController.getStates().LastOrDefault());
             }
             catch (Exception ex)
             {
@@ -542,18 +527,22 @@ namespace Fingerprints.ViewModels
         private void LoadRightImage()
         {
             IdSorter sorter = null;
+            bool loadResult = false;
             try
             {
-                RightDrawingService.LoadImage();
+                loadResult = RightDrawingService.LoadImage();
+                if (loadResult)
+                {
+                    sorter = new IdSorter(RightDrawingService, LeftDrawingService);
+                    sorter.SortById();
 
-                sorter = new IdSorter(RightDrawingService, LeftDrawingService);
-                sorter.SortById();
+                    FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
 
-                FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
+                    AddEmptyObject(RightDrawingService, LeftDrawingService);
 
-                AddEmptyObject(RightDrawingService, LeftDrawingService);
+                    RightDrawingService.SetToReplaceColor(null);
+                }
 
-                RightDrawingService.SetToReplaceColor(null);
             }
             catch (Exception ex)
             {
@@ -568,18 +557,38 @@ namespace Fingerprints.ViewModels
         private void LoadLeftImage()
         {
             IdSorter sorter = null;
+            bool loadResult = false;
             try
             {
-                LeftDrawingService.LoadImage();
+                loadResult = LeftDrawingService.LoadImage();
 
-                sorter = new IdSorter(LeftDrawingService, RightDrawingService);
-                sorter.SortById();
+                if (loadResult)
+                {
 
-                FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
+                    sorter = new IdSorter(LeftDrawingService, RightDrawingService);
+                    sorter.SortById();
 
-                AddEmptyObject(LeftDrawingService, RightDrawingService);
+                    FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
 
-                LeftDrawingService.SetToReplaceColor(null);
+                    AddEmptyObject(LeftDrawingService, RightDrawingService);
+
+                    LeftDrawingService.SetToReplaceColor(null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void NewMinutia()
+        {
+            try
+            {
+                Window1 win = new Window1();
+                win.ShowDialog();
+                //drawer.stopDrawing();
+                MinutiaeStates.Add(dbController.getStates().LastOrDefault());
             }
             catch (Exception ex)
             {

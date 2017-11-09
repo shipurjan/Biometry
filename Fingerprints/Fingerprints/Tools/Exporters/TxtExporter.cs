@@ -5,6 +5,8 @@ using ExceptionLogger;
 using Fingerprints.Models;
 using Newtonsoft.Json;
 using Fingerprints.Factories;
+using System.Windows;
+using Fingerprints.Tools.Converters;
 
 namespace Fingerprints.Tools.Exporters
 {
@@ -34,13 +36,35 @@ namespace Fingerprints.Tools.Exporters
             {
                 foreach (var item in data)
                 {
-                    preparedData.Add(Parse(item));
+                    if (item is CurveLineState)
+                    {
+                        preparedData.Add(ParseCurveLine(item));
+                    }
+                    else
+                    {
+                        preparedData.Add(Parse(item));
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        private MinutiaFileState ParseCurveLine(MinutiaStateBase _state)
+        {
+            MinutiaFileState result = null;
+            try
+            {
+                result = FileMinutiaFactory.Create(_state);
+                result.Points = LinesToPointsConverter.ConvertPoints(result.Points);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         private MinutiaFileState Parse(MinutiaStateBase _state)
