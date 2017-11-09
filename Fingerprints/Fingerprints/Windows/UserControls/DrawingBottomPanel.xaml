@@ -7,21 +7,45 @@
              xmlns:local="clr-namespace:Fingerprints.Windows.UserControls"
              mc:Ignorable="d" 
              xmlns:Converters="clr-namespace:Fingerprints.Converters"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="25" d:DesignWidth="300">
     <UserControl.Resources>
         <Converters:UriSourceToFileName x:Key="UriToFileName" />
     </UserControl.Resources>
     <Grid Height="25" VerticalAlignment="Bottom" Background="#DDDDDD">
-        <TextBlock Text="{Binding BackgroundImage.UriSource, FallbackValue=Brak, Converter={StaticResource UriToFileName}}" HorizontalAlignment="Left"/>
-        <materialDesign:PopupBox HorizontalAlignment="Right" ToggleContent="Opcje" >
-            <StackPanel Width="200" Height="150">
-                <TextBlock Text="Filtry" />
-            </StackPanel>
-        </materialDesign:PopupBox>
-        <materialDesign:PopupBox HorizontalAlignment="Right" Margin="0 0 40 0" ToggleContent="Filtry">
-            <StackPanel>
-                <TextBlock Text="Filtry" />
-            </StackPanel>
-        </materialDesign:PopupBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding BackgroundImage.UriSource, FallbackValue=Brak, Converter={StaticResource UriToFileName}}" TextTrimming="CharacterEllipsis" Grid.Column="1" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+            <materialDesign:PopupBox Margin="0 0 10 0">
+                <StackPanel>
+                    
+                </StackPanel>
+                
+                
+                <materialDesign:PopupBox.ToggleContent>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Filter" Opacity="0.8"/>
+                        <TextBlock Text="Filtry"/>
+                    </StackPanel>
+                </materialDesign:PopupBox.ToggleContent>
+            </materialDesign:PopupBox>
+
+            <materialDesign:PopupBox>
+                <StackPanel>
+                    
+                </StackPanel>
+                
+                
+                <materialDesign:PopupBox.ToggleContent>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Settings" Opacity="0.8"/>
+                        <TextBlock Text="Opcje"/>
+                    </StackPanel>
+                </materialDesign:PopupBox.ToggleContent>
+            </materialDesign:PopupBox>
+        </StackPanel>
     </Grid>
 </UserControl>
