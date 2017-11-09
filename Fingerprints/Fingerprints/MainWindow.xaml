@@ -26,6 +26,7 @@
         <Converters:CollectionCountIncrementConverter x:Key="CountConverter" />
         <Converters:RowAndCellConverter x:Key="RowAndCellConverter" />
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Converters:UriSourceToFileName x:Key="UriToFileName" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -184,6 +185,19 @@
                         </Canvas>
                     </Canvas>
                 </Border>
+                <Grid Height="25" VerticalAlignment="Bottom" Background="#DDDDDD">
+                    <TextBlock Text="{Binding LeftDrawingService.BackgroundImage.UriSource, FallbackValue=Brak, Converter={StaticResource UriToFileName}}" HorizontalAlignment="Left"/>
+                    <materialDesign:PopupBox HorizontalAlignment="Right" ToggleContent="Opcje" >
+                        <StackPanel Width="200" Height="150">
+                            <TextBlock Text="Filtry" />
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                    <materialDesign:PopupBox HorizontalAlignment="Right" Margin="0 0 40 0" ToggleContent="Filtry">
+                        <StackPanel>
+                            <TextBlock Text="Filtry" />
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
             </Grid>
 
             <!--rightCanvas-->

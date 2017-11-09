@@ -145,6 +145,7 @@
     <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
     <Compile Include="Converters\GridClickedItemPosition.cs" />
     <Compile Include="Converters\RowAndCellConverter.cs" />
+    <Compile Include="Converters\UriSourceToFileName.cs" />
     <Compile Include="DataBase\UniDBInitializer.cs" />
     <Compile Include="EventArgsObjects\CurrentDrawingChangedEventArgs.cs" />
     <Compile Include="EventArgsObjects\DrawingObjectAddedEventArgs.cs" />
