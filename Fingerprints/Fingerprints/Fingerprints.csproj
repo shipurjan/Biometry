@@ -189,7 +189,7 @@
     <Compile Include="Tools\Importers\ImportResult.cs" />
     <Compile Include="Tools\Importers\ImportTypes.cs" />
     <Compile Include="Tools\Importers\TxtImporter.cs" />
-    <Compile Include="Tools\LinestoPointsConverter\LinesToPointsConverter.cs" />
+    <Compile Include="Tools\Converters\LinesToPointsConverter.cs" />
     <Compile Include="Tools\MyObservableCollection.cs" />
     <Compile Include="Tools\PathTool.cs" />
     <Compile Include="ViewModels\DataGridActivities.cs" />
