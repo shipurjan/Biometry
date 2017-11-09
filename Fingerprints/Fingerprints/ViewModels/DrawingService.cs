@@ -356,7 +356,7 @@ namespace Fingerprints.ViewModels
                     }
 
                     //import data from file
-                    importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
+                    importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"));
 
                     if (importResult.ResultData.AnyOrNotNull())
                     {

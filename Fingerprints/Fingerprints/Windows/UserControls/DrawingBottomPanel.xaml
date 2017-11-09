@@ -35,7 +35,7 @@
 
             <materialDesign:PopupBox>
                 <StackPanel>
-                    
+                    <Button Content="mindtc" Style="{StaticResource buttonStyles}" Command="{Binding MindtcIdentifyCommand}"></Button>
                 </StackPanel>
                 
                 
