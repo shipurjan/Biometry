@@ -292,6 +292,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Additionals\mindtct.exe">
+      <Link>Additionals\mindtct.exe</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="SharedPackages\ExceptionLogger.dll" />
   </ItemGroup>
   <ItemGroup />
