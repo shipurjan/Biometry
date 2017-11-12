@@ -26,6 +26,9 @@ namespace Fingerprints.Tools.Importers
                     case ImportTypes.txt:
                         result = new TxtImporter();
                         break;
+                    case ImportTypes.xyt:
+                        result = new XytImporter();
+                        break;
                 }
             }
             catch (Exception ex)

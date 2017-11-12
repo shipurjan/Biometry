@@ -18,6 +18,9 @@ using Fingerprints.EventArgsObjects;
 using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
+using Prism.Commands;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Fingerprints.ViewModels
 {
@@ -90,7 +93,17 @@ namespace Fingerprints.ViewModels
             { SetProperty(ref selectedIndex, value != -1 ? value : null); }
         }
 
+        private bool isLoading;
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set { SetProperty(ref isLoading, value); }
+        }
+
+
         #endregion
+
+        public ICommand MindtcIdentifyCommand { get; }
 
         /// <summary>
         /// Initializes new instance
@@ -101,7 +114,8 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
-                //AcceptButtonVisibility = false;
+                MindtcIdentifyCommand = new DelegateCommand(MindtcIndetify);
+                IsLoading = false;
             }
             catch (Exception ex)
             {
@@ -495,6 +509,30 @@ namespace Fingerprints.ViewModels
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private async void MindtcIndetify()
+        {
+
+            try
+            {
+                IsLoading = true;
+                string imagePath = BackgroundImage.UriSource.AbsolutePath;
+
+                await Task.Run(() => {
+                    Mindtc mindtc = new Mindtc();
+                    mindtc.Identify(imagePath);
+                });
+
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
