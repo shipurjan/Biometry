@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:Fingerprints.Windows.UserControls"
              mc:Ignorable="d" 
              xmlns:Converters="clr-namespace:Fingerprints.Converters"
+             xmlns:FilterImage="clr-namespace:Fingerprints.Tools.ImageFilters"
              d:DesignHeight="25" d:DesignWidth="300">
     <UserControl.Resources>
         <Converters:UriSourceToFileName x:Key="UriToFileName" />
@@ -21,7 +22,8 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
             <materialDesign:PopupBox Margin="0 0 10 0">
                 <StackPanel>
-                    
+                    <Button x:Name="NoneFilter" Content="None" Command="{Binding NoneFilterCommand}"></Button>
+                    <Button x:Name="SobelFilter" Content="Sobel" Command="{Binding SobelFilterCommand}"></Button>
                 </StackPanel>
                 
                 

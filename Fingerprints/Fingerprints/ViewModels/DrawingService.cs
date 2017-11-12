@@ -18,6 +18,8 @@ using Fingerprints.EventArgsObjects;
 using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
+using Fingerprints.Tools.ImageFilters;
+using Prism.Commands;
 
 namespace Fingerprints.ViewModels
 {
@@ -35,6 +37,8 @@ namespace Fingerprints.ViewModels
         public MyObservableCollection<MinutiaStateBase> DrawingData { get; }
 
         private Point mousePosition;
+
+        private FilterImage filterImage = null;
 
         #region Props
         /// <summary>
@@ -92,6 +96,9 @@ namespace Fingerprints.ViewModels
 
         #endregion
 
+        public ICommand NoneFilterCommand { get; }
+        public ICommand SobelFilterCommand { get; }
+
         /// <summary>
         /// Initializes new instance
         /// </summary>
@@ -101,6 +108,8 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
+                NoneFilterCommand = new DelegateCommand(NoneFilter);
+                SobelFilterCommand = new DelegateCommand(SobelFilter);
                 //AcceptButtonVisibility = false;
             }
             catch (Exception ex)
@@ -343,7 +352,9 @@ namespace Fingerprints.ViewModels
 
                 if (openFile.ShowDialog() == true)
                 {
-                    BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
+                    filterImage = new FilterImage(new BitmapImage(new Uri(openFile.FileName)));
+
+                    BackgroundImage = filterImage.OryginalImage;
 
                     WriteableBitmap = new WriteableBitmap(BackgroundImage.PixelWidth, (BackgroundImage.PixelHeight), 96, 96, PixelFormats.Bgra32, null);
 
@@ -491,6 +502,30 @@ namespace Fingerprints.ViewModels
                 currentDrawing.Points.CollectionChanged += CurrentDrawingCollectionChanged;
                 currentDrawing.PropertyChanged += CurrentDrawingPropertyChanged;
                 currentDrawing.InitiateNewDrawing += InitiateNewDrawing;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void NoneFilter()
+        {
+            try
+            {
+                BackgroundImage = filterImage.Filter(FilterImageType.None).Get();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void SobelFilter()
+        {
+            try
+            {
+                BackgroundImage = filterImage.Filter(FilterImageType.Sobel).Get();
             }
             catch (Exception ex)
             {
