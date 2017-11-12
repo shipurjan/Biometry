@@ -5,6 +5,7 @@ using Fingerprints.Models;
 using Fingerprints.Resources;
 using Fingerprints.Tools;
 using Fingerprints.Tools.Exporters;
+using Fingerprints.Tools.Importers;
 using Fingerprints.Windows.Controls;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -59,6 +60,7 @@ namespace Fingerprints.ViewModels
         public ICommand NewMinutiaCommand { get; }
         public ICommand LoadLeftImageCommand { get; }
         public ICommand LoadRightImageCommand { get; }
+        public ICommand MindtcDetectCommand { get; }
 
         #endregion
 
@@ -97,6 +99,7 @@ namespace Fingerprints.ViewModels
                 LoadLeftImageCommand = new DelegateCommand(LoadLeftImage);
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
                 NewMinutiaCommand = new DelegateCommand(NewMinutia);
+                MindtcDetectCommand = new DelegateCommand<DrawingService>(MindtcDetect);
 
                 //DrawingService events
                 LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
@@ -107,6 +110,42 @@ namespace Fingerprints.ViewModels
 
                 LeftDrawingService.NewDrawingInitialized += LeftDrawingService_NewDrawingInitialized;
                 RightDrawingService.NewDrawingInitialized += RightDrawingService_NewDrawingInitialized;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void MindtcDetect(DrawingService _drawingService)
+        {
+            try
+            {
+                _drawingService.IsLoading = true;
+                string imagePath = _drawingService.BackgroundImage.UriSource.AbsolutePath;
+                ImportResult importResult = null;
+                Mindtc mindtc = new Mindtc();
+
+                mindtc.DetectImage(imagePath);
+
+                mindtc.DetectionCompleted += (_result) =>
+                {
+                    importResult = _result;
+
+                    if (importResult.ResultData.AnyOrNotNull())
+                    {
+                        DrawingService oppositeDrawingService = _drawingService == LeftDrawingService ? RightDrawingService : LeftDrawingService;
+                        //create MitutiaStateBase objects in drawing service
+                        MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, _drawingService);
+
+                        FillEmpty(oppositeDrawingService, _drawingService.DrawingData.Count - oppositeDrawingService.DrawingData.Count);
+
+                        AddEmptyObject(_drawingService, oppositeDrawingService);
+
+                        _drawingService.SetToReplaceColor(null);
+                    }
+                    _drawingService.IsLoading = false;
+                };
             }
             catch (Exception ex)
             {
@@ -633,15 +672,7 @@ namespace Fingerprints.ViewModels
                 if (RightDrawingService.BackgroundImage != null)
                     rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
-                //ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
-                ObservableCollection<MinutiaStateBase> obsStates = new ObservableCollection<MinutiaStateBase>();
-                var state = new EmptyState();
-                state.Points.Add(new System.Windows.Point(10, 10));
-
-                List<MinutiaStateBase> listStates = new List<MinutiaStateBase>();
-                listStates.Add(state);
-                obsStates.Add(state);
-                MessageBox.Show((obsStates.Contains(listStates.First())).ToString());
+                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }
             catch (Exception ex)
             {

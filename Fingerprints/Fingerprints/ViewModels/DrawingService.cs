@@ -517,24 +517,7 @@ namespace Fingerprints.ViewModels
 
             try
             {
-                IsLoading = true;
-                string imagePath = BackgroundImage.UriSource.AbsolutePath;
-                ImportResult importResult = null;
-                Mindtc mindtc = new Mindtc();
 
-                mindtc.DetectImage(imagePath);
-
-                mindtc.DetectionCompleted += (_result) =>
-                {
-                    IsLoading = false;
-                    importResult = _result;
-
-                    if (importResult.ResultData.AnyOrNotNull())
-                    {
-                        //create MitutiaStateBase objects in drawing service
-                        MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, this);
-                    }
-                };
 
             }
             catch (Exception ex)
