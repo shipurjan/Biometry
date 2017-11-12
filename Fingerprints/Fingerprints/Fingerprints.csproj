@@ -145,6 +145,7 @@
     <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
     <Compile Include="Converters\GridClickedItemPosition.cs" />
     <Compile Include="Converters\RowAndCellConverter.cs" />
+    <Compile Include="Converters\UriSourceToFileName.cs" />
     <Compile Include="DataBase\UniDBInitializer.cs" />
     <Compile Include="EventArgsObjects\CurrentDrawingChangedEventArgs.cs" />
     <Compile Include="EventArgsObjects\DrawingObjectAddedEventArgs.cs" />
@@ -219,6 +220,9 @@
     <Compile Include="Windows\SelectImage.xaml.cs">
       <DependentUpon>SelectImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
+      <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
+    </Compile>
     <Page Include="Windows\ColorPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SelectImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\DrawingBottomPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

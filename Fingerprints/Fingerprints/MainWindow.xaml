@@ -18,6 +18,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
         xmlns:Converters="clr-namespace:Fingerprints.Converters"
+        xmlns:UserControls="clr-namespace:Fingerprints.Windows.UserControls"
         Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
@@ -26,6 +27,7 @@
         <Converters:CollectionCountIncrementConverter x:Key="CountConverter" />
         <Converters:RowAndCellConverter x:Key="RowAndCellConverter" />
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Converters:UriSourceToFileName x:Key="UriToFileName" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -146,7 +148,7 @@
 
                 <!--table-->
                 <ColumnDefinition Width="20*" MaxWidth="300" MinWidth="250"/>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions> 
 
             <!--leftCanvas-->
             <Grid Grid.Column="0">
@@ -186,6 +188,7 @@
                         </Canvas>
                     </Canvas>
                 </Border>
+                <UserControls:DrawingBottomPanel DataContext="{Binding LeftDrawingService}" Margin="2 0 2 2"/>
             </Grid>
 
             <!--rightCanvas-->
@@ -227,6 +230,7 @@
                         </Canvas>
                     </Canvas>
                 </Border>
+                <UserControls:DrawingBottomPanel DataContext="{Binding RightDrawingService}" Margin="2 0 2 2"/>
             </Grid>
 
             <!--table-->
