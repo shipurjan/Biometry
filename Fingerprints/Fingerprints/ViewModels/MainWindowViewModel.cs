@@ -9,10 +9,12 @@ using Fingerprints.Windows.Controls;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -631,7 +633,15 @@ namespace Fingerprints.ViewModels
                 if (RightDrawingService.BackgroundImage != null)
                     rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
 
-                ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
+                //ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
+                ObservableCollection<MinutiaStateBase> obsStates = new ObservableCollection<MinutiaStateBase>();
+                var state = new EmptyState();
+                state.Points.Add(new System.Windows.Point(10, 10));
+
+                List<MinutiaStateBase> listStates = new List<MinutiaStateBase>();
+                listStates.Add(state);
+                obsStates.Add(state);
+                MessageBox.Show((obsStates.Contains(listStates.First())).ToString());
             }
             catch (Exception ex)
             {

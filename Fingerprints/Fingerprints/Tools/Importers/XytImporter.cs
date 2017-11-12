@@ -19,7 +19,7 @@ namespace Fingerprints.Tools.Importers
         {
             using (var db = new FingerContext())
             {
-                SelfDefinedMinutiae vectorMinutia = db.SelfDefinedMinutiaes.Where(x => x.DrawingType == DrawingType.Vector).FirstOrDefault();
+                vectorMinutia = db.SelfDefinedMinutiaes.Where(x => x.DrawingType == DrawingType.Vector).FirstOrDefault();
             }
 
         }

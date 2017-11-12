@@ -1,4 +1,5 @@
 ﻿using ExceptionLogger;
+using Fingerprints.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Fingerprints.Tools.Importers
     {
         public int X { get; }
         public int Y { get; }
-        public int Angle { get; }
+        public double Angle { get; }
 
         public XytRow(string _x, string _y, string _angle)
         {
@@ -38,7 +39,7 @@ namespace Fingerprints.Tools.Importers
             {
                 X = Convert.ToInt16(_x);
                 Y = Convert.ToInt16(_y);
-                Angle = Convert.ToInt16(_angle);
+                Angle = Utils.AngleToRadians(Convert.ToInt16(_angle));
             }
             catch (Exception ex)
             {
