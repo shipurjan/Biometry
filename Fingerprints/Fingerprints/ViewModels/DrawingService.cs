@@ -18,9 +18,6 @@ using Fingerprints.EventArgsObjects;
 using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
-using Prism.Commands;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Fingerprints.ViewModels
 {
@@ -114,7 +111,6 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
-                MindtcIdentifyCommand = new DelegateCommand(MindtcIndetify);
                 IsLoading = false;
             }
             catch (Exception ex)
@@ -509,23 +505,6 @@ namespace Fingerprints.ViewModels
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void MindtcIndetify()
-        {
-
-            try
-            {
-
-
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-            finally
-            {
             }
         }
 
