@@ -6,6 +6,7 @@ using Fingerprints.Resources;
 using Fingerprints.Tools;
 using Fingerprints.Tools.Exporters;
 using Fingerprints.Tools.Importers;
+using Fingerprints.Tools.Mindtc;
 using Fingerprints.Windows.Controls;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -18,7 +19,7 @@ using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
 {
-    class MainWindowViewModel : BindableBase
+    class MainWindowViewModel : ViewModel_Base
     {
         #region Properties and variables
 
@@ -46,9 +47,11 @@ namespace Fingerprints.ViewModels
 
         public DataGridActivities DataGridActivities { get; }
 
-        #endregion
+        public MindtcActivity MindtcActivity { get; }
 
         public string ProjectName { get; set; }
+
+        #endregion
 
         #region Commands
 
@@ -58,7 +61,6 @@ namespace Fingerprints.ViewModels
         public ICommand NewMinutiaCommand { get; }
         public ICommand LoadLeftImageCommand { get; }
         public ICommand LoadRightImageCommand { get; }
-        public ICommand MindtcDetectCommand { get; }
 
         #endregion
 
@@ -84,6 +86,9 @@ namespace Fingerprints.ViewModels
                 //init grid with data from drawing services
                 DataGridActivities = new DataGridActivities(LeftDrawingService, RightDrawingService);
 
+                //init mindtc activity object for handling mindtc detection
+                MindtcActivity = new MindtcActivity(LeftDrawingService, RightDrawingService);
+
                 //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
 
@@ -97,7 +102,6 @@ namespace Fingerprints.ViewModels
                 LoadLeftImageCommand = new DelegateCommand(LoadLeftImage);
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
                 NewMinutiaCommand = new DelegateCommand(NewMinutia);
-                MindtcDetectCommand = new DelegateCommand<DrawingService>(MindtcDetect);
 
                 //DrawingService events
                 LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
@@ -144,9 +148,9 @@ namespace Fingerprints.ViewModels
                         //create MitutiaStateBase objects in drawing service
                         MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, _drawingService);
 
-                        FillEmpty(oppositeDrawingService, _drawingService.DrawingData.Count - oppositeDrawingService.DrawingData.Count);
+                        FillDrawingDataWithEmptyObjects(oppositeDrawingService, _drawingService.DrawingData.Count - oppositeDrawingService.DrawingData.Count);
 
-                        AddEmptyObject(_drawingService, oppositeDrawingService);
+                        AddEmptyObjectOnLastPosition(_drawingService, oppositeDrawingService);
 
                         _drawingService.SetToReplaceColor(null);
 
@@ -272,7 +276,7 @@ namespace Fingerprints.ViewModels
             {
                 if (!(RightDrawingData.LastOrDefault() is EmptyState))
                 {
-                    AddEmptyObject(RightDrawingService, LeftDrawingService);
+                    AddEmptyObjectOnLastPosition(RightDrawingService, LeftDrawingService);
                 }
             }
             catch (Exception ex)
@@ -292,67 +296,13 @@ namespace Fingerprints.ViewModels
             {
                 if (!(LeftDrawingData.LastOrDefault() is EmptyState))
                 {
-                    AddEmptyObject(LeftDrawingService, RightDrawingService);
+                    AddEmptyObjectOnLastPosition(LeftDrawingService, RightDrawingService);
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
-        }
-
-        /// <summary>
-        /// Adds DrawingObject with type 'Empty' to DrawingData
-        /// </summary>
-        /// <param name="_drawingService"></param>
-        /// <param name="_oppositeDrawingService"></param>
-        private void AddEmptyObject(DrawingService _drawingService, DrawingService _oppositeDrawingService)
-        {
-            try
-            {
-                if (CanAddEmptyObjectOnLastPosition(_drawingService, _oppositeDrawingService))
-                {
-                    _drawingService.DrawingData.Add(new EmptyState());
-                }
-
-                if (CanAddEmptyObjectOnLastPosition(_oppositeDrawingService, _drawingService))
-                {
-                    _oppositeDrawingService.DrawingData.Add(new EmptyState());
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        /// <summary>
-        /// Checks if EmptyObject can be added to last index
-        /// </summary>
-        /// <param name="_drawingService"></param>
-        /// <param name="_oppositeDrawingService"></param>
-        /// <returns></returns>
-        private bool CanAddEmptyObjectOnLastPosition(DrawingService _drawingService, DrawingService _oppositeDrawingService)
-        {
-            bool result = true;
-            try
-            {
-                // if DrawingData is empty, return false
-                if (_drawingService.WriteableBitmap == null)
-                    return false;
-
-                // if EmptyObject is on last position and DrawingData has more objects that opposite, returns false
-                if (_drawingService.DrawingData.LastOrDefault() is EmptyState && _oppositeDrawingService.DrawingData.Count <= _drawingService.DrawingData.Count)
-                    return false;
-
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-
-            return result;
         }
 
         /// <summary>
@@ -584,9 +534,9 @@ namespace Fingerprints.ViewModels
                     sorter = new IdSorter(RightDrawingService, LeftDrawingService);
                     sorter.SortById();
 
-                    FillEmpty(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
+                    FillDrawingDataWithEmptyObjects(RightDrawingService, LeftDrawingData.Count - RightDrawingData.Count);
 
-                    AddEmptyObject(RightDrawingService, LeftDrawingService);
+                    AddEmptyObjectOnLastPosition(RightDrawingService, LeftDrawingService);
 
                     RightDrawingService.SetToReplaceColor(null);
                 }
@@ -616,9 +566,9 @@ namespace Fingerprints.ViewModels
                     sorter = new IdSorter(LeftDrawingService, RightDrawingService);
                     sorter.SortById();
 
-                    FillEmpty(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
+                    FillDrawingDataWithEmptyObjects(LeftDrawingService, RightDrawingData.Count - LeftDrawingData.Count);
 
-                    AddEmptyObject(LeftDrawingService, RightDrawingService);
+                    AddEmptyObjectOnLastPosition(LeftDrawingService, RightDrawingService);
 
                     LeftDrawingService.SetToReplaceColor(null);
                 }
@@ -737,27 +687,6 @@ namespace Fingerprints.ViewModels
             {
                 senderObject = ((DrawingService)_sender);
                 SelectedComboboxItem = MinutiaeStates.FirstOrDefault(x => x.MinutiaName == senderObject.CurrentDrawing.MinutiaName);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void FillEmpty(DrawingService _drawingService, int _count)
-        {
-            try
-            {
-                if (_count <= 0 || _drawingService.BackgroundImage == null)
-                {
-                    return;
-                }
-
-                for (
-                    int i = 0; i < _count; i++)
-                {
-                    _drawingService.AddMinutiaToDrawingData(new EmptyState());
-                }
             }
             catch (Exception ex)
             {

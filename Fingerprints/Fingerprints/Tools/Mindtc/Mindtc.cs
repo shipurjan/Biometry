@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Fingerprints.Tools
+namespace Fingerprints.Tools.Mindtc
 {
     class Mindtc : IDisposable
     {
@@ -159,7 +159,6 @@ namespace Fingerprints.Tools
             {
                 //delete temporary directory
                 Directory.Delete(tempDirectoryPath, recursive: true);
-                Dispose();
             }
         }
 
