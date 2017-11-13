@@ -746,7 +746,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                if (_count <= 0)
+                if (_count <= 0 || _drawingService.BackgroundImage == null)
                 {
                     return;
                 }

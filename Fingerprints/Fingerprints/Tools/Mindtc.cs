@@ -182,6 +182,10 @@ namespace Fingerprints.Tools
                 {
                     if (disposing)
                     {
+                        mindtcProcess.ErrorDataReceived -= Process_ErrorDataReceived;
+                        mindtcProcess.OutputDataReceived -= Process_OutputDataReceived;
+                        mindtcProcess.Exited -= Process_Exited;
+
                         mindtcProcess?.Dispose();
                         mindtcProcess = null;
 
