@@ -119,12 +119,17 @@ namespace Fingerprints.ViewModels
 
         private void MindtcDetect(DrawingService _drawingService)
         {
+            _drawingService.IsLoading = true;
+            ImportResult importResult = null;
+            Mindtc mindtc = null;
+            string imagePath = "";
+            DrawingService oppositeDrawingService = null;
             try
             {
-                _drawingService.IsLoading = true;
-                string imagePath = _drawingService.BackgroundImage.UriSource.AbsolutePath;
-                ImportResult importResult = null;
-                Mindtc mindtc = new Mindtc();
+                oppositeDrawingService = _drawingService == LeftDrawingService ? RightDrawingService : LeftDrawingService;
+
+                mindtc = new Mindtc();
+                imagePath = _drawingService.BackgroundImage.UriSource.AbsolutePath;
 
                 mindtc.DetectImage(imagePath);
 
@@ -134,7 +139,6 @@ namespace Fingerprints.ViewModels
 
                     if (importResult.ResultData.AnyOrNotNull())
                     {
-                        DrawingService oppositeDrawingService = _drawingService == LeftDrawingService ? RightDrawingService : LeftDrawingService;
                         //create MitutiaStateBase objects in drawing service
                         MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, _drawingService);
 
@@ -143,6 +147,7 @@ namespace Fingerprints.ViewModels
                         AddEmptyObject(_drawingService, oppositeDrawingService);
 
                         _drawingService.SetToReplaceColor(null);
+
                     }
                     _drawingService.IsLoading = false;
                 };

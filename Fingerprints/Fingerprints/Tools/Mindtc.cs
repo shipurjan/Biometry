@@ -16,12 +16,14 @@ using System.Windows;
 
 namespace Fingerprints.Tools
 {
-    class Mindtc
+    class Mindtc : IDisposable
     {
         public event DetectionComplatedDelegate DetectionCompleted;
         public delegate void DetectionComplatedDelegate(ImportResult _result);
 
         private Process mindtcProcess;
+
+        private Task mindtcTask;
 
         private string PreparedImagePath { set; get; }
 
@@ -45,7 +47,7 @@ namespace Fingerprints.Tools
 
         public void DetectImage(string _ImagePath)
         {
-            Task.Run(() =>
+            mindtcTask = Task.Run(() =>
             {
                 try
                 {
@@ -115,6 +117,7 @@ namespace Fingerprints.Tools
             finally
             {
                 Directory.Delete(tempDirectoryPath, recursive: true);
+                Dispose();
             }
         }
 
@@ -167,5 +170,45 @@ namespace Fingerprints.Tools
             }
             return result;
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            try
+            {
+                if (!disposedValue)
+                {
+                    if (disposing)
+                    {
+                        mindtcProcess?.Dispose();
+                        mindtcProcess = null;
+
+                        mindtcTask?.Dispose();
+                        mindtcTask = null;
+                    }
+
+                    disposedValue = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                Dispose(true);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+        #endregion
     }
 }
