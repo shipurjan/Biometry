@@ -604,8 +604,8 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                string leftFileName = LeftDrawingService.BackgroundImage.GetFileName();
-                string rightFileName = RightDrawingService.BackgroundImage.GetFileName();
+                string leftFileName = LeftDrawingService.FilterImage.FileName;
+                string rightFileName = RightDrawingService.FilterImage.FileName;
 
                 ExportService.SaveAsFileDialog(LeftDrawingData.ToList(), leftFileName, RightDrawingData.ToList(), rightFileName);
             }
@@ -627,9 +627,9 @@ namespace Fingerprints.ViewModels
 
                 //get path to save data as BackgroundImage file name with txt extension
                 if (LeftDrawingService.BackgroundImage != null)
-                    leftPath = Path.ChangeExtension(LeftDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                    leftPath = Path.ChangeExtension(LeftDrawingService.FilterImage.FilePath, ".txt");
                 if (RightDrawingService.BackgroundImage != null)
-                    rightPath = Path.ChangeExtension(RightDrawingService.BackgroundImage.UriSource.AbsolutePath, ".txt");
+                    rightPath = Path.ChangeExtension(RightDrawingService.FilterImage.FilePath, ".txt");
 
                 ExportService.SaveTxt(LeftDrawingData.ToList(), leftPath, RightDrawingData.ToList(), rightPath);
             }

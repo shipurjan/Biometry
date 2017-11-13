@@ -4,6 +4,7 @@ using ExceptionLogger;
 using Fingerprints.Resources;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace Fingerprints.Tools.ImageFilters
 {
-    internal class FilterImageFluentInterface
+    public class FilterImageFluentInterface
     {
         private readonly FilterImage _filterImage;
 
@@ -56,8 +57,8 @@ namespace Fingerprints.Tools.ImageFilters
             Image<Gray, Byte> sobel = null;
             try
             {
-                sobel = new Image<Gray, Byte>(_filterImage.FilteredImage.ToBitmap());
-                _filterImage.FilteredImage = sobel.Sobel(0, 1, 3).Add(sobel.Sobel(1, 0, 3)).AbsDiff(new Gray(0.0)).ToBitmap().ToBitmapImage();
+                sobel = new Image<Gray, Byte>(_filterImage.FilteredImage);
+                _filterImage.FilteredImage = sobel.Sobel(0, 1, 3).Add(sobel.Sobel(1, 0, 3)).AbsDiff(new Gray(0.0)).ToBitmap();                
             }
             catch (Exception ex)
             {
@@ -84,7 +85,7 @@ namespace Fingerprints.Tools.ImageFilters
         /// Return filtered image
         /// </summary>
         /// <returns></returns>
-        public BitmapImage Get()
+        public Bitmap Get()
         {
             return _filterImage.FilteredImage;
         }

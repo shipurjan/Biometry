@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{Binding BackgroundImage.UriSource, FallbackValue=Brak, Converter={StaticResource UriToFileName}}" TextTrimming="CharacterEllipsis" Grid.Column="1" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <TextBlock Text="{Binding FilterImage.FileName, FallbackValue=Brak}" TextTrimming="CharacterEllipsis" Grid.Column="1" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
             <materialDesign:PopupBox Margin="0 0 10 0">
                 <StackPanel>

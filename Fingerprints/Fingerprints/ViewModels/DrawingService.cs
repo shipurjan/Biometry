@@ -37,8 +37,12 @@ namespace Fingerprints.ViewModels
         public MyObservableCollection<MinutiaStateBase> DrawingData { get; }
 
         private Point mousePosition;
-
-        private FilterImage filterImage = null;
+        private FilterImage filterImage;
+        public FilterImage FilterImage
+        {
+            get { return filterImage; }
+            set { SetProperty(ref filterImage, value); }
+        }
 
         #region Props
         /// <summary>
@@ -352,11 +356,11 @@ namespace Fingerprints.ViewModels
 
                 if (openFile.ShowDialog() == true)
                 {
-                    filterImage = new FilterImage(new BitmapImage(new Uri(openFile.FileName)));
+                    FilterImage = new FilterImage(new System.Drawing.Bitmap(openFile.FileName), openFile.FileName);                   
 
-                    BackgroundImage = filterImage.OryginalImage;
+                    BackgroundImage = FilterImage.OryginalImage.ToBitmapImage();
 
-                    WriteableBitmap = new WriteableBitmap(BackgroundImage.PixelWidth, (BackgroundImage.PixelHeight), 96, 96, PixelFormats.Bgra32, null);
+                    WriteableBitmap = new WriteableBitmap(FilterImage.OryginalImage.Width, FilterImage.OryginalImage.Height, 96, 96, PixelFormats.Bgra32, null);
 
                     //Reset drawing
                     DrawingData.Clear();
@@ -513,7 +517,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                BackgroundImage = filterImage.Filter(FilterImageType.None).Get();
+                BackgroundImage = FilterImage.Filter(FilterImageType.None).Get().ToBitmapImage();
             }
             catch (Exception ex)
             {
@@ -525,7 +529,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                BackgroundImage = filterImage.Filter(FilterImageType.Sobel).Get();
+                BackgroundImage = FilterImage.Filter(FilterImageType.Sobel).Get().ToBitmapImage();
             }
             catch (Exception ex)
             {
