@@ -117,6 +117,10 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Starts mindtc detection
+        /// </summary>
+        /// <param name="_drawingService"></param>
         private void MindtcDetect(DrawingService _drawingService)
         {
             _drawingService.IsLoading = true;

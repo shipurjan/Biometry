@@ -18,18 +18,48 @@ namespace Fingerprints.Tools
 {
     class Mindtc : IDisposable
     {
+        /// <summary>
+        /// Event informing that detection is complete
+        /// </summary>
         public event DetectionComplatedDelegate DetectionCompleted;
+
+        /// <summary>
+        /// Delegate used in event
+        /// </summary>
+        /// <param name="_result">Result of detection</param>
         public delegate void DetectionComplatedDelegate(ImportResult _result);
 
+        /// <summary>
+        /// mindtc console process
+        /// </summary>
         private Process mindtcProcess;
 
+        /// <summary>
+        /// mindtc Task for asynchronous operation
+        /// </summary>
         private Task mindtcTask;
 
+        /// <summary>
+        /// Path to temporary image
+        /// </summary>
         private string PreparedImagePath { set; get; }
 
+        /// <summary>
+        /// Path to mindtc app
+        /// </summary>
         private string MindtcPath { get; }
+
+        /// <summary>
+        /// Path to main directory of application
+        /// </summary>
         private string AppDirectoryPath { get; }
+
+        /// <summary>
+        /// path to temp directory used in detection
+        /// </summary>
         private string tempDirectoryPath { get; }
+
+
         public Mindtc()
         {
             try
@@ -45,16 +75,23 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// Starts asynchronous image detection
+        /// </summary>
+        /// <param name="_ImagePath"></param>
         public void DetectImage(string _ImagePath)
         {
             mindtcTask = Task.Run(() =>
             {
                 try
                 {
+                    //Create temporary directory
                     Directory.CreateDirectory(tempDirectoryPath);
 
+                    //Prepares image, saves in 8bits depth
                     PreparedImagePath = PrepareImageAndReturnPath(_ImagePath);
 
+                    //Starts mindtc process
                     StartProcess();
                 }
                 catch (Exception ex)
@@ -64,6 +101,9 @@ namespace Fingerprints.Tools
             });
         }
 
+        /// <summary>
+        /// Starts mindtc process, initializes events 
+        /// </summary>
         public void StartProcess()
         {
             try
@@ -99,12 +139,19 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// mindtcProcess event, occurs when process ended
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Process_Exited(object sender, EventArgs e)
         {
             try
             {
+                //import data from temporary file
                 ImportResult importResult = ImporterService.Import(Path.Combine(tempDirectoryPath, Path.GetFileNameWithoutExtension(PreparedImagePath) + ".xyt"));
 
+                //fire event
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     DetectionCompleted(importResult);
@@ -116,11 +163,17 @@ namespace Fingerprints.Tools
             }
             finally
             {
+                //delete temporary directory
                 Directory.Delete(tempDirectoryPath, recursive: true);
                 Dispose();
             }
         }
 
+        /// <summary>
+        /// mindtc Process event, occurs when console output received data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             try
@@ -136,6 +189,11 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// mindtc Process event, occurs when console output received error
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             try
@@ -151,6 +209,11 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// Prepares Image for mindtc Detection, saves images in 8bits depth
+        /// </summary>
+        /// <param name="_ImagePath"></param>
+        /// <returns></returns>
         private string PrepareImageAndReturnPath(string _ImagePath)
         {
             string result = "";
