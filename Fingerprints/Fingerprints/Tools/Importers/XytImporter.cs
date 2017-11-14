@@ -19,9 +19,22 @@ namespace Fingerprints.Tools.Importers
         {
             using (var db = new FingerContext())
             {
-                vectorMinutia = db.SelfDefinedMinutiaes.Where(x => x.DrawingType == DrawingType.Vector).FirstOrDefault();
-            }
+                vectorMinutia = db.SelfDefinedMinutiaes.Where(x => x.DrawingType == DrawingType.Vector && x.Name == "mindtc").FirstOrDefault();
 
+                if (vectorMinutia == null)
+                {
+                    vectorMinutia = new SelfDefinedMinutiae()
+                    {
+                        ProjectId = Database.currentProject,
+                        DrawingType = DrawingType.Vector,
+                        Name = "mindtc",
+                        Color = "#00a9ff"
+                    };
+
+                    db.SelfDefinedMinutiaes.Add(vectorMinutia);
+                    db.SaveChanges();
+                }
+            }
         }
 
         public List<MinutiaFileState> GetformattedData()

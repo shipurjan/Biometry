@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
@@ -112,51 +113,6 @@ namespace Fingerprints.ViewModels
 
                 LeftDrawingService.NewDrawingInitialized += LeftDrawingService_NewDrawingInitialized;
                 RightDrawingService.NewDrawingInitialized += RightDrawingService_NewDrawingInitialized;
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        /// <summary>
-        /// Starts mindtc detection
-        /// </summary>
-        /// <param name="_drawingService"></param>
-        private void MindtcDetect(DrawingService _drawingService)
-        {
-            _drawingService.IsLoading = true;
-            ImportResult importResult = null;
-            Mindtc mindtc = null;
-            string imagePath = "";
-            DrawingService oppositeDrawingService = null;
-            try
-            {
-                oppositeDrawingService = _drawingService == LeftDrawingService ? RightDrawingService : LeftDrawingService;
-
-                mindtc = new Mindtc();
-                imagePath = _drawingService.BackgroundImage.UriSource.AbsolutePath;
-
-                mindtc.DetectImage(imagePath);
-
-                mindtc.DetectionCompleted += (_result) =>
-                {
-                    importResult = _result;
-
-                    if (importResult.ResultData.AnyOrNotNull())
-                    {
-                        //create MitutiaStateBase objects in drawing service
-                        MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, _drawingService);
-
-                        FillDrawingDataWithEmptyObjects(oppositeDrawingService, _drawingService.DrawingData.Count - oppositeDrawingService.DrawingData.Count);
-
-                        AddEmptyObjectOnLastPosition(_drawingService, oppositeDrawingService);
-
-                        _drawingService.SetToReplaceColor(null);
-
-                    }
-                    _drawingService.IsLoading = false;
-                };
             }
             catch (Exception ex)
             {
