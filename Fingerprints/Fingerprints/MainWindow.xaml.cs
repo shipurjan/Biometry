@@ -24,8 +24,6 @@ namespace Fingerprints
     /// </summary>
     public partial class MainWindow : Window
     {
-        MinutiaeTypeController controller;
-        SelectionChangedEventHandler comboboxHandler = null;
         //public DrawService drawer;
         public MainWindow()
         {
@@ -33,105 +31,6 @@ namespace Fingerprints
             var viewModel = new MainWindowViewModel();
             InitializeComponent();
             DataContext = viewModel;
-
-            //listBoxImageL.ItemsSource = viewModel.LeftDrawingService.DrawingData;
-            //listBoxImageR.ItemsSource = viewModel.RightDrawingService.DrawingData;
-            //comboBox.ItemsSource = viewModel.MinutiaeStates;
-
-            //Application.Current.MainWindow = this;
-            //Picture picture = new Picture(this);
-            //UserMinutiaFactory factory = new UserMinutiaFactory();
-            //drawer = new DrawService(factory);
-            //picture.InitializeR();
-            //picture.InitializeL();
-            controller = new MinutiaeTypeController();
-            //comboBox.ItemsSource = controller.getStates();
-            //InitTable();
-            //saveEvents();
-            //comboBoxChanged();
-            //addEmpty.Click += addEmpty_Click;
-            //listBoxImageL.MouseDown += UnselectOnBlank;
-            //listBoxImageR.MouseDown += UnselectOnBlank;
-        }
-
-        /// <summary>
-        /// Unselect items in Listbox if mouse click on blank space of listbox
-        /// </summary>
-        /// <param name="_sender"></param>
-        /// <param name="_args"></param>
-        private void UnselectOnBlank(object _sender, MouseButtonEventArgs _args)
-        {
-            var sender = (DataGrid)_sender;
-            HitTestResult hitTestResult = VisualTreeHelper.HitTest(sender, _args.GetPosition(sender));
-            Control controlUnderMouse = hitTestResult.VisualHit.GetParentOfType<Control>();
-            if (controlUnderMouse is DataGrid)
-            {
-
-            }
-        }
-
-        //public void comboBoxChanged()
-        //{
-        //    comboboxHandler += (ss, ee) =>
-        //    {
-        //        if (comboBox.SelectedValue != null)
-        //        {
-        //            drawer.startNewDrawing(comboBox.SelectedItem as MinutiaState);
-        //        }
-        //    };
-
-        //    comboBox.SelectionChanged += comboboxHandler;
-        //}
-
-        public void setComboboxTitle(int index = -1)
-        {
-            comboBox.SelectionChanged -= comboboxHandler;
-            comboBox.SelectedIndex = index;
-            comboBox.SelectionChanged += comboboxHandler;
-        }
-
-        //public void InitTable()
-        //{
-        //    Table table = new Table();
-        //}
-
-        //public void saveEvents()
-        //{
-        //    this.Closing += (ss, ee) =>
-        //    {
-        //        if (MessageBox.Show("Czy zapisać zmiany?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-        //        {
-        //            FileTransfer.Save();
-        //        }
-        //    };
-
-        //    saveButton.Click += (ss, ee) =>
-        //    {
-        //        FileTransfer.Save();
-        //    };
-        //}
-
-        private void saveAs_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "xyt|*.xyt";
-            saveFileDialog1.Title = "Save an Image File";
-            saveFileDialog1.ShowDialog();
-
-            if (saveFileDialog1.FileName != "")
-            {
-                switch (saveFileDialog1.FilterIndex)
-                {
-                    case 1:
-                        FileTransfer.ConvertToXytAndSave(saveFileDialog1.FileName);
-                        break;
-                }
-            }
-        }
-
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
