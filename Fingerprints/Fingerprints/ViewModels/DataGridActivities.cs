@@ -9,7 +9,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Fingerprints.ViewModels
 {
@@ -69,6 +71,20 @@ namespace Fingerprints.ViewModels
             DrawingObjectClickChangedCommand = new DelegateCommand<GridClickedItemPosition>(DrawingObjectClickChanged);
         }
 
+        public void MouseDownCommand(object _sender, MouseButtonEventArgs _args)
+        {
+            var sender = (DataGrid)_sender;
+            HitTestResult hitTestResult = VisualTreeHelper.HitTest(sender, _args.GetPosition(sender));
+            Control controlUnderMouse = hitTestResult.VisualHit.GetParentOfType<Control>();
+
+            if (controlUnderMouse is DataGrid)
+            {
+                LeftDrawingDecorator.ShowOnlyIndex(null);
+                RightDrawingDecorator.ShowOnlyIndex(null);
+            }
+
+        }
+
         /// <summary>
         /// Event occurs when selection of DrawingObject changed on grid
         /// </summary>
@@ -95,13 +111,13 @@ namespace Fingerprints.ViewModels
                 {
                     SetCurrentDrawing(LeftDrawingService, RightDrawingService);
 
-                    LeftDrawingDecorator.ShowOnlyIndex(ClickedPosition.RowIndex);
+                    LeftDrawingDecorator.ShowOnlyIndex(LeftDrawingService.SelectedIndex);
                 }
                 else if (ClickedPosition.CellIndex == Columns.SecondImage)
                 {
                     SetCurrentDrawing(RightDrawingService, LeftDrawingService);
 
-                    RightDrawingDecorator.ShowOnlyIndex(ClickedPosition.RowIndex);
+                    RightDrawingDecorator.ShowOnlyIndex(RightDrawingService.SelectedIndex);
                 }
             }
             catch (Exception ex)

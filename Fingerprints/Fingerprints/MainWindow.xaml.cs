@@ -33,7 +33,7 @@ namespace Fingerprints
             var viewModel = new MainWindowViewModel();
             InitializeComponent();
             DataContext = viewModel;
-            
+
             //listBoxImageL.ItemsSource = viewModel.LeftDrawingService.DrawingData;
             //listBoxImageR.ItemsSource = viewModel.RightDrawingService.DrawingData;
             //comboBox.ItemsSource = viewModel.MinutiaeStates;
@@ -61,11 +61,12 @@ namespace Fingerprints
         /// <param name="_args"></param>
         private void UnselectOnBlank(object _sender, MouseButtonEventArgs _args)
         {
-            HitTestResult hitTestResult = VisualTreeHelper.HitTest((ListBox)_sender, _args.GetPosition((ListBox)_sender));
+            var sender = (DataGrid)_sender;
+            HitTestResult hitTestResult = VisualTreeHelper.HitTest(sender, _args.GetPosition(sender));
             Control controlUnderMouse = hitTestResult.VisualHit.GetParentOfType<Control>();
-            if (controlUnderMouse is ListBox)
+            if (controlUnderMouse is DataGrid)
             {
-                ((ListBox)_sender).UnselectAll();
+
             }
         }
 

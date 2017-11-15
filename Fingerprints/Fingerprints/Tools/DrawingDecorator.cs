@@ -24,21 +24,34 @@ namespace Fingerprints.Tools
             }
         }
 
-        public void ShowOnlyIndex(int _index)
+        public void ShowOnlyIndex(int? _index)
         {
             Color temp;
+            byte alphaValue = 255;
             try
             {
+                if (_index.HasValue)
+                {
+                    alphaValue = 150;
+                }
+                else
+                {
+                    alphaValue = 255;
+                }
+
                 foreach (var item in DrawingService.DrawingData)
                 {
                     temp = item.Color;
-                    temp.A = 200;
+                    temp.A = alphaValue;
                     item.Color = temp;
                 }
 
-                temp = DrawingService.DrawingData[_index].Color;
-                temp.A = 255;
-                DrawingService.DrawingData[_index].Color = temp;
+                if (_index.HasValue)
+                {
+                    temp = DrawingService.DrawingData[_index.Value].Color;
+                    temp.A = 255;
+                    DrawingService.DrawingData[_index.Value].Color = temp;
+                }
 
                 DrawingService.Draw();
             }

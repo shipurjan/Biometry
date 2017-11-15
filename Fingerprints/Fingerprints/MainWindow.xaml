@@ -241,6 +241,11 @@
                     <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
                               SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False"
                               AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <ei:CallMethodAction TargetObject="{Binding DataGridActivities}" MethodName="MouseDownCommand" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Nr" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -365,8 +370,8 @@
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
                                         <Setter Property="Padding" Value="0" />
                                         <Setter Property="Cursor" Value="Hand" />
-                                        <Setter Property="BorderThickness" Value="0" />
-                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
