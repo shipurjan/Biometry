@@ -24,6 +24,10 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// Sets opacity to all drawingObjects except at specific index
+        /// </summary>
+        /// <param name="_index"></param>
         public void ShowOnlyIndex(int? _index)
         {
             Color temp;
