@@ -15,6 +15,7 @@
                 <Setter Property="Height" Value="25"/>
                 <Setter Property="Width" Value="150" />
                 <Setter Property="Background" Value="#FFEEEEEE" />
+                <Setter Property="Foreground" Value="#FF8D8D8D" />
             </Style>
             <Style TargetType="ContextMenu" x:Key="contextMenuStyles" BasedOn="{StaticResource MaterialDesignContextMenu}" />
             <Style TargetType="MenuItem" x:Key="menuItemStyles" BasedOn="{StaticResource MaterialDesignMenuItem}" />

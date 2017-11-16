@@ -14,7 +14,7 @@ namespace Fingerprints.Tools.Importers
 {
     public class TxtImporter : ImporterBase, IDataImporter
     {
-        public TxtImporter(DrawingService _drawingService) : base(_drawingService)
+        public TxtImporter() : base()
         {
         }
 

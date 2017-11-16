@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExceptionLogger;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,6 +15,18 @@ namespace Fingerprints.Models
         public string Name { get; set; }
         public double Angle { get; set; }
         public List<Point> Points { get; set; }
+
+        public MinutiaFileState()
+        {
+            try
+            {
+                Points = new List<Point>();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
 
         public MinutiaState ToMinutiaState()
         {

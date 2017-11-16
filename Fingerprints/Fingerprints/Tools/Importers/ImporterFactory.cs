@@ -16,7 +16,7 @@ namespace Fingerprints.Tools.Importers
         /// <param name="_type"></param>
         /// <param name="_drawingService"></param>
         /// <returns></returns>
-        public static IDataImporter Create(ImportTypes _type, DrawingService _drawingService)
+        public static IDataImporter Create(ImportTypes _type)
         {
             IDataImporter result = null;
             try
@@ -24,7 +24,10 @@ namespace Fingerprints.Tools.Importers
                 switch (_type)
                 {
                     case ImportTypes.txt:
-                        result = new TxtImporter(_drawingService);
+                        result = new TxtImporter();
+                        break;
+                    case ImportTypes.xyt:
+                        result = new XytImporter();
                         break;
                 }
             }

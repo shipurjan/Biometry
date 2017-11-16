@@ -90,7 +90,17 @@ namespace Fingerprints.ViewModels
             { SetProperty(ref selectedIndex, value != -1 ? value : null); }
         }
 
+        private bool isLoading;
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set { SetProperty(ref isLoading, value); }
+        }
+
+
         #endregion
+
+        public ICommand MindtcIdentifyCommand { get; }
 
         /// <summary>
         /// Initializes new instance
@@ -101,7 +111,7 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
-                //AcceptButtonVisibility = false;
+                IsLoading = false;
             }
             catch (Exception ex)
             {
@@ -356,7 +366,7 @@ namespace Fingerprints.ViewModels
                     }
 
                     //import data from file
-                    importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"), this);
+                    importResult = ImporterService.Import(Path.ChangeExtension(openFile.FileName, ".txt"));
 
                     if (importResult.ResultData.AnyOrNotNull())
                     {
