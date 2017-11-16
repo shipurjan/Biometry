@@ -2,13 +2,16 @@
 using Fingerprints.Converters;
 using Fingerprints.Factories;
 using Fingerprints.MinutiaeTypes;
+using Fingerprints.Tools;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Fingerprints.ViewModels
 {
@@ -42,7 +45,6 @@ namespace Fingerprints.ViewModels
 
             }
         }
-
 
         public ICommand DrawingObjectClickChangedCommand { get; }
 
@@ -87,10 +89,14 @@ namespace Fingerprints.ViewModels
                 if (ClickedPosition.CellIndex == Columns.FirstImage)
                 {
                     SetCurrentDrawing(LeftDrawingService, RightDrawingService);
+                    
+                    SetDeforation_SelectedObject(LeftDrawingService);
                 }
                 else if (ClickedPosition.CellIndex == Columns.SecondImage)
                 {
                     SetCurrentDrawing(RightDrawingService, LeftDrawingService);
+
+                    SetDeforation_SelectedObject(RightDrawingService);
                 }
             }
             catch (Exception ex)
@@ -99,11 +105,29 @@ namespace Fingerprints.ViewModels
             }
         }
 
+        /// <summary>
+        /// Changes Color of drawing objects, to all sets opacity to half, for selected to 100%
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        private void SetDeforation_SelectedObject(DrawingService _drawingService)
+        {
+            if (_drawingService.SelectedIndex.HasValue && _drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+            {
+                //sets to all drawing objects opacity 100%
+                _drawingService.Decorator.ShowOnlyIndex();
+            }
+            else
+            {
+                //sets opacity 100% only for specific index
+                _drawingService.Decorator.ShowOnlyIndex(_drawingService.SelectedIndex);
+            }
+        }
+
         private void SetCurrentDrawing(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
             try
             {
-                if (_drawingService.SelectedIndex.HasValue && _drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+                if (CanSetCurrentDrawingToDrawingService(_drawingService))
                 {
                     //get SelfDefinedMinutiae
                     var minutia = _oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].Minutia;
@@ -114,7 +138,7 @@ namespace Fingerprints.ViewModels
                     //sets CurrentDrawing in DrawingService which draws without index
                     _oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia, _oppositeDrawingService.WriteableBitmap);
                 }
-                else if (_drawingService.SelectedIndex.HasValue && _oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+                else if (CanSetCurrentDrawingToOppositeDrawingService(_drawingService, _oppositeDrawingService))
                 {
                     //get SelfDefinedMinutiae
                     var minutia = _drawingService.DrawingData[_drawingService.SelectedIndex.Value].Minutia;
@@ -130,6 +154,63 @@ namespace Fingerprints.ViewModels
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        /// <summary>
+        /// Checks if current drawing in opposite drawing service can be changed
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        /// <returns></returns>
+        private bool CanSetCurrentDrawingToOppositeDrawingService(DrawingService _drawingService, DrawingService _oppositeDrawingService)
+        {
+            bool result = true;
+            try
+            {
+                if (!_drawingService.SelectedIndex.HasValue)
+                    return false;
+
+                if (_oppositeDrawingService.DrawingData.Count <= 0)
+                    return false;
+
+                //Drawing object on selectedIndex must be EmptyState type
+                if (_oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() != typeof(EmptyState))
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+                result = false;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Checks if current drawing in drawing service can be changed
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <returns></returns>
+        private bool CanSetCurrentDrawingToDrawingService(DrawingService _drawingService)
+        {
+            bool result = true;
+            try
+            {
+                if (!_drawingService.SelectedIndex.HasValue)
+                    return false;
+
+                if (_drawingService.DrawingData.Count <= 0)
+                    return false;
+
+                //Drawing object on selectedIndex must be EmptyState type
+                if (_drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() != typeof(EmptyState))
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+                result = false;
+            }
+            return result;
         }
 
         /// <summary>
