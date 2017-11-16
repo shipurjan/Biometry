@@ -89,19 +89,37 @@ namespace Fingerprints.ViewModels
                 if (ClickedPosition.CellIndex == Columns.FirstImage)
                 {
                     SetCurrentDrawing(LeftDrawingService, RightDrawingService);
-
-                    LeftDrawingService.Decorator.ShowOnlyIndex(LeftDrawingService.SelectedIndex);
+                    
+                    SetDeforation_SelectedObject(LeftDrawingService);
                 }
                 else if (ClickedPosition.CellIndex == Columns.SecondImage)
                 {
                     SetCurrentDrawing(RightDrawingService, LeftDrawingService);
 
-                    RightDrawingService.Decorator.ShowOnlyIndex(RightDrawingService.SelectedIndex);
+                    SetDeforation_SelectedObject(RightDrawingService);
                 }
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Changes Color of drawing objects, to all sets opacity to half, for selected to 100%
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        private void SetDeforation_SelectedObject(DrawingService _drawingService)
+        {
+            if (_drawingService.SelectedIndex.HasValue && _drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+            {
+                //sets to all drawing objects opacity 100%
+                _drawingService.Decorator.ShowOnlyIndex(null);
+            }
+            else
+            {
+                //sets opacity 100% only for specific index
+                _drawingService.Decorator.ShowOnlyIndex(_drawingService.SelectedIndex);
             }
         }
 
