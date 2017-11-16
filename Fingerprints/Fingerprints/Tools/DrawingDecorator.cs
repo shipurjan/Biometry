@@ -27,8 +27,8 @@ namespace Fingerprints.Tools
         /// <summary>
         /// Sets opacity to all drawingObjects except at specific index
         /// </summary>
-        /// <param name="_index"></param>
-        public void ShowOnlyIndex(int? _index)
+        /// <param name="_index">default null, method will be set alpha to default value (255)</param>
+        public void ShowOnlyIndex(int? _index = null)
         {
             Color temp;
             byte alphaValue = 255;

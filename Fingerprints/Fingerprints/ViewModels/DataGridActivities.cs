@@ -114,7 +114,7 @@ namespace Fingerprints.ViewModels
             if (_drawingService.SelectedIndex.HasValue && _drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
             {
                 //sets to all drawing objects opacity 100%
-                _drawingService.Decorator.ShowOnlyIndex(null);
+                _drawingService.Decorator.ShowOnlyIndex();
             }
             else
             {

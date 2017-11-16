@@ -158,7 +158,7 @@ namespace Fingerprints.ViewModels
                     }
                 }
 
-                Decorator.ShowOnlyIndex(null);
+                Decorator.ShowOnlyIndex();
                 Draw();
             }
             catch (Exception ex)
