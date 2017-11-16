@@ -22,7 +22,7 @@ namespace Fingerprints.Tools.Importers
         /// <summary>
         /// Represent data prepared by importer
         /// </summary>
-        public List<MinutiaFileState> ResultData { get; }
+        public List<MinutiaFileState> ResultData { get; set; }
 
         /// <summary>
         /// if Success return fail, this property will contain error message

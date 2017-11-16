@@ -148,7 +148,7 @@
 
                 <!--table-->
                 <ColumnDefinition Width="20*" MaxWidth="300" MinWidth="250"/>
-            </Grid.ColumnDefinitions> 
+            </Grid.ColumnDefinitions>
 
             <!--leftCanvas-->
             <Grid Grid.Column="0">
@@ -374,6 +374,8 @@
                     </DataGrid>
                 </Grid>
             </Grid>
+            <UserControls:LoadingOverlay Visibility="{Binding LeftDrawingService.IsLoading, Converter={StaticResource BoolToVis}}" Grid.Column="0"></UserControls:LoadingOverlay>
+            <UserControls:LoadingOverlay Visibility="{Binding RightDrawingService.IsLoading, Converter={StaticResource BoolToVis}}" Grid.Column="1"></UserControls:LoadingOverlay>
         </Grid>
     </Grid>
 </Window>
