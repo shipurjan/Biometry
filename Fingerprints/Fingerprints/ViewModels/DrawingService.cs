@@ -32,11 +32,20 @@ namespace Fingerprints.ViewModels
 
         public event EventHandler DrawingObjectAdded;
 
-        public MyObservableCollection<MinutiaStateBase> DrawingData { get; }
-
+        /// <summary>
+        /// Helper variable used for moving image
+        /// </summary>
         private Point mousePosition;
 
         #region Props
+
+        public DrawingDecorator Decorator { get; }
+
+        /// <summary>
+        /// MyObservableCollection of Drawing Data 
+        /// </summary>
+        public MyObservableCollection<MinutiaStateBase> DrawingData { get; }
+
         /// <summary>
         /// Current Drawing, on set raise event CurrentDrawingChanged
         /// </summary>
@@ -101,7 +110,7 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
-                //AcceptButtonVisibility = false;
+                Decorator = new DrawingDecorator(this);
             }
             catch (Exception ex)
             {
@@ -149,6 +158,7 @@ namespace Fingerprints.ViewModels
                     }
                 }
 
+                Decorator.ShowOnlyIndex(null);
                 Draw();
             }
             catch (Exception ex)
@@ -416,22 +426,6 @@ namespace Fingerprints.ViewModels
                 CurrentDrawing = MinutiaStateFactory.Create(CurrentDrawing.Minutia, WriteableBitmap);
 
                 NewDrawingInitialized(this, null);
-
-                if (CurrentDrawing.Minutia.DrawingType == Models.DrawingType.CurveLine)
-                {
-                    InitializeActionButtonForCurveLine();
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void InitializeActionButtonForCurveLine()
-        {
-            try
-            {
             }
             catch (Exception ex)
             {

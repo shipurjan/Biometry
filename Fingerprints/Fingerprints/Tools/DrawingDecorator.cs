@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace Fingerprints.Tools
 {
-    class DrawingDecorator
+    public class DrawingDecorator
     {
         private DrawingService DrawingService { get; }
         public DrawingDecorator(DrawingService _drawingService)
@@ -34,14 +34,7 @@ namespace Fingerprints.Tools
             byte alphaValue = 255;
             try
             {
-                if (_index.HasValue)
-                {
-                    alphaValue = 150;
-                }
-                else
-                {
-                    alphaValue = 255;
-                }
+                alphaValue = _index.HasValue ? (byte)150 : (byte)255;
 
                 foreach (var item in DrawingService.DrawingData)
                 {

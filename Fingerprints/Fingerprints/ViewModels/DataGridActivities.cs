@@ -20,9 +20,6 @@ namespace Fingerprints.ViewModels
         private DrawingService LeftDrawingService { get; }
         private DrawingService RightDrawingService { get; }
 
-        private DrawingDecorator LeftDrawingDecorator { get; }
-        private DrawingDecorator RightDrawingDecorator { get; }
-
         public ObservableCollection<GridViewModel> GridViewModelList { get; }
 
         /// <summary>
@@ -49,7 +46,6 @@ namespace Fingerprints.ViewModels
             }
         }
 
-
         public ICommand DrawingObjectClickChangedCommand { get; }
 
         public ICommand DeleteButtonCommand { get; }
@@ -61,28 +57,11 @@ namespace Fingerprints.ViewModels
             LeftDrawingService = _leftDrawingService;
             RightDrawingService = _rightDrawingService;
 
-            LeftDrawingDecorator = new DrawingDecorator(_leftDrawingService);
-            RightDrawingDecorator = new DrawingDecorator(_rightDrawingService);
-
             LeftDrawingService.DrawingData.CollectionChanged += LeftDrawingDataChanged;
             RightDrawingService.DrawingData.CollectionChanged += RightDrawingDataChanged;
 
             DeleteButtonCommand = new DelegateCommand<object>(DeleteButtonClick);
             DrawingObjectClickChangedCommand = new DelegateCommand<GridClickedItemPosition>(DrawingObjectClickChanged);
-        }
-
-        public void MouseDownCommand(object _sender, MouseButtonEventArgs _args)
-        {
-            var sender = (DataGrid)_sender;
-            HitTestResult hitTestResult = VisualTreeHelper.HitTest(sender, _args.GetPosition(sender));
-            Control controlUnderMouse = hitTestResult.VisualHit.GetParentOfType<Control>();
-
-            if (controlUnderMouse is DataGrid)
-            {
-                LeftDrawingDecorator.ShowOnlyIndex(null);
-                RightDrawingDecorator.ShowOnlyIndex(null);
-            }
-
         }
 
         /// <summary>
@@ -111,13 +90,13 @@ namespace Fingerprints.ViewModels
                 {
                     SetCurrentDrawing(LeftDrawingService, RightDrawingService);
 
-                    LeftDrawingDecorator.ShowOnlyIndex(LeftDrawingService.SelectedIndex);
+                    LeftDrawingService.Decorator.ShowOnlyIndex(LeftDrawingService.SelectedIndex);
                 }
                 else if (ClickedPosition.CellIndex == Columns.SecondImage)
                 {
                     SetCurrentDrawing(RightDrawingService, LeftDrawingService);
 
-                    RightDrawingDecorator.ShowOnlyIndex(RightDrawingService.SelectedIndex);
+                    RightDrawingService.Decorator.ShowOnlyIndex(RightDrawingService.SelectedIndex);
                 }
             }
             catch (Exception ex)
@@ -130,7 +109,7 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                if (_drawingService.SelectedIndex.HasValue && _drawingService.DrawingData.Count > 0 && _drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+                if (CanSetCurrentDrawingToDrawingService(_drawingService))
                 {
                     //get SelfDefinedMinutiae
                     var minutia = _oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].Minutia;
@@ -141,7 +120,7 @@ namespace Fingerprints.ViewModels
                     //sets CurrentDrawing in DrawingService which draws without index
                     _oppositeDrawingService.CurrentDrawing = MinutiaStateFactory.Create(minutia, _oppositeDrawingService.WriteableBitmap);
                 }
-                else if (_drawingService.SelectedIndex.HasValue && _oppositeDrawingService.DrawingData.Count > 0 && _oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() == typeof(EmptyState))
+                else if (CanSetCurrentDrawingToOppositeDrawingService(_drawingService, _oppositeDrawingService))
                 {
                     //get SelfDefinedMinutiae
                     var minutia = _drawingService.DrawingData[_drawingService.SelectedIndex.Value].Minutia;
@@ -157,6 +136,63 @@ namespace Fingerprints.ViewModels
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        /// <summary>
+        /// Checks if current drawing in opposite drawing service can be changed
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="_oppositeDrawingService"></param>
+        /// <returns></returns>
+        private bool CanSetCurrentDrawingToOppositeDrawingService(DrawingService _drawingService, DrawingService _oppositeDrawingService)
+        {
+            bool result = true;
+            try
+            {
+                if (!_drawingService.SelectedIndex.HasValue)
+                    return false;
+
+                if (_oppositeDrawingService.DrawingData.Count <= 0)
+                    return false;
+
+                //Drawing object on selectedIndex must be EmptyState type
+                if (_oppositeDrawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() != typeof(EmptyState))
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+                result = false;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Checks if current drawing in drawing service can be changed
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <returns></returns>
+        private bool CanSetCurrentDrawingToDrawingService(DrawingService _drawingService)
+        {
+            bool result = true;
+            try
+            {
+                if (!_drawingService.SelectedIndex.HasValue)
+                    return false;
+
+                if (_drawingService.DrawingData.Count <= 0)
+                    return false;
+
+                //Drawing object on selectedIndex must be EmptyState type
+                if (_drawingService.DrawingData[_drawingService.SelectedIndex.Value].GetType() != typeof(EmptyState))
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+                result = false;
+            }
+            return result;
         }
 
         /// <summary>
