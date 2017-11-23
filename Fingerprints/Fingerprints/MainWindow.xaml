@@ -281,7 +281,7 @@
                                                             </Setter>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
-                                                            <Setter Property="Background" Value="#FFEEEEEE"></Setter>
+                                                            <Setter Property="Background" Value="#FAFAFA"></Setter>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -292,6 +292,13 @@
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
                                         <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
@@ -327,7 +334,7 @@
                                                             </Setter>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
-                                                            <Setter Property="Background" Value="#FFEEEEEE"></Setter>
+                                                            <Setter Property="Background" Value="#FAFAFA"></Setter>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -338,6 +345,13 @@
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
                                         <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
@@ -371,6 +385,11 @@
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Background" Value="#fafafa" />
+                            </Style>
+                        </DataGrid.RowStyle>
                     </DataGrid>
                 </Grid>
             </Grid>
