@@ -26,7 +26,7 @@ namespace Fingerprints.Tools.ImageFilters
         /// </summary>
         /// <param name="_filterType"></param>
         /// <returns></returns>
-        public FilterImageFluentInterface Filter(FilterImageType _filterType)
+        public FilterImageFluentInterface Filter(FilterImageType _filterType, params object[] _parameters)
         {
             try
             {
@@ -37,6 +37,9 @@ namespace Fingerprints.Tools.ImageFilters
                         break;
                     case FilterImageType.Sobel:
                         FilterBySobel();
+                        break;
+                    case FilterImageType.Gauss:
+                        FilterByGauss(_parameters);
                         break;
                     default:
                         break;
@@ -58,7 +61,27 @@ namespace Fingerprints.Tools.ImageFilters
             try
             {
                 sobel = new Image<Gray, Byte>(_filterImage.FilteredImage);
-                _filterImage.FilteredImage = sobel.Sobel(0, 1, 3).Add(sobel.Sobel(1, 0, 3)).AbsDiff(new Gray(0.0)).ToBitmap();                
+                _filterImage.FilteredImage = sobel.Sobel(0, 1, 3)
+                                            .Add(sobel.Sobel(1, 0, 3))
+                                            .AbsDiff(new Gray(0.0)).ToBitmap();                
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Filter using gauss
+        /// </summary>
+        private void FilterByGauss(params object[] _parameters)
+        {
+            Image<Gray, Byte> gauss = null;
+            try
+            {
+                gauss = new Image<Gray, Byte>(_filterImage.FilteredImage);
+                _filterImage.FilteredImage = gauss.SmoothGaussian(Convert.ToInt32(_parameters[0]))
+                                            .ToBitmap();
             }
             catch (Exception ex)
             {

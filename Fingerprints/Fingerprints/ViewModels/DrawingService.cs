@@ -100,8 +100,7 @@ namespace Fingerprints.ViewModels
 
         #endregion
 
-        public ICommand NoneFilterCommand { get; }
-        public ICommand SobelFilterCommand { get; }
+        public ICommand FilterCommand { get; }
 
         /// <summary>
         /// Initializes new instance
@@ -112,8 +111,7 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
-                NoneFilterCommand = new DelegateCommand(NoneFilter);
-                SobelFilterCommand = new DelegateCommand(SobelFilter);
+                FilterCommand = new DelegateCommand<string>(Filter);
                 //AcceptButtonVisibility = false;
             }
             catch (Exception ex)
@@ -513,23 +511,30 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        private void NoneFilter()
+        /// <summary>
+        /// Filter image 
+        /// </summary>
+        /// <param name="_filterType"></param>
+        private void Filter(string _filterType)
         {
+            FilterImageType myFilter = FilterImageType.None;
             try
             {
-                BackgroundImage = FilterImage.Filter(FilterImageType.None).Get().ToBitmapImage();
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void SobelFilter()
-        {
-            try
-            {
-                BackgroundImage = FilterImage.Filter(FilterImageType.Sobel).Get().ToBitmapImage();
+                Enum.TryParse(_filterType, out myFilter);
+                switch (myFilter)
+                {
+                    case FilterImageType.None:
+                        BackgroundImage = filterImage.Filter(myFilter).Get().ToBitmapImage();
+                        break;
+                    case FilterImageType.Sobel:
+                        BackgroundImage = filterImage.Filter(myFilter, 3).Get().ToBitmapImage();
+                        break;
+                    case FilterImageType.Gauss:
+                        BackgroundImage = filterImage.Filter(myFilter, 5).Get().ToBitmapImage();
+                        break;
+                    default:
+                        break;
+                }
             }
             catch (Exception ex)
             {

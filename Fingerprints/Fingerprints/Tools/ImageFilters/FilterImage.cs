@@ -38,9 +38,9 @@ namespace Fingerprints.Tools.ImageFilters
             }
         }
 
-        public FilterImageFluentInterface Filter(FilterImageType type)
+        public FilterImageFluentInterface Filter(FilterImageType type, params object[] _parameters)
         {
-            _set.Filter(type);
+            _set.Filter(type, _parameters);
             return _set;
         }
     }
