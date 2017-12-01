@@ -10,5 +10,6 @@ namespace Fingerprints.Tools.ImageFilters
     {
         None = 0,
         Sobel = 1,
+        Gauss = 2,
     }
 }

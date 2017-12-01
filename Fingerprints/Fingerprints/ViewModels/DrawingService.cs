@@ -37,8 +37,12 @@ namespace Fingerprints.ViewModels
         public MyObservableCollection<MinutiaStateBase> DrawingData { get; }
 
         private Point mousePosition;
-
-        private FilterImage filterImage = null;
+        private FilterImage filterImage;
+        public FilterImage FilterImage
+        {
+            get { return filterImage; }
+            set { SetProperty(ref filterImage, value); }
+        }
 
         #region Props
         /// <summary>
@@ -96,8 +100,7 @@ namespace Fingerprints.ViewModels
 
         #endregion
 
-        public ICommand NoneFilterCommand { get; }
-        public ICommand SobelFilterCommand { get; }
+        public ICommand FilterCommand { get; }
 
         /// <summary>
         /// Initializes new instance
@@ -108,8 +111,7 @@ namespace Fingerprints.ViewModels
             {
                 DrawingData = new MyObservableCollection<MinutiaStateBase>();
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
-                NoneFilterCommand = new DelegateCommand(NoneFilter);
-                SobelFilterCommand = new DelegateCommand(SobelFilter);
+                FilterCommand = new DelegateCommand<string>(Filter);
                 //AcceptButtonVisibility = false;
             }
             catch (Exception ex)
@@ -352,11 +354,11 @@ namespace Fingerprints.ViewModels
 
                 if (openFile.ShowDialog() == true)
                 {
-                    filterImage = new FilterImage(new BitmapImage(new Uri(openFile.FileName)));
+                    FilterImage = new FilterImage(new System.Drawing.Bitmap(openFile.FileName), openFile.FileName);                   
 
-                    BackgroundImage = filterImage.OryginalImage;
+                    BackgroundImage = FilterImage.OryginalImage.ToBitmapImage();
 
-                    WriteableBitmap = new WriteableBitmap(BackgroundImage.PixelWidth, (BackgroundImage.PixelHeight), 96, 96, PixelFormats.Bgra32, null);
+                    WriteableBitmap = new WriteableBitmap(FilterImage.OryginalImage.Width, FilterImage.OryginalImage.Height, 96, 96, PixelFormats.Bgra32, null);
 
                     //Reset drawing
                     DrawingData.Clear();
@@ -509,23 +511,30 @@ namespace Fingerprints.ViewModels
             }
         }
 
-        private void NoneFilter()
+        /// <summary>
+        /// Filter image 
+        /// </summary>
+        /// <param name="_filterType"></param>
+        private void Filter(string _filterType)
         {
+            FilterImageType myFilter = FilterImageType.None;
             try
             {
-                BackgroundImage = filterImage.Filter(FilterImageType.None).Get();
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void SobelFilter()
-        {
-            try
-            {
-                BackgroundImage = filterImage.Filter(FilterImageType.Sobel).Get();
+                Enum.TryParse(_filterType, out myFilter);
+                switch (myFilter)
+                {
+                    case FilterImageType.None:
+                        BackgroundImage = filterImage.Filter(myFilter).Get().ToBitmapImage();
+                        break;
+                    case FilterImageType.Sobel:
+                        BackgroundImage = filterImage.Filter(myFilter, 3).Get().ToBitmapImage();
+                        break;
+                    case FilterImageType.Gauss:
+                        BackgroundImage = filterImage.Filter(myFilter, 5).Get().ToBitmapImage();
+                        break;
+                    default:
+                        break;
+                }
             }
             catch (Exception ex)
             {

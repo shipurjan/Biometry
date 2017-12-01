@@ -18,12 +18,13 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{Binding BackgroundImage.UriSource, FallbackValue=Brak, Converter={StaticResource UriToFileName}}" TextTrimming="CharacterEllipsis" Grid.Column="1" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <TextBlock Text="{Binding FilterImage.FileName, FallbackValue=Brak}" TextTrimming="CharacterEllipsis" Grid.Column="1" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
             <materialDesign:PopupBox Margin="0 0 10 0">
                 <StackPanel>
-                    <Button x:Name="NoneFilter" Content="None" Command="{Binding NoneFilterCommand}"></Button>
-                    <Button x:Name="SobelFilter" Content="Sobel" Command="{Binding SobelFilterCommand}"></Button>
+                    <Button x:Name="NoneFilter" Content="None" Command="{Binding FilterCommand}" CommandParameter="None"></Button>
+                    <Button x:Name="SobelFilter" Content="Sobel" Command="{Binding FilterCommand}" CommandParameter="Sobel"></Button>
+                    <Button x:Name="GaussFilter" Content="Gauss" Command="{Binding FilterCommand}" CommandParameter="Gauss"></Button>
                 </StackPanel>
                 
                 
