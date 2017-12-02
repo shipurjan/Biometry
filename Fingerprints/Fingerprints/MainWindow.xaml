@@ -249,10 +249,10 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Typ 1" Width="70">
+                            <DataGridTemplateColumn Header="Typ 1" Width="70" CellStyle="{StaticResource GridCell}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel ContextMenu="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                        <StackPanel ContextMenu="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource LeftCellStackPanel}">
                                             <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <!--<TextBlock Text="{Binding LeftDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                                             <i:Interaction.Triggers>
@@ -267,45 +267,14 @@
                                                     </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
-                                            <StackPanel.Style>
-                                                <Style TargetType="{x:Type StackPanel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
-                                                            <Setter Property="Background">
-                                                                <Setter.Value>
-                                                                    <RadialGradientBrush>
-                                                                        <GradientStop Color="#FFEEEEEE" Offset="0"/>
-                                                                        <GradientStop Color="#FFBDBDBD" Offset="1"/>
-                                                                    </RadialGradientBrush>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
-                                                            <Setter Property="Background" Value="#FAFAFA"></Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </StackPanel.Style>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellStyle>
-                                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
-                                        <Setter Property="Padding" Value="0" />
-                                        <Setter Property="Cursor" Value="Hand" />
-                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter Property="BorderBrush" Value="Transparent" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Typ 2" Width="70">
+                            <DataGridTemplateColumn Header="Typ 2" Width="70" CellStyle="{StaticResource GridCell}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel ContextMenu="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                        <StackPanel ContextMenu="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource RightCellStackPanel}">
                                             <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <!--<TextBlock Text="{Binding RightDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                                             <i:Interaction.Triggers>
@@ -320,40 +289,9 @@
                                                     </i:InvokeCommandAction>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
-                                            <StackPanel.Style>
-                                                <Style TargetType="{x:Type StackPanel}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">
-                                                            <Setter Property="Background">
-                                                                <Setter.Value>
-                                                                    <RadialGradientBrush>
-                                                                        <GradientStop Color="#FFEEEEEE" Offset="0"/>
-                                                                        <GradientStop Color="#FFBDBDBD" Offset="1"/>
-                                                                    </RadialGradientBrush>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
-                                                            <Setter Property="Background" Value="#FAFAFA"></Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </StackPanel.Style>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellStyle>
-                                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
-                                        <Setter Property="Padding" Value="0" />
-                                        <Setter Property="Cursor" Value="Hand" />
-                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter Property="BorderBrush" Value="Transparent" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn Header="Usuń">

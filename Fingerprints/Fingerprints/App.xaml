@@ -19,6 +19,43 @@
             </Style>
             <Style TargetType="ContextMenu" x:Key="contextMenuStyles" BasedOn="{StaticResource MaterialDesignContextMenu}" />
             <Style TargetType="MenuItem" x:Key="menuItemStyles" BasedOn="{StaticResource MaterialDesignMenuItem}" />
+            <Style TargetType="StackPanel" x:Key="LeftCellStackPanel">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="True">
+                        <Setter Property="Background" Value="#ebebeb"></Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
+                        <Setter Property="Background" Value="#FAFAFA"></Setter>
+                    </DataTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#dedede"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="StackPanel" x:Key="RightCellStackPanel">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="True">
+                        <Setter Property="Background" Value="#ebebeb"></Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
+                        <Setter Property="Background" Value="#FAFAFA"></Setter>
+                    </DataTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#dedede"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="GridCell" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource ResourceKey={x:Type DataGridCell}}">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
