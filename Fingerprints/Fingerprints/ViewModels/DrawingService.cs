@@ -97,17 +97,7 @@ namespace Fingerprints.ViewModels
             { return selectedIndex; }
             set
             {
-                if (selectedIndex.HasValue)
-                {
-                    DrawingData[selectedIndex.Value].IsSelected = false;
-                }
-
                 SetProperty(ref selectedIndex, value != -1 ? value : null);
-
-                if (selectedIndex.HasValue)
-                {
-                    DrawingData[selectedIndex.Value].IsSelected = true;
-                }
             }
         }
 

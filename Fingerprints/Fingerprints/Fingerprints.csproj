@@ -155,7 +155,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
-    <Compile Include="Converters\BoolToInt.cs" />
+    <Compile Include="Converters\BoolToColorConverter.cs" />
     <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
     <Compile Include="Converters\GridClickedItemPosition.cs" />
     <Compile Include="Converters\RowAndCellConverter.cs" />

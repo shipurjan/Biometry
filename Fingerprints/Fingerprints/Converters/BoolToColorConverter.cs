@@ -5,18 +5,29 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Fingerprints.Converters
 {
-    class BoolToInt : IValueConverter
+    class BoolToColorConverter : IValueConverter
     {
         public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {
-            object result = null;
+            Brush result = null;
             try
             {
-                result = (int)value;
+                if ((bool)value == true)
+                {
+                    Color temp = (Color)ColorConverter.ConvertFromString("#a8a8a8");
+                    result = new SolidColorBrush(temp);
+                }
+                else
+                {
+                    Color temp = (Color)ColorConverter.ConvertFromString(Application.Current.Resources["MainColor"].ToString());
+                    result = new SolidColorBrush(temp);
+                }
             }
             catch (Exception ex)
             {
