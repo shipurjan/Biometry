@@ -96,7 +96,19 @@ namespace Fingerprints.ViewModels
             get
             { return selectedIndex; }
             set
-            { SetProperty(ref selectedIndex, value != -1 ? value : null); }
+            {
+                if (selectedIndex.HasValue)
+                {
+                    DrawingData[selectedIndex.Value].IsSelected = false;
+                }
+
+                SetProperty(ref selectedIndex, value != -1 ? value : null);
+
+                if (selectedIndex.HasValue)
+                {
+                    DrawingData[selectedIndex.Value].IsSelected = true;
+                }
+            }
         }
 
         private bool isLoading;
