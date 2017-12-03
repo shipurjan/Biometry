@@ -36,7 +36,7 @@ namespace Fingerprints.Tools.ImageFilters
                         SetFilteredToOryginal();
                         break;
                     case FilterImageType.Sobel:
-                        FilterBySobel();
+                        FilterBySobel(_parameters);
                         break;
                     case FilterImageType.Gauss:
                         FilterByGauss(_parameters);
@@ -55,14 +55,14 @@ namespace Fingerprints.Tools.ImageFilters
         /// <summary>
         /// Filter using sobel
         /// </summary>
-        private void FilterBySobel()
+        private void FilterBySobel(params object[] _parameters)
         {
             Image<Gray, Byte> sobel = null;
             try
             {
                 sobel = new Image<Gray, Byte>(_filterImage.FilteredImage);
-                _filterImage.FilteredImage = sobel.Sobel(0, 1, 3)
-                                            .Add(sobel.Sobel(1, 0, 3))
+                _filterImage.FilteredImage = sobel.Sobel(0, 1, Convert.ToInt32(_parameters[0]))
+                                            .Add(sobel.Sobel(1, 0, Convert.ToInt32(_parameters[0])))
                                             .AbsDiff(new Gray(0.0)).ToBitmap();                
             }
             catch (Exception ex)

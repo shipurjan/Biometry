@@ -20,6 +20,7 @@ using System.Linq;
 using System.ComponentModel;
 using Fingerprints.Tools.ImageFilters;
 using Prism.Commands;
+using Fingerprints.Windows;
 
 namespace Fingerprints.ViewModels
 {
@@ -527,13 +528,17 @@ namespace Fingerprints.ViewModels
             try
             {
                 Enum.TryParse(_filterType, out myFilter);
+                var window = new FilterWindow(this, myFilter);
+                
                 switch (myFilter)
                 {
                     case FilterImageType.None:
                         BackgroundImage = filterImage.Filter(myFilter).Get().ToBitmapImage();
                         break;
                     case FilterImageType.Sobel:
-                        BackgroundImage = filterImage.Filter(myFilter, 3).Get().ToBitmapImage();
+                        window.ShowDialog();
+                        window.Close();
+                        //BackgroundImage = filterImage.Filter(myFilter, 3).Get().ToBitmapImage();
                         break;
                     case FilterImageType.Gauss:
                         BackgroundImage = filterImage.Filter(myFilter, 5).Get().ToBitmapImage();

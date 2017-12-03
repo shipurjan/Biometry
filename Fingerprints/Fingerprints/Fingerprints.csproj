@@ -215,6 +215,7 @@
     <Compile Include="Tools\MyObservableCollection.cs" />
     <Compile Include="Tools\PathTool.cs" />
     <Compile Include="ViewModels\DataGridActivities.cs" />
+    <Compile Include="ViewModels\FilterWindowViewModel.cs" />
     <Compile Include="ViewModels\GridViewModel.cs" />
     <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
@@ -236,6 +237,9 @@
       <DependentUpon>AddWizard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\GridContextMenu.cs" />
+    <Compile Include="Windows\FilterWindow.xaml.cs">
+      <DependentUpon>FilterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ProjectWindow.xaml.cs">
       <DependentUpon>ProjectWindow.xaml</DependentUpon>
     </Compile>
@@ -265,6 +269,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\AddWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\FilterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
