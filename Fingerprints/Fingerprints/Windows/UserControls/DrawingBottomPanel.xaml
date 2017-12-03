@@ -38,7 +38,7 @@
 
             <materialDesign:PopupBox>
                 <StackPanel>
-                    
+                    <Button Content="mindtc" Command="{Binding DataContext.MindtcActivity.MindtcDetectCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}" Style="{StaticResource buttonStyles}"></Button>
                 </StackPanel>
                 
                 

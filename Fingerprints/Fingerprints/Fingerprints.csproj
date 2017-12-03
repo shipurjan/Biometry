@@ -188,6 +188,7 @@
     <Compile Include="MinutiaeTypes\CurveLineState.cs" />
     <Compile Include="MinutiaeTypes\SegmentState.cs" />
     <Compile Include="Tools\DependencyObjectExtensions.cs" />
+    <Compile Include="Tools\DrawingDecorator.cs" />
     <Compile Include="Tools\IDataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
     <Compile Include="Tools\Exporters\ExporterBase.cs" />
@@ -207,6 +208,10 @@
     <Compile Include="Tools\Importers\ImportTypes.cs" />
     <Compile Include="Tools\Importers\TxtImporter.cs" />
     <Compile Include="Tools\Converters\LinesToPointsConverter.cs" />
+    <Compile Include="Tools\Importers\XytColumns.cs" />
+    <Compile Include="Tools\Importers\XytImporter.cs" />
+    <Compile Include="Tools\Mindtc\Mindtc.cs" />
+    <Compile Include="Tools\Mindtc\MindtcActivities.cs" />
     <Compile Include="Tools\MyObservableCollection.cs" />
     <Compile Include="Tools\PathTool.cs" />
     <Compile Include="ViewModels\DataGridActivities.cs" />
@@ -214,6 +219,7 @@
     <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel_Base.cs" />
     <Compile Include="Windows\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
@@ -238,6 +244,9 @@
     </Compile>
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\UserControls\LoadingOverlay.xaml.cs">
+      <DependentUpon>LoadingOverlay.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\ColorPicker.xaml">
       <SubType>Designer</SubType>
@@ -268,6 +277,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\UserControls\DrawingBottomPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\LoadingOverlay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,6 +321,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Additionals\mindtct.exe">
+      <Link>Additionals\mindtct.exe</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="SharedPackages\ExceptionLogger.dll" />
   </ItemGroup>
   <ItemGroup />

@@ -119,6 +119,10 @@ namespace Fingerprints.Factories
             {
                 Logger.WriteExceptionLog(ex);
             }
+            finally
+            {
+                _drawingService.SetToReplaceColor(null);
+            }
         }
 
     }

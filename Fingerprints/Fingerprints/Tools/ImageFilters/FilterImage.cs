@@ -40,7 +40,15 @@ namespace Fingerprints.Tools.ImageFilters
 
         public FilterImageFluentInterface Filter(FilterImageType type, params object[] _parameters)
         {
-            _set.Filter(type, _parameters);
+            try
+            {
+                _set.Filter(type, _parameters);
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
             return _set;
         }
     }

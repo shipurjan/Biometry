@@ -1,8 +1,4 @@
-﻿using Fingerprints.Factories;
-using Fingerprints.Models;
-using Fingerprints.ViewModels;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Fingerprints
+namespace Fingerprints.Windows.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LoadingOverlay.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoadingOverlay : UserControl
     {
-        //public DrawService drawer;
-        public MainWindow()
+        public LoadingOverlay()
         {
-            Application.Current.MainWindow = this;
-            var viewModel = new MainWindowViewModel();
             InitializeComponent();
-            DataContext = viewModel;
         }
     }
 }
