@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace Fingerprints.Tools.Mindtc
 {
-    class Mindtc : IDisposable
+    class Mindtct : IDisposable
     {
         /// <summary>
         /// Event informing that detection is complete
@@ -54,7 +54,7 @@ namespace Fingerprints.Tools.Mindtc
         private string tempDirectoryPath { get; }
 
 
-        public Mindtc()
+        public Mindtct()
         {
             try
             {
@@ -107,7 +107,7 @@ namespace Fingerprints.Tools.Mindtc
                     StartInfo = new ProcessStartInfo
                     {
                         FileName = MindtcPath,
-                        Arguments = string.Format("-m1 {0} {1}", PreparedImagePath, Path.Combine(tempDirectoryPath, Path.GetFileNameWithoutExtension(PreparedImagePath))),
+                        Arguments = string.Format("{0} {1}", PreparedImagePath, Path.Combine(tempDirectoryPath, Path.GetFileNameWithoutExtension(PreparedImagePath))),
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         CreateNoWindow = true,
@@ -158,7 +158,7 @@ namespace Fingerprints.Tools.Mindtc
             finally
             {
                 //delete temporary directory
-                Directory.Delete(tempDirectoryPath, recursive: true);
+                //Directory.Delete(tempDirectoryPath, recursive: true);
             }
         }
 
