@@ -158,7 +158,7 @@ namespace Fingerprints.Tools.Mindtc
             finally
             {
                 //delete temporary directory
-                //Directory.Delete(tempDirectoryPath, recursive: true);
+                Directory.Delete(tempDirectoryPath, recursive: true);
             }
         }
 
