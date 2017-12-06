@@ -155,6 +155,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppInstance.cs" />
+    <Compile Include="Converters\BoolToColorConverter.cs" />
     <Compile Include="Converters\CollectionCountIncrementConverter.cs" />
     <Compile Include="Converters\GridClickedItemPosition.cs" />
     <Compile Include="Converters\RowAndCellConverter.cs" />
@@ -242,6 +243,9 @@
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UserControls\DrawingObjectCell.xaml.cs">
+      <DependentUpon>DrawingObjectCell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\UserControls\LoadingOverlay.xaml.cs">
       <DependentUpon>LoadingOverlay.xaml</DependentUpon>
     </Compile>
@@ -274,6 +278,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\UserControls\DrawingBottomPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\DrawingObjectCell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

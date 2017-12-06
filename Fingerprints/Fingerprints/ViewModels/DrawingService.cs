@@ -96,7 +96,9 @@ namespace Fingerprints.ViewModels
             get
             { return selectedIndex; }
             set
-            { SetProperty(ref selectedIndex, value != -1 ? value : null); }
+            {
+                SetProperty(ref selectedIndex, value != -1 ? value : null);
+            }
         }
 
         private bool isLoading;

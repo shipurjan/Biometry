@@ -41,6 +41,8 @@ namespace Fingerprints.Tools
                     temp = item.Color;
                     temp.A = alphaValue;
                     item.Color = temp;
+
+                    item.IsSelected = false;
                 }
 
                 if (_index.HasValue)
@@ -48,6 +50,8 @@ namespace Fingerprints.Tools
                     temp = DrawingService.DrawingData[_index.Value].Color;
                     temp.A = 255;
                     DrawingService.DrawingData[_index.Value].Color = temp;
+
+                    DrawingService.DrawingData[_index.Value].IsSelected = true;
                 }
 
                 DrawingService.Draw();
