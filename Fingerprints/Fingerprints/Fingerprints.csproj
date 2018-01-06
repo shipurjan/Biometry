@@ -243,9 +243,6 @@
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\UserControls\DrawingObjectCell.xaml.cs">
-      <DependentUpon>DrawingObjectCell.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\UserControls\LoadingOverlay.xaml.cs">
       <DependentUpon>LoadingOverlay.xaml</DependentUpon>
     </Compile>
@@ -278,10 +275,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\UserControls\DrawingBottomPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\UserControls\DrawingObjectCell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
