@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fingerprints", "Fingerprints\Fingerprints.csproj", "{2DA886E3-F43F-4B06-910D-A4E8EB4EBE24}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupBiometry", "SetupBiometry\SetupBiometry.vdproj", "{8C6955ED-EB75-46E6-A54C-FAC0E1E928EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{2DA886E3-F43F-4B06-910D-A4E8EB4EBE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DA886E3-F43F-4B06-910D-A4E8EB4EBE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DA886E3-F43F-4B06-910D-A4E8EB4EBE24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6955ED-EB75-46E6-A54C-FAC0E1E928EA}.Debug|Any CPU.ActiveCfg = Debug
+		{8C6955ED-EB75-46E6-A54C-FAC0E1E928EA}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
