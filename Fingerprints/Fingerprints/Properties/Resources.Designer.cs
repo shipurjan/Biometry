@@ -83,6 +83,16 @@ namespace Fingerprints.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap iconBlackWithBackground {
+            get {
+                object obj = ResourceManager.GetObject("iconBlackWithBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap iconWhite {
             get {
                 object obj = ResourceManager.GetObject("iconWhite", resourceCulture);

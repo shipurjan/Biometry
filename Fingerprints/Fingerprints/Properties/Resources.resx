@@ -121,6 +121,9 @@
   <data name="iconBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconBlack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="iconBlackWithBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconBlackWithBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="iconWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

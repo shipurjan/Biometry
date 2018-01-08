@@ -75,10 +75,8 @@
                                     VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="False"
                                     Grid.Row="0" Margin="0 0 18 -20" Background="#03A9F4" BorderBrush="#03A9F4" Click="SelectProjectButton_Click" >
                         <Viewbox Width="22" Height="22">
-                            <Canvas Width="24" Height="24">
-                                <Image Source="/Fingerprints;component/Resources/ic_done_white_48dp.png" Height="24" 
+                            <Image Source="/Fingerprints;component/Resources/ic_done_white_48dp.png" Height="24" 
                                        HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
-                            </Canvas>
                         </Viewbox>
                     </Button>
                 </Grid>

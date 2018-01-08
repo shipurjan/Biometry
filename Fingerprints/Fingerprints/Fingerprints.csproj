@@ -80,7 +80,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>iconBlack.ico</ApplicationIcon>
+    <ApplicationIcon>iconBlackWithBackground.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV.UI, Version=3.3.0.2824, Culture=neutral, processorArchitecture=MSIL">
@@ -338,6 +338,8 @@
     <None Include="Resources\iconBlack.png" />
     <Resource Include="icon.ico" />
     <Resource Include="iconBlack.ico" />
+    <None Include="Resources\iconBlackWithBackground.png" />
+    <Resource Include="iconBlackWithBackground.ico" />
     <Content Include="Resources\ic_done_white_48dp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
