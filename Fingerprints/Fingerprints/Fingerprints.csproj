@@ -336,8 +336,6 @@
     </None>
     <None Include="Resources\icon.png" />
     <None Include="Resources\iconBlack.png" />
-    <Resource Include="icon.ico" />
-    <Resource Include="iconBlack.ico" />
     <None Include="Resources\iconBlackWithBackground.png" />
     <Resource Include="iconBlackWithBackground.ico" />
     <Content Include="Resources\ic_done_white_48dp.png">

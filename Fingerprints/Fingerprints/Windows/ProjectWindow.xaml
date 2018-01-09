@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Biometry" Height="298.896" Width="448.98" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Biometry" Height="298.896" Width="448.98" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Fingerprints;component/iconBlackWithBackground.ico">
     <Grid>
         <materialDesign:DialogHost DialogClosing="DialogHost_OnDialogClosing"
                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -22,6 +22,8 @@
                 <StackPanel Margin="16">
                     <TextBlock>Dodaj nowy projekt</TextBlock>
                     <TextBox Margin="0 8 0 0" HorizontalAlignment="Stretch" x:Name="ProjectNameTextBox" />
+                    <Label Margin="0 0 0 0" HorizontalAlignment="Stretch" Content="Nazwa projektu jest wymagana"
+                           Foreground="Red" FontSize="10" x:Name="ProjectNameValidationLabel" Visibility="Collapsed" />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                         <Button Style="{StaticResource MaterialDesignFlatButton}"
                                         IsDefault="True"
