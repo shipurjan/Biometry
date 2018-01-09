@@ -15,8 +15,9 @@ namespace Fingerprints
         /// </summary>
         public static int currentProject = 0;
 
-        static public void AddNewMinutiae(string name, DrawingType drawType)
+        static public SelfDefinedMinutiae AddNewMinutiae(string name, DrawingType drawType)
         {
+            SelfDefinedMinutiae result = null;
             try
             {
                 using (var db = new FingerContext())
@@ -31,12 +32,15 @@ namespace Fingerprints
                     };
                     db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
                     db.SaveChanges();
+
+                    result = SelfDefinedMinutiae;
                 }
             }
             catch (Exception ex)
             {
-                ExceptionLogger.Logger.WriteExceptionLog(ex);
+                Logger.WriteExceptionLog(ex);
             }
+            return result;
         }
         static public void DeleteMinutiae(SelfDefinedMinutiae minutiae)
         {

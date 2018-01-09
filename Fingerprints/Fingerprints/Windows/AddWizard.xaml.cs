@@ -33,7 +33,7 @@ namespace Fingerprints
 
             InitializeComponent();
             listBox.ItemsSource = definedMinutiae;
-            
+
             List<string> drawingType = new List<string>();
 
             drawingType.Add("Punkt");
@@ -42,10 +42,11 @@ namespace Fingerprints
             drawingType.Add("Trojkat");
             drawingType.Add("Daszek");
             drawingType.Add("Odcinek");
-            
-            comboBoxType.ItemsSource = drawingType;
 
-            buttonColorPicker.Click += (ss, ee) =>
+            DrawingType.ItemsSource = drawingType;
+
+            Color.Background = Brushes.Red;
+            Color.Click += (ss, ee) =>
             {
                 ColorPicker colorPicker = new ColorPicker();
                 colorPicker.Owner = this;
@@ -53,24 +54,9 @@ namespace Fingerprints
 
                 if (colorPicked != "")
                 {
-                    buttonColorPicker.Background = (Brush)new BrushConverter().ConvertFromString(colorPicked);
+                    Color.Background = (Brush)new BrushConverter().ConvertFromString(colorPicked);
                 }
             };
-            //listBoxRefresh();
-        }
-
-        private void add_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {                
-                Database.AddNewMinutiae(textBox.Text, (DrawingType)comboBoxType.SelectedIndex + 1);
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("Uzupełnij dane");
-            }
         }
 
         private void delete_Click(object sender, RoutedEventArgs e)
@@ -85,7 +71,71 @@ namespace Fingerprints
 
         private void DialogHost_OnDialogClosing(Object sender, DialogClosingEventArgs eventArgs)
         {
+            try
+            {
+                if ((bool)eventArgs.Parameter)
+                {
+                    if (IsValidationCorrent())
+                    {
+                        definedMinutiae.Add(Database.AddNewMinutiae(DefinedMinutiaName.Text, (DrawingType)DrawingType.SelectedIndex + 1));
 
+                        DefinedMinutiaName.Text = "";
+                        DrawingType.SelectedIndex = -1;
+                        HideValidationErrors();
+                    }
+                    else
+                    {
+                        eventArgs.Cancel();
+                    }
+                }
+                else
+                {
+                    HideValidationErrors();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private void HideValidationErrors()
+        {
+            try
+            {
+                DefinedMinutiaNameValidationError.Visibility = Visibility.Collapsed;
+                DrawingTypeValidationError.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        private bool IsValidationCorrent()
+        {
+            bool result = true;
+            try
+            {
+                HideValidationErrors();
+
+                if (string.IsNullOrWhiteSpace(DefinedMinutiaName.Text))
+                {
+                    result = false;
+                    DefinedMinutiaNameValidationError.Visibility = Visibility.Visible;
+                }
+
+                if (DrawingType.SelectedValue is null)
+                {
+                    result = false;
+                    DrawingTypeValidationError.Visibility = Visibility.Visible;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         private void MenuItemDelete_Click(object sender, RoutedEventArgs e)

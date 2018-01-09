@@ -22,14 +22,21 @@
                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel Margin="16">
-                    <TextBlock>Nazwa:</TextBlock>
-                    <TextBox x:Name="textBox" Height="25" Margin="0 2 0 15"/>
-                    <TextBlock>Typ:</TextBlock>
-                    <ComboBox x:Name="comboBoxType" Height="25" Margin="0 2 0 15"/>
+                    <StackPanel Margin="0 2 0 15">
+                        <TextBlock>Nazwa:</TextBlock>
+                        <TextBox x:Name="DefinedMinutiaName" Height="25"/>
+                        <TextBlock x:Name="DefinedMinutiaNameValidationError" Text="Nazwa jest wymagana" Foreground="Red" Visibility="Collapsed" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0 2 0 15">
+                        <TextBlock>Typ:</TextBlock>
+                        <ComboBox x:Name="DrawingType" Height="25"/>
+                        <TextBlock x:Name="DrawingTypeValidationError" Text="Należy wybrać typ" Foreground="Red" Visibility="Collapsed" />
+                    </StackPanel>
+
                     <TextBlock>Kolor:</TextBlock>
-                    <Button x:Name="buttonColorPicker" Style="{StaticResource buttonStyles}" Margin="0 2 0 15" HorizontalAlignment="Stretch"></Button>
-                    <Label Margin="0 0 0 0" HorizontalAlignment="Stretch" Content="Nazwa projektu jest wymagana"
-                           Foreground="Red" FontSize="10" x:Name="ProjectNameValidationLabel" Visibility="Collapsed" />
+                    <Button x:Name="Color" Style="{StaticResource buttonStyles}" Margin="0 2 0 15" HorizontalAlignment="Stretch"></Button>
+
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                         <Button Style="{StaticResource MaterialDesignFlatButton}"
                                         IsDefault="True"
@@ -83,11 +90,6 @@
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <ListBox.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Usuń"></MenuItem>
-                            </ContextMenu>
-                        </ListBox.ContextMenu>
                     </ListBox>
                     <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
                         <TextBlock Margin="16" FontSize="16">Zdefiniowane typy</TextBlock>
