@@ -66,7 +66,7 @@
                     <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"                                
                                     Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
                                     VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                                    Grid.Row="0" Margin="0 0 78 -20" Background="#54c458" BorderBrush="#54c458" >
+                                    Grid.Row="1" Margin="0,0,80,6" Background="#54c458" BorderBrush="#54c458" >
                         <Viewbox Width="22" Height="22">
                             <Canvas Width="24" Height="24">
                                 <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="White" />
@@ -75,7 +75,7 @@
                     </Button>
                     <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="SelectProjectButton"                               
                                     VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="False"
-                                    Grid.Row="0" Margin="0 0 18 -20" Background="#03A9F4" BorderBrush="#03A9F4" Click="SelectProjectButton_Click" >
+                                    Grid.Row="1" Margin="0,0,18,6" Background="#03A9F4" BorderBrush="#03A9F4" Click="SelectProjectButton_Click" >
                         <Viewbox Width="22" Height="22">
                             <Image Source="/Fingerprints;component/Resources/ic_done_white_48dp.png" Height="24" 
                                        HorizontalAlignment="Center" VerticalAlignment="Center"></Image>

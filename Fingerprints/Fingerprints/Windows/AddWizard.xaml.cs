@@ -1,6 +1,9 @@
-﻿using Fingerprints.Models;
+﻿using ExceptionLogger;
+using Fingerprints.Models;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,52 +23,47 @@ namespace Fingerprints
     /// </summary>
     public partial class Window1 : Window
     {
+        ObservableCollection<SelfDefinedMinutiae> definedMinutiae;
+
         public static string colorPicked;
         public Window1()
         {
             colorPicked = "";
+            definedMinutiae = new ObservableCollection<SelfDefinedMinutiae>(Database.ShowSelfDefinedMinutiae());
+
             InitializeComponent();
+            listBox.ItemsSource = definedMinutiae;
+            
             List<string> drawingType = new List<string>();
-            List<string> colors = new List<string>();
-            List<double> size = new List<double>();
+
             drawingType.Add("Punkt");
             drawingType.Add("Prosta skierowana");
             drawingType.Add("Krzywa dowolna");
             drawingType.Add("Trojkat");
             drawingType.Add("Daszek");
             drawingType.Add("Odcinek");
-            size.Add(0.1);
-            size.Add(0.25);
-            size.Add(0.5);
-            size.Add(1);
-            size.Add(2);
-            thicknessCombobox.Items.Add(0.3);
-            thicknessCombobox.Items.Add(0.5);
-            thicknessCombobox.Items.Add(0.7);
-            thicknessCombobox.Items.Add(1);
-            thicknessCombobox.Items.Add(1.3);
-            thicknessCombobox.Items.Add(1.5);
-
+            
             comboBoxType.ItemsSource = drawingType;
-            comboBoxSize.ItemsSource = size; 
+
             buttonColorPicker.Click += (ss, ee) =>
             {
                 ColorPicker colorPicker = new ColorPicker();
+                colorPicker.Owner = this;
                 colorPicker.ShowDialog();
 
                 if (colorPicked != "")
                 {
-                    buttonColorPicker.Background = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(colorPicked);
+                    buttonColorPicker.Background = (Brush)new BrushConverter().ConvertFromString(colorPicked);
                 }
             };
-            listBoxRefresh();
+            //listBoxRefresh();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
             try
             {                
-                Database.AddNewMinutiae(textBox.Text, (DrawingType)comboBoxType.SelectedIndex + 1, colorPicked, Convert.ToDouble(comboBoxSize.SelectedItem), Convert.ToDouble(thicknessCombobox.SelectedItem));
+                Database.AddNewMinutiae(textBox.Text, (DrawingType)comboBoxType.SelectedIndex + 1);
                 this.Close();
             }
             catch (Exception ex)
@@ -77,16 +75,40 @@ namespace Fingerprints
 
         private void delete_Click(object sender, RoutedEventArgs e)
         {
-            if (listBox.SelectedValue != null && MessageBox.Show("Czy na pewno chcesz usunąć minucje?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                Database.DeleteMinutiae(listBox.SelectedValue as SelfDefinedMinutiae);
-                listBoxRefresh();
-            }
+
         }
 
         private void listBoxRefresh()
         {
             listBox.ItemsSource = Database.ShowSelfDefinedMinutiae();
+        }
+
+        private void DialogHost_OnDialogClosing(Object sender, DialogClosingEventArgs eventArgs)
+        {
+
+        }
+
+        private void MenuItemDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PackIcon_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            SelfDefinedMinutiae definedMinutia = null;
+            try
+            {
+                if (listBox.SelectedValue != null && MessageBox.Show("Czy na pewno chcesz usunąć zdefiniowany typ?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    definedMinutia = listBox.SelectedValue as SelfDefinedMinutiae;
+                    Database.DeleteMinutiae(definedMinutia);
+                    definedMinutiae.Remove(definedMinutia);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
     }
 }

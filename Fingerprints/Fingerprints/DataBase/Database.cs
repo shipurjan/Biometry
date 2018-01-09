@@ -15,7 +15,7 @@ namespace Fingerprints
         /// </summary>
         public static int currentProject = 0;
 
-        static public void AddNewMinutiae(string name, DrawingType drawType, string color, double size, double thickness)
+        static public void AddNewMinutiae(string name, DrawingType drawType)
         {
             try
             {
@@ -27,7 +27,6 @@ namespace Fingerprints
                         Name = name,
                         ProjectId = currentProject,
                         DrawingType = q,
-                        Color = color,
 
                     };
                     db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
