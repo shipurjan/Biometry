@@ -270,7 +270,7 @@ namespace Fingerprints.ViewModels
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Reset)
                 {
 
-                    for (int i = 0; i < GridViewModelList.Count - 1; i++)
+                    for (int i = GridViewModelList.Count - 2; i >= 0; i--)
                     {
                         GridViewModelList[i].RightDrawingObject = null;
                         if (GridViewModelList[i].LeftDrawingObject == null)
@@ -322,7 +322,7 @@ namespace Fingerprints.ViewModels
                 //Set Null to Object, if left and right objects are null, remove from GridViewModelList
                 if (_eventArgs.Action == NotifyCollectionChangedAction.Reset)
                 {
-                    for (int i = 0; i < GridViewModelList.Count - 1; i++)
+                    for (int i = GridViewModelList.Count - 2; i >= 0; i--)
                     {
                         GridViewModelList[i].LeftDrawingObject = null;
                         if (GridViewModelList[i].RightDrawingObject == null)

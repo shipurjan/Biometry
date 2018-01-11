@@ -9,28 +9,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Fingerprints.Tools.Mindtc
 {
-    class MindtcActivity : ViewModel_Base, IDisposable
+    class MindtctActivity : ViewModel_Base, IDisposable
     {
         public DrawingService LeftDrawingService { get; }
         public DrawingService RightDrawingService { get; }
 
-        private Mindtc mindtc { get; }
-        Mindtc.DetectionComplatedDelegate DetectionCompletedHander;
+        private Mindtct mindtc { get; }
+        Mindtct.DetectionComplatedDelegate DetectionCompletedHander;
 
         public ICommand MindtcDetectCommand { get; }
 
-        public MindtcActivity(DrawingService _leftDrawingService, DrawingService _rightDrawingService)
+        public MindtctActivity(DrawingService _leftDrawingService, DrawingService _rightDrawingService)
         {
             try
             {
                 LeftDrawingService = _leftDrawingService;
                 RightDrawingService = _rightDrawingService;
 
-                mindtc = new Mindtc();
+                mindtc = new Mindtct();
 
                 MindtcDetectCommand = new DelegateCommand<DrawingService>(MindtcDetect);
             }
@@ -64,6 +65,8 @@ namespace Fingerprints.Tools.Mindtc
 
                     if (importResult.ResultData.AnyOrNotNull())
                     {
+                        CorrectImportedData(importResult, _drawingService.BackgroundImage.PixelHeight);
+
                         //create MitutiaStateBase objects in drawing service
                         MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, _drawingService);
 
@@ -79,6 +82,26 @@ namespace Fingerprints.Tools.Mindtc
                 };
 
                 mindtc.DetectionCompleted += DetectionCompletedHander;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Changes y from cartesian system to screen drawing ( on screen we drawing from top left corner )
+        /// </summary>
+        /// <param name="_importResult"></param>
+        /// <param name="_pixelHeight"></param>
+        private void CorrectImportedData(ImportResult _importResult, int _pixelHeight)
+        {
+            try
+            {
+                foreach (var item in _importResult.ResultData)
+                {
+                    item.Points[0] = new Point(item.Points[0].X, _pixelHeight - item.Points[0].Y);
+                }
             }
             catch (Exception ex)
             {
