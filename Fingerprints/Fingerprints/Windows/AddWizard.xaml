@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Kreator minucji" Height="357.99" Width="414.925" ResizeMode="CanMinimize"
+        Title="Zdefiniowane minucje" Height="357.99" Width="414.925" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterOwner"
         x:Name="AddWizard">
     <Grid>
@@ -23,13 +23,19 @@
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel Margin="16">
                     <StackPanel Margin="0 2 0 15">
-                        <TextBlock>Nazwa:</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Nazwa:</TextBlock>
+                            <TextBlock Foreground="Red">*</TextBlock>
+                        </StackPanel>
                         <TextBox x:Name="DefinedMinutiaName" Height="25"/>
                         <TextBlock x:Name="DefinedMinutiaNameValidationError" Text="Nazwa jest wymagana" Foreground="Red" Visibility="Collapsed" />
                     </StackPanel>
 
                     <StackPanel Margin="0 2 0 15">
-                        <TextBlock>Typ:</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Typ:</TextBlock>
+                            <TextBlock Foreground="Red">*</TextBlock>
+                        </StackPanel>
                         <ComboBox x:Name="DrawingType" Height="25"/>
                         <TextBlock x:Name="DrawingTypeValidationError" Text="Należy wybrać typ" Foreground="Red" Visibility="Collapsed" />
                     </StackPanel>
@@ -74,7 +80,10 @@
                                         <ColumnDefinition Width="10*"/>
                                         <ColumnDefinition Width="15"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                                        <materialDesign:ColorZone Background="{Binding Color}" Width="15" Height="15" Margin="12 0 0 0"/>
+                                    </StackPanel>
                                     <materialDesign:PackIcon Kind="Delete" Height="16" Grid.Column="1" MouseUp="PackIcon_MouseUp" Cursor="Hand">
                                         <materialDesign:PackIcon.Style>
                                             <Style TargetType="materialDesign:PackIcon">

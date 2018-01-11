@@ -77,7 +77,7 @@ namespace Fingerprints
                 {
                     if (IsValidationCorrent())
                     {
-                        definedMinutiae.Add(Database.AddNewMinutiae(DefinedMinutiaName.Text, (DrawingType)DrawingType.SelectedIndex + 1));
+                        definedMinutiae.Add(Database.AddNewMinutiae(DefinedMinutiaName.Text, (DrawingType)DrawingType.SelectedIndex + 1, Color.Background));
 
                         DefinedMinutiaName.Text = "";
                         DrawingType.SelectedIndex = -1;
@@ -123,6 +123,14 @@ namespace Fingerprints
                 {
                     result = false;
                     DefinedMinutiaNameValidationError.Visibility = Visibility.Visible;
+                    DefinedMinutiaNameValidationError.Text = "Nazwa jest wymagana";
+                }
+
+                if (definedMinutiae.FirstOrDefault(x => x.Name.ToLower() == DefinedMinutiaName.Text.ToLower()) != null)
+                {
+                    result = false;
+                    DefinedMinutiaNameValidationError.Visibility = Visibility.Visible;
+                    DefinedMinutiaNameValidationError.Text = "Taka nazwa już istnieje";
                 }
 
                 if (DrawingType.SelectedValue is null)

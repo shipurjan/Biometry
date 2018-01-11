@@ -74,7 +74,7 @@ namespace Fingerprints.Windows
                     ProjectNameValidationLabel.Content = "Nazwa projektu jest wymagana";
                 }
 
-                if (projects.Exists(x => x.Name == ProjectNameTextBox.Text))
+                if (projects.Exists(x => x.Name.ToLower() == ProjectNameTextBox.Text.ToLower()))
                 {
                     result = false;
                     ProjectNameValidationLabel.Content = "Projekt o takiej nazwie jest już dodany";

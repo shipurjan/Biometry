@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Fingerprints.Models;
 using ExceptionLogger;
+using System.Windows.Media;
 
 namespace Fingerprints
 {
@@ -15,7 +16,7 @@ namespace Fingerprints
         /// </summary>
         public static int currentProject = 0;
 
-        static public SelfDefinedMinutiae AddNewMinutiae(string name, DrawingType drawType)
+        static public SelfDefinedMinutiae AddNewMinutiae(string name, DrawingType drawType, Brush minutiaColor)
         {
             SelfDefinedMinutiae result = null;
             try
@@ -28,6 +29,7 @@ namespace Fingerprints
                         Name = name,
                         ProjectId = currentProject,
                         DrawingType = q,
+                        Color = minutiaColor.ToString(),
 
                     };
                     db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
