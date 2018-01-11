@@ -214,6 +214,7 @@
     <Compile Include="Tools\Importers\ImporterService.cs" />
     <Compile Include="Tools\Importers\ImportResult.cs" />
     <Compile Include="Tools\Importers\ImportTypes.cs" />
+    <Compile Include="Tools\Importers\MinColumns.cs" />
     <Compile Include="Tools\Importers\MinImporter.cs" />
     <Compile Include="Tools\Importers\TxtImporter.cs" />
     <Compile Include="Tools\Converters\LinesToPointsConverter.cs" />

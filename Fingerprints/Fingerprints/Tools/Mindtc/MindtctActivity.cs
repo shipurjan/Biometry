@@ -65,7 +65,7 @@ namespace Fingerprints.Tools.Mindtc
 
                     if (importResult.ResultData.AnyOrNotNull())
                     {
-                        CorrectImportedData(importResult, _drawingService.BackgroundImage.PixelHeight);
+                        //CorrectImportedData(importResult, _drawingService.BackgroundImage.PixelHeight);
 
                         //create MitutiaStateBase objects in drawing service
                         MinutiaStateFactory.AddMinutiaeFileToDrawingService(importResult.ResultData, _drawingService);
