@@ -136,7 +136,6 @@
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}" Command="{Binding SaveClickCommand}"/>
-                <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Style="{StaticResource buttonStyles}" Visibility="Collapsed"/>
             </Grid>
         </Grid>
 
