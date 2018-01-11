@@ -19,7 +19,7 @@
         xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
         xmlns:Converters="clr-namespace:Fingerprints.Converters"
         xmlns:UserControls="clr-namespace:Fingerprints.Windows.UserControls"
-        Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
+        Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000" Icon="iconBlackWithBackground.ico">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
