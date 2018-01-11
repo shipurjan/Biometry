@@ -158,7 +158,7 @@ namespace Fingerprints.Tools.Mindtc
             finally
             {
                 //delete temporary directory
-                Directory.Delete(tempDirectoryPath, recursive: true);
+                //Directory.Delete(tempDirectoryPath, recursive: true);
             }
         }
 
@@ -211,10 +211,10 @@ namespace Fingerprints.Tools.Mindtc
         {
             string result = "";
 
-            string imageName = Path.GetFileName(_ImagePath);
+            string imageName = Path.GetFileNameWithoutExtension(_ImagePath);
             try
             {
-                result = Path.Combine(tempDirectoryPath, imageName);
+                result = Path.Combine(tempDirectoryPath, imageName + ".png");
                 Mat imageMat = new Mat(_ImagePath);
 
                 imageMat.ToImage<Gray, Byte>().Save(result);
