@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fingerprints.Windows"
         mc:Ignorable="d"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -13,16 +14,75 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Biometry" Height="285" Width="525" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
-    <Grid Height="265" VerticalAlignment="Top" Margin="0,0,0,-1">
-        <Label x:Name="title" Content="Wybierz projekt" HorizontalAlignment="Left" Height="30" Margin="68,10,0,0" VerticalAlignment="Top" Width="123"/>
-        <ListBox x:Name="project_list" HorizontalAlignment="Left" Height="124" Margin="10,42,0,0" VerticalAlignment="Top" Width="250"/>
-        <Button x:Name="open_project_button" Content="Otwórz projekt" HorizontalAlignment="Left" Margin="275,42,0,0" VerticalAlignment="Top" Width="226" Click="open_project_button_Click" Style="{StaticResource buttonStyles}"/>
-        <Button x:Name="add_button" Content="Dodaj projekt" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="250" Click="add_button_Click" Style="{StaticResource buttonStyles}"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" Margin="10,180,0,0" TextWrapping="Wrap" Text="Nowy projekt" VerticalAlignment="Top" Width="250"/>
-        <Button x:Name="delete_buttton" Content="Usuń projekt" HorizontalAlignment="Left" Margin="275,144,0,0" VerticalAlignment="Top" Width="226" Click="delete_button_Click" Style="{StaticResource buttonStyles}">
-
-        </Button>
-
+        Title="Biometry" Height="298.896" Width="448.98" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Fingerprints;component/iconBlackWithBackground.ico">
+    <Grid>
+        <materialDesign:DialogHost DialogClosing="DialogHost_OnDialogClosing"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock>Dodaj nowy projekt</TextBlock>
+                    <TextBox Margin="0 8 0 0" HorizontalAlignment="Stretch" x:Name="ProjectNameTextBox" />
+                    <Label Margin="0 0 0 0" HorizontalAlignment="Stretch" Content="Nazwa projektu jest wymagana"
+                           Foreground="Red" FontSize="10" x:Name="ProjectNameValidationLabel" Visibility="Collapsed" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsDefault="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            Akceptuj
+                            <Button.CommandParameter>
+                                <system:Boolean>True</system:Boolean>
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            Anuluj
+                            <Button.CommandParameter>
+                                <system:Boolean>False</system:Boolean>
+                            </Button.CommandParameter>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+            <Border BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" ClipToBounds="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="ProjectsListBox" SelectionChanged="ProjectsListBox_SelectionChanged" 
+                             MouseDoubleClick="ProjectsListBox_MouseDoubleClick" FontSize="14">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Usuń" Click="MenuItemDelete_Click"></MenuItem>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                    </ListBox>
+                    <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                        <TextBlock Margin="16" FontSize="16">Projekty</TextBlock>
+                    </materialDesign:ColorZone>
+                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"                                
+                                    Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                    VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                                    Grid.Row="0" Margin="0 0 78 -20" Background="#54c458" BorderBrush="#54c458" >
+                        <Viewbox Width="22" Height="22">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="White" />
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Name="SelectProjectButton"                               
+                                    VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="False"
+                                    Grid.Row="0" Margin="0 0 18 -20" Background="#03A9F4" BorderBrush="#03A9F4" Click="SelectProjectButton_Click" >
+                        <Viewbox Width="22" Height="22">
+                            <Image Source="/Fingerprints;component/Resources/ic_done_white_48dp.png" Height="24" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                        </Viewbox>
+                    </Button>
+                </Grid>
+            </Border>
+        </materialDesign:DialogHost>
     </Grid>
 </Window>
