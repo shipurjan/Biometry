@@ -208,8 +208,8 @@
     <Compile Include="Tools\Converters\LinesToPointsConverter.cs" />
     <Compile Include="Tools\Importers\XytColumns.cs" />
     <Compile Include="Tools\Importers\XytImporter.cs" />
-    <Compile Include="Tools\Mindtc\Mindtc.cs" />
-    <Compile Include="Tools\Mindtc\MindtcActivities.cs" />
+    <Compile Include="Tools\Mindtc\Mindtct.cs" />
+    <Compile Include="Tools\Mindtc\MindtctActivity.cs" />
     <Compile Include="Tools\MyObservableCollection.cs" />
     <Compile Include="Tools\PathTool.cs" />
     <Compile Include="ViewModels\DataGridActivities.cs" />
