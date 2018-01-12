@@ -540,9 +540,12 @@ namespace Fingerprints.ViewModels
             try
             {
                 Window1 win = new Window1();
+                win.Owner = Application.Current.MainWindow;
+                    
                 win.ShowDialog();
-                //drawer.stopDrawing();
-                MinutiaeStates.Add(dbController.getStates().LastOrDefault());
+                MinutiaeStates.Clear();
+
+                MinutiaeStates.AddRange(dbController.getStates());
             }
             catch (Exception ex)
             {
