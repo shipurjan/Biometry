@@ -18,6 +18,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
         xmlns:Converters="clr-namespace:Fingerprints.Converters"
+        xmlns:Tools ="clr-namespace:Fingerprints.Tools"
         xmlns:UserControls="clr-namespace:Fingerprints.Windows.UserControls"
         Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000" Icon="iconBlackWithBackground.ico">
     <Window.DataContext>
@@ -191,6 +192,8 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding LeftDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.LeftDrawing}">
+                </materialDesign:DialogHost>
             </Grid>
 
             <!--rightCanvas-->
@@ -233,6 +236,8 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding RightDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.RightDrawing}">
+                </materialDesign:DialogHost>
             </Grid>
 
             <!--table-->
@@ -240,7 +245,7 @@
 
                 <!--listboxes-->
                 <Grid Grid.Row="2">
-                    <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
+                    <DataGrid x:Name="MinutiaDataGrid" VirtualizingPanel.IsVirtualizing="False" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
                               SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False"
                               AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
                         <DataGrid.Columns>
@@ -256,7 +261,7 @@
                                     <DataTemplate>
                                         <Border BorderBrush="{Binding LeftDrawingObject.IsSelected, Converter={StaticResource BoolToColor}}" BorderThickness="1">
                                             <StackPanel ContextMenu="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource LeftCellStackPanel}">
-                                                <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
                                                 <!--<TextBlock Text="{Binding LeftDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="PreviewMouseDown">
@@ -280,7 +285,7 @@
                                     <DataTemplate>
                                         <Border BorderBrush="{Binding RightDrawingObject.IsSelected, Converter={StaticResource BoolToColor}}" BorderThickness="1">
                                             <StackPanel ContextMenu="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource RightCellStackPanel}">
-                                                <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                                 <!--<TextBlock Text="{Binding RightDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="PreviewMouseDown">

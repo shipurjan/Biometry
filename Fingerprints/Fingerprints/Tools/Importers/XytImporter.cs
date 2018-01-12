@@ -15,26 +15,10 @@ namespace Fingerprints.Tools.Importers
     class XytImporter : ImporterBase, IDataImporter
     {
         private SelfDefinedMinutiae vectorMinutia;
+
         public XytImporter() : base()
         {
-            using (var db = new FingerContext())
-            {
-                vectorMinutia = db.SelfDefinedMinutiaes.Where(x => x.DrawingType == DrawingType.Vector && x.Name == "mindtc").FirstOrDefault();
-
-                if (vectorMinutia == null)
-                {
-                    vectorMinutia = new SelfDefinedMinutiae()
-                    {
-                        ProjectId = Database.currentProject,
-                        DrawingType = DrawingType.Vector,
-                        Name = "mindtc",
-                        Color = "#00a9ff"
-                    };
-
-                    db.SelfDefinedMinutiaes.Add(vectorMinutia);
-                    db.SaveChanges();
-                }
-            }
+            vectorMinutia = GetSelfDefinedMinutiaOrCreate();
         }
 
         public List<MinutiaFileState> GetformattedData()
@@ -74,12 +58,13 @@ namespace Fingerprints.Tools.Importers
 
         private MinutiaFileState NewFileState(XytRow _row)
         {
-            MinutiaFileState result = new MinutiaFileState();
+            MindtctFileState result = new MindtctFileState();
             try
             {
                 result.Angle = _row.Angle;
                 result.Points.Add(new Point(_row.X, _row.Y));
                 result.Name = vectorMinutia.Name;
+                result.Quantity = _row.Quantity;
             }
             catch (Exception ex)
             {

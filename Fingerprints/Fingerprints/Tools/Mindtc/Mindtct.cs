@@ -53,6 +53,16 @@ namespace Fingerprints.Tools.Mindtc
         /// </summary>
         private string tempDirectoryPath { get; }
 
+        /// <summary>
+        /// Indicates extension type of mindtct file
+        /// </summary>
+        private ImportTypes type { set; get; }
+
+        /// <summary>
+        /// indicates extension type of mindtct file e.g .xyt
+        /// </summary>
+        private string fileExtension { set; get; }
+
 
         public Mindtct()
         {
@@ -73,12 +83,15 @@ namespace Fingerprints.Tools.Mindtc
         /// Starts asynchronous image detection
         /// </summary>
         /// <param name="_ImagePath"></param>
-        public void DetectImage(string _ImagePath)
+        public void DetectImage(string _ImagePath, ImportTypes _type)
         {
             mindtcTask = Task.Run(() =>
             {
                 try
                 {
+                    type = _type;
+                    fileExtension = "." + _type.ToString();
+
                     //Create temporary directory
                     Directory.CreateDirectory(tempDirectoryPath);
 
@@ -143,7 +156,7 @@ namespace Fingerprints.Tools.Mindtc
             try
             {
                 //import data from temporary file
-                ImportResult importResult = ImporterService.Import(Path.Combine(tempDirectoryPath, Path.GetFileNameWithoutExtension(PreparedImagePath) + ".xyt"));
+                ImportResult importResult = ImporterService.Import(Path.Combine(tempDirectoryPath, Path.GetFileNameWithoutExtension(PreparedImagePath) + fileExtension));
 
                 //fire event
                 Application.Current.Dispatcher.Invoke(() =>
@@ -211,10 +224,10 @@ namespace Fingerprints.Tools.Mindtc
         {
             string result = "";
 
-            string imageName = Path.GetFileName(_ImagePath);
+            string imageName = Path.GetFileNameWithoutExtension(_ImagePath);
             try
             {
-                result = Path.Combine(tempDirectoryPath, imageName);
+                result = Path.Combine(tempDirectoryPath, imageName + ".png");
                 Mat imageMat = new Mat(_ImagePath);
 
                 imageMat.ToImage<Gray, Byte>().Save(result);

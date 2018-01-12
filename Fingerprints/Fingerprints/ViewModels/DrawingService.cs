@@ -18,11 +18,15 @@ using Fingerprints.EventArgsObjects;
 using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
+using MaterialDesignThemes.Wpf;
+using Fingerprints.Windows.UserControls.Dialogs;
 
 namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
+        public DialogTypes Dialog { get; }
+
         /// <summary>
         /// Event raised when current drawing change
         /// </summary>
@@ -116,7 +120,7 @@ namespace Fingerprints.ViewModels
         /// <summary>
         /// Initializes new instance
         /// </summary>
-        public DrawingService()
+        public DrawingService(DialogTypes assignedDialog)
         {
             try
             {
@@ -124,6 +128,7 @@ namespace Fingerprints.ViewModels
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
                 Decorator = new DrawingDecorator(this);
                 IsLoading = false;
+                Dialog = assignedDialog;
             }
             catch (Exception ex)
             {
@@ -173,6 +178,18 @@ namespace Fingerprints.ViewModels
 
                 Decorator.ShowOnlyIndex();
                 Draw();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        internal void OpenDialog(DialogTypes type)
+        {
+            try
+            {
+
             }
             catch (Exception ex)
             {

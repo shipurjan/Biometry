@@ -29,6 +29,9 @@ namespace Fingerprints.Tools.Importers
                     case ImportTypes.xyt:
                         result = new XytImporter();
                         break;
+                    case ImportTypes.min:
+                        result = new MinImporter();
+                        break;
                 }
             }
             catch (Exception ex)

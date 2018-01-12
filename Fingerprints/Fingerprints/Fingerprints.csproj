@@ -187,6 +187,7 @@
     <Compile Include="MinutiaeTypes\VectorState.cs" />
     <Compile Include="MinutiaeTypes\PointState.cs" />
     <Compile Include="Models\DrawingType.cs" />
+    <Compile Include="Models\MindtctFileState.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="MinutiaeTypes\CurveLineState.cs" />
     <Compile Include="MinutiaeTypes\SegmentState.cs" />
     <Compile Include="Tools\DependencyObjectExtensions.cs" />
+    <Compile Include="Tools\DialogTypes.cs" />
     <Compile Include="Tools\DrawingDecorator.cs" />
     <Compile Include="Tools\IDataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
@@ -214,6 +216,8 @@
     <Compile Include="Tools\Importers\ImporterService.cs" />
     <Compile Include="Tools\Importers\ImportResult.cs" />
     <Compile Include="Tools\Importers\ImportTypes.cs" />
+    <Compile Include="Tools\Importers\MinColumns.cs" />
+    <Compile Include="Tools\Importers\MinImporter.cs" />
     <Compile Include="Tools\Importers\TxtImporter.cs" />
     <Compile Include="Tools\Converters\LinesToPointsConverter.cs" />
     <Compile Include="Tools\Importers\XytColumns.cs" />
@@ -250,6 +254,10 @@
     <Compile Include="Windows\SelectImage.xaml.cs">
       <DependentUpon>SelectImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UserControls\Dialogs\MindtctDialog.xaml.cs">
+      <DependentUpon>MindtctDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\UserControls\Dialogs\MindtctDialogViewModel.cs" />
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
     </Compile>
@@ -281,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SelectImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\Dialogs\MindtctDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
