@@ -17,7 +17,7 @@ namespace Fingerprints.Tools.Importers
             try
             {
                 string[] splitted = _row.Split(delimiter);
-                result = new XytRow(splitted[0], splitted[1], splitted[2]);
+                result = new XytRow(splitted[0], splitted[1], splitted[2], splitted[3]);
             }
             catch (Exception ex)
             {
@@ -32,14 +32,16 @@ namespace Fingerprints.Tools.Importers
         public int X { get; }
         public int Y { get; }
         public double Angle { get; }
+        public int Quantity { get; }
 
-        public XytRow(string _x, string _y, string _angle)
+        public XytRow(string _x, string _y, string _angle, string _quantity)
         {
             try
             {
                 X = Convert.ToInt32(_x);
                 Y = Convert.ToInt32(_y);
                 Angle = GetAngleInRadians(_angle);
+                Quantity = Convert.ToInt32(_quantity);
             }
             catch (Exception ex)
             {

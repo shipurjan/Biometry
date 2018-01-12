@@ -62,8 +62,6 @@ namespace Fingerprints.ViewModels
         public ICommand NewMinutiaCommand { get; }
         public ICommand LoadLeftImageCommand { get; }
         public ICommand LoadRightImageCommand { get; }
-        public ICommand OpenLeftDialogCommand { get; }
-        public ICommand OpenRightDialogCommand { get; }
 
         #endregion
 
@@ -76,8 +74,8 @@ namespace Fingerprints.ViewModels
                 dbController = new MinutiaeTypeController();
 
                 //Initialize Drawing Services
-                LeftDrawingService = new DrawingService();
-                RightDrawingService = new DrawingService();
+                LeftDrawingService = new DrawingService(Dialogs.LeftDrawing);
+                RightDrawingService = new DrawingService(DialogTypes.RightDrawing);
 
                 //Add method for CollectinoChanged
                 LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;
@@ -105,8 +103,6 @@ namespace Fingerprints.ViewModels
                 LoadLeftImageCommand = new DelegateCommand(LoadLeftImage);
                 LoadRightImageCommand = new DelegateCommand(LoadRightImage);
                 NewMinutiaCommand = new DelegateCommand(NewMinutia);
-                OpenLeftDialogCommand = new DelegateCommand(OpenLeftDialog);
-                OpenRightDialogCommand = new DelegateCommand(OpenRightDialog);
 
                 //DrawingService events
                 LeftDrawingService.CurrentDrawingChanged += LeftDrawingService_CurrentDrawingChanged;
@@ -122,16 +118,6 @@ namespace Fingerprints.ViewModels
             {
                 Logger.WriteExceptionLog(ex);
             }
-        }
-
-        private void OpenRightDialog()
-        {
-            RightDrawingService.OpenDialog(DialogTypes.RightDrawing);
-        }
-
-        private void OpenLeftDialog()
-        {
-            LeftDrawingService.OpenDialog(DialogTypes.LeftDrawing);
         }
 
         #region DrawingService Events

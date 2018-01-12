@@ -256,6 +256,7 @@
     <Compile Include="Windows\UserControls\Dialogs\MindtctDialog.xaml.cs">
       <DependentUpon>MindtctDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UserControls\Dialogs\MindtctDialogViewModel.cs" />
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
     </Compile>

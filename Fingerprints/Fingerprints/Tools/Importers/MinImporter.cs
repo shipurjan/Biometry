@@ -12,13 +12,19 @@ namespace Fingerprints.Tools.Importers
 {
     class MinImporter : ImporterBase, IDataImporter
     {
-        private SelfDefinedMinutiae vectorMinutia;
+        private SelfDefinedMinutiae VectorBifurcationAppearing;
+        private SelfDefinedMinutiae VectorBifurcationDisappearing;
+        private SelfDefinedMinutiae vectorRidgeEndingAppearing;
+        private SelfDefinedMinutiae vectorRidgeEndingDisappearing;
 
         public MinImporter() : base()
         {
             try
             {
-                vectorMinutia = GetSelfDefinedMinutiaOrCreate("mindtct(.min)");
+                VectorBifurcationAppearing = GetSelfDefinedMinutiaOrCreate("Rozwidlenie (M)");
+                VectorBifurcationDisappearing = GetSelfDefinedMinutiaOrCreate("Złączenie (M)");
+                vectorRidgeEndingAppearing = GetSelfDefinedMinutiaOrCreate("Początek (M)");
+                vectorRidgeEndingDisappearing = GetSelfDefinedMinutiaOrCreate("Zakończenie (M)");
             }
             catch (Exception ex)
             {
@@ -72,14 +78,53 @@ namespace Fingerprints.Tools.Importers
             {
                 result = new MinutiaFileState();
 
-                result.Angle = _row.Dir;
+                result.Angle = _row.Direction;
                 result.Points.Add(new Point(_row.Mx, _row.My));
-                result.Name = vectorMinutia.Name;
+                result.Name = GetMinutiaName(_row.MinutiaType, _row.FeatureType);
+                result.Quantity = Convert.ToInt32((_row.ReliabilityMeasure * 100));
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
                 result = null;
+            }
+            return result;
+        }
+
+        private string GetMinutiaName(MindtctMinutiaTypes minutiaType, MindtctFeatureTypes featureType)
+        {
+            string result = string.Empty;
+            try
+            {
+                switch (minutiaType)
+                {
+                    case MindtctMinutiaTypes.Bifurcation:
+                        switch (featureType)
+                        {
+                            case MindtctFeatureTypes.Appearing:
+                                result = VectorBifurcationAppearing.Name;
+                                break;
+                            case MindtctFeatureTypes.Disappearing:
+                                result = VectorBifurcationDisappearing.Name;
+                                break;
+                        }
+                        break;
+                    case MindtctMinutiaTypes.RidgeEnding:
+                        switch (featureType)
+                        {
+                            case MindtctFeatureTypes.Appearing:
+                                result = vectorRidgeEndingAppearing.Name;
+                                break;
+                            case MindtctFeatureTypes.Disappearing:
+                                result = vectorRidgeEndingDisappearing.Name;
+                                break;
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
             }
             return result;
         }

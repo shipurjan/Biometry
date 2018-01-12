@@ -52,10 +52,6 @@
                         <MenuItem Header="Zapisz" Command="{Binding SaveClickCommand}"/>
                         <MenuItem Header="Zapisz jako" Command="{Binding SaveAsClickCommand}"/>
                     </MenuItem>
-                    <MenuItem Header="Dialogs" Height="30">
-                        <MenuItem Header="Open Left Dialog" Command="{Binding OpenLeftDialogCommand}" />
-                        <MenuItem Header="Open Right Dialog" Command="{Binding OpenRightDialogCommand}"/>
-                    </MenuItem>
                 </Menu>
             </materialDesign:ColorZone>
         </Grid>
@@ -139,7 +135,7 @@
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
                 <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}" Command="{Binding SaveClickCommand}"/>
-                <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Style="{StaticResource buttonStyles}" Click="addEmpty_Click"/>
             </Grid>
         </Grid>
 
@@ -248,7 +244,7 @@
 
                 <!--listboxes-->
                 <Grid Grid.Row="2">
-                    <DataGrid x:Name="MinutiaDataGrid" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
+                    <DataGrid x:Name="MinutiaDataGrid" VirtualizingPanel.IsVirtualizing="False" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
                               SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False"
                               AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
                         <DataGrid.Columns>
@@ -264,7 +260,7 @@
                                     <DataTemplate>
                                         <Border BorderBrush="{Binding LeftDrawingObject.IsSelected, Converter={StaticResource BoolToColor}}" BorderThickness="1">
                                             <StackPanel ContextMenu="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource LeftCellStackPanel}">
-                                                <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
                                                 <!--<TextBlock Text="{Binding LeftDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="PreviewMouseDown">
@@ -288,7 +284,7 @@
                                     <DataTemplate>
                                         <Border BorderBrush="{Binding RightDrawingObject.IsSelected, Converter={StaticResource BoolToColor}}" BorderThickness="1">
                                             <StackPanel ContextMenu="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource RightCellStackPanel}">
-                                                <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                                 <!--<TextBlock Text="{Binding RightDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="PreviewMouseDown">

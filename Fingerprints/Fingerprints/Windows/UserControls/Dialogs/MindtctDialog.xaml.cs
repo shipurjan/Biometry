@@ -22,7 +22,9 @@ namespace Fingerprints.Windows.UserControls.Dialogs
     {
         public MindtctDialog()
         {
+            var viewModel = new MindtctDialogViewModel();
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }

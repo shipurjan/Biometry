@@ -39,6 +39,18 @@ namespace Fingerprints.Tools.Importers
         }
     }
 
+    public enum MindtctMinutiaTypes
+    {
+        Bifurcation,
+        RidgeEnding,
+    }
+
+    public enum MindtctFeatureTypes
+    {
+        Appearing,
+        Disappearing
+    }
+
     public class MinRow
     {
         public int Mn { get; }
@@ -48,11 +60,11 @@ namespace Fingerprints.Tools.Importers
         /// <summary>
         /// calculated to radians used for drawing on bitmap
         /// </summary>
-        public double Dir { get; }
+        public double Direction { get; }
 
-        public double Rel { get; }
-        public string Typ { get; }
-        public string Ftyp { get; }
+        public double ReliabilityMeasure { get; }
+        public MindtctMinutiaTypes MinutiaType { get; }
+        public MindtctFeatureTypes FeatureType { get; }
         public int Fn { get; }
 
         public MinRow(string _mn, string _mx, string _my, string _dir, string _rel, string _typ, string _ftyp,
@@ -63,10 +75,10 @@ namespace Fingerprints.Tools.Importers
                 Mn = Convert.ToInt32(_mn);
                 Mx = Convert.ToInt32(_mx);
                 My = Convert.ToInt32(_my);
-                Dir = getAngleInRadians(_dir);
-                Rel = Convert.ToDouble(_rel, CultureInfo.InvariantCulture);
-                Typ = _typ;
-                Ftyp = _ftyp;
+                Direction = getAngleInRadians(_dir);
+                ReliabilityMeasure = Convert.ToDouble(_rel, CultureInfo.InvariantCulture);
+                MinutiaType = _typ == "BIF" ? MindtctMinutiaTypes.Bifurcation : MindtctMinutiaTypes.RidgeEnding;
+                FeatureType = _ftyp == "APP" ? MindtctFeatureTypes.Appearing : MindtctFeatureTypes.Disappearing;
                 Fn = Convert.ToInt32(_fn);
             }
             catch (Exception ex)

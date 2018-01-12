@@ -64,6 +64,7 @@ namespace Fingerprints.Tools.Importers
                 result.Angle = _row.Angle;
                 result.Points.Add(new Point(_row.X, _row.Y));
                 result.Name = vectorMinutia.Name;
+                result.Quantity = _row.Quantity;
             }
             catch (Exception ex)
             {

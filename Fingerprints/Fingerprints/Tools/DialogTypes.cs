@@ -1,4 +1,6 @@
-﻿namespace Fingerprints
+﻿using Fingerprints.ViewModels;
+
+namespace Fingerprints
 {
     public enum DialogTypes
     {
