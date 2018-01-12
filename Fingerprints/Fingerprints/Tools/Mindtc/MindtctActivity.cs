@@ -68,6 +68,11 @@ namespace Fingerprints.Tools.Mindtc
             }
         }
 
+        /// <summary>
+        /// Returns viewModel from MindtctDialog user control
+        /// </summary>
+        /// <param name="_args"></param>
+        /// <returns></returns>
         private static MindtctDialogViewModel GetMindtctDialogViewModel(DialogClosingEventArgs _args)
         {
             MindtctDialog dialog = null;
@@ -105,6 +110,7 @@ namespace Fingerprints.Tools.Mindtc
                 //Begin detection on image and return data from file with selected extension
                 mindtc.DetectImage(imagePath, _dialogViewModel.SelectedType.Key);
 
+                //Occurs when detection complete
                 DetectionCompletedHander = (_result) =>
                 {
                     importResult = _result;
@@ -125,6 +131,13 @@ namespace Fingerprints.Tools.Mindtc
             }
         }
 
+        /// <summary>
+        /// Parse imported data to MinutiaStateBase and corrects objects in drawing data
+        /// </summary>
+        /// <param name="importResult"></param>
+        /// <param name="_dialogViewModel"></param>
+        /// <param name="_drawingService"></param>
+        /// <param name="oppositeDrawingService"></param>
         private void ProcessImportedData(ImportResult importResult, MindtctDialogViewModel _dialogViewModel, DrawingService _drawingService, DrawingService oppositeDrawingService)
         {
             List<MinutiaFileState> importedData = null;
@@ -146,18 +159,6 @@ namespace Fingerprints.Tools.Mindtc
                 AddEmptyObjectOnLastPosition(_drawingService, oppositeDrawingService);
 
                 _drawingService.SetToReplaceColor(null);
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
-            }
-        }
-
-        private void MindtctDialogClosed(object _sender, DialogOpenedEventArgs _args)
-        {
-            try
-            {
-
             }
             catch (Exception ex)
             {

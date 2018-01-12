@@ -53,8 +53,14 @@ namespace Fingerprints.Tools.Mindtc
         /// </summary>
         private string tempDirectoryPath { get; }
 
+        /// <summary>
+        /// Indicates extension type of mindtct file
+        /// </summary>
         private ImportTypes type { set; get; }
 
+        /// <summary>
+        /// indicates extension type of mindtct file e.g .xyt
+        /// </summary>
         private string fileExtension { set; get; }
 
 
@@ -165,7 +171,7 @@ namespace Fingerprints.Tools.Mindtc
             finally
             {
                 //delete temporary directory
-                //Directory.Delete(tempDirectoryPath, recursive: true);
+                Directory.Delete(tempDirectoryPath, recursive: true);
             }
         }
 
