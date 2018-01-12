@@ -143,7 +143,7 @@ namespace Fingerprints.Tools.Mindtc
             try
             {
                 //import data from temporary file
-                ImportResult importResult = ImporterService.Import(Path.Combine(tempDirectoryPath, Path.GetFileNameWithoutExtension(PreparedImagePath) + ".min"));
+                ImportResult importResult = ImporterService.Import(Path.Combine(tempDirectoryPath, Path.GetFileNameWithoutExtension(PreparedImagePath) + ".xyt"));
 
                 //fire event
                 Application.Current.Dispatcher.Invoke(() =>

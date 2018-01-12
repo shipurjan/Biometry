@@ -37,14 +37,40 @@ namespace Fingerprints.Tools.Importers
         {
             try
             {
-                X = Convert.ToInt16(_x);
-                Y = Convert.ToInt16(_y);
-                Angle = Utils.AngleToRadians(Convert.ToInt16(_angle));
+                X = Convert.ToInt32(_x);
+                Y = Convert.ToInt32(_y);
+                Angle = GetAngleInRadians(_angle);
             }
             catch (Exception ex)
             {
                 Logger.WriteExceptionLog(ex);
             }
+        }
+
+        private double GetAngleInRadians(string _dir)
+        {
+            double result = 0;
+            int direction = 0;
+            try
+            {
+                // multiple direction value with constant increment to get angle in degrees
+                direction = Convert.ToInt32(_dir);
+                
+
+                if (direction > 180)
+                {
+                    result = (360 - direction) * Math.PI / 180;
+                }
+                else
+                {
+                    result = (-1 * direction) * Math.PI / 180;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
     }
 }
