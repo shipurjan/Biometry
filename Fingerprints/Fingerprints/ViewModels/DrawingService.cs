@@ -18,6 +18,8 @@ using Fingerprints.EventArgsObjects;
 using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
+using MaterialDesignThemes.Wpf;
+using Fingerprints.Windows.UserControls.Dialogs;
 
 namespace Fingerprints.ViewModels
 {
@@ -173,6 +175,18 @@ namespace Fingerprints.ViewModels
 
                 Decorator.ShowOnlyIndex();
                 Draw();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        internal void OpenDialog(DialogTypes type)
+        {
+            try
+            {
+
             }
             catch (Exception ex)
             {

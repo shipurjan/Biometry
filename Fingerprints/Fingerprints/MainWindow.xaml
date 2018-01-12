@@ -18,6 +18,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
         xmlns:Converters="clr-namespace:Fingerprints.Converters"
+        xmlns:Tools ="clr-namespace:Fingerprints.Tools"
         xmlns:UserControls="clr-namespace:Fingerprints.Windows.UserControls"
         Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000" Icon="iconBlackWithBackground.ico">
     <Window.DataContext>
@@ -50,6 +51,10 @@
                         <MenuItem Header="Nowa minucja" Command="{Binding NewMinutiaCommand}"/>
                         <MenuItem Header="Zapisz" Command="{Binding SaveClickCommand}"/>
                         <MenuItem Header="Zapisz jako" Command="{Binding SaveAsClickCommand}"/>
+                    </MenuItem>
+                    <MenuItem Header="Dialogs" Height="30">
+                        <MenuItem Header="Open Left Dialog" Command="{Binding OpenLeftDialogCommand}" />
+                        <MenuItem Header="Open Right Dialog" Command="{Binding OpenRightDialogCommand}"/>
                     </MenuItem>
                 </Menu>
             </materialDesign:ColorZone>
@@ -190,6 +195,8 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding LeftDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.LeftDrawing}">
+                </materialDesign:DialogHost>
             </Grid>
 
             <!--rightCanvas-->
@@ -232,6 +239,8 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding RightDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.RightDrawing}">
+                </materialDesign:DialogHost>
             </Grid>
 
             <!--table-->

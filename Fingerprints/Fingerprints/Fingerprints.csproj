@@ -199,6 +199,7 @@
     <Compile Include="MinutiaeTypes\CurveLineState.cs" />
     <Compile Include="MinutiaeTypes\SegmentState.cs" />
     <Compile Include="Tools\DependencyObjectExtensions.cs" />
+    <Compile Include="Tools\DialogTypes.cs" />
     <Compile Include="Tools\DrawingDecorator.cs" />
     <Compile Include="Tools\IDataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
@@ -252,6 +253,9 @@
     <Compile Include="Windows\SelectImage.xaml.cs">
       <DependentUpon>SelectImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UserControls\Dialogs\MindtctDialog.xaml.cs">
+      <DependentUpon>MindtctDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
     </Compile>
@@ -283,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\SelectImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\Dialogs\MindtctDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
