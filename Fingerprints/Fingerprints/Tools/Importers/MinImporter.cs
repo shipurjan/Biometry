@@ -73,10 +73,10 @@ namespace Fingerprints.Tools.Importers
         }
         private MinutiaFileState NewFileState(MinRow _row)
         {
-            MinutiaFileState result = null;
+            MindtctFileState result = null;
             try
             {
-                result = new MinutiaFileState();
+                result = new MindtctFileState();
 
                 result.Angle = _row.Direction;
                 result.Points.Add(new Point(_row.Mx, _row.My));

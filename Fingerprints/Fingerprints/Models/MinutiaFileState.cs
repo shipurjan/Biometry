@@ -14,7 +14,6 @@ namespace Fingerprints.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public double Angle { get; set; }
-        public int Quantity { get; set; }
         public List<Point> Points { get; set; }
 
         public MinutiaFileState()

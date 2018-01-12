@@ -51,6 +51,9 @@ namespace Fingerprints.Tools.Importers
         Disappearing
     }
 
+    /// <summary>
+    /// description of columns: http://ffpis.sourceforge.net/man/mindtct.html
+    /// </summary>
     public class MinRow
     {
         public int Mn { get; }
@@ -87,6 +90,11 @@ namespace Fingerprints.Tools.Importers
             }
         }
 
+        /// <summary>
+        /// Parses angle from mindtct format to radians
+        /// </summary>
+        /// <param name="_dir"></param>
+        /// <returns></returns>
         private double getAngleInRadians(string _dir)
         {
             double result = 0;
@@ -94,6 +102,7 @@ namespace Fingerprints.Tools.Importers
             try
             {
                 // multiple direction value with constant increment to get angle in degrees
+                // add 8 (90 degrees) to angle to correct with application standard
                 direction = Convert.ToInt32((Convert.ToInt32(_dir) + 8) * 11.25);
 
                 if (direction > 180)

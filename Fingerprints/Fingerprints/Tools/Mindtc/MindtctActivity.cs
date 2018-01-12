@@ -149,7 +149,7 @@ namespace Fingerprints.Tools.Mindtc
                 }
 
                 //Filter data by quantity
-                importedData = importResult.ResultData.Where(x => x.Quantity >= _dialogViewModel.MinutiaQuantity).ToList();
+                importedData = importResult.ResultData.Where(x => ((MindtctFileState)x).Quantity >= _dialogViewModel.MinutiaQuantity).ToList();
 
                 //create MitutiaStateBase objects in drawing service
                 MinutiaStateFactory.AddMinutiaeFileToDrawingService(importedData, _drawingService);

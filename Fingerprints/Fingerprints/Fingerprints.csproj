@@ -187,6 +187,7 @@
     <Compile Include="MinutiaeTypes\VectorState.cs" />
     <Compile Include="MinutiaeTypes\PointState.cs" />
     <Compile Include="Models\DrawingType.cs" />
+    <Compile Include="Models\MindtctFileState.cs" />
     <Compile Include="Models\MinutiaFileState.cs" />
     <Compile Include="Models\MinutiaState.cs" />
     <Compile Include="Resources\ExtensionMethods.cs" />

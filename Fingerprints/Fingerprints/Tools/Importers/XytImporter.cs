@@ -58,7 +58,7 @@ namespace Fingerprints.Tools.Importers
 
         private MinutiaFileState NewFileState(XytRow _row)
         {
-            MinutiaFileState result = new MinutiaFileState();
+            MindtctFileState result = new MindtctFileState();
             try
             {
                 result.Angle = _row.Angle;
