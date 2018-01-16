@@ -74,8 +74,8 @@ namespace Fingerprints.ViewModels
                 dbController = new MinutiaeTypeController();
 
                 //Initialize Drawing Services
-                LeftDrawingService = new DrawingService(DrawingServiceSide.Left);
-                RightDrawingService = new DrawingService(DrawingServiceSide.Right);
+                LeftDrawingService = new DrawingService(Dialogs.LeftDrawing);
+                RightDrawingService = new DrawingService(DialogTypes.RightDrawing);
 
                 //Add method for CollectinoChanged
                 LeftDrawingData.CollectionChanged += LeftDrawingDataChanged;

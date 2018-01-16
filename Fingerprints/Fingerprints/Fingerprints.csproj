@@ -189,7 +189,7 @@
     <Compile Include="MinutiaeTypes\SegmentState.cs" />
     <Compile Include="Tools\DependencyObjectExtensions.cs" />
     <Compile Include="Tools\DrawingDecorator.cs" />
-    <Compile Include="Tools\DrawingServiceSide.cs" />
+    <Compile Include="Tools\Dialogs.cs" />
     <Compile Include="Tools\IDataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
     <Compile Include="Tools\Exporters\ExporterBase.cs" />

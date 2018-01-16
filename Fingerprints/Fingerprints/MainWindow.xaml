@@ -190,10 +190,7 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding LeftDrawingService}" Margin="2 0 2 2"/>
-                <materialDesign:DialogHost Identifier="Left">
-                    <materialDesign:DialogHost.DialogContent>
-                        <Windows:FilterWindow></Windows:FilterWindow>
-                    </materialDesign:DialogHost.DialogContent>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.LeftDrawing}">
                 </materialDesign:DialogHost>
             </Grid>
 
@@ -237,10 +234,7 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding RightDrawingService}" Margin="2 0 2 2"/>
-                <materialDesign:DialogHost Identifier="Right">
-                    <materialDesign:DialogHost.DialogContent>
-                        <Windows:FilterWindow></Windows:FilterWindow>
-                    </materialDesign:DialogHost.DialogContent>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.RightDrawing}">
                 </materialDesign:DialogHost>
 
             </Grid>

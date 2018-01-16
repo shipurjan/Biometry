@@ -58,8 +58,11 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                DrawingService.BackgroundImage = DrawingService.FilterImage.Filter(FilterType, SliderCurrentValue).Get().ToBitmapImage();
                 DialogHost.CloseDialogCommand.Execute(true, null);
+                DrawingService.IsLoading = true;
+                DrawingService.BackgroundImage = DrawingService.FilterImage.Filter(FilterType, SliderCurrentValue).Get().ToBitmapImage();
+                
+                DrawingService.IsLoading = false;
             }
             catch (Exception ex)
             {

@@ -28,6 +28,8 @@ namespace Fingerprints.ViewModels
 {
     public class DrawingService : BindableBase, IDisposable
     {
+        public DialogTypes Dialog { get; }
+
         /// <summary>
         /// Event raised when current drawing change
         /// </summary>
@@ -124,12 +126,10 @@ namespace Fingerprints.ViewModels
 
         public ICommand MindtcIdentifyCommand { get; }
 
-        public DrawingServiceSide Side = DrawingServiceSide.None;
-
         /// <summary>
         /// Initializes new instance
         /// </summary>
-        public DrawingService(DrawingServiceSide _side)
+        public DrawingService(DialogTypes assignedDialog)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace Fingerprints.ViewModels
                 FilterCommand = new DelegateCommand<string>(Filter);
 
                 //Set Drawing ServiceSide
-                Side = _side;
+                Dialog = assignedDialog;
             }
             catch (Exception ex)
             {
@@ -541,7 +541,7 @@ namespace Fingerprints.ViewModels
                         BackgroundImage = filterImage.Filter(myFilter).Get().ToBitmapImage();
                         break;
                     default:
-                        var result = await DialogHost.Show(windowParameters, Side.ToString());
+                        var result = await DialogHost.Show(windowParameters, Dialog);
                         break;
                 }
             }

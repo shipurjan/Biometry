@@ -17,6 +17,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="241*"/>
+            <ColumnDefinition Width="59*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -24,15 +28,29 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Wybierz siłę filtra" Margin="8 15 15 15"></TextBlock>
-        <StackPanel Grid.Row="1">
-            <Slider Grid.Row="1" Minimum="{Binding minSlider}" Maximum="{Binding maxSlider}" IsSnapToTickEnabled="True" TickFrequency="{Binding TickFrequency}" Style="{StaticResource MaterialDesignDiscreteSlider}" 
+        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="8,8,8,8" Grid.ColumnSpan="2">Wybierz siłę filtra</TextBlock>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="1">
+            <Slider Minimum="{Binding minSlider}" Maximum="{Binding maxSlider}" 
+                    IsSnapToTickEnabled="True" TickFrequency="{Binding TickFrequency}" 
+                    Style="{StaticResource MaterialDesignDiscreteSlider}" 
                     ToolTip="Siła filtra"
                     Value="{Binding SliderCurrentValue}"
-                    Margin="0 0 0 15" />
+                    Margin=" 8 8 8 8"
+                    x:Name="FilterSlider"/>
         </StackPanel>
-       
-        <Button Grid.Row="2" Content="Filtruj" Command="{Binding FilterClickCommand}" Margin="8"/>
-        <Button Grid.Row="3" IsCancel="True" Margin="8" Content="Anuluj" Command="{x:Static wpf:DialogHost.CloseDialogCommand}"/>
+        <TextBlock Grid.Column="1" VerticalAlignment="Bottom" Margin=" 8 8 8 8" TextAlignment="Center" Text="{Binding ElementName=FilterSlider, Path=Value, StringFormat={}{0}}" Grid.Row="1"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+            <Button Grid.Row="2" 
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Margin="0 8 8 0"
+                    Content="Filtruj" Command="{Binding FilterClickCommand}"  />
+            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                Anuluj
+            </Button>
+        </StackPanel>
+        <!--<Button Grid.Row="3" IsCancel="True" Margin="8" Content="Anuluj" Command="{x:Static wpf:DialogHost.CloseDialogCommand}" Grid.ColumnSpan="2"/>-->
     </Grid>
 </UserControl>
