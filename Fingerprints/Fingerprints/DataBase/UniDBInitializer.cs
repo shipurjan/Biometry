@@ -13,17 +13,6 @@ namespace Fingerprints.DataBase
     {
         protected override void Seed(FingerContext context)
         {
-
-            IList<Type> types = new List<Type>();
-
-            foreach (DrawingType drawingType in Enum.GetValues(typeof(DrawingType)))
-            {
-                types.Add(TypeModelFactory.Create(drawingType));
-            }
-                        
-
-            foreach (Type type in types)
-                context.Types.Add(type);
             base.Seed(context);
         }
     }

@@ -52,7 +52,7 @@
                         <MenuItem Header="Zapisz jako" Command="{Binding SaveAsClickCommand}"/>
                     </MenuItem>
                     <MenuItem Header="Narzędzia" Height="30">
-                        <MenuItem Header="Zdefiniowane minucje" Command="{Binding NewMinutiaCommand}"/>
+                        <MenuItem Header="Zdefiniowane typy" Command="{Binding NewMinutiaCommand}"/>
                     </MenuItem>
                 </Menu>
             </materialDesign:ColorZone>
