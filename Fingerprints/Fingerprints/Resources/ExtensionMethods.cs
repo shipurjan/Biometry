@@ -91,33 +91,49 @@ namespace Fingerprints.Resources
 
         public static System.Drawing.Bitmap ToBitmap(this BitmapImage bitmapImage)
         {
-            using (MemoryStream outStream = new MemoryStream())
+            System.Drawing.Bitmap result = null;
+            try
             {
-                BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-                enc.Save(outStream);
-                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    BitmapEncoder enc = new BmpBitmapEncoder();
+                    enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                    enc.Save(outStream);
+                    System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
 
-                return new System.Drawing.Bitmap(bitmap);
+                    result = new System.Drawing.Bitmap(bitmap);
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
 
         public static BitmapImage ToBitmapImage(this System.Drawing.Bitmap bitmap)
         {
-            using (var memory = new MemoryStream())
+            BitmapImage result = null;
+            try
             {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-                memory.Position = 0;
+                using (var memory = new MemoryStream())
+                {
+                    bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                    memory.Position = 0;
 
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-                return bitmapImage;
+                    result = new BitmapImage();
+                    result.BeginInit();
+                    result.StreamSource = memory;
+                    result.CacheOption = BitmapCacheOption.OnLoad;
+                    result.EndInit();
+                    result.Freeze();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
     }
 }
