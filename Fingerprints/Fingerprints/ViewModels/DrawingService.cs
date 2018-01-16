@@ -547,8 +547,7 @@ namespace Fingerprints.ViewModels
         /// <param name="_filterType"></param>
         private async void Filter(string _filterType)
         {
-            Task taskResult = null;
-            IsLoading = true;
+            Task taskResult = null;            
             FilterImageType myFilter = FilterImageType.None;
             try
             {
@@ -559,13 +558,13 @@ namespace Fingerprints.ViewModels
                     case FilterImageType.None:
                         taskResult = Task.Run(() =>
                         {
+                            IsLoading = true;
                             BackgroundImage = filterImage.Filter(FilterImageType.None).Get().ToBitmapImage();
-                        });
-                        IsLoading = false;
+                            IsLoading = false;
+                        });  
                         break;
                     default:
                         var result = await DialogHost.Show(windowParameters, Dialog);
-                        IsLoading = false;
                         break;
                 }
             }

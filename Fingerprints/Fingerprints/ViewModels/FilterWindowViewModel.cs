@@ -60,9 +60,11 @@ namespace Fingerprints.ViewModels
             try
             {
                 DialogHost.CloseDialogCommand.Execute(true, null);
+                DrawingService.IsLoading = true;
                 result = Task.Run(() =>
                 {                    
                     DrawingService.BackgroundImage = DrawingService.FilterImage.Filter(FilterType, SliderCurrentValue).Get().ToBitmapImage();
+                    DrawingService.IsLoading = false;
                 });
             }
             catch (Exception ex)
