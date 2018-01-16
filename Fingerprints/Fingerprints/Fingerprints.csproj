@@ -189,6 +189,7 @@
     <Compile Include="MinutiaeTypes\SegmentState.cs" />
     <Compile Include="Tools\DependencyObjectExtensions.cs" />
     <Compile Include="Tools\DrawingDecorator.cs" />
+    <Compile Include="Tools\DrawingServiceSide.cs" />
     <Compile Include="Tools\IDataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
     <Compile Include="Tools\Exporters\ExporterBase.cs" />
@@ -249,6 +250,9 @@
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\UserControls\FilterParameters.xaml.cs">
+      <DependentUpon>FilterParameters.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\UserControls\LoadingOverlay.xaml.cs">
       <DependentUpon>LoadingOverlay.xaml</DependentUpon>
     </Compile>
@@ -285,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\UserControls\DrawingBottomPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\FilterParameters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

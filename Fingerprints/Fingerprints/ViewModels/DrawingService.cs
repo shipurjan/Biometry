@@ -21,6 +21,8 @@ using System.ComponentModel;
 using Fingerprints.Tools.ImageFilters;
 using Prism.Commands;
 using Fingerprints.Windows;
+using MaterialDesignThemes.Wpf;
+using Fingerprints.Windows.UserControls;
 
 namespace Fingerprints.ViewModels
 {
@@ -122,10 +124,12 @@ namespace Fingerprints.ViewModels
 
         public ICommand MindtcIdentifyCommand { get; }
 
+        public DrawingServiceSide Side = DrawingServiceSide.None;
+
         /// <summary>
         /// Initializes new instance
         /// </summary>
-        public DrawingService()
+        public DrawingService(DrawingServiceSide _side)
         {
             try
             {
@@ -134,7 +138,9 @@ namespace Fingerprints.ViewModels
                 Decorator = new DrawingDecorator(this);
                 IsLoading = false;
                 FilterCommand = new DelegateCommand<string>(Filter);
-                //AcceptButtonVisibility = false;
+
+                //Set Drawing ServiceSide
+                Side = _side;
             }
             catch (Exception ex)
             {
@@ -522,28 +528,20 @@ namespace Fingerprints.ViewModels
         /// Filter image 
         /// </summary>
         /// <param name="_filterType"></param>
-        private void Filter(string _filterType)
+        private async void Filter(string _filterType)
         {
             FilterImageType myFilter = FilterImageType.None;
             try
             {
                 Enum.TryParse(_filterType, out myFilter);
-                var window = new FilterWindow(this, myFilter);
-                
+                var windowParameters = new FilterWindow(this, myFilter);
                 switch (myFilter)
                 {
                     case FilterImageType.None:
                         BackgroundImage = filterImage.Filter(myFilter).Get().ToBitmapImage();
                         break;
-                    case FilterImageType.Sobel:
-                        window.ShowDialog();
-                        window.Close();
-                        //BackgroundImage = filterImage.Filter(myFilter, 3).Get().ToBitmapImage();
-                        break;
-                    case FilterImageType.Gauss:
-                        BackgroundImage = filterImage.Filter(myFilter, 5).Get().ToBitmapImage();
-                        break;
                     default:
+                        var result = await DialogHost.Show(windowParameters, Side.ToString());
                         break;
                 }
             }

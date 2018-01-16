@@ -1,9 +1,11 @@
 ﻿using ExceptionLogger;
 using Fingerprints.Resources;
 using Fingerprints.Tools.ImageFilters;
+using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ using System.Windows.Input;
 
 namespace Fingerprints.ViewModels
 {
-    class FilterWindowViewModel : ViewModel_Base
+    class FilterWindowViewModel : ViewModel_Base, INotifyPropertyChanged
     {
         #region Properties and variables
         public string FilterName { get; set; }
@@ -44,9 +46,7 @@ namespace Fingerprints.ViewModels
 
                 SetSlider(_filterType);
 
-                FilterClickCommand = new DelegateCommand(FilterClick);
-
-
+                FilterClickCommand = new DelegateCommand(FilterClick);                
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace Fingerprints.ViewModels
             try
             {
                 DrawingService.BackgroundImage = DrawingService.FilterImage.Filter(FilterType, SliderCurrentValue).Get().ToBitmapImage();
-                
+                DialogHost.CloseDialogCommand.Execute(true, null);
             }
             catch (Exception ex)
             {
@@ -72,10 +72,9 @@ namespace Fingerprints.ViewModels
             try
             {
                 minSlider = 1;
-                maxSlider = 30;
+                maxSlider = 31;
                 TickFrequency = 2;
-                SliderCurrentValue = 3;
-                FilterName = "Sobel";
+                SliderCurrentValue = 15;
                 FilterType = _filterType;
             }
             catch (Exception ex)

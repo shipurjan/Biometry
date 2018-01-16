@@ -19,6 +19,7 @@
         xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
         xmlns:Converters="clr-namespace:Fingerprints.Converters"
         xmlns:UserControls="clr-namespace:Fingerprints.Windows.UserControls"
+        xmlns:Windows="clr-namespace:Fingerprints.Windows"
         Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
@@ -189,6 +190,11 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding LeftDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="Left">
+                    <materialDesign:DialogHost.DialogContent>
+                        <Windows:FilterWindow></Windows:FilterWindow>
+                    </materialDesign:DialogHost.DialogContent>
+                </materialDesign:DialogHost>
             </Grid>
 
             <!--rightCanvas-->
@@ -231,6 +237,12 @@
                     </Canvas>
                 </Border>
                 <UserControls:DrawingBottomPanel DataContext="{Binding RightDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="Right">
+                    <materialDesign:DialogHost.DialogContent>
+                        <Windows:FilterWindow></Windows:FilterWindow>
+                    </materialDesign:DialogHost.DialogContent>
+                </materialDesign:DialogHost>
+
             </Grid>
 
             <!--table-->

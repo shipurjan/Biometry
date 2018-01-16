@@ -19,8 +19,11 @@ namespace Fingerprints.Windows
     /// <summary>
     /// Interaction logic for FilterWindow.xaml
     /// </summary>
-    public partial class FilterWindow : Window
+    public partial class FilterWindow : UserControl
     {
+        public FilterWindow()
+        { }
+
         public FilterWindow(DrawingService _drawingService, FilterImageType _type)
         {
             var viewModel = new FilterWindowViewModel(_drawingService, _type);
