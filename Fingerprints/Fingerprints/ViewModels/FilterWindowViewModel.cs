@@ -56,13 +56,14 @@ namespace Fingerprints.ViewModels
 
         private void FilterClick()
         {
+            Task result = null;
             try
             {
                 DialogHost.CloseDialogCommand.Execute(true, null);
-                DrawingService.IsLoading = true;
-                DrawingService.BackgroundImage = DrawingService.FilterImage.Filter(FilterType, SliderCurrentValue).Get().ToBitmapImage();
-                
-                DrawingService.IsLoading = false;
+                result = Task.Run(() =>
+                {                    
+                    DrawingService.BackgroundImage = DrawingService.FilterImage.Filter(FilterType, SliderCurrentValue).Get().ToBitmapImage();
+                });
             }
             catch (Exception ex)
             {

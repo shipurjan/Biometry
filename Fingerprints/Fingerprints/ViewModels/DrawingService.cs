@@ -25,6 +25,7 @@ using MaterialDesignThemes.Wpf;
 using Fingerprints.Windows.UserControls;
 using MaterialDesignThemes.Wpf;
 using Fingerprints.Windows.UserControls.Dialogs;
+using System.Threading.Tasks;
 
 namespace Fingerprints.ViewModels
 {
@@ -546,6 +547,8 @@ namespace Fingerprints.ViewModels
         /// <param name="_filterType"></param>
         private async void Filter(string _filterType)
         {
+            Task taskResult = null;
+            IsLoading = true;
             FilterImageType myFilter = FilterImageType.None;
             try
             {
@@ -554,10 +557,15 @@ namespace Fingerprints.ViewModels
                 switch (myFilter)
                 {
                     case FilterImageType.None:
-                        BackgroundImage = filterImage.Filter(myFilter).Get().ToBitmapImage();
+                        taskResult = Task.Run(() =>
+                        {
+                            BackgroundImage = filterImage.Filter(FilterImageType.None).Get().ToBitmapImage();
+                        });
+                        IsLoading = false;
                         break;
                     default:
                         var result = await DialogHost.Show(windowParameters, Dialog);
+                        IsLoading = false;
                         break;
                 }
             }
@@ -566,6 +574,7 @@ namespace Fingerprints.ViewModels
                 Logger.WriteExceptionLog(ex);
             }
         }
+        
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
