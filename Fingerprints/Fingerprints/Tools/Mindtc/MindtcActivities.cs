@@ -54,7 +54,7 @@ namespace Fingerprints.Tools.Mindtc
             {
                 oppositeDrawingService = _drawingService == LeftDrawingService ? RightDrawingService : LeftDrawingService;
 
-                imagePath = _drawingService.FilterImage.FilePath;
+                imagePath = _drawingService.BackgroundImage.UriSource.AbsolutePath;
 
                 mindtc.DetectImage(imagePath);
 

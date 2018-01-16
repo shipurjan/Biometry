@@ -21,7 +21,7 @@ namespace Fingerprints.Resources
             double result = 0.0;
             try
             {
-                result = (360 - _angleInDegrees) * Math.PI / 180;
+                result = (-1 * _angleInDegrees) * Math.PI / 180;
             }
             catch (Exception ex)
             {

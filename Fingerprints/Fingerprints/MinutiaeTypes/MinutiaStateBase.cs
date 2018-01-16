@@ -62,6 +62,13 @@ namespace Fingerprints.MinutiaeTypes
             set { SetProperty(ref willBeReplaced, value); }
         }
 
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { SetProperty(ref isSelected, value); }
+        }
+
         private bool acceptButtonVisibility;
         public bool AcceptButtonVisibility
         {
@@ -127,6 +134,7 @@ namespace Fingerprints.MinutiaeTypes
                 Minutia = _minutia;
                 WriteableBmp = _writeableBitmap;
                 AcceptButtonVisibility = false;
+                IsSelected = false;
 
                 if (Minutia != null && Minutia.DrawingType != DrawingType.Empty)
                 {

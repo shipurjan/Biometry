@@ -23,6 +23,8 @@ using Prism.Commands;
 using Fingerprints.Windows;
 using MaterialDesignThemes.Wpf;
 using Fingerprints.Windows.UserControls;
+using MaterialDesignThemes.Wpf;
+using Fingerprints.Windows.UserControls.Dialogs;
 
 namespace Fingerprints.ViewModels
 {
@@ -109,7 +111,9 @@ namespace Fingerprints.ViewModels
             get
             { return selectedIndex; }
             set
-            { SetProperty(ref selectedIndex, value != -1 ? value : null); }
+            {
+                SetProperty(ref selectedIndex, value != -1 ? value : null);
+            }
         }
 
         private bool isLoading;
@@ -190,6 +194,18 @@ namespace Fingerprints.ViewModels
 
                 Decorator.ShowOnlyIndex();
                 Draw();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        internal void OpenDialog(DialogTypes type)
+        {
+            try
+            {
+
             }
             catch (Exception ex)
             {

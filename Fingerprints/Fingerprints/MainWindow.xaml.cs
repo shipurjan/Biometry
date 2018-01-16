@@ -32,5 +32,10 @@ namespace Fingerprints
             InitializeComponent();
             DataContext = viewModel;
         }
+
+        private void addEmpty_Click(object sender, RoutedEventArgs e)
+        {
+            MinutiaDataGrid.Items.Refresh();
+        }
     }
 }

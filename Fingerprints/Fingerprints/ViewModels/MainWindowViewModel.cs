@@ -48,7 +48,7 @@ namespace Fingerprints.ViewModels
 
         public DataGridActivities DataGridActivities { get; }
 
-        public MindtcActivity MindtcActivity { get; }
+        public MindtctActivity MindtcActivity { get; }
 
         public string ProjectName { get; set; }
 
@@ -88,7 +88,7 @@ namespace Fingerprints.ViewModels
                 DataGridActivities = new DataGridActivities(LeftDrawingService, RightDrawingService);
 
                 //init mindtc activity object for handling mindtc detection
-                MindtcActivity = new MindtcActivity(LeftDrawingService, RightDrawingService);
+                MindtcActivity = new MindtctActivity(LeftDrawingService, RightDrawingService);
 
                 //Get MinutiaeStates for combobox
                 MinutiaeStates = new ObservableCollection<MinutiaState>(dbController.getStates());
@@ -540,9 +540,12 @@ namespace Fingerprints.ViewModels
             try
             {
                 Window1 win = new Window1();
+                win.Owner = Application.Current.MainWindow;
+                    
                 win.ShowDialog();
-                //drawer.stopDrawing();
-                MinutiaeStates.Add(dbController.getStates().LastOrDefault());
+                MinutiaeStates.Clear();
+
+                MinutiaeStates.AddRange(dbController.getStates());
             }
             catch (Exception ex)
             {
