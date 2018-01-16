@@ -18,8 +18,14 @@ using Fingerprints.EventArgsObjects;
 using System.Collections.Specialized;
 using System.Linq;
 using System.ComponentModel;
+using Fingerprints.Tools.ImageFilters;
+using Prism.Commands;
+using Fingerprints.Windows;
+using MaterialDesignThemes.Wpf;
+using Fingerprints.Windows.UserControls;
 using MaterialDesignThemes.Wpf;
 using Fingerprints.Windows.UserControls.Dialogs;
+using System.Threading.Tasks;
 
 namespace Fingerprints.ViewModels
 {
@@ -40,6 +46,12 @@ namespace Fingerprints.ViewModels
         /// Helper variable used for moving image
         /// </summary>
         private Point mousePosition;
+        private FilterImage filterImage;
+        public FilterImage FilterImage
+        {
+            get { return filterImage; }
+            set { SetProperty(ref filterImage, value); }
+        }
 
         #region Props
 
@@ -115,6 +127,8 @@ namespace Fingerprints.ViewModels
 
         #endregion
 
+        public ICommand FilterCommand { get; }
+
         public ICommand MindtcIdentifyCommand { get; }
 
         /// <summary>
@@ -128,6 +142,9 @@ namespace Fingerprints.ViewModels
                 DrawingData.CollectionChanged += DrawingDataCollectionChanged;
                 Decorator = new DrawingDecorator(this);
                 IsLoading = false;
+                FilterCommand = new DelegateCommand<string>(Filter);
+
+                //Set Drawing ServiceSide
                 Dialog = assignedDialog;
             }
             catch (Exception ex)
@@ -383,9 +400,11 @@ namespace Fingerprints.ViewModels
 
                 if (openFile.ShowDialog() == true)
                 {
-                    BackgroundImage = new BitmapImage(new Uri(openFile.FileName));
+                    FilterImage = new FilterImage(new System.Drawing.Bitmap(openFile.FileName), openFile.FileName);                   
 
-                    WriteableBitmap = new WriteableBitmap(BackgroundImage.PixelWidth, (BackgroundImage.PixelHeight), 96, 96, PixelFormats.Bgra32, null);
+                    BackgroundImage = FilterImage.OryginalImage.ToBitmapImage();
+
+                    WriteableBitmap = new WriteableBitmap(FilterImage.OryginalImage.Width, FilterImage.OryginalImage.Height, 96, 96, PixelFormats.Bgra32, null);
 
                     //Reset drawing
                     DrawingData.Clear();
@@ -521,6 +540,40 @@ namespace Fingerprints.ViewModels
                 Logger.WriteExceptionLog(ex);
             }
         }
+
+        /// <summary>
+        /// Filter image 
+        /// </summary>
+        /// <param name="_filterType"></param>
+        private async void Filter(string _filterType)
+        {
+            Task taskResult = null;            
+            FilterImageType myFilter = FilterImageType.None;
+            try
+            {
+                Enum.TryParse(_filterType, out myFilter);
+                var windowParameters = new FilterWindow(this, myFilter);
+                switch (myFilter)
+                {
+                    case FilterImageType.None:
+                        taskResult = Task.Run(() =>
+                        {
+                            IsLoading = true;
+                            BackgroundImage = filterImage.Filter(FilterImageType.None).Get().ToBitmapImage();
+                            IsLoading = false;
+                        });  
+                        break;
+                    default:
+                        var result = await DialogHost.Show(windowParameters, Dialog);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+        
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

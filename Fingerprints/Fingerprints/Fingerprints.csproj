@@ -210,6 +210,9 @@
     <Compile Include="Tools\Exporters\XytExporter.cs" />
     <Compile Include="Tools\IDataImporter.cs" />
     <Compile Include="Tools\IdSorter.cs" />
+    <Compile Include="Tools\ImageFilters\FilterImage.cs" />
+    <Compile Include="Tools\ImageFilters\FilterImageFluentInterface.cs" />
+    <Compile Include="Tools\ImageFilters\FilterImageType.cs" />
     <Compile Include="Tools\Importers\ImporterBase.cs" />
     <Compile Include="Tools\Importers\ImporterFactory.cs" />
     <Compile Include="Tools\Importers\ImporterService.cs" />
@@ -226,6 +229,7 @@
     <Compile Include="Tools\MyObservableCollection.cs" />
     <Compile Include="Tools\PathTool.cs" />
     <Compile Include="ViewModels\DataGridActivities.cs" />
+    <Compile Include="ViewModels\FilterWindowViewModel.cs" />
     <Compile Include="ViewModels\GridViewModel.cs" />
     <Compile Include="ViewModels\DrawingService.cs" />
     <Compile Include="MinutiaeTypes\MinutiaStateBase.cs" />
@@ -246,6 +250,9 @@
       <DependentUpon>AddWizard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Controls\GridContextMenu.cs" />
+    <Compile Include="Windows\FilterWindow.xaml.cs">
+      <DependentUpon>FilterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ProjectWindow.xaml.cs">
       <DependentUpon>ProjectWindow.xaml</DependentUpon>
     </Compile>
@@ -258,6 +265,9 @@
     <Compile Include="Windows\UserControls\Dialogs\MindtctDialogViewModel.cs" />
     <Compile Include="Windows\UserControls\DrawingBottomPanel.xaml.cs">
       <DependentUpon>DrawingBottomPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\UserControls\FilterParameters.xaml.cs">
+      <DependentUpon>FilterParameters.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\UserControls\LoadingOverlay.xaml.cs">
       <DependentUpon>LoadingOverlay.xaml</DependentUpon>
@@ -282,6 +292,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\FilterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\ProjectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -295,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\UserControls\DrawingBottomPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\UserControls\FilterParameters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
