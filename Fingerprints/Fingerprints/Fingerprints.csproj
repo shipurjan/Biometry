@@ -177,7 +177,6 @@
     <Compile Include="Factories\FileMinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaFactory.cs" />
     <Compile Include="Factories\MinutiaStateFactory.cs" />
-    <Compile Include="Factories\TypeModelFactory.cs" />
     <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IMouseClickable.cs" />
     <Compile Include="Interfaces\IMouseMoveable.cs" />
@@ -238,7 +237,6 @@
     <Compile Include="DataBase\Database.cs" />
     <Compile Include="DataBase\FingerContext.cs" />
     <Compile Include="Interfaces\IDraw.cs" />
-    <Compile Include="Models\Type.cs" />
     <Compile Include="DataBase\MinutiaeTypeController.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Models\Project.cs" />

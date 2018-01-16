@@ -133,7 +133,7 @@ namespace Fingerprints
                     DefinedMinutiaNameValidationError.Text = "Taka nazwa już istnieje";
                 }
 
-                if (DrawingType.SelectedValue is null)
+                if (DrawingType.SelectedValue == null)
                 {
                     result = false;
                     DrawingTypeValidationError.Visibility = Visibility.Visible;

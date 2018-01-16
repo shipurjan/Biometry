@@ -9,7 +9,6 @@ namespace Fingerprints
         {
             System.Data.Entity.Database.SetInitializer<FingerContext>(new UniDBInitializer<FingerContext>());
         }
-        public DbSet<Type> Types { get; set; }
         public DbSet<SelfDefinedMinutiae> SelfDefinedMinutiaes { get; set; }
         public DbSet<Project> Projects { get; set; }
     }

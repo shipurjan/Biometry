@@ -22,13 +22,12 @@ namespace Fingerprints
             try
             {
                 using (var db = new FingerContext())
-                {
-                    var q = db.Types.Where(x => x.DrawingType == drawType).Select(x => x.DrawingType).Single();
+                {                    
                     var SelfDefinedMinutiae = new SelfDefinedMinutiae()
                     {
                         Name = name,
                         ProjectId = currentProject,
-                        DrawingType = q,
+                        DrawingType = drawType,
                         Color = minutiaColor.ToString(),
 
                     };
