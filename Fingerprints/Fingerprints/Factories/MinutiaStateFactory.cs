@@ -109,8 +109,11 @@ namespace Fingerprints.Factories
                         //get SelfDefinedMinutia by name
                         var tempMinutia = definedMinutiaes.Where(x => x.Name == item.Name).FirstOrDefault();
 
-                        //Creates object of Minutia which is automatic assigned to drawing service
-                        _drawingService.DrawingData.Add(MinutiaStateFactory.Create(item, tempMinutia, _drawingService.WriteableBitmap));
+                        if (CanAdd(_drawingService, item))
+                        {
+                            //Creates object of Minutia which is automatic assigned to drawing service
+                            _drawingService.DrawingData.Add(MinutiaStateFactory.Create(item, tempMinutia, _drawingService.WriteableBitmap));
+                        }
                     }
                 }
 
@@ -125,5 +128,28 @@ namespace Fingerprints.Factories
             }
         }
 
+        /// <summary>
+        /// Checks if item can be added to drawing service
+        /// </summary>
+        /// <param name="_drawingService"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private static bool CanAdd(DrawingService _drawingService, MinutiaFileState item)
+        {
+            var drawingData = _drawingService.DrawingData.ToList();
+            bool result = false;
+            try
+            {
+                //check if angle and points are the same
+                result = !(drawingData.Exists((x) => x.Angle == item.Angle && 
+                                                    x.Points.Except(item.Points).Count() == 0 && 
+                                                    item.Points.Except(x.Points).Count() == 0));
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
     }
 }
