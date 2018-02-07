@@ -105,7 +105,7 @@ namespace Fingerprints.Tools.Mindtc
                 oppositeDrawingService = _drawingService == LeftDrawingService ? RightDrawingService : LeftDrawingService;
 
                 //get path of image to be processed
-                imagePath = _drawingService.BackgroundImage.UriSource.AbsolutePath;
+                imagePath = _drawingService.FilterImage.FilePath;
 
                 //Begin detection on image and return data from file with selected extension
                 mindtc.DetectImage(imagePath, _dialogViewModel.SelectedType.Key);
