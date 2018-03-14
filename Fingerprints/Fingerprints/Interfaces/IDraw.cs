@@ -7,11 +7,9 @@ using System.Windows.Controls;
 
 namespace Fingerprints
 {
-    interface IDraw
+    public interface IDraw
     {
         void Draw(OverridedCanvas canvas, Image image, int index = -1);
-        void DeleteEvent(Image image, OverridedCanvas canvas);
-        void DrawFromFile(OverridedCanvas canvas);
-        string ToJson();
+        void Stop(Image image, OverridedCanvas canvas);
     }
 }

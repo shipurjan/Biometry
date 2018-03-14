@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SQLite;
+using Fingerprints.Models;
+using ExceptionLogger;
+using System.Windows.Media;
 
 namespace Fingerprints
 {
@@ -13,31 +15,33 @@ namespace Fingerprints
         /// Na razie dodaje rzeczy na sztywno do jednej tabeli, potem to trzeba bedzie zmienic jakos ;o
         /// </summary>
         public static int currentProject = 0;
-        static public void InitialData()
-        {
-            AddNewMinutiae("Por", 1, "Czerwony", 1, 1);
-            AddNewMinutiae("Rozwidlenie", 2 , "Zielony", 1.2, 1);
-            AddNewMinutiae("Dowolna", 3, "Niebieski", 1, 1);
-        }
 
-        static public void AddNewMinutiae(string name, int drawType, string color, double size, double thickness)
+        static public SelfDefinedMinutiae AddNewMinutiae(string name, DrawingType drawType, Brush minutiaColor)
         {
-            using (var db = new FingerContext())
+            SelfDefinedMinutiae result = null;
+            try
             {
-                var q = db.Types.Where(x => x.TypeId == drawType).Select(x => x.TypeId).Single();
-                var SelfDefinedMinutiae = new SelfDefinedMinutiae()
-                {
-                    Name = name,
-                    ProjectId = currentProject,
-                    TypeId = q,
-                    Color = color,
-                    Size = size,
-                    Thickness = thickness
-                                    
-                };
-                db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
-                db.SaveChanges();          
+                using (var db = new FingerContext())
+                {                    
+                    var SelfDefinedMinutiae = new SelfDefinedMinutiae()
+                    {
+                        Name = name,
+                        ProjectId = currentProject,
+                        DrawingType = drawType,
+                        Color = minutiaColor.ToString(),
+
+                    };
+                    db.SelfDefinedMinutiaes.Add(SelfDefinedMinutiae);
+                    db.SaveChanges();
+
+                    result = SelfDefinedMinutiae;
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
         }
         static public void DeleteMinutiae(SelfDefinedMinutiae minutiae)
         {
@@ -83,9 +87,41 @@ namespace Fingerprints
         {
             using (var db = new FingerContext())
             {
-                var q = db.Projects.AsEnumerable().ToList();
+                var q = db.Projects.ToList();
                 return q;
             }
+        }
+
+        static public string GetProjectName()
+        {
+            string result = String.Empty;
+            try
+            {
+                using (var db = new FingerContext())
+                {
+                    result = db.Projects.FirstOrDefault(project => project.ProjectID == currentProject).ToString();                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return result;
+        }
+
+        static public void InitDbIfNoExit()
+        {
+            try
+            {
+                using (var db = new FingerContext())
+                {
+                    db.Database.CreateIfNotExists();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
     }

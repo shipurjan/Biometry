@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fingerprints"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -14,11 +16,25 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Fingerprints" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000">
+        xmlns:ViewModel="clr-namespace:Fingerprints.ViewModels"
+        xmlns:Converters="clr-namespace:Fingerprints.Converters"
+        xmlns:Tools ="clr-namespace:Fingerprints.Tools"
+        xmlns:UserControls="clr-namespace:Fingerprints.Windows.UserControls"
+        Title="{Binding ProjectName}" Name="mainWindow" Width="1000" Height="600" MinHeight="600" MinWidth="1000" Icon="iconBlackWithBackground.ico">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Converters:CollectionCountIncrementConverter x:Key="CountConverter" />
+        <Converters:RowAndCellConverter x:Key="RowAndCellConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Converters:BoolToColorConverter x:Key="BoolToColor" />
+        <Converters:UriSourceToFileName x:Key="UriToFileName" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <!--topMenuBar-->
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="30" />
 
             <!--topButtons-->
             <RowDefinition Height="16*" MaxHeight="80" MinHeight="50"/>
@@ -32,8 +48,11 @@
             <materialDesign:ColorZone Mode="PrimaryMid">
                 <Menu x:Name="mainMenu" IsMainMenu="True" Height="30" VerticalAlignment="Top">
                     <MenuItem Header="_Plik" Height="30">
-                        <MenuItem Header="Nowa minucja" Click="wizardAdd_Click"/>
-                        <MenuItem Header="Zapisz jako" Click="saveAs_Click"/>
+                        <MenuItem Header="Zapisz" Command="{Binding SaveClickCommand}"/>
+                        <MenuItem Header="Zapisz jako" Command="{Binding SaveAsClickCommand}"/>
+                    </MenuItem>
+                    <MenuItem Header="Narzędzia" Height="30">
+                        <MenuItem Header="Zdefiniowane typy" Command="{Binding NewMinutiaCommand}"/>
                     </MenuItem>
                 </Menu>
             </materialDesign:ColorZone>
@@ -64,8 +83,9 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openLeftImage" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
-                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
+                <Button x:Name="openLeftImage" Command="{Binding LoadLeftImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1"  Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="acceptLeftCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="{Binding LeftDrawingService.CurrentDrawing.AcceptButtonVisibility, FallbackValue=Hidden,
+                    Converter={StaticResource BoolToVis}}" Style="{StaticResource buttonStyles}" Command="{Binding LeftDrawingService.CurrentDrawing.AcceptButtonCommand}" />
             </Grid>
 
             <!--comboBox-->
@@ -77,7 +97,20 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" MinWidth="150" MaxWidth="250" Margin="30 0 30 0" />
+                <ComboBox x:Name="comboBox" Text="--Wybierz--" Grid.Row="1" ItemsSource="{Binding MinutiaeStates}" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                          MinWidth="150" MaxWidth="250" Margin="30 0 30 0" SelectedItem="{Binding SelectedComboboxItem}" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MinutiaName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding MinutiaeStatesSelectionChanged}" CommandParameter="{Binding ElementName=comboBox, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                </ComboBox>
             </Grid>
 
             <!--right-->
@@ -89,8 +122,9 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="openRightImage" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
-                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="Hidden" Style="{StaticResource buttonStyles}"></Button>
+                <Button x:Name="openRightImage" Command="{Binding LoadRightImageCommand}" Content="Wczytaj zdjęcie" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="acceptRightCurveButton" Content="Akceptuj" Grid.Row="3" Visibility="{Binding RightDrawingService.CurrentDrawing.AcceptButtonVisibility, 
+                    FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" Style="{StaticResource buttonStyles}" Command="{Binding RightDrawingService.CurrentDrawing.AcceptButtonCommand}" />
             </Grid>
 
             <!--aboveTable-->
@@ -102,8 +136,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}"/>
-                <Button x:Name="addEmpty"  Content="Dodaj puste" Grid.Row="3" Style="{StaticResource buttonStyles}"/>
+                <Button x:Name="saveButton" Content="Zapisz" Grid.Row="1" Style="{StaticResource buttonStyles}" Command="{Binding SaveClickCommand}"/>
             </Grid>
         </Grid>
 
@@ -124,77 +157,193 @@
             <Grid Grid.Column="0">
                 <Border x:Name="borderLeft" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Left" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaLeft" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" VerticalAlignment="Stretch" ClipToBounds="True" Margin="1, 1, 1, 1">
-                        <Image x:Name="imageL" Tag="Left" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
-                        <local:OverridedCanvas x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
+                        <Canvas Canvas.Left="0" Canvas.Top="0">
+                            <Image x:Name="imageL" Height="{Binding LeftDrawingService.BackgroundImage.PixelHeight}" Width="{Binding LeftDrawingService.BackgroundImage.PixelWidth}"
+                                   Source="{Binding LeftDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}" Tag="Left" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Canvas.Top="0" Canvas.Left="0">
+                            </Image>
+
+                            <Image x:Name="leftImageForDrawing" Source="{Binding LeftDrawingService.WriteableBitmap}" RenderOptions.BitmapScalingMode="NearestNeighbor" Canvas.Top="0" Canvas.Left="0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseMove">
+                                        <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseMoveMethod"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseDownMethod" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <local:OverridedCanvas Visibility="Collapsed" x:Name="canvasImageL" SnapsToDevicePixels="True" Tag="Left" Canvas.Left="0" Canvas.Top="0"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseWheel">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseWheelGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseLeftButtonDownGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseLeftButtonUpGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseMove">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="PreviewMouseMoveGroupMethod" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Canvas>
                     </Canvas>
                 </Border>
+                <UserControls:DrawingBottomPanel DataContext="{Binding LeftDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.LeftDrawing}">
+                </materialDesign:DialogHost>
             </Grid>
 
             <!--rightCanvas-->
             <Grid Grid.Column="1">
                 <Border x:Name="borderRight" BorderBrush="#FFEEEEEE" BorderThickness="2" HorizontalAlignment="Stretch" Tag="Right" VerticalAlignment="Stretch">
                     <Canvas Name="canvasAreaRight" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Margin="1, 1, 1, 1" VerticalAlignment="Stretch" ClipToBounds="True">
-                        <Image x:Name="imageR" Tag="Right" Canvas.Left="0" Canvas.Top="0" RenderOptions.BitmapScalingMode="NearestNeighbor"  Stretch="Fill" />
-                        <local:OverridedCanvas x:Name="canvasImageR" SnapsToDevicePixels="True" Tag="Right" Canvas.Left="0" Canvas.Top="0"/>
+                        <Canvas Canvas.Left="0" Canvas.Top="0">
+                            <Image x:Name="imageR" Tag="Right" Canvas.Left="0" Canvas.Top="0" Height="{Binding RightDrawingService.BackgroundImage.PixelHeight}" 
+                                   Width="{Binding RightDrawingService.BackgroundImage.PixelWidth}" Source="{Binding RightDrawingService.BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" >
+                            </Image>
+
+                            <Image x:Name="rightImageForDrawing" Source="{Binding RightDrawingService.WriteableBitmap}" SnapsToDevicePixels="True"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill" Canvas.Left="0" Canvas.Top="0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseMove">
+                                        <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseMoveMethod"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseDownMethod" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <local:OverridedCanvas x:Name="canvasImageR" SnapsToDevicePixels="True" Tag="Right" Canvas.Left="0" Canvas.Top="0"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseWheel">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseWheelGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseLeftButtonDownGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseLeftButtonUpGroupMethod" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseMove">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="PreviewMouseMoveGroupMethod" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Canvas>
                     </Canvas>
                 </Border>
+                <UserControls:DrawingBottomPanel DataContext="{Binding RightDrawingService}" Margin="2 0 2 2"/>
+                <materialDesign:DialogHost Identifier="{x:Static local:Dialogs.RightDrawing}">
+                </materialDesign:DialogHost>
             </Grid>
 
             <!--table-->
             <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition MinHeight="25" MaxHeight="30"/>
-                    <RowDefinition MinHeight="25" MaxHeight="30"/>
-                    <RowDefinition Height="100*"/>
-                </Grid.RowDefinitions>
-
-                <!--first header-->
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,1,1,1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <TextBlock x:Name="textBlock1" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 1" VerticalAlignment="Center" />
-                    <TextBlock x:Name="textBlock2" Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Zdjęcie 2" VerticalAlignment="Center" />
-                </Grid>
-
-                <!--second header-->
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border BorderBrush="#FFEEEEEE" Margin="0, -1, -1, 0" BorderThickness="0,1,1,1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="0,0,0,1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <Border BorderBrush="#FFEEEEEE" Margin=" -1, -1, 0, 0" BorderThickness="1,1,1,1" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></Border>
-                    <materialDesign:PackIcon Kind="Delete" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="25" />
-                    <TextBlock  Text="Typ 1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1"/>
-                    <TextBlock  Text="Typ 2" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="2"/>
-
-                </Grid>
 
                 <!--listboxes-->
                 <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="MinutiaDataGrid" VirtualizingPanel.IsVirtualizing="False" ItemsSource="{Binding DataGridActivities.GridViewModelList}" SelectionUnit="Cell" 
+                              SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False"
+                              AlternationCount="{Binding DataGridActivities.GridViewModelList.Count}">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Nr" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={StaticResource ResourceKey=CountConverter}}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Typ 1" Width="70" CellStyle="{StaticResource GridCell}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{Binding LeftDrawingObject.IsSelected, Converter={StaticResource BoolToColor}}" BorderThickness="1">
+                                            <StackPanel ContextMenu="{Binding DataContext.ContextMenuLeftObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource LeftCellStackPanel}">
+                                                <TextBlock Text="{Binding LeftDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                                <!--<TextBlock Text="{Binding LeftDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.DataGridActivities.DrawingObjectClickChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                                            <i:InvokeCommandAction.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource ResourceKey=RowAndCellConverter}">
+                                                                    <Binding Path="AlternationIndex" RelativeSource="{RelativeSource AncestorType=DataGridRow}" />
+                                                                    <Binding Path="Column.DisplayIndex" RelativeSource="{RelativeSource AncestorType=DataGridCell}" />
+                                                                </MultiBinding>
+                                                            </i:InvokeCommandAction.CommandParameter>
+                                                        </i:InvokeCommandAction>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Typ 2" Width="70" CellStyle="{StaticResource GridCell}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{Binding RightDrawingObject.IsSelected, Converter={StaticResource BoolToColor}}" BorderThickness="1">
+                                            <StackPanel ContextMenu="{Binding DataContext.ContextMenuRightObject, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Style="{StaticResource RightCellStackPanel}">
+                                                <TextBlock Text="{Binding RightDrawingObject.MinutiaName}" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                <!--<TextBlock Text="{Binding RightDrawingObject.Id}" TextTrimming="CharacterEllipsis" Margin="0 10 0 10" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.DataGridActivities.DrawingObjectClickChangedCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                                                            <i:InvokeCommandAction.CommandParameter>
+                                                                <MultiBinding Converter="{StaticResource ResourceKey=RowAndCellConverter}">
+                                                                    <Binding Path="AlternationIndex" RelativeSource="{RelativeSource AncestorType=DataGridRow}" />
+                                                                    <Binding Path="Column.DisplayIndex" RelativeSource="{RelativeSource AncestorType=DataGridCell}" />
+                                                                </MultiBinding>
+                                                            </i:InvokeCommandAction.CommandParameter>
+                                                        </i:InvokeCommandAction>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
-                    <Border BorderBrush="#FFEEEEEE" BorderThickness="1,0,0,0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                    </Border>
-                    <ListBox x:Name="listBoxImageL" Grid.Column="1" />
-                    <ListBox x:Name="listBoxImageR" Grid.Column="2" />
-                    <ListBox x:Name="listBoxDelete" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                            <DataGridTemplateColumn Header="Usuń">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#fafafa">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataGridActivities.DeleteButtonCommand}"
+                                                CommandParameter="{Binding}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0 10 0 10"/>
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="{Binding Path=DeleteButtonVisible, Converter={StaticResource BoolToVis}}" />
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Background" Value="#fafafa" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                    </DataGrid>
                 </Grid>
             </Grid>
+            <UserControls:LoadingOverlay Visibility="{Binding LeftDrawingService.IsLoading, Converter={StaticResource BoolToVis}}" Grid.Column="0"></UserControls:LoadingOverlay>
+            <UserControls:LoadingOverlay Visibility="{Binding RightDrawingService.IsLoading, Converter={StaticResource BoolToVis}}" Grid.Column="1"></UserControls:LoadingOverlay>
         </Grid>
     </Grid>
 </Window>

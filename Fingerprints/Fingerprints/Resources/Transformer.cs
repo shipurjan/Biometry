@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,18 +16,18 @@ namespace Fingerprints.Resources
             minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
         }
 
-        public List<string> getBozorthFormat(List<string> minutiaeList)
+        public List<string> getBozorthFormat(List<MinutiaState> minutiaeList)
         {
             List<string> bozorthList = new List<string>();
 
-            foreach (string item in minutiaeList)
+            foreach (var item in minutiaeList)
             {
-                switch (getMinutiaeDrawingType(item))
+                switch (item.Minutia.DrawingType)
                 {
-                    case 2:
+                    case DrawingType.Vector:
                         bozorthList.Add(transformVectorToXYT(item));
                         break;
-                    case 5:
+                    case DrawingType.Peak:
                         bozorthList.Add(transformPeakToXYT(item));
                         break;
                     default:
@@ -37,12 +38,11 @@ namespace Fingerprints.Resources
             return bozorthList;
         }
 
-        public string transformPeakToXYT(string item)
+        public string transformPeakToXYT(MinutiaState item)
         {
-            string[] array = item.Split(';');
-            Point firstPoint = new Point(Convert.ToInt16(array[2]), Convert.ToInt16(array[3]));
-            Point secondPoint = new Point(Convert.ToInt16(array[4]), Convert.ToInt16(array[5]));
-            Point thirdPoint = new Point(Convert.ToInt16(array[6]), Convert.ToInt16(array[7]));
+            Point firstPoint = item.Points[0];
+            Point secondPoint = item.Points[1];
+            Point thirdPoint = item.Points[2];
             // Tworzymy 2 wektory
             Point vectorA = new Point(firstPoint.X - secondPoint.X, firstPoint.Y - secondPoint.Y);
             Point vectorB = new Point(thirdPoint.X - secondPoint.X, thirdPoint.Y - secondPoint.Y);
@@ -70,11 +70,9 @@ namespace Fingerprints.Resources
             return Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
         }
 
-        public string transformVectorToXYT(string item)
+        public string transformVectorToXYT(MinutiaState item)
         {
-            string[] array = item.Split(';');
-
-            return array[2] + " " + array[3] + " " + Utils.angleInDegrees(Convert.ToDouble(array[4]));
+            return item.Points.First().X + " " + item.Points.First().Y + " " + Utils.angleInDegrees(Convert.ToDouble(item.Angle));
         }
         public List<string> getListWithoutEmptyObjects(List<string> list)
         {
@@ -90,7 +88,7 @@ namespace Fingerprints.Resources
             return temp;
         }
 
-        public int getMinutiaeDrawingType(string item)
+        public DrawingType getMinutiaeDrawingType(string item)
         {
             var type = minutiaeList.Where(x => x.Name == getNameFromListElement(item)).FirstOrDefault();
             if (type == null)
@@ -99,7 +97,7 @@ namespace Fingerprints.Resources
             }
             else
             {
-                return type.TypeId;
+                return type.DrawingType;
             }
         }
 

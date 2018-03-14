@@ -1,25 +1,40 @@
-﻿using Fingerprints.Resources;
+﻿using Fingerprints.Models;
+using Fingerprints.Resources;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Fingerprints
 {
     public abstract class Minutiae : AppInstance
     {
-        public string Name;
-        public long id { get; set; }
-        public Minutiae(long id = 0)
-        {
-            this.id = id;
-        }
+        public MinutiaState state;
+        public Brush color;
 
+        public Minutiae(MinutiaState state)
+        {
+            this.state = new MinutiaState()
+            {
+                Minutia = state.Minutia,
+                Points = new List<Point>()
+            };
+            ConvertStateColorToBrush();
+        }
+        protected void ConvertStateColorToBrush()
+        {
+            if (state.Minutia != null && state.Minutia.Color != null)
+            {
+                this.color = (Brush)new System.Windows.Media.BrushConverter().ConvertFromString(state.Minutia.Color);
+            }
+        }
         public void deleteChildWithGivenIndex(string canvasType, int index)
         {
             if (canvasType == "Left")
@@ -36,24 +51,30 @@ namespace Fingerprints
         {
             if (listType == "Left")
             {
-                insertStringToList(FileTransfer.ListL, index);
+                insertMinutiaStateToFile(FileTransfer.ListL, index);
             }
             else
             {
-                insertStringToList(FileTransfer.ListR, index);
+                insertMinutiaStateToFile(FileTransfer.ListR, index);
             }
         }
 
-        private void insertStringToList(List<string> list, int index = -1)
+        private void insertMinutiaStateToFile(List<MinutiaState> list, int index = -1)
         {
             if (index > -1)
             {
-                list.Insert(index, ToString());
+                list.Insert(index, state);
             }
             else
             {
-                list.Add(ToString());
+                list.Add(state);
             }
+
+            this.state = new MinutiaState()
+            {
+                Minutia = this.state.Minutia,
+                Points = new List<Point>()
+            };
         }
 
         public long getIdForMinutiae(string canvasType, int index)
@@ -102,7 +123,7 @@ namespace Fingerprints
             Shape child1 = castChildObject(canvas1.Children[mainWindow.canvasImageL.Children.Count - 1]);
             Shape child2 = castChildObject(canvas2.Children[mainWindow.canvasImageR.Children.Count - 1]);
 
-            if (child1.Tag == child2.Tag)
+            if (child1.Tag.ToString() == child2.Tag.ToString())
             {
                 return UnixDate.GetCurrentUnixTimestampMillis();
             }
@@ -143,35 +164,7 @@ namespace Fingerprints
             {
                 deleteChildWithGivenIndex(canvas.Tag.ToString(), index);
             }
-        }
-        private void addEmptyOnLastLine()
-        {
-            Empty emptyL = new Empty();
-            Empty emptyR = new Empty();
-            emptyR.Draw(mainWindow.canvasImageR, mainWindow.imageR);
-            emptyL.Draw(mainWindow.canvasImageL, mainWindow.imageL);
-        }
-
-        protected void addEmptyLastLineIfIndexOnLastElement(int index)
-        {
-            if (index == -1)
-                addEmptyOnLastLine();
-        }
-
-        public void AddEmptyToOpositeSite(OverridedCanvas canvas, int index)
-        {
-            if (index >= 0)
-            {
-                return;
-            }
-
-            Empty empty = new Empty();
-
-            if (canvas == mainWindow.canvasImageL && CanvasCountEqual())
-                empty.Draw(mainWindow.canvasImageR, mainWindow.imageR);
-            else if (canvas == mainWindow.canvasImageR && CanvasCountEqual())
-                empty.Draw(mainWindow.canvasImageL, mainWindow.imageL);
-        }
+        }  
         public bool CanvasCountEqual()
         {
             return (mainWindow.canvasImageL.Children.Count == mainWindow.canvasImageR.Children.Count);

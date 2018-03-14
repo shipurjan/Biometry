@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fingerprints.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,22 @@ namespace Fingerprints
             }
         }
 
+        public List<MinutiaState> getStates()
+        {
+            List<MinutiaState> states = new List<MinutiaState>();
+            using (var db = new FingerContext())
+            {
+                var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
+
+                foreach (var item in q)
+                {
+                    states.Add(new MinutiaState() { Minutia = item });
+                }
+
+                return states;
+            }
+        }
+
         public List<SelfDefinedMinutiae> GetAllMinutiaeTypes()
         {
             using (var db = new FingerContext())
@@ -26,11 +43,11 @@ namespace Fingerprints
             }
         }
 
-        public int GetTypeIdOfSelectedMinutiae(string selectedValue)
+        public DrawingType GetTypeIdOfSelectedMinutiae(string selectedValue)
         {
             using (var db = new FingerContext())
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.TypeId).First();
+                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.DrawingType).First();
                 return q;
             }
         }
@@ -44,19 +61,11 @@ namespace Fingerprints
             }
         }
 
-        public double GetThicknessOfSelectedMinutiae(string selectedValue)
+        public SelfDefinedMinutiae GetMinutia(string name)
         {
             using (var db = new FingerContext())
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Thickness).First();
-                return q;
-            }
-        }
-        public double GetSizeOfSelectedMinutiae(string selectedValue)
-        {
-            using (var db = new FingerContext())
-            {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Size).First();
+                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == name).First();
                 return q;
             }
         }

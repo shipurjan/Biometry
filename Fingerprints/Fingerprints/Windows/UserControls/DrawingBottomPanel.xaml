@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Fingerprints.Windows.UserControls.DrawingBottomPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Fingerprints.Windows.UserControls"
+             mc:Ignorable="d" 
+             xmlns:Converters="clr-namespace:Fingerprints.Converters"
+             xmlns:FilterImage="clr-namespace:Fingerprints.Tools.ImageFilters"
+             d:DesignHeight="25" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Converters:UriSourceToFileName x:Key="UriToFileName" />
+    </UserControl.Resources>
+    <Grid Height="25" VerticalAlignment="Bottom" Background="#DDDDDD">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding FilterImage.FileName, FallbackValue=Brak}" TextTrimming="CharacterEllipsis" Grid.Column="1" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+            <materialDesign:PopupBox Margin="0 0 10 0">
+                    <StackPanel>
+                        <Button x:Name="NoneFilter" Content="None" Command="{Binding FilterCommand}" CommandParameter="None"></Button>
+                        <Button x:Name="SobelFilter" Content="Sobel" Command="{Binding FilterCommand}" CommandParameter="Sobel"></Button>
+                        <Button x:Name="GaussFilter" Content="Gauss" Command="{Binding FilterCommand}" CommandParameter="Gauss"></Button>
+                    </StackPanel>
+                
+                
+                
+                <materialDesign:PopupBox.ToggleContent>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Filter" Opacity="0.8"/>
+                        <TextBlock Text="Filtry"/>
+                    </StackPanel>
+                </materialDesign:PopupBox.ToggleContent>
+            </materialDesign:PopupBox>
+
+            <materialDesign:PopupBox>
+                <StackPanel>
+                    <Button Content="mindtc" Command="{Binding DataContext.MindtcActivity.MindtcDetectCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}" Style="{StaticResource buttonStyles}"></Button>
+                </StackPanel>
+                
+                
+                <materialDesign:PopupBox.ToggleContent>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Settings" Opacity="0.8"/>
+                        <TextBlock Text="Opcje"/>
+                    </StackPanel>
+                </materialDesign:PopupBox.ToggleContent>
+            </materialDesign:PopupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

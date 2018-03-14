@@ -28,8 +28,8 @@ namespace Fingerprints
         {
             try
             {
-            Window1.colorPicked = colorPicker.SelectedColor.ToString();
-            this.Close();
+                Window1.colorPicked = colorPicker.SelectedColor.ToString();
+                this.Close();
             }
             catch
             {

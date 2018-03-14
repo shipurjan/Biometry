@@ -1,4 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using Fingerprints.Factories;
+using Fingerprints.Models;
+using Microsoft.Win32;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,14 +31,14 @@ namespace Fingerprints
 
         public void InitializeL()
         {
-            Init(mw.canvasImageL, mw.imageL, mw.openLeftImage);
+            Init(mw.leftImageForDrawing, mw.imageL, mw.openLeftImage);
         }
         public void InitializeR()
         {
-            Init(mw.canvasImageR, mw.imageR, mw.openRightImage);
+            //Init(mw.canvasImageR, mw.imageR, mw.openRightImage);
         }
 
-        private void Init(OverridedCanvas canvasImage, Image image, Button button)
+        private void Init(Image imageForDrawing, Image image, Button button)
         {
             button.Click += (ss, ee) =>
             {   
@@ -49,57 +53,42 @@ namespace Fingerprints
                     if (image.Tag.ToString() == "Left")
                     {
                         FileTransfer.Save();
-                        mw.listBoxImageL.Items.Clear();
+                        //mw.listBoxImageL.Items.Clear();
                         FileTransfer.ListL.Clear();
                         FileTransfer.LeftImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadLeftFile();
-                        canvasImage.Children.Clear();
                         if (helper.canInsertEmpty())
                             fillEmptyListWithEmpty();
                         sortMinutiaeListLById();
                         deleteEmptyLine();
-                        loadMinutiae(FileTransfer.ListL, canvasImage);
-                        mw.canvasImageR.Children.Clear();
-                        loadMinutiae(FileTransfer.ListR, mw.canvasImageR);
-
                     }
                     else
                     {
                         FileTransfer.Save();
-                        mw.listBoxImageR.Items.Clear();
+                        //mw.listBoxImageR.Items.Clear();
                         FileTransfer.ListR.Clear();
                         FileTransfer.RightImagePath = System.IO.Path.ChangeExtension(openFile.FileName, ".txt");
                         FileTransfer.LoadRightFile();
-                        canvasImage.Children.Clear();
                         if (helper.canInsertEmpty())
                             fillEmptyListWithEmpty();
                         sortMinutiaeListRById();
                         deleteEmptyLine();
-                        loadMinutiae(FileTransfer.ListR, canvasImage);
-                        mw.canvasImageL.Children.Clear();
-                        loadMinutiae(FileTransfer.ListL, mw.canvasImageL);
                     }
                 }
-                Canvas.SetTop(canvasImage, Canvas.GetTop(image));
-                Canvas.SetLeft(canvasImage, Canvas.GetLeft(image));
-
-                if (helper.canInsertEmpty())
-                {
-                    helper.deleteUnnecessaryEmpty();
-                    helper.addEmptyOnLastLine();
-                }
+                Canvas.SetTop(imageForDrawing, Canvas.GetTop(image));
+                Canvas.SetLeft(imageForDrawing, Canvas.GetLeft(image));
             };
 
 
-            image.MouseLeftButtonDown += (ss, ee) =>
+            imageForDrawing.MouseLeftButtonDown += (ss, ee) =>
             {
                 firstPoint = ee.GetPosition(mw);
-                image.CaptureMouse();
+                imageForDrawing.CaptureMouse();
             };
 
-            image.MouseWheel += (ss, ee) =>
+            imageForDrawing.MouseWheel += (ss, ee) =>
             {
-                Matrix matline = canvasImage.RenderTransform.Value;
+                Matrix matline = imageForDrawing.RenderTransform.Value;
                 Matrix mat = image.RenderTransform.Value;
                 Point mouse = ee.GetPosition(image);
 
@@ -117,10 +106,10 @@ namespace Fingerprints
                 MatrixTransform mtf = new MatrixTransform(mat);
                 image.RenderTransform = mtf;
                 MatrixTransform mtfl = new MatrixTransform(matline);
-                canvasImage.RenderTransform = mtfl;
+                imageForDrawing.RenderTransform = mtfl;
             };
 
-            image.MouseMove += (ss, ee) =>
+            imageForDrawing.MouseMove += (ss, ee) =>
             {
                 if (ee.LeftButton == MouseButtonState.Pressed)
                 {
@@ -129,94 +118,35 @@ namespace Fingerprints
 
                     Canvas.SetLeft(image, Canvas.GetLeft(image) - res.X);
                     Canvas.SetTop(image, Canvas.GetTop(image) - res.Y);
-                    Canvas.SetLeft(canvasImage, Canvas.GetLeft(image) - res.X);
-                    Canvas.SetTop(canvasImage, Canvas.GetTop(image) - res.Y);
+                    Canvas.SetLeft(imageForDrawing, Canvas.GetLeft(image) - res.X);
+                    Canvas.SetTop(imageForDrawing, Canvas.GetTop(image) - res.Y);
                     firstPoint = temp;
                 }
             };
-            image.MouseUp += (ss, ee) => { image.ReleaseMouseCapture(); };
+            imageForDrawing.MouseUp += (ss, ee) => { imageForDrawing.ReleaseMouseCapture(); };
         }
 
-        private void loadMinutiae(List<string> list, OverridedCanvas canvas)
+        private void loadRightMinutiae(List<MinutiaState> list, OverridedCanvas canvas)
         {
-            List<SelfDefinedMinutiae> minutiaeList = new MinutiaeTypeController().GetAllMinutiaeTypes();
-
-            IDraw draw = null;
-            foreach (var item in list)
-            {
-                string[] tmp = item.Split(';');
-                
-                var type = minutiaeList.Where(x => x.Name == tmp[1]).FirstOrDefault();
-
-                if(type == null)
-                {
-                    draw = new Empty();
-                }
-                else if (type.TypeId == 1)
-                {
-                    draw = new SinglePoint(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToInt64(tmp[0]));
-                }
-                else if (type.TypeId == 2)
-                {
-                    draw = new Vector(type.Name, type.Color, type.Size, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToInt64(tmp[0]));
-                }
-                else if (type.TypeId == 3)
-                {
-                    draw = new CurveLine(type.Name, type.Color, type.Thickness, tmp, Convert.ToInt64(tmp[0]));
-                }
-                else if (type.TypeId == 4)
-                {
-                    draw = new Triangle(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]), Convert.ToDouble(tmp[7]), Convert.ToInt64(tmp[0]));
-                }
-                else if (type.TypeId == 5)
-                {
-                    draw = new Peak(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToDouble(tmp[6]), Convert.ToDouble(tmp[7]), Convert.ToInt64(tmp[0]));
-                }
-                else if (type.TypeId == 6)
-                {
-                    draw = new Segment(type.Name, type.Color, type.Thickness, Convert.ToDouble(tmp[2]), Convert.ToDouble(tmp[3]), Convert.ToDouble(tmp[4]), Convert.ToDouble(tmp[5]), Convert.ToInt64(tmp[0]));
-                }
-                else
-                {
-                    draw = new Empty();
-                }
-
-                draw.DrawFromFile(canvas);
-
-            }
-        }
-        private void fillEmpty()
-        {
-            Empty emptyObject = new Empty();
-            int l = mw.canvasImageL.Children.Count;
-            int r = mw.canvasImageR.Children.Count;
-            if (l > r)
-            {
-                for (int i = 0; i < l-r; i++)
-                {
-                    emptyObject.DrawFromFile(mw.canvasImageR);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < r - l; i++)
-                {
-                    emptyObject.DrawFromFile(mw.canvasImageL);
-                }
-            }
+            //FileMinutiaFactory factory = new FileMinutiaFactory();
+            //DrawService drawService = new DrawService(factory);
+            //foreach (var item in list)
+            //{
+            //    drawService.startRightDrawing(item);
+            //}
         }
 
         private void sortMinutiaeListRById()
         {
             for (int indexFrom = 0; indexFrom < FileTransfer.ListL.Count(); indexFrom++)
             {
-                string minutiaeIdL = getIdFromListElement(FileTransfer.ListL[indexFrom]);
+                string minutiaeIdL = FileTransfer.ListL[indexFrom].Id.ToString();
                 if (minutiaeIdL == "0")
                     continue;
 
                 for (int indexTo = 0; indexTo < FileTransfer.ListR.Count(); indexTo++)
                 {
-                    var minutiaeIdR = getIdFromListElement(FileTransfer.ListR[indexTo]);
+                    var minutiaeIdR = FileTransfer.ListR[indexTo].Id.ToString();
                     if (minutiaeIdL == minutiaeIdR)
                     {
                         swapElementsR(indexFrom, indexTo);
@@ -224,8 +154,8 @@ namespace Fingerprints
                     }
                     if (indexTo == FileTransfer.ListR.Count() - 1)
                     {
-                        FileTransfer.ListR.Insert(indexFrom, "0;Puste");
-                        FileTransfer.ListL.Add("0;Puste");
+                        FileTransfer.ListR.Insert(indexFrom, new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                        FileTransfer.ListL.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
                         break;
                     }
                 }
@@ -236,13 +166,13 @@ namespace Fingerprints
         {
             for (int indexFrom = 0; indexFrom < FileTransfer.ListR.Count(); indexFrom++)
             {
-                string minutiaeIdR = getIdFromListElement(FileTransfer.ListR[indexFrom]);
+                string minutiaeIdR = FileTransfer.ListR[indexFrom].Id.ToString();
                 if (minutiaeIdR == "0")
                     continue;
 
                 for (int indexTo = 0; indexTo < FileTransfer.ListL.Count(); indexTo++)
                 {
-                    var minutiaeIdL = getIdFromListElement(FileTransfer.ListL[indexTo]);
+                    var minutiaeIdL = FileTransfer.ListL[indexTo].Id.ToString();
                     if (minutiaeIdL == minutiaeIdR)
                     {
                         swapElementsL(indexFrom, indexTo);
@@ -250,8 +180,8 @@ namespace Fingerprints
                     }
                     if (indexTo == FileTransfer.ListL.Count() - 1)
                     {
-                        FileTransfer.ListL.Insert(indexFrom, "0;Puste");
-                        FileTransfer.ListR.Add("0;Puste");
+                        FileTransfer.ListL.Insert(indexFrom, new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                        FileTransfer.ListR.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
                         break;
                     }
 
@@ -265,12 +195,12 @@ namespace Fingerprints
             if (FileTransfer.ListL.Count() > FileTransfer.ListR.Count())
             {
                 for (int i = FileTransfer.ListR.Count(); i < FileTransfer.ListL.Count(); i++)
-                    FileTransfer.ListR.Add("0;Puste");
+                    FileTransfer.ListR.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
             }
             else
             {
                 for (int i = FileTransfer.ListL.Count(); i < FileTransfer.ListR.Count(); i++)
-                    FileTransfer.ListL.Add("0;Puste");
+                    FileTransfer.ListL.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
             }
         }
 
@@ -278,8 +208,8 @@ namespace Fingerprints
         {
             if (indexTo == FileTransfer.ListR.Count() - 1)
             {
-                FileTransfer.ListR.Insert(indexFrom -1 , "0;Puste");
-                FileTransfer.ListL.Add("0;Puste");
+                FileTransfer.ListR.Insert(indexFrom -1 , new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                FileTransfer.ListL.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
             }                               
         }
 
@@ -287,8 +217,8 @@ namespace Fingerprints
         {
             if (indexTo == FileTransfer.ListL.Count() - 1)
             {             
-                FileTransfer.ListL.Insert(indexFrom - 1, "0;Puste");
-                FileTransfer.ListR.Add("0;Puste");             
+                FileTransfer.ListL.Insert(indexFrom - 1, new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });
+                FileTransfer.ListR.Add(new MinutiaState() { Id = 0, Minutia = new SelfDefinedMinutiae() { Name = "Puste" } });             
             }
         }
 
@@ -320,7 +250,7 @@ namespace Fingerprints
             int count = FileTransfer.ListL.Count();
             for (int index = 0; index < count; index++)
             {
-                if (FileTransfer.ListL[index] == "0;Puste" && FileTransfer.ListR[index] == "0;Puste")
+                if (FileTransfer.ListL[index].Id == 0 && FileTransfer.ListR[index].Id == 0)
                 {
                     FileTransfer.ListL.RemoveAt(index);
                     FileTransfer.ListR.RemoveAt(index);

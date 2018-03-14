@@ -28,7 +28,7 @@ namespace Fingerprints
                 return;
             }
 
-            mainWindow.listBoxImageL.Items.RemoveAt(index);
+            //mainWindow.listBoxImageL.Items.RemoveAt(index);
             mainWindow.canvasImageL.Children.RemoveAt(index);
 
             if (FileTransfer.ListL.Count > index)
@@ -46,7 +46,7 @@ namespace Fingerprints
                 return;
             }
 
-            mainWindow.listBoxImageR.Items.RemoveAt(index);
+            //mainWindow.listBoxImageR.Items.RemoveAt(index);
             mainWindow.canvasImageR.Children.RemoveAt(index);
 
             if (FileTransfer.ListR.Count > index)
@@ -63,6 +63,10 @@ namespace Fingerprints
             if (child.GetType().Name == "Path")
             {
                 return (System.Windows.Shapes.Path)child;
+            }
+            else if(child.GetType().Name == "Line")
+            {
+                return (System.Windows.Shapes.Line)child;
             }
             else
             {
