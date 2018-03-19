@@ -132,6 +132,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
@@ -228,6 +229,8 @@
     <Compile Include="Tools\Mindtc\MindtctActivity.cs" />
     <Compile Include="Tools\MyObservableCollection.cs" />
     <Compile Include="Tools\PathTool.cs" />
+    <Compile Include="Tools\ProcessExecutor.cs" />
+    <Compile Include="Tools\SqlLocalDB\SqlLocalDB_Utils.cs" />
     <Compile Include="ViewModels\DataGridActivities.cs" />
     <Compile Include="ViewModels\FilterWindowViewModel.cs" />
     <Compile Include="ViewModels\GridViewModel.cs" />

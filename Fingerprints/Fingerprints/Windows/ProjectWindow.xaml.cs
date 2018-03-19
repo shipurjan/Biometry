@@ -1,4 +1,5 @@
 ﻿using ExceptionLogger;
+using Fingerprints.Tools.SqlLocalDB;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -27,20 +28,20 @@ namespace Fingerprints.Windows
 
         public ProjectWindow()
         {
-            try
+            var localdb = new SqlLocalDB_Utils();
+            if (!localdb.CheckIfInstanceExists())
             {
-                //Get path of exe and set it as DataDirectory for EF
-                string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                string path = (System.IO.Path.GetDirectoryName(executable));
-                AppDomain.CurrentDomain.SetData("DataDirectory", path);
-                InitializeComponent();
-                listBoxRefresh();
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteExceptionLog(ex);
+                MessageBox.Show("No instance of localDB found");
+                Environment.Exit(0);
             }
 
+            //Get path of exe and set it as DataDirectory for EF
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            FingerContext.LocalDB_Directory = path;
+
+            InitializeComponent();
+            listBoxRefresh();
         }
         private void listBoxRefresh()
         {
