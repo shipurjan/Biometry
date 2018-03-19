@@ -7,6 +7,7 @@ using Fingerprints.Tools;
 using Fingerprints.Tools.Exporters;
 using Fingerprints.Tools.Importers;
 using Fingerprints.Tools.Mindtc;
+using Fingerprints.Tools.SqlLocalDB;
 using Fingerprints.Windows.Controls;
 using Prism.Commands;
 using Prism.Mvvm;
