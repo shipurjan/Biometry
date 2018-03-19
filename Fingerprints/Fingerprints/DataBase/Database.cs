@@ -45,51 +45,92 @@ namespace Fingerprints
         }
         static public void DeleteMinutiae(SelfDefinedMinutiae minutiae)
         {
-            using (var db = new FingerContext())
-            { 
-                db.SelfDefinedMinutiaes.Attach(minutiae);
-                db.SelfDefinedMinutiaes.Remove(minutiae);
-                db.SaveChanges();
+            try
+            {
+                using (var db = new FingerContext())
+                {
+                    db.SelfDefinedMinutiaes.Attach(minutiae);
+                    db.SelfDefinedMinutiaes.Remove(minutiae);
+                    db.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
 
         static public List<SelfDefinedMinutiae> ShowSelfDefinedMinutiae()
         {
-            using (var db = new FingerContext())
+            List<SelfDefinedMinutiae> q = null;
+            try
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == currentProject).AsEnumerable().ToList();
-                return q;
+                using (var db = new FingerContext())
+                {
+                    q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == currentProject).AsEnumerable().ToList();                    
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return q;
         }
         static public void AddNewProject(string name)
         {
-            using (var db = new FingerContext())
+            try
             {
-                var Project = new Project()
+                using (var db = new FingerContext())
                 {
-                    Name = name
-                };
-                db.Projects.Add(Project);
-                db.SaveChanges();
+                    var Project = new Project()
+                    {
+                        Name = name
+                    };
+                    db.Projects.Add(Project);
+                    db.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
 
         static public void DeleteProject(Project project)
         {
-            using (var db = new FingerContext())
+            try
             {
-                db.Projects.Attach(project);
-                db.Projects.Remove(project);
-                db.SaveChanges();
+                using (var db = new FingerContext())
+                {
+                    db.Projects.Attach(project);
+                    db.Projects.Remove(project);
+                    db.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
         static public List<Project> ShowProject()
         {
-            using (var db = new FingerContext())
+            List<Project> q = null;
+            try
             {
-                var q = db.Projects.ToList();
-                return q;
+                using (var db = new FingerContext())
+                {
+                   q = db.Projects.ToList();                    
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return q;
+
         }
 
         static public string GetProjectName()

@@ -27,40 +27,64 @@ namespace Fingerprints.Windows
 
         public ProjectWindow()
         {
-            //Get path of exe and set it as DataDirectory for EF
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
-            InitializeComponent();
-            listBoxRefresh();
+            try
+            {
+                //Get path of exe and set it as DataDirectory for EF
+                string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                string path = (System.IO.Path.GetDirectoryName(executable));
+                AppDomain.CurrentDomain.SetData("DataDirectory", path);
+                InitializeComponent();
+                listBoxRefresh();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+
         }
         private void listBoxRefresh()
         {
-            projects = Database.ShowProject();
-            ProjectsListBox.ItemsSource = projects;
+            try
+            {
+                projects = Database.ShowProject();
+                ProjectsListBox.ItemsSource = projects;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
 
         private void DialogHost_OnDialogClosing(Object sender, DialogClosingEventArgs eventArgs)
         {
-            if ((bool)eventArgs.Parameter)
+            try
             {
-                if (IsValidationCorrent())
+                if ((bool)eventArgs.Parameter)
                 {
-                    Database.AddNewProject(ProjectNameTextBox.Text);
-                    listBoxRefresh();
-                    ProjectNameTextBox.Text = "";
-                    ProjectNameValidationLabel.Visibility = Visibility.Collapsed;
+                    if (IsValidationCorrent())
+                    {
+                        Database.AddNewProject(ProjectNameTextBox.Text);
+                        listBoxRefresh();
+                        ProjectNameTextBox.Text = "";
+                        ProjectNameValidationLabel.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        ProjectNameValidationLabel.Visibility = Visibility.Visible;
+                        eventArgs.Cancel();
+                    }
                 }
                 else
                 {
-                    ProjectNameValidationLabel.Visibility = Visibility.Visible;
-                    eventArgs.Cancel();
+                    ProjectNameValidationLabel.Visibility = Visibility.Collapsed;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                ProjectNameValidationLabel.Visibility = Visibility.Collapsed;
+                Logger.WriteExceptionLog(ex);
             }
+            
         }
 
         private bool IsValidationCorrent()

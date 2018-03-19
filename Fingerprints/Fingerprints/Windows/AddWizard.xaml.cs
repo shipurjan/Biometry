@@ -28,35 +28,43 @@ namespace Fingerprints
         public static string colorPicked;
         public Window1()
         {
-            colorPicked = "";
-            definedMinutiae = new ObservableCollection<SelfDefinedMinutiae>(Database.ShowSelfDefinedMinutiae());
-
-            InitializeComponent();
-            listBox.ItemsSource = definedMinutiae;
-
-            List<string> drawingType = new List<string>();
-
-            drawingType.Add("Punkt");
-            drawingType.Add("Prosta skierowana");
-            drawingType.Add("Krzywa dowolna");
-            drawingType.Add("Trojkat");
-            drawingType.Add("Daszek");
-            drawingType.Add("Odcinek");
-
-            DrawingType.ItemsSource = drawingType;
-
-            Color.Background = Brushes.Red;
-            Color.Click += (ss, ee) =>
+            try
             {
-                ColorPicker colorPicker = new ColorPicker();
-                colorPicker.Owner = this;
-                colorPicker.ShowDialog();
+                colorPicked = "";
+                definedMinutiae = new ObservableCollection<SelfDefinedMinutiae>(Database.ShowSelfDefinedMinutiae());
 
-                if (colorPicked != "")
+                InitializeComponent();
+                listBox.ItemsSource = definedMinutiae;
+
+                List<string> drawingType = new List<string>();
+
+                drawingType.Add("Punkt");
+                drawingType.Add("Prosta skierowana");
+                drawingType.Add("Krzywa dowolna");
+                drawingType.Add("Trojkat");
+                drawingType.Add("Daszek");
+                drawingType.Add("Odcinek");
+
+                DrawingType.ItemsSource = drawingType;
+
+                Color.Background = Brushes.Red;
+                Color.Click += (ss, ee) =>
                 {
-                    Color.Background = (Brush)new BrushConverter().ConvertFromString(colorPicked);
-                }
-            };
+                    ColorPicker colorPicker = new ColorPicker();
+                    colorPicker.Owner = this;
+                    colorPicker.ShowDialog();
+
+                    if (colorPicked != "")
+                    {
+                        Color.Background = (Brush)new BrushConverter().ConvertFromString(colorPicked);
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
 
         private void delete_Click(object sender, RoutedEventArgs e)
@@ -66,7 +74,14 @@ namespace Fingerprints
 
         private void listBoxRefresh()
         {
-            listBox.ItemsSource = Database.ShowSelfDefinedMinutiae();
+            try
+            {
+                listBox.ItemsSource = Database.ShowSelfDefinedMinutiae();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }            
         }
 
         private void DialogHost_OnDialogClosing(Object sender, DialogClosingEventArgs eventArgs)

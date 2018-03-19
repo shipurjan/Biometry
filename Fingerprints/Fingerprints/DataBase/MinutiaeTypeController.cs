@@ -1,4 +1,5 @@
-﻿using Fingerprints.Models;
+﻿using ExceptionLogger;
+using Fingerprints.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,63 +12,114 @@ namespace Fingerprints
     {
         public List<SelfDefinedMinutiae> Show()
         {
-            using (var db = new FingerContext())
+            List<SelfDefinedMinutiae> q = null;
+            try
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
-                return q;
+                using (var db = new FingerContext())
+                {
+                    q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
+                    
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return q;
+
         }
 
         public List<MinutiaState> getStates()
         {
             List<MinutiaState> states = new List<MinutiaState>();
-            using (var db = new FingerContext())
+            try
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
-
-                foreach (var item in q)
+                using (var db = new FingerContext())
                 {
-                    states.Add(new MinutiaState() { Minutia = item });
-                }
+                    var q = db.SelfDefinedMinutiaes.Where(x => x.ProjectId == Database.currentProject).ToList();
 
-                return states;
+                    foreach (var item in q)
+                    {
+                        states.Add(new MinutiaState() { Minutia = item });
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return states;
         }
 
         public List<SelfDefinedMinutiae> GetAllMinutiaeTypes()
         {
-            using (var db = new FingerContext())
+            List<SelfDefinedMinutiae> q = null;
+            try
             {
-                var q = db.SelfDefinedMinutiaes.ToList();
-                return q;
+                using (var db = new FingerContext())
+                {
+                    q = db.SelfDefinedMinutiaes.ToList();
+                    
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return q;
+
         }
 
         public DrawingType GetTypeIdOfSelectedMinutiae(string selectedValue)
         {
-            using (var db = new FingerContext())
+            DrawingType q = DrawingType.Empty;
+            try
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.DrawingType).First();
-                return q;
+                using (var db = new FingerContext())
+                {
+                    q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.DrawingType).First();                    
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return q;
         }
 
         public string GetColorOfSelectedMinutiae(string selectedValue)
         {
-            using (var db = new FingerContext())
+            string q = String.Empty;
+            try
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Color).First();
-                return q;
+                using (var db = new FingerContext())
+                {
+                    q = db.SelfDefinedMinutiaes.Where(x => x.Name == selectedValue).Select(y => y.Color).First();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return q;
+           
         }
 
         public SelfDefinedMinutiae GetMinutia(string name)
         {
-            using (var db = new FingerContext())
+            SelfDefinedMinutiae q = null;
+            try
             {
-                var q = db.SelfDefinedMinutiaes.Where(x => x.Name == name).First();
-                return q;
+                using (var db = new FingerContext())
+                {
+                    q = db.SelfDefinedMinutiaes.Where(x => x.Name == name).First();
+                }
             }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            return q;            
         }
     }
 }

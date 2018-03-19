@@ -22,16 +22,24 @@ namespace Fingerprints.Windows.Controls
 
         public GridContextMenu(DrawingService _drawingService, DrawingService _oppositeDrawingService)
         {
-            dbController = new MinutiaeTypeController();
+            try
+            {
+                dbController = new MinutiaeTypeController();
 
-            //set style
-            Style = Application.Current.FindResource("contextMenuStyles") as Style;
+                //set style
+                Style = Application.Current.FindResource("contextMenuStyles") as Style;
 
-            drawingService = _drawingService;
-            oppositeDrawingService = _oppositeDrawingService;
+                drawingService = _drawingService;
+                oppositeDrawingService = _oppositeDrawingService;
 
-            Items.Add(BuildInsertMenuItem());
-            Items.Add(BuildDeleteMenuItem());
+                Items.Add(BuildInsertMenuItem());
+                Items.Add(BuildDeleteMenuItem());
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
 
         private MenuItem BuildInsertMenuItem()
