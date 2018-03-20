@@ -28,22 +28,29 @@ namespace Fingerprints.Windows
 
         public ProjectWindow()
         {
-            var localdb = new SqlLocalDB_Utils();
-
-            //Initializes LocalDB, if something wrong shows information about LocalDB error and closes application!
-            if (!localdb.InitializeLocalDB())
+            try
             {
-                MessageBox.Show("No instance of localDB found");
-                Environment.Exit(0);
+                var localdb = new SqlLocalDB_Utils();
+
+                //Initializes LocalDB, if something wrong shows information about LocalDB error and closes application!
+                if (!localdb.InitializeLocalDB())
+                {
+                    MessageBox.Show("No instance of localDB found");
+                    Environment.Exit(0);
+                }
+
+                //Get path of exe and set it as DataDirectory for EF
+                string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                string path = (System.IO.Path.GetDirectoryName(executable));
+                FingerContext.LocalDB_Directory = path;
+
+                InitializeComponent();
+                listBoxRefresh();
             }
-
-            //Get path of exe and set it as DataDirectory for EF
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
-            FingerContext.LocalDB_Directory = path;
-
-            InitializeComponent();
-            listBoxRefresh();
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
         private void listBoxRefresh()
         {
