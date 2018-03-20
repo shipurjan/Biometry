@@ -29,7 +29,9 @@ namespace Fingerprints.Windows
         public ProjectWindow()
         {
             var localdb = new SqlLocalDB_Utils();
-            if (!localdb.CheckIfInstanceExists())
+
+            //Initializes LocalDB, if something wrong shows information about LocalDB error and closes application!
+            if (!localdb.InitializeLocalDB())
             {
                 MessageBox.Show("No instance of localDB found");
                 Environment.Exit(0);

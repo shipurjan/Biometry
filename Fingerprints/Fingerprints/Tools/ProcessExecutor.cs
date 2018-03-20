@@ -21,6 +21,12 @@ namespace Fingerprints.Tools
 
         private Process applicationProcess;
 
+        /// <summary>
+        /// constructor of Process executor class
+        /// </summary>
+        /// <param name="_onProcessExit">this delegate will be called on process exit</param>
+        /// <param name="_onProcess_OutputDataReceive">this delegate will be called when process returns some data (can be called multiple times on process execution)</param>
+        /// <param name="_onProcess_ErrorDataReceive">this delegate will be called when process returns errors (can be called multiple times on process execution)</param>
         public ProcessExecutor(Process_Exited _onProcessExit, Process_OutputDataReceived _onProcess_OutputDataReceive, Process_ErrorDataReceived _onProcess_ErrorDataReceive)
         {
             try
@@ -35,7 +41,30 @@ namespace Fingerprints.Tools
             }
         }
 
-        public void StartProcess_WithWait(string _fileName, string _command)
+        /// <summary>
+        /// Starts process, needs exe name and optional parameters
+        /// </summary>
+        /// <param name="_fileName">name of exe e.g sqllocaldb.exe</param>
+        /// <param name="_parameters">parameters e.g info</param>
+        public void StartProcess_WithWait(string _fileName, string _parameters = "")
+        {
+            try
+            {
+                InitializeAndStartProcess(_fileName, _parameters);
+                applicationProcess.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// Initializes process object and starts its
+        /// </summary>
+        /// <param name="_fileName"></param>
+        /// <param name="_parameters"></param>
+        private void InitializeAndStartProcess(string _fileName, string _parameters)
         {
             try
             {
@@ -44,7 +73,7 @@ namespace Fingerprints.Tools
                     StartInfo = new ProcessStartInfo
                     {
                         FileName = _fileName,
-                        Arguments = _command,
+                        Arguments = _parameters,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         CreateNoWindow = true,
@@ -60,7 +89,6 @@ namespace Fingerprints.Tools
                 applicationProcess.ErrorDataReceived += ErrorDataReceved;
                 applicationProcess.OutputDataReceived += OutputDataReceived;
                 applicationProcess.Exited += Exited;
-                applicationProcess.WaitForExit();
             }
             catch (Exception ex)
             {
@@ -68,6 +96,11 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// launches delegate on process exit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exited(object sender, EventArgs e)
         {
             try
@@ -80,6 +113,11 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// launches delegate when process returns data (can be called multiple times on process execution)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             try
@@ -92,6 +130,11 @@ namespace Fingerprints.Tools
             }
         }
 
+        /// <summary>
+        /// launches delegate when process returns errors (can be called mutliple times on process execution)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ErrorDataReceved(object sender, DataReceivedEventArgs e)
         {
             try

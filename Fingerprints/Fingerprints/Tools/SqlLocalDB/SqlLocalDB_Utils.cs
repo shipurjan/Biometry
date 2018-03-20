@@ -13,8 +13,6 @@ namespace Fingerprints.Tools.SqlLocalDB
 {
     public class SqlLocalDB_Utils
     {
-        private static string localDBName = "myinstance";
-
         private List<string> outputDataBuffer;
 
         public SqlLocalDB_Utils()
@@ -29,7 +27,13 @@ namespace Fingerprints.Tools.SqlLocalDB
             }
         }
 
-        public bool CheckIfInstanceExists()
+        /// <summary>
+        /// Searching for LocalDB instance
+        /// if SqlLocalDB is not installed returns false
+        /// if No SqlLocalDB instance found, creates new
+        /// </summary>
+        /// <returns></returns>
+        public bool InitializeLocalDB()
         {
             bool result = false;
             ProcessExecutor process;
@@ -42,8 +46,15 @@ namespace Fingerprints.Tools.SqlLocalDB
 
                 if (!outputDataBuffer.Exists(x => x.Equals("sqllocaldb.exe", StringComparison.OrdinalIgnoreCase)))
                 {
-                    FingerContext.LocalDB_Name = outputDataBuffer.FirstOrDefault();
-                    result = true;
+                    if (!(outputDataBuffer.Count == 0))
+                    {
+                        FingerContext.LocalDB_Name = outputDataBuffer.FirstOrDefault();
+                        result = true;
+                    }
+                    else
+                    {
+                        process.StartProcess_WithWait("sqllocaldb.exe", "create MSSQLLocalDB");
+                    }
                 }
 
                 process.Dispose();
