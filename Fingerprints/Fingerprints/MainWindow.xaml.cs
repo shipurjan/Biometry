@@ -1,4 +1,5 @@
-﻿using Fingerprints.Factories;
+﻿using ExceptionLogger;
+using Fingerprints.Factories;
 using Fingerprints.Models;
 using Fingerprints.ViewModels;
 using Microsoft.Win32;
@@ -27,15 +28,31 @@ namespace Fingerprints
         //public DrawService drawer;
         public MainWindow()
         {
-            Application.Current.MainWindow = this;
-            var viewModel = new MainWindowViewModel();
-            InitializeComponent();
-            DataContext = viewModel;
+            try
+            {
+                Application.Current.MainWindow = this;
+                var viewModel = new MainWindowViewModel();
+                InitializeComponent();
+                DataContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
 
         private void addEmpty_Click(object sender, RoutedEventArgs e)
         {
-            MinutiaDataGrid.Items.Refresh();
+            try
+            {
+                MinutiaDataGrid.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
     }
 }

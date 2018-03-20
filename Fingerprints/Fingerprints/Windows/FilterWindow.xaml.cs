@@ -1,4 +1,5 @@
-﻿using Fingerprints.Tools.ImageFilters;
+﻿using ExceptionLogger;
+using Fingerprints.Tools.ImageFilters;
 using Fingerprints.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,17 @@ namespace Fingerprints.Windows
 
         public FilterWindow(DrawingService _drawingService, FilterImageType _type)
         {
-            var viewModel = new FilterWindowViewModel(_drawingService, _type);
-            InitializeComponent();
-            DataContext = viewModel;
+            try
+            {
+                var viewModel = new FilterWindowViewModel(_drawingService, _type);
+                InitializeComponent();
+                DataContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+            
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExceptionLogger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,14 @@ namespace Fingerprints
     {
         public ColorPicker()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
