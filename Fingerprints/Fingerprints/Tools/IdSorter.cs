@@ -159,11 +159,19 @@ namespace Fingerprints.Tools
             try
             {
                 if (tmpData.Count > tmpOppositeData.Count)
-                    for (int i = 0; i < tmpData.Count - tmpOppositeData.Count + 1; i++)
+                {
+                    for (int i = tmpData.Count - tmpOppositeData.Count; i > 0; i--)
+                    {
                         tmpOppositeData.Add(new EmptyState());
+                    }
+                }
                 else
-                    for (int i = 0; i < tmpOppositeData.Count - tmpData.Count + 1; i++)
+                {
+                    for (int i = tmpOppositeData.Count - tmpData.Count; i > 0; i--)
+                    {
                         tmpData.Add(new EmptyState());
+                    }
+                }
             }
             catch (Exception ex)
             {
