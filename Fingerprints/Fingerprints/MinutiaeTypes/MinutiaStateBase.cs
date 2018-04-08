@@ -12,6 +12,7 @@ using System.Linq;
 using System.Windows.Media;
 using Fingerprints.Models;
 using System.Windows.Input;
+using Fingerprints.Tools;
 
 namespace Fingerprints.MinutiaeTypes
 {
@@ -60,6 +61,13 @@ namespace Fingerprints.MinutiaeTypes
         {
             get { return willBeReplaced; }
             set { SetProperty(ref willBeReplaced, value); }
+        }
+
+        private Brush colorOnList;
+        public Brush ColorOnList
+        {
+            get { return colorOnList; }
+            set { SetProperty(ref colorOnList, value); }
         }
 
         private bool isSelected;
@@ -135,6 +143,7 @@ namespace Fingerprints.MinutiaeTypes
                 WriteableBmp = _writeableBitmap;
                 AcceptButtonVisibility = false;
                 IsSelected = false;
+                colorOnList = HexColor.ToBrush("#FAFAFA");
 
                 if (Minutia != null && Minutia.DrawingType != DrawingType.Empty)
                 {

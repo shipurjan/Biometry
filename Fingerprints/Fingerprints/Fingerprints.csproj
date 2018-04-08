@@ -202,6 +202,7 @@
     <Compile Include="Tools\DependencyObjectExtensions.cs" />
     <Compile Include="Tools\DialogTypes.cs" />
     <Compile Include="Tools\DrawingDecorator.cs" />
+    <Compile Include="Tools\HexColor.cs" />
     <Compile Include="Tools\IDataExporter.cs" />
     <Compile Include="Tools\Exporters\ExportEnums.cs" />
     <Compile Include="Tools\Exporters\ExporterBase.cs" />

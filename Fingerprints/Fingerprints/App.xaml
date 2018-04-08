@@ -29,7 +29,7 @@
                         <Setter Property="Background" Value="#ebebeb"></Setter>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding LeftDrawingObject.WillBeReplaced}" Value="False">
-                        <Setter Property="Background" Value="#FAFAFA"></Setter>
+                        <Setter Property="Background" Value="{Binding LeftDrawingObject.ColorOnList}"></Setter>
                     </DataTrigger>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="#dedede"></Setter>
@@ -42,7 +42,7 @@
                         <Setter Property="Background" Value="#ebebeb"></Setter>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding RightDrawingObject.WillBeReplaced}" Value="False">
-                        <Setter Property="Background" Value="#FAFAFA"></Setter>
+                        <Setter Property="Background" Value="{Binding RightDrawingObject.ColorOnList}"></Setter>
                     </DataTrigger>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="#dedede"></Setter>
