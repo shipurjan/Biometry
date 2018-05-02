@@ -76,7 +76,7 @@ namespace Fingerprints.MinutiaeTypes
         {
             try
             {
-                if (args.MouseDevice.RightButton == MouseButtonState.Pressed)
+                if (args.MouseDevice.LeftButton == MouseButtonState.Pressed)
                 {
                     var point = args.GetPosition((IInputElement)sender).ToFloorPoint();
 

@@ -320,7 +320,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void MouseLeftButtonDownGroupMethod(object sender, MouseButtonEventArgs args)
+        public void MouseRightButtonDownGroupMethod(object sender, MouseButtonEventArgs args)
         {
             try
             {
@@ -338,7 +338,7 @@ namespace Fingerprints.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void MouseLeftButtonUpGroupMethod(object sender, MouseButtonEventArgs args)
+        public void MouseRightButtonUpGroupMethod(object sender, MouseButtonEventArgs args)
         {
             try
             {
@@ -363,7 +363,7 @@ namespace Fingerprints.ViewModels
             Point res;
             try
             {
-                if (args.LeftButton == MouseButtonState.Pressed)
+                if (args.RightButton == MouseButtonState.Pressed)
                 {
                     uiElement = (UIElement)sender;
 

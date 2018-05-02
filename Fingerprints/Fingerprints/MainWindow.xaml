@@ -178,11 +178,11 @@
                                 <i:EventTrigger EventName="PreviewMouseWheel">
                                     <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseWheelGroupMethod" />
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseLeftButtonDownGroupMethod" />
+                                <i:EventTrigger EventName="PreviewMouseRightButtonDown">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseRightButtonDownGroupMethod" />
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseLeftButtonUpGroupMethod" />
+                                <i:EventTrigger EventName="PreviewMouseRightButtonUp">
+                                    <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="MouseRightButtonUpGroupMethod" />
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="PreviewMouseMove">
                                     <ei:CallMethodAction TargetObject="{Binding LeftDrawingService}" MethodName="PreviewMouseMoveGroupMethod" />
@@ -222,11 +222,11 @@
                                 <i:EventTrigger EventName="PreviewMouseWheel">
                                     <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseWheelGroupMethod" />
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseLeftButtonDownGroupMethod" />
+                                <i:EventTrigger EventName="PreviewMouseRightButtonDown">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseRightButtonDownGroupMethod" />
                                 </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseLeftButtonUpGroupMethod" />
+                                <i:EventTrigger EventName="PreviewMouseRightButtonUp">
+                                    <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="MouseRightButtonUpGroupMethod" />
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="PreviewMouseMove">
                                     <ei:CallMethodAction TargetObject="{Binding RightDrawingService}" MethodName="PreviewMouseMoveGroupMethod" />
