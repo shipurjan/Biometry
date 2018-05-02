@@ -1,5 +1,6 @@
 ﻿using ExceptionLogger;
 using Fingerprints.Models;
+using Fingerprints.Tools;
 using Fingerprints.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Fingerprints.MinutiaeTypes
     {
         public EmptyState(int? _atIndex = null) : base(generateMinutia(), null, _atIndex)
         {
+            ColorOnList = HexColor.ToBrush("#fff3f8");
         }
 
         private static SelfDefinedMinutiae generateMinutia()
