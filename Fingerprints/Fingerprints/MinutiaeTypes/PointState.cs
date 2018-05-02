@@ -40,7 +40,7 @@ namespace Fingerprints.MinutiaeTypes
 
         public void MouseClick(object sender, MouseButtonEventArgs args)
         {
-            if (args.RightButton == MouseButtonState.Pressed)
+            if (args.LeftButton == MouseButtonState.Pressed)
             {
                 try
                 {
