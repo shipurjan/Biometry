@@ -52,9 +52,20 @@ namespace Fingerprints.Tools
             string oppositeId = String.Empty;
             try
             {
+                
+                ClearEmpties();
+                
                 // If one list is empty, there is nothing to sort, therefore leave meothod 
-                if (tmpData.Count == 0 || tmpOppositeData.Count == 0)
+                if (tmpData.Count == 0 && tmpOppositeData.Count == 0)
+                {
+                    CutUnecessaryEmpty();
                     return;
+                }
+                else if (tmpData.Count == 0 || tmpOppositeData.Count == 0)
+                {
+                    return;
+                }
+                
 
                 //Fill with empties to match list count
                 FillEmpty();
@@ -90,7 +101,7 @@ namespace Fingerprints.Tools
                             break;
                         }
 
-                    }
+                    }                    
                 }
 
                 // Cut unecessary empty object lines 
@@ -143,6 +154,34 @@ namespace Fingerprints.Tools
                         count--;
                         index--;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteExceptionLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// removeAllEmpites from list
+        /// </summary>
+        private void ClearEmpties()
+        {
+            try
+            {
+                if(tmpData.Count != 0)
+                {
+                    tmpData.RemoveAll(item => item.Minutia.DrawingType == DrawingType.Empty);
+                    drawingService.DrawingData.Clear();
+                    drawingService.DrawingData.AddRange(tmpData);
+
+                    
+                }
+                else if (tmpOppositeData.Count != 0)
+                {
+                    tmpOppositeData.RemoveAll(item => item.Minutia.DrawingType == DrawingType.Empty);
+                    oppositeDrawingService.DrawingData.Clear();
+                    oppositeDrawingService.DrawingData.AddRange(tmpOppositeData);
                 }
             }
             catch (Exception ex)

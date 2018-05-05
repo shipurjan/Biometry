@@ -80,7 +80,7 @@ namespace Fingerprints.ViewModels
                     return false;
 
                 // if EmptyObject is on last position and DrawingData has more objects that opposite, returns false
-                if (_drawingService.DrawingData.LastOrDefault() is EmptyState && _oppositeDrawingService.DrawingData.Count <= _drawingService.DrawingData.Count)
+                if (_drawingService.DrawingData.LastOrDefault() is EmptyState && _oppositeDrawingService.DrawingData.Count < _drawingService.DrawingData.Count)
                     return false;
 
             }
