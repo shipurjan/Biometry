@@ -77,11 +77,23 @@ namespace Fingerprints.ViewModels
         {
             try
             {
-                minSlider = 1;
-                maxSlider = 31;
-                TickFrequency = 2;
-                SliderCurrentValue = 15;
-                FilterType = _filterType;
+                if (_filterType == FilterImageType.Sobel)
+                {
+                    minSlider = 1;
+                    maxSlider = 7;
+                    TickFrequency = 2;
+                    SliderCurrentValue = 3;
+                    FilterType = _filterType;
+                }
+                else
+                {
+                    minSlider = 1;
+                    maxSlider = 31;
+                    TickFrequency = 2;
+                    SliderCurrentValue = 5;
+                    FilterType = _filterType;
+                }
+                
             }
             catch (Exception ex)
             {
