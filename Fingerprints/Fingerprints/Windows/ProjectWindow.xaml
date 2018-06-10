@@ -61,8 +61,8 @@
                             <DataTemplate>
                                 <Grid Width="{Binding ElementName=ProjectsWindow, Path=ActualWidth}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="90*"/>
-                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="85*"/>
+                                        <ColumnDefinition Width="15*"/>
                                         <ColumnDefinition Width="15"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding Name}" Grid.Column="0"/>
